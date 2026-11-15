@@ -167,7 +167,10 @@ Due personaggi che combattono vicini (a 1-2 caselle) guadagnano punti di support
 - **Stile:** illustrato moderno. Mappe dipinte con toni caldi (ottone, rame verderame, fuliggine), interfaccia scura ed elegante, ritratti grandi nei dialoghi.
 - **Ritratti:** da generare con il workflow ComfyUI di Giova (SDXL Illustrious). Ogni personaggio ha un **ritratto base** più tre espressioni (normale, sorriso, arrabbiato o triste) con la stessa posa, sfondo trasparente, mezzo busto.
 - **Prompt di base per i ritratti:** `half body portrait, [descrizione del personaggio], fantasy steampunk mercenary outfit, brass and leather details, soft painterly shading, clean lineart, neutral grey background, facing slightly left, game character portrait`. Si aggiungono capelli, vestiti, colori e un dettaglio riconoscibile dalla scheda dell'amico.
-- **Unità sulla mappa:** medaglioni con il colore della squadra e l'icona dell'arma (come nel prototipo), poi sostituibili con mini-ritratti.
+- **Mappa (fatto nel prototipo):** dipinta via codice a partire dai dati: prato a macchie morbide, selciato della fonderia con cordoli, canali con argini di pietra, binari con curve e ponti, mura con tetti di ardesia e finestre accese, fornace luminosa, alberi con ombre, luce calda da sinistra e vignettatura. Ogni mappa nuova si disegna da sola.
+- **Unità sulla mappa (fatto nel prototipo):** medaglioni con il volto del personaggio, bordo del colore della squadra e piccola icona dell'arma; il boss ha il bordo d'ottone. I nemici hanno un aspetto per classe (elmo, tricorno, cappuccio, elmo chiuso).
+- **Ritratti provvisori (fatti nel prototipo):** SVG con luci e ombre e un dettaglio per personaggio (spalline d'ottone per Giova, jabot per Lethy, spilla a foglia e Prospy per Wata, fiala verde per Mars). Restano finché non arrivano i PNG di ComfyUI.
+- **Crediti:** icone delle armi da game-icons.net (Lorc, Delapouite, Skoll), CC BY 3.0. La grafica di RPG Maker non si può usare (solo per giochi fatti con RPG Maker); materiale libero utilizzabile in `RISORSE_GRAFICHE.md`.
 
 ## 12. Architettura tecnica (per lo sviluppo)
 

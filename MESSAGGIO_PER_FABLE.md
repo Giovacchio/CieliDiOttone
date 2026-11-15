@@ -33,3 +33,5 @@ Ti allego:
 - Se non finisci tutto, dimmi chiaramente cosa manca: lo continuo con un altro modello.
 
 Priorità: regole corrette e motore solido > IA > telefono > grafica.
+
+**Grafica (già decisa):** stile illustrato, niente pixel art. Nel prototipo la mappa è dipinta via codice (`drawMap`: prato a macchie, canali con argini, binari e ponti, mura con finestre accese, fornace luminosa, alberi con ombre) e i ritratti sono SVG con luci e ombre (`portrait`), usati anche sulle pedine. Tienili come base nel nuovo motore, in un modulo grafico separato, così le mappe nuove si disegnano da sole a partire dai dati. I ritratti PNG generati con ComfyUI arriveranno dopo in `assets/ritratti/`: prevedi che sostituiscano gli SVG quando ci sono.
