@@ -44,7 +44,7 @@ Il cast usa i **nickname** degli amici. Personaggi della Compagnia della Brace g
 | Personaggio | Classe | Carattere | Abilità unica |
 |---|---|---|---|
 | **Giova** (protagonista) | Stratega · spada | Calmo, organizzato, sceglie sempre la mossa migliore calcolando il rischio | **Calcolo del rischio:** lui e gli alleati entro 2 caselle hanno +10 precisione |
-| **Wata** | Etermante delle Radici · magia naturale | Gentilissima, appassionata di magia, parla con le piante | **Famiglio felino:** il suo gatto Briciola la avvisa dei colpi, +10 schivata |
+| **Wata** | Etermante delle Radici · magia naturale | Gentilissima, appassionata di magia, parla con le piante | **Famiglio felino:** il suo gatto Prospy la avvisa dei colpi, +10 schivata |
 | **Lethy** | Spadaccina · stocco | Rapidissima, di famiglia ricca, un po' fuori dal mondo | **Stoccata:** lo stocco fa danno triplo ai corazzati |
 | **Mars** | Druida alchimista · elisir | Curiosa, aperta a ogni esperienza nuova, sperimenta su tutto | **Spirito libero:** ottiene il 50% di PE in più |
 
@@ -58,7 +58,7 @@ Il cast usa i **nickname** degli amici. Personaggi della Compagnia della Brace g
 
 ### Gli altri tre
 
-- **Wata:** cresciuta ai margini delle Radici, usa una magia gentile fatta di rovi, radici e spore. Il gatto **Briciola** (nome provvisorio) la segue ovunque e "sente" l'etere. È lei la prima a capire che i cristalli sono vivi.
+- **Wata:** cresciuta ai margini delle Radici, usa una magia gentile fatta di rovi, radici e spore. Il gatto **Prospy** (nome provvisorio) la segue ovunque e "sente" l'etere. È lei la prima a capire che i cristalli sono vivi.
 - **Lethy:** ultima figlia di una famiglia di banchieri delle Leghe Libere. Ha imparato la scherma con i migliori maestri ma non ha mai visto una battaglia vera; tratta i nemici come avversari di un torneo. Comica, ma il suo stocco è il più veloce della Compagnia.
 - **Mars:** druida che ha lasciato il suo circolo perché voleva "provare tutto". Mescola erbe, etere e chimica della Corona in elisir sempre nuovi, quasi sempre funzionanti. All'accampamento sperimenta ricette e pozioni (oggetti casuali, a volte strani).
 
@@ -179,7 +179,7 @@ Due personaggi che combattono vicini (a 1-2 caselle) guadagnano punti di support
 
 ## 14. Domande aperte
 
-- Schede degli altri amici, aspetto fisico di Giova, Wata, Lethy e Mars, nome vero del gatto di Wata.
+- Schede degli altri amici, aspetto fisico di Giova, Wata, Lethy e Mars.
 - Titolo definitivo del gioco.
 - Quante rotte nell'atto III: tre, o due più un finale segreto?
 - Musica: brani liberi da diritti da aggiungere in seguito.

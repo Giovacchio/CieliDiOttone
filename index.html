@@ -216,7 +216,7 @@ function setupUnits(){
       items:[{n:"Tonico", q:2}], look:{skin:"#f2d2b8", hair:"#e8c876", style:"pony", coat:"#f0ece4"}}),
     mkUnit({id:"wata", name:"Wata", cls:"Etermante delle Radici", team:"ally", lv:1, x:3,y:7, move:"inf", mov:5, w:"rovo",
       st:{hp:17,for:1,mag:7,abi:6,vel:6,fort:6,def:2,res:7}, gr:{hp:55,for:10,mag:60,abi:45,vel:45,fort:55,def:15,res:50},
-      skill:{n:"Famiglio felino", d:"Il suo gatto la avvisa dei colpi: +10 schivata.", cat:true},
+      skill:{n:"Famiglio felino", d:"Prospy, il suo gatto arancione, la avvisa dei colpi: +10 schivata.", cat:true},
       items:[{n:"Tonico", q:1}], look:{skin:"#eecaa8", hair:"#7a5236", style:"long", coat:"#5f8a55"}}),
     mkUnit({id:"mars", name:"Mars", cls:"Druida alchimista", team:"ally", lv:1, x:2,y:8, move:"inf", mov:5, w:"elisir",
       st:{hp:17,for:2,mag:6,abi:5,vel:6,fort:5,def:3,res:6}, gr:{hp:60,for:15,mag:50,abi:45,vel:45,fort:45,def:20,res:45},
@@ -334,7 +334,7 @@ function renderUnits(){
     Object.assign(d.style,{left:u.x*T+"px",top:u.y*T+"px",width:T+"px",height:T+"px"});
     const w = W(u);
     d.innerHTML = `<div class="tok" style="color:#fff"><svg viewBox="0 0 24 24" fill="currentColor">${ICON[w.ic||w.t]||ICON.spada}</svg></div>
-      <div class="hpb"><i style="width:${100*u.hp/u.st.hp}%"></i></div>${u.skill?.cat?'<div class="cat" title="Il gatto di Wata"><svg viewBox="0 0 24 24"><path d="M4 3l4 5h8l4-5v10c0 5-4 8-8 8s-8-3-8-8z" fill="#2b2b33"/><circle cx="9" cy="13" r="1.4" fill="#f2d35a"/><circle cx="15" cy="13" r="1.4" fill="#f2d35a"/></svg></div>':''}`;
+      <div class="hpb"><i style="width:${100*u.hp/u.st.hp}%"></i></div>${u.skill?.cat?'<div class="cat" title="Prospy, il gatto di Wata"><svg viewBox="0 0 24 24"><path d="M4 3l4 5h8l4-5v10c0 5-4 8-8 8s-8-3-8-8z" fill="#e8873a"/><path d="M7 11h3M14 11h3M8 16h8" stroke="#b85c1c" stroke-width="1.2"/><circle cx="9" cy="13" r="1.4" fill="#3a5a2a"/><circle cx="15" cy="13" r="1.4" fill="#3a5a2a"/></svg></div>':''}`;
     L.appendChild(d);
   }
 }
@@ -603,13 +603,13 @@ function endScreen(win){
 const INTRO = [
   ["giova","La fonderia di Corvara. Ho contato le guardie due volte: sette, più il capitano. Se giochiamo bene, nessuno di noi si fa male."],
   ["lethy","Sette soltanto? A casa avevamo più camerieri. Possiamo sfidarli a duello uno alla volta, vero?"],
-  ["wata","Lethy... non funziona così. Briciola, resta vicina a me: là dentro l'etere è triste, lo sento."],
+  ["wata","Lethy... non funziona così. Prospy, resta vicina a me: là dentro l'etere è triste, lo sento."],
   ["mars","Io invece sono curiosissima: una fornace a etere! Chi si ferisce venga da me, ho un elisir nuovo da provare. Funziona quasi sicuramente."],
   ["giova","Quasi? ...Va bene. Compagnia della Brace, si punta alla fornace. Scelta ottimale, rischio calcolato."],
 ];
 const VICTORY = [
   ["boss","Credete di aver vinto? Quei cristalli non sono pietre. Chiedete al vostro committente cosa c'è dentro..."],
-  ["wata","Giova... il cristallo è caldo. Briciola gli soffia contro, come se dentro respirasse qualcosa."],
+  ["wata","Giova... il cristallo è caldo. Prospy gli soffia contro, come se dentro respirasse qualcosa."],
   ["mars","Posso tenerne un frammento? Solo per studiarlo. Promesso."],
   ["lethy","Se vale tanto, mio padre ne comprerebbe una cassa. Ah, forse non è il momento."],
   ["giova","Lo portiamo via tutto. E poi il nostro committente ci deve delle risposte."],
