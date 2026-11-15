@@ -209,19 +209,19 @@ function setupUnits(){
     mkUnit({id:"giova", name:"Giova", cls:"Stratega", team:"ally", lv:1, x:2,y:6, move:"inf", mov:5, w:"spada", leader:true,
       st:{hp:22,for:6,mag:2,abi:8,vel:7,fort:6,def:6,res:3}, gr:{hp:75,for:45,mag:15,abi:60,vel:50,fort:55,def:35,res:25},
       skill:{n:"Calcolo del rischio", d:"Giova e gli alleati entro 2 caselle: +10 precisione."},
-      items:[{n:"Tonico", q:3}], look:{skin:"#d6a57e", hair:"#1e1a18", style:"short", coat:"#3b5f8a"}}),
+      items:[{n:"Tonico", q:3}], look:{skin:"#e8bf9c", hair:"#b5401f", style:"tuft", beard:true, coat:"#3b5f8a"}}),
     mkUnit({id:"lethy", name:"Lethy", cls:"Spadaccina", team:"ally", lv:1, x:1,y:7, move:"inf", mov:5, w:"stocco",
       st:{hp:17,for:5,mag:1,abi:9,vel:11,fort:5,def:3,res:3}, gr:{hp:60,for:40,mag:10,abi:60,vel:70,fort:50,def:20,res:25},
       skill:{n:"Stoccata", d:"Lo stocco infligge danno triplo ai corazzati."},
-      items:[{n:"Tonico", q:2}], look:{skin:"#f2d2b8", hair:"#e8c876", style:"pony", coat:"#f0ece4"}}),
+      items:[{n:"Tonico", q:2}], look:{skin:"#f2d2b8", hair:"#5a3a26", under:"#f1eee8", style:"bob", coat:"#2f4a6e"}}),
     mkUnit({id:"wata", name:"Wata", cls:"Etermante delle Radici", team:"ally", lv:1, x:3,y:7, move:"inf", mov:5, w:"rovo",
       st:{hp:17,for:1,mag:7,abi:6,vel:6,fort:6,def:2,res:7}, gr:{hp:55,for:10,mag:60,abi:45,vel:45,fort:55,def:15,res:50},
       skill:{n:"Famiglio felino", d:"Prospy, il suo gatto arancione, la avvisa dei colpi: +10 schivata.", cat:true},
-      items:[{n:"Tonico", q:1}], look:{skin:"#eecaa8", hair:"#7a5236", style:"long", coat:"#5f8a55"}}),
+      items:[{n:"Tonico", q:1}], look:{skin:"#eecaa8", hair:"#7b4fb0", style:"longv", coat:"#5f8a55"}}),
     mkUnit({id:"mars", name:"Mars", cls:"Druida alchimista", team:"ally", lv:1, x:2,y:8, move:"inf", mov:5, w:"elisir",
       st:{hp:17,for:2,mag:6,abi:5,vel:6,fort:5,def:3,res:6}, gr:{hp:60,for:15,mag:50,abi:45,vel:45,fort:45,def:20,res:45},
       skill:{n:"Spirito libero", d:"Ama le esperienze nuove: ottiene il 50% di PE in più."},
-      items:[{n:"Tonico", q:2}], look:{skin:"#c99a74", hair:"#a8452e", style:"messy", coat:"#8a6a3f"}}),
+      items:[{n:"Tonico", q:2}], look:{skin:"#c99a74", hair:"#141214", style:"curly", coat:"#8a6a3f"}}),
     // nemici: Corona di Ottone
     mkUnit({id:"e1", name:"Soldato della Corona", cls:"Lanciere", team:"enemy", lv:1, x:11,y:4, move:"inf", mov:5, w:"lancia", ai:"attack",
       st:{hp:18,for:6,mag:0,abi:4,vel:4,fort:1,def:4,res:0}}),
@@ -309,8 +309,13 @@ function portrait(u){
     long:`<path d="M25 44c0-16 9-25 23-25s23 9 23 25v28c-3 0-5-2-6-5V45c-5-8-11-11-17-11s-12 3-17 11v22c-1 3-3 5-6 5z" fill="${L.hair}"/>`,
     helm:`<path d="M24 46c0-17 10-27 24-27s24 10 24 27H24z" fill="#6f747d"/><rect x="24" y="42" width="48" height="5" fill="#4b5058"/>`,
     bald:`<path d="M27 38c2-12 10-18 21-18s19 6 21 18c-6-4-13-6-21-6s-15 2-21 6z" fill="${L.hair}" opacity=".5"/><path d="M34 62c4 8 24 8 28 0v6c-6 8-22 8-28 0z" fill="#3a2b22"/>`,
+    tuft:`<path d="M27 42c0-14 9-22 21-22s21 8 21 22c-4-6-10-9-21-9s-17 3-21 9z" fill="${L.hair}"/><path d="M40 30c2-10 14-15 22-9-6 0-9 3-10 7-3-3-8-2-12 2z" fill="${L.hair}"/><path d="M44 26c6-4 12-3 15 1" stroke="#0003" stroke-width="1.5" fill="none"/>`,
+    longv:`<path d="M24 46c0-17 10-27 24-27s24 10 24 27v34c-3 0-6-3-7-7V47c-5-9-11-12-17-12s-12 3-17 12v26c-1 4-4 7-7 7z" fill="${L.hair}"/><path d="M30 36c6-6 12-8 18-8s12 2 18 8c-6-2-12-3-18-3s-12 1-18 3z" fill="#fff3"/>`,
+    bob:`<path d="M25 60c-3-6-3-12-1-18 2-14 11-22 24-22s22 8 24 22c2 6 2 12-1 18h-6c1-6 0-12-2-16-4-6-9-8-15-8s-11 2-15 8c-2 4-3 10-2 16z" fill="${L.under}"/><path d="M25 52c-1-4-1-7 0-10 2-14 11-22 23-22s21 8 23 22c1 3 1 6 0 10h-5c0-4-1-8-3-10-4-6-9-8-15-8s-11 2-15 8c-2 2-3 6-3 10z" fill="${L.hair}"/>`,
+    curly:`<g fill="${L.hair}"><circle cx="32" cy="34" r="7"/><circle cx="40" cy="27" r="7.5"/><circle cx="49" cy="25" r="7.5"/><circle cx="58" cy="28" r="7"/><circle cx="65" cy="35" r="6.5"/><circle cx="29" cy="42" r="5"/><circle cx="67" cy="43" r="5"/><circle cx="45" cy="31" r="6"/><circle cx="54" cy="32" r="6"/></g>`,
   }[L.style] || "";
   const coat = L.coat;
+  const beard = L.beard ? `<path d="M31 47c1 11 7 18 17 18s16-7 17-18c-1 5-3 9-6 11-3-1-7-2-11-2s-8 1-11 2c-3-2-5-6-6-11z" fill="${L.hair}" opacity=".5"/>` : "";
   return `<svg viewBox="0 0 96 96" width="100%" height="100%" role="img" aria-label="Ritratto di ${u.name}">
     <rect width="96" height="96" fill="${bg}"/>
     <circle cx="70" cy="22" r="26" fill="${u.team==="ally"?"#2c4766":"#5a2b28"}" opacity=".6"/>
@@ -320,7 +325,7 @@ function portrait(u){
     <ellipse cx="48" cy="44" rx="18" ry="21" fill="${L.skin}"/>
     <ellipse cx="41" cy="46" rx="2.2" ry="2.8" fill="#1a1412"/><ellipse cx="55" cy="46" rx="2.2" ry="2.8" fill="#1a1412"/>
     <path d="M43 56c3 2 7 2 10 0" stroke="#7a4a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-    ${hair}
+    ${beard}${hair}
   </svg>`;
 }
 

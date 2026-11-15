@@ -62,6 +62,17 @@ Il cast usa i **nickname** degli amici. Personaggi della Compagnia della Brace g
 - **Lethy:** ultima figlia di una famiglia di banchieri delle Leghe Libere. Ha imparato la scherma con i migliori maestri ma non ha mai visto una battaglia vera; tratta i nemici come avversari di un torneo. Comica, ma il suo stocco è il più veloce della Compagnia.
 - **Mars:** druida che ha lasciato il suo circolo perché voleva "provare tutto". Mescola erbe, etere e chimica della Corona in elisir sempre nuovi, quasi sempre funzionanti. All'accampamento sperimenta ricette e pozioni (oggetti casuali, a volte strani).
 
+### Aspetto
+
+| Personaggio | Aspetto |
+|---|---|
+| Giova | Capelli rossi con un ciuffo, barba leggera; cappotto blu da stratega |
+| Wata | Capelli viola lunghi; mantello verde muschio con ricami di foglie; Prospy, gatto arancione |
+| Lethy | Caschetto castano con la parte sotto tinta di bianco; giacca da scherma blu e bianca, stocco |
+| Mars | Capelli corti, ricci e neri; gilet marrone pieno di tasche e fiale, occhialini |
+
+I prompt per generare i ritratti sono in `ritratti/PROMPT_RITRATTI.md`.
+
 Altri amici si aggiungeranno con la stessa scheda.
 
 ### Scheda per ogni amico (da compilare)
@@ -179,7 +190,7 @@ Due personaggi che combattono vicini (a 1-2 caselle) guadagnano punti di support
 
 ## 14. Domande aperte
 
-- Schede degli altri amici, aspetto fisico di Giova, Wata, Lethy e Mars.
+- Schede degli altri amici.
 - Titolo definitivo del gioco.
 - Quante rotte nell'atto III: tre, o due più un finale segreto?
 - Musica: brani liberi da diritti da aggiungere in seguito.
