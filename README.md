@@ -20,3 +20,7 @@ Gioco tattico a turni su griglia, nel browser, da PC e da telefono. Mondo fantas
 ## Compagnia della Brace
 
 Giova (Stratega), Wata (Etermante delle Radici), Lethy (Spadaccina), Mars (Druida alchimista).
+
+## Crediti
+
+- Icone delle armi: [game-icons.net](https://game-icons.net) (Lorc, Delapouite, Skoll), CC BY 3.0.
