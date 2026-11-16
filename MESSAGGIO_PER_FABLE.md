@@ -8,7 +8,7 @@ Ciao. Sto facendo un gioco tattico a turni nel browser, ispirato ai tattici clas
 
 Ti allego:
 - `GDD.md`: il documento di design completo (mondo, classi, formule, supporti, accampamento, architettura). Seguilo.
-- `index.html`: un prototipo giocabile fatto con un altro modello (una mappa, movimento, combattimento con previsione, IA semplice, livelli, dialoghi). Usalo come riferimento per l'aspetto e le formule; il codice puoi riscriverlo da zero se serve.
+- `index.html`: un prototipo giocabile fatto con un altro modello: **prologo e 12 capitoli** (più il primo capitolo di ognuna delle 3 rotte dell'Atto IV), con obiettivi diversi, rinforzi, ospiti, scelta di rotta, salvataggio, mappa dipinta via codice e ritratti SVG. I capitoli sono già dati nell'array `CHAPTERS` (mappa come righe di testo, schieramento, obiettivo, nemici creati con `foe(classe, livello, x, y, opzioni)`, eventi, dialoghi, ricompense). Usalo come riferimento; il codice puoi riscriverlo da zero.
 
 **Chi sono:** non so programmare. Tutto deve funzionare senza che io tocchi il codice; se devo fare qualcosa io, spiegamelo passo passo. Il gioco va su GitHub Pages (repository: Giovacchio/CieliDiOttone, già collegato) e deve funzionare bene sia da PC sia da telefono.
 
@@ -23,7 +23,7 @@ Ti allego:
 7. **Capitoli descritti da dati**: obiettivi diversi (sconfiggi tutti, sconfiggi il comandante, resisti N turni, raggiungi una casella), rinforzi a turni stabiliti, dialoghi prima, durante e dopo la battaglia.
 8. **Salvataggi** nel browser con più slot ed esportazione in un file.
 9. **Test automatici** per formule, movimento e IA.
-10. Riporta il **Prologo** del prototipo nel nuovo motore, così si gioca subito.
+10. Riporta **tutti i capitoli già scritti** (array `CHAPTERS`, con dialoghi e scelta di rotta) nel nuovo motore come file JSON, senza cambiarne la storia, così si gioca subito tutta la campagna. Il simulatore di partite automatiche usato per bilanciarli si può rifare come test.
 
 **Come lavorare:**
 - Prima un piano breve (architettura e cartelle), poi aspetta il mio ok.

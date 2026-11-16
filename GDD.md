@@ -37,6 +37,29 @@ Gioco tattico a turni su griglia, ispirato ai tattici classici (Radiant Dawn, Th
 | IV · Cieli di ottone | 13 – 17 | Guerra aperta. Capitoli diversi in base alla rotta, battaglie sui dirigibili |
 | V · L'ultima brace | 18 – 20 | Finale diverso per rotta, epilogo per ogni personaggio in base ai supporti |
 
+### Capitoli già scritti e giocabili (nel prototipo, array `CHAPTERS`)
+
+| Capitolo | Titolo | Obiettivo | Cosa succede |
+|---|---|---|---|
+| Prologo | La Fonderia di Corvara | Comandante | Furto del carico di etere; il Capitano Vorn accenna a cosa c'è nei cristalli |
+| 1 | Binari nella nebbia | Raggiungi | Fuga verso il confine; entra l'Ispettrice Ferrante (Corona) |
+| 2 | Le capre di Merlaia | Resisti 6 turni (di notte) | Difesa del villaggio di Nonna Tessa dai predoni di Gorran; Wata ottiene le Spine, Mars l'elisir di Tessa |
+| 3 | I Corvi di Sale | Comandante | Porto Ambra: il Signor Grigio, Brann fa il doppio gioco, "mantello verde"; stocco d'argento per Lethy |
+| 4 | Il magazzino delle Lanterne | Comandante | Il committente è Sorella Maelis (Concilio); raid notturno di Ferrante con aeronauti. Fine Atto I |
+| 5 | Sentieri di radice | Sconfiggi tutti | Segatrici della Corona nelle Radici; Wata sente il nome "Ilvo" in un cristallo |
+| 6 | Fondoscuro | Raggiungi entro il turno 7 | Il Custode Thalen punisce un villaggio che si è curato con i cristalli; la Compagnia combatte il Concilio |
+| 7 | Il Pozzo delle Voci | Proteggi Maelis 5 turni | Le voci nei cristalli sono persone |
+| 8 | Il tribunale di Lucegrande | Comandante | Thalen si arrende; il Registro delle Radici svela il segreto. Fine Atto II |
+| 9 | Le miniere di Cenerossa | Comandante | La Corona fa morire i minatori sopra radici trapiantate; Ferrante scopre la verità |
+| 10 | La notte di Corvara | Porta Ferrante all'uscita | Evasione di Ferrante; il Direttore Strand: "fai il conto, stratega" |
+| 11 | Il Cuore delle Radici | Comandante | Il Gran Custode Arven voleva spegnere tutto l'etere col Canto del Silenzio |
+| 12 | Ritorno a Fossa Grigia | Resisti 6 turni | Corona e Concilio contro la Compagnia; **scelta della rotta**: Ferrante (Corona), Maelis (Concilio) o Leghe Libere |
+| 13 | La Sovrana / Lucegrande in fiamme / La piazza di Porto Ambra | per rotta | Primo capitolo dell'Atto IV di ciascuna rotta |
+
+Antagonisti con una ragione credibile: **Strand** (Corona, "ogni lampada salva dieci vite"), **Arven** (Concilio, "il Silenzio è pietà"), **Thalen** (Concilio, "le Radici non sono una farmacia"). Personaggi della storia: Ferrante, Maelis, il Signor Grigio, Nonna Tessa, Brann, Erba.
+
+Da scrivere: capitoli 14-17 per ciascuna rotta (battaglie sui dirigibili, Strand e Arven come boss finali a seconda della rotta) e Atto V (18-20) con finali ed epiloghi.
+
 ## 4. Cast
 
 Il cast usa i **nickname** degli amici. Personaggi della Compagnia della Brace già decisi:
