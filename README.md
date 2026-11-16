@@ -24,3 +24,8 @@ Giova (Stratega), Wata (Etermante delle Radici), Lethy (Spadaccina), Mars (Druid
 ## Crediti
 
 - Icone delle armi: [game-icons.net](https://game-icons.net) (Lorc, Delapouite, Skoll), CC BY 3.0.
+
+## Strumenti
+
+- `strumenti/controlla_mappe.js`: controlla che unità e obiettivi di ogni capitolo stiano su caselle valide e raggiungibili (`node strumenti/controlla_mappe.js`).
+- `strumenti/simula_campagna.js`: fa giocare la campagna a un bot e stampa vittorie, turni e livelli per capitolo (`node strumenti/simula_campagna.js 5`). Richiedono Playwright.
