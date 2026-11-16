@@ -13,6 +13,9 @@ import { livelloNumero, statoCoppia } from "../motore/supporti.js";
 import { passaArma, passaOggetto, impugna } from "../motore/inventario.js";
 import { vittoria, sconfitta } from "./schermate.js";
 import * as FX from "./effetti.js";
+import { suona, musica } from "./suono.js";
+import { opzioni, aiuto, pausaMenu, confermaFineTurno, schermoIntero } from "./menu.js";
+import { scriviPreferenza } from "../salvataggi.js";
 import { apriScena, chiudiScena, scenaAssalto, scenaColpo, scenaMancato, scenaAperta } from "./scontro.js";
 
 const tavola = () => $("#board");
@@ -33,6 +36,8 @@ export function preparaBattaglia(idCapitolo, opzioni = {}, giaPronta = null) {
   $("#bDanger").classList.remove("on");
   $("#chap").textContent = cap.titolo;
   $("#goalTxt").textContent = cap.obiettivo.testo;
+  $("#obTop").textContent = cap.obiettivo.testo; $("#terreno").innerHTML = "";
+  G.cur = null; G.anteprima = null;
   $("#capoTxt").textContent = G.b.capo()?.nome || "il capo";
   $("#log").innerHTML = "<div>Il registro della battaglia apparirà qui.</div>";
   chiudiMenu(); aggiornaFase(); adatta(); mostraInfo(null);
@@ -73,6 +78,7 @@ function cartello(cap) {
     const [sopra, sotto] = cap.titolo.includes(" · ") ? cap.titolo.split(" · ") : ["", cap.titolo];
     const c = document.createElement("div");
     c.className = "cartello";
+    suona("cartello");
     c.innerHTML = `<div><div class="catto">${h(cap.atto || "")}</div><div class="cnum">${h(sopra)}</div><div class="ctit">${h(sotto)}</div><div class="criga"></div></div>`;
     document.body.appendChild(c);
     let chiuso = false;
@@ -102,9 +108,9 @@ function preparativi() {
     const ricrea = (pos) => { preparaBattaglia(cap.id, { ia: G.ia, posizioni: pos }); G.modo = "schiera"; disegna(); };
     const disegna = () => {
       const inCampo = new Set(G.b.unita.filter((u) => u.compagnia).map((u) => u.id)), scelta = membri.length > cap.schieramento.length;
-      barra.innerHTML = `<div><b>Preparativi</b> · tocca due caselle azzurre per scambiare di posto.${scelta ? ` Posti: ${inCampo.size}/${cap.schieramento.length}.` : ""}</div>
+      barra.innerHTML = `<div><b>Preparativi</b> Scegli due caselle azzurre per scambiare di posto.${scelta ? ` Posti: ${inCampo.size}/${cap.schieramento.length}.` : ""}</div>
         ${scelta ? `<div class="chips">${membri.map((id) => `<button class="btn chip${inCampo.has(id) ? " on" : ""}" data-id="${id}" ${D.personaggi[id].capo ? "disabled" : ""}>${h(D.personaggi[id].nome)}</button>`).join("")}</div>` : ""}
-        <button class="btn primary" id="prepVia">Inizia la battaglia</button>`;
+        <button class="btn primary" id="prepVia">Inizia la battaglia <kbd>Spazio</kbd></button>`;
       barra.querySelectorAll(".chip").forEach((c) => c.onclick = () => {
         const pos = posizioniAttuali(), id = c.dataset.id;
         if (pos[id]) delete pos[id];
@@ -138,9 +144,9 @@ function preparativi() {
 export function adatta() {
   if (!G.b) return;
   const involucro = $("#wrap"), stretto = window.innerWidth <= 860;
-  const larghezza = involucro.clientWidth - 4, altezza = stretto ? 9999 : involucro.clientHeight - 4;
+  const larghezza = involucro.clientWidth - (stretto ? 4 : 28), altezza = stretto ? 9999 : involucro.clientHeight - 28;
   G.stretto = stretto;
-  G.lato = Math.max(stretto ? 44 : 22, Math.floor(Math.min(larghezza / G.b.larghe, altezza / G.b.alte, 64)));
+  G.lato = Math.max(stretto ? 44 : 22, Math.floor(Math.min(larghezza / G.b.larghe, altezza / G.b.alte, stretto ? 64 : 88)));
   tavola().style.width = G.b.larghe * G.lato + "px";
   tavola().style.height = G.b.alte * G.lato + "px";
   disegnaMappa($("#bg"), G.b.cap, G.lato);
@@ -191,7 +197,17 @@ export function disegnaPortate() {
     for (const [x, y] of b.cap.schieramento) L.appendChild(casella(x, y, G.scambio && G.scambio.x === x && G.scambio.y === y ? "hl" : "mv"));
     return;
   }
-  if (!u) return;
+  if (!u) { // nessuna selezione: anteprima di chi sta sotto il cursore (fin dove arriva, cosa può colpire)
+    const v = G.anteprima;
+    if (v && v.pv > 0 && G.modo === "riposo" && libero()) {
+      if (alleato(v) && !v.agito) {
+        const mosse = b.raggiungibili(v), blu = new Set(mosse.map((t) => chiave(t.x, t.y))), rosse = new Set();
+        for (const id of v.armi) { const a = G.dati.armi[id]; if (a.cura == null) for (const k of caselleColpibili(b, mosse, a.gittata)) if (!blu.has(k)) rosse.add(k); }
+        riempi(L, blu, "mv pre"); riempi(L, rosse, "at pre");
+      } else if (!alleato(v)) riempi(L, caselleMinacciate(b, v), "at pre");
+    }
+    return;
+  }
   if (G.modo === "scelta" && G.raggio) {
     const mosse = new Set(G.raggio.map((t) => chiave(t.x, t.y)));
     riempi(L, mosse, "mv");
@@ -298,12 +314,13 @@ async function racconta(f) {
     case "dialogo": await storia(f.righe); break;
     case "fase":
       aggiornaFase(); ridisegna();
+      suona(f.fase === "giocatore" ? "faseGiocatore" : "faseNemico"); musica(f.fase === "giocatore" ? "battaglia" : "nemico");
       if (f.fase === "giocatore") inquadra(b.capo());
       await striscione(f.fase === "giocatore" ? "Fase del giocatore" : "Fase nemica", f.fase === "giocatore" ? "p" : "e");
       break;
     case "rinforzi":
       registro(`<b>Rinforzi${f.unita.every((u) => !alleato(u)) ? " nemici" : ""}:</b> ${f.unita.length}.`);
-      ridisegna(); inquadra(f.unita[0]);
+      ridisegna(); inquadra(f.unita[0]); suona("rinforzi");
       for (const u of f.unita) { effetto(u, "arrivo"); FX.arrivo(u); }
       await pausa(500); break;
     case "scelta": mostraInfo(f.u); inquadra(f.u); break;
@@ -324,26 +341,27 @@ async function racconta(f) {
       numeroVolante(f.d, f.critico ? `CRITICO ${f.danno}` : String(f.danno), f.critico ? "#ffcf5a" : "#fff");
       effetto(f.d, f.critico ? "critico" : "colpito");
       FX.colpo(armaDi(f.a), f.a, f.d, f.critico); scenaColpo(f.d, f.danno, f.critico);
+      suona(armaDi(f.a).tipo); suona(f.critico ? "critico" : "impatto");
       if (f.critico) { tavola().classList.remove("scossa"); void tavola().offsetWidth; tavola().classList.add("scossa"); }
       registro(`${h(f.a.nome)} colpisce ${h(f.d.nome)}${f.critico ? " con un critico" : ""}: ${f.danno} danni.`);
       disegnaUnita(); await pausa(scenaAperta() ? 430 : 260); break;
     case "mancato":
-      numeroVolante(f.d, "Mancato", "#9aa"); effetto(f.d, "schiva"); FX.mancato(f.a, f.d); scenaMancato(f.d);
+      numeroVolante(f.d, "Mancato", "#9aa"); effetto(f.d, "schiva"); FX.mancato(f.a, f.d); scenaMancato(f.d); suona("mancato");
       registro(`${h(f.a.nome)} manca ${h(f.d.nome)}.`);
       await pausa(scenaAperta() ? 430 : 260); break;
     case "sconfitta": {
       const el = elementi.get(f.u);
       if (el) { el.style.transition = "opacity .5s"; el.style.opacity = "0"; }
-      FX.sconfitta(f.u);
+      FX.sconfitta(f.u); suona("sconfitta");
       await pausa(450);
       svaniti.add(f.u);
       registro(alleato(f.u) ? `<b>${h(f.u.nome)}</b> è ferito e si ritira dalla battaglia.` : (f.u.siRitira ? `<b>${h(f.u.nome)}</b> è battuto e si ritira.` : `${h(f.u.nome)} è sconfitto.`));
       disegnaUnita(); disegnaPericolo(); break;
     }
     case "pe": registro(`${h(f.u.nome)} ottiene ${f.quanti} PE.`); break;
-    case "livello": FX.livello(f.u); await pausa(350); await mostraLivello(f.u, f.aumenti); break;
+    case "livello": FX.livello(f.u); suona("livello"); await pausa(350); await mostraLivello(f.u, f.aumenti); break;
     case "cura":
-      numeroVolante(f.t, "+" + f.pv, "#8de08f"); effetto(f.t, "curato"); FX.cura(f.t);
+      numeroVolante(f.t, "+" + f.pv, "#8de08f"); effetto(f.t, "curato"); FX.cura(f.t); if (!f.eco) suona("cura");
       if (f.oggetto) registro(`${h(f.t.nome)} usa ${h(f.oggetto.nome)}: +${f.pv} PV.`);
       else if (f.u) registro(`${h(f.u.nome)} cura ${h(f.t.nome)}: +${f.pv} PV.`);
       disegnaUnita();
@@ -359,7 +377,7 @@ async function cammina(u, da) {
   const el = elementi.get(u), T = G.lato, passi = el ? percorso(G.b, u, da.x, da.y, u.x, u.y) : [];
   if (passi.length < 2) { disegnaUnita(); await pausa(passi.length ? 150 : 0); return; }
   el.style.transition = "left .08s linear, top .08s linear";
-  for (const p of passi) { el.style.left = p.x * T + "px"; el.style.top = p.y * T + "px"; FX.passo(p.x, p.y); await pausa(80); }
+  for (const p of passi) { el.style.left = p.x * T + "px"; el.style.top = p.y * T + "px"; FX.passo(p.x, p.y); suona("passo"); await pausa(80); }
   el.style.transition = "";
   disegnaUnita();
 }
@@ -401,7 +419,7 @@ function menu(u, voci) {
     const p = document.createElement("button");
     p.innerHTML = h(testo) + (nota ? `<small>${h(nota)}</small>` : "");
     p.setAttribute("role", "menuitem");
-    p.onclick = (e) => { e.stopPropagation(); azione(); };
+    p.onclick = (e) => { e.stopPropagation(); suona("clic"); azione(); };
     m.appendChild(p);
   }
   tavola().appendChild(m);
@@ -471,7 +489,7 @@ function mostraPrevisione(a, d) {
   </div>`);
   $("#fcOk").focus();
   $("#fcNo").onclick = () => chiudiVelo();
-  $("#fcOk").onclick = () => { chiudiVelo(); agisci(a, b.attacca(a, d)); };
+  $("#fcOk").onclick = () => { suona("conferma"); chiudiVelo(); agisci(a, b.attacca(a, d)); };
 }
 // Esegue un'azione del giocatore, poi controlla se la fase è finita.
 async function agisci(u, generatore) {
@@ -493,6 +511,7 @@ export async function fineTurno() {
 export function annulla() {
   if (G.modo === "schiera") { G.scambio = null; disegnaPortate(); return; }
   if (!libero()) return;
+  if (veloAperto() || G.modo !== "riposo") suona("annulla");
   if (veloAperto()) { chiudiVelo(); if (G.modo === "mosso" && G.sel) apriMenu(G.sel); return; }
   const u = G.sel;
   if (G.modo === "bersaglio" || G.modo === "cura") {
@@ -511,7 +530,7 @@ async function suCasella(x, y) {
   if (G.modo === "schiera") { G.toccaSchiera(x, y); return; }
   if (!libero()) return;
   const b = G.b, u = b.unitaIn(x, y);
-  const seleziona = (v) => { G.sel = v; G.origine = { x: v.x, y: v.y }; G.modo = "scelta"; G.raggio = b.raggiungibili(v); G.haScambiato = false; };
+  const seleziona = (v) => { suona("seleziona"); G.sel = v; G.origine = { x: v.x, y: v.y }; G.modo = "scelta"; G.raggio = b.raggiungibili(v); G.haScambiato = false; };
   if (G.modo === "riposo" || G.modo === "nemico") {
     if (u && alleato(u) && !u.agito) seleziona(u);
     else if (u) { G.sel = u; G.modo = "nemico"; G.raggio = null; }
@@ -552,13 +571,50 @@ function disegnaPercorso(u, x, y) {
 }
 
 // ------------------------------------------------------------------ collegamento ai comandi della pagina
-export function collegaComandi({ alTitolo, velocita, cambiaVelocita }) {
+// Sposta il cursore della mappa (mouse o tastiera): aggiorna il riquadro del terreno e l'anteprima di chi sta lì sotto.
+export function spostaCursore(x, y, daTastiera) {
+  const b = G.b, c = $("#cursor"), T = G.lato;
+  if (!b || !b.dentro(x, y)) { c.hidden = true; return; }
+  const nuovo = !G.cur || G.cur.x !== x || G.cur.y !== y;
+  G.cur = { x, y };
+  c.hidden = false;
+  Object.assign(c.style, { left: x * T + "px", top: y * T + "px", width: T + "px", height: T + "px" });
+  if (!nuovo) return;
+  if (daTastiera) { inquadra(G.cur); suona("sfiora"); }
+  const u = b.unitaIn(x, y), t = b.terreno(x, y);
+  const costo = t.costo.fanteria >= 99 ? "non si passa a piedi" : `costa ${t.costo.fanteria} a piedi`;
+  $("#terreno").innerHTML = `<b>${h(t.nome)}</b> <span>Difesa +${t.difesa} · Schivata +${t.schivata} · ${costo}${t.cura ? " · cura il 10% a inizio fase" : ""}</span>`
+    + (u ? `<div class="tunita ${alleato(u) ? "al" : "ne"}"><b>${h(u.nome)}</b> Lv ${u.lv} · PV ${u.pv}/${u.stat.hp} · ${h(armaDi(u).nome)}</div>` : "");
+  const prima = G.anteprima;
+  G.anteprima = G.modo === "riposo" && u ? u : null;
+  if (prima !== G.anteprima) disegnaPortate();
+  if (G.modo === "scelta" && G.sel && G.raggio && G.raggio.some((p) => p.x === x && p.y === y)) disegnaPercorso(G.sel, x, y); else disegnaPercorso(null);
+}
+// Passa al prossimo personaggio che deve ancora agire (Tab).
+function prossimaUnita(indietro) {
+  if (!libero() || (G.modo !== "riposo" && G.modo !== "scelta" && G.modo !== "nemico")) return;
+  const l = G.b.vivi("alleato").filter((u) => !u.agito);
+  if (!l.length) return;
+  const i = l.indexOf(G.sel), u = l[(i + (indietro ? -1 : 1) + l.length * 2) % l.length] || l[0];
+  if (G.modo !== "riposo") annulla();
+  spostaCursore(u.x, u.y, true);
+  suCasella(u.x, u.y);
+}
+// Fine turno su richiesta del giocatore: chiede conferma se qualcuno non ha ancora agito.
+export function richiediFineTurno() {
+  if (!libero()) return;
+  for (let i = 0; i < 6 && (veloAperto() || G.modo !== "riposo"); i++) annulla(); // rimette a posto un'unità mossa a metà
+  const fermi = G.b.vivi("alleato").filter((u) => !u.agito).length;
+  if (fermi) confermaFineTurno(fermi, fineTurno); else fineTurno();
+}
+
+export function collegaComandi({ alTitolo }) {
   const T = () => G.lato;
   const daEvento = (e) => { const r = tavola().getBoundingClientRect(); return { x: Math.floor((e.clientX - r.left) / T()), y: Math.floor((e.clientY - r.top) / T()) }; };
   tavola().addEventListener("click", (e) => {
     if (e.target.closest(".menu") || !G.b) return;
     const { x, y } = daEvento(e);
-    if (G.b.dentro(x, y)) suCasella(x, y);
+    if (G.b.dentro(x, y)) { spostaCursore(x, y, false); suCasella(x, y); }
   });
   // tasto destro = annulla; sul telefono lo stesso gesto è tenere premuto (alcuni telefoni lo traducono già in "tasto destro")
   let timer = null, ultimoAnnulla = 0, saltaClic = false;
@@ -571,32 +627,65 @@ export function collegaComandi({ alTitolo, velocita, cambiaVelocita }) {
   }, { passive: true });
   for (const ev of ["touchend", "touchmove", "touchcancel"]) tavola().addEventListener(ev, () => clearTimeout(timer), { passive: true });
   tavola().addEventListener("click", (e) => { if (saltaClic) { e.stopImmediatePropagation(); saltaClic = false; } }, true);
-  tavola().addEventListener("mousemove", (e) => {
-    const c = $("#cursor");
-    if (!G.b) return;
-    const { x, y } = daEvento(e);
-    if (!G.b.dentro(x, y)) { c.hidden = true; return; }
-    c.hidden = false;
-    Object.assign(c.style, { left: x * T() + "px", top: y * T() + "px", width: T() + "px", height: T() + "px" });
-  });
-  tavola().addEventListener("mousemove", (e) => {
-    if (!G.b) return;
-    const { x, y } = daEvento(e);
-    if (G.modo === "scelta" && G.sel && G.raggio && G.raggio.some((t) => t.x === x && t.y === y)) disegnaPercorso(G.sel, x, y); else disegnaPercorso(null);
-  });
-  tavola().addEventListener("mouseleave", () => { $("#cursor").hidden = true; disegnaPercorso(null); });
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$(".dlg") && !G.chiusa) annulla(); });
-  $("#bEnd").onclick = () => {
-    if (!libero()) return;
-    for (let i = 0; i < 6 && (veloAperto() || G.modo !== "riposo"); i++) annulla(); // rimette a posto un'unità mossa a metà
-    fineTurno();
-  };
+  tavola().addEventListener("mousemove", (e) => { if (G.b) { const { x, y } = daEvento(e); spostaCursore(x, y, false); } });
+  tavola().addEventListener("mouseleave", () => { $("#cursor").hidden = true; disegnaPercorso(null); if (G.anteprima) { G.anteprima = null; disegnaPortate(); } G.cur = null; });
+
+  const zone = () => { G.pericolo = !G.pericolo; $("#bDanger").classList.toggle("on", G.pericolo); suona("clic"); disegnaPericolo(); };
+  G.aggiornaVeloce = () => { const si = G.velocita < 1; $("#bFast").classList.toggle("on", si); $("#bFast").setAttribute("aria-pressed", String(si)); };
+  const veloce = () => { G.velocita = G.velocita < 1 ? 1 : 0.4; scriviPreferenza("fast", G.velocita < 1 ? "1" : "0"); G.aggiornaVeloce(); suona("clic"); };
+  const pausaGioco = () => { if (!G.occupato && !G.chiusa && !veloAperto()) { suona("clic"); pausaMenu({ alTitolo }); } };
+  const libera = () => !G.occupato && !veloAperto() && !$(".cartello");
+  G.aggiornaVeloce();
+  $("#bEnd").onclick = richiediFineTurno;
   $("#bCancel").onclick = () => annulla();
-  $("#bDanger").onclick = () => { G.pericolo = !G.pericolo; $("#bDanger").classList.toggle("on", G.pericolo); disegnaPericolo(); };
-  const veloce = (si) => { G.velocita = si ? 0.4 : 1; $("#bFast").classList.toggle("on", si); $("#bFast").setAttribute("aria-pressed", String(si)); };
-  veloce(velocita);
-  $("#bFast").onclick = () => { const si = G.velocita === 1; veloce(si); cambiaVelocita(si); };
-  $("#bMenu").onclick = () => { if (!G.occupato) alTitolo(); };
+  $("#bDanger").onclick = zone;
+  $("#bFast").onclick = veloce;
+  $("#bMenu").onclick = pausaGioco;
+  $("#bAiuto").onclick = () => { if (libera()) { suona("clic"); aiuto(); } };
+  $("#bOpz").onclick = () => { if (libera()) { suona("clic"); opzioni(); } };
+  $("#bSchermo").onclick = schermoIntero;
+
+  // tastiera: la mappa si gioca tutta anche senza mouse
+  const DIREZIONI = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] };
+  window.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (e.target.tagName === "BUTTON" && !e.target.closest(".menu") && (k === "Enter" || k === " ")) return; // il pulsante fa già il suo
+    const cartello = $(".cartello");
+    if (cartello) { if (k === "Enter" || k === " " || k === "Escape") { e.preventDefault(); cartello.click(); } return; }
+    if (veloAperto()) { if (k === "Escape" && ($(".forecast") || $(".scambio")) && !$(".dlg")) annulla(); return; }
+    if (!G.b || G.chiusa) return;
+    const menu = $(".menu");
+    if (menu) {
+      const voci = [...menu.querySelectorAll("button")], i = voci.indexOf(document.activeElement);
+      if (k === "ArrowDown" || k === "s") { e.preventDefault(); voci[(i + 1) % voci.length].focus(); suona("sfiora"); }
+      else if (k === "ArrowUp" || k === "w") { e.preventDefault(); voci[(i - 1 + voci.length) % voci.length].focus(); suona("sfiora"); }
+      else if (/^[1-9]$/.test(k) && voci[+k - 1]) { e.preventDefault(); voci[+k - 1].click(); }
+      else if (k === "Escape") annulla();
+      return;
+    }
+    if (DIREZIONI[k]) {
+      e.preventDefault();
+      const c = G.cur || G.sel || G.b.capo(), [dx, dy] = DIREZIONI[k];
+      spostaCursore(Math.max(0, Math.min(G.b.larghe - 1, c.x + dx)), Math.max(0, Math.min(G.b.alte - 1, c.y + dy)), true);
+      return;
+    }
+    if (G.modo === "schiera") {
+      if (k === "Enter" && G.cur) { e.preventDefault(); suCasella(G.cur.x, G.cur.y); }
+      else if (k === " ") { e.preventDefault(); $("#prepVia")?.click(); }
+      else if (k === "Escape") annulla();
+      return;
+    }
+    if (k === "Enter" || k === " ") { e.preventDefault(); const c = G.cur || G.b.capo(); spostaCursore(c.x, c.y, true); suCasella(c.x, c.y); }
+    else if (k === "Escape") { if (G.modo === "riposo") pausaGioco(); else annulla(); }
+    else if (k === "Tab") { e.preventDefault(); prossimaUnita(e.shiftKey); }
+    else if (k === "e") richiediFineTurno();
+    else if (k === "q") zone();
+    else if (k === "f") veloce();
+    else if (k === "h" || k === "F1") { e.preventDefault(); if (libera()) aiuto(); }
+  });
+  // dopo un clic sui pulsanti a lato, la tastiera torna alla mappa
+  document.querySelector("aside").addEventListener("click", (e) => { if (e.target.closest("button")) document.activeElement?.blur(); });
   let attesa;
   window.addEventListener("resize", () => { clearTimeout(attesa); attesa = setTimeout(adatta, 120); });
 }

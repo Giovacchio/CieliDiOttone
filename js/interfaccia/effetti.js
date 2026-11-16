@@ -3,7 +3,10 @@
 //  - "colpi" (sopra le pedine): fendenti, frecce, magie, esplosioni, cure, critici, sconfitte.
 // Tutto è fatto di particelle semplici; se il dispositivo chiede meno movimento, l'atmosfera resta spenta.
 const S = { amb: null, fx: null, T: 48, W: 0, H: 0, sotto: [], sopra: [], sorgenti: [], luci: [], ultimo: 0, giro: false, tempo: 0 };
-const calmo = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pocoMovimento = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+let calmo = pocoMovimento;
+// Accende o spegne l'atmosfera delle mappe (opzione del giocatore); gli effetti dei colpi restano.
+export function impostaAtmosfera(accesa) { calmo = pocoMovimento || !accesa; if (calmo) S.sotto = []; }
 const caso = (a, b) => a + Math.random() * (b - a);
 const scegli = (l) => l[Math.floor(Math.random() * l.length)];
 

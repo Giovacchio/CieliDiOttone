@@ -305,3 +305,92 @@ img.png{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object
   .dlg .portrait{width:86px;height:86px;margin-top:-22px}
 }
 @media (prefers-reduced-motion:reduce){.mv,.at,.hl,.unit.sel .tok,.end.title h2{animation:none}}
+
+/* ================= veste da gioco per PC: cornice, pannelli, menu, titolo ================= */
+kbd{font:600 11px/1 var(--body);padding:3px 5px;border-radius:4px;background:#0c0d11;border:1px solid #ffffff2e;border-bottom-width:2px;color:#cfd3dc;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.btn.primary kbd{background:#3a2a0c;border-color:#00000055;color:#f7e3b4}
+#board{cursor:pointer}
+.app{user-select:none;-webkit-user-select:none}
+.pre{opacity:.5;animation:none}
+.obtop,.hbtn .btn{font-size:14px}
+.obtop{flex:1;min-width:0;text-align:center;color:#d9d2c1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.obtop:not(:empty)::before{content:"Obiettivo  ";color:var(--brass);font-family:var(--display);letter-spacing:.06em}
+.hbtn{display:flex;gap:6px}
+.btn.tondo{width:34px;height:34px;min-height:0;padding:0;border-radius:50%;font-size:16px;line-height:1;display:grid;place-items:center}
+.card.terreno{font-size:13px;line-height:1.45;color:var(--muted);min-height:44px}
+.card.terreno b{color:var(--ink);font-family:var(--display);font-weight:400;font-size:15px;margin-right:6px}
+.card.terreno:empty::after{content:"Passa il mouse sulla mappa per leggere il terreno."}
+.tunita{margin-top:4px}.tunita.al b{color:#9cc6f2}.tunita.ne b{color:#f2a29b}
+
+.pannello{background:linear-gradient(180deg,#242833,#181b22);border:1px solid var(--brass);border-radius:14px;padding:20px 22px;width:min(540px,100%);max-height:92vh;overflow:auto;box-shadow:0 30px 80px #000d,inset 0 1px 0 #ffffff14;animation:dlgSu .18s ease-out}
+.pannello.largo{width:min(900px,100%)}.pannello.stretto{width:min(420px,100%)}
+.pannello h2{font-family:var(--display);font-weight:400;color:var(--brass);margin:0 0 12px;font-size:28px}
+.pannello h3{font-family:var(--display);font-weight:400;font-size:18px;margin:14px 0 4px;color:#f3ead8}
+.pannello p{line-height:1.5;margin:6px 0}
+.orig{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #ffffff12}
+.orig span{display:flex;flex-direction:column}.orig small{color:var(--muted);font-size:13px}
+.orig input[type=range]{width:200px;accent-color:var(--brass)}
+.btn.interr{min-width:64px}.btn.interr.on{background:linear-gradient(180deg,#e0b65f,#b9893a);color:#1b1408;border-color:#00000055}
+.colonna{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.colonna .btn{text-align:left;padding:12px 14px;font-size:16px}
+.colonna .btn small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px}
+.due{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.tasti{border-collapse:collapse;width:100%}.tasti td{padding:5px 0;vertical-align:top;line-height:1.5}.tasti td:first-child{white-space:nowrap;padding-right:14px}.tasti kbd{margin:0 3px 0 0}
+
+.overlay:has(.tscena){padding:0;background:#07090d}
+.tscena{position:fixed;inset:0;overflow:hidden}
+.tscena canvas{position:absolute;inset:0;width:100%;height:100%}
+.tcol{position:absolute;left:clamp(22px,7vw,120px);top:0;bottom:0;width:min(560px,calc(100vw - 44px));display:flex;flex-direction:column;justify-content:center;padding:24px 0;overflow:auto}
+.tsopra{font-family:var(--display);color:#d9c9a0;font-size:clamp(15px,1.6vw,20px);letter-spacing:.08em}
+.tlogo{font-family:var(--display);font-weight:400;font-size:clamp(46px,7.6vw,112px);line-height:.98;margin:4px 0 clamp(18px,4vh,44px);
+  background:linear-gradient(100deg,#a87a2f 15%,#f8e2a4 42%,#c79a45 60%,#8a6427 90%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #000a) drop-shadow(0 0 28px #d2a24c44);animation:lucido 7s linear infinite}
+.tmenu{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.tvoce{background:none;border:0;color:#efe6d2;font-family:var(--display);font-size:clamp(20px,2.3vw,28px);padding:7px 14px 7px 0;text-align:left;position:relative;transition:padding-left .14s,color .14s;cursor:pointer}
+.tvoce small{display:block;font-family:var(--body);font-size:14px;color:#b9b2a0;margin-top:1px}
+.tvoce::before{content:"";position:absolute;left:0;top:50%;width:0;height:2px;background:var(--brass);transition:width .14s}
+.tvoce:hover,.tvoce:focus-visible{color:var(--brass);padding-left:34px;outline:none}
+.tvoce:hover::before,.tvoce:focus-visible::before{width:24px}
+.tnota{color:#c9c1ad;font-size:14px;min-height:1.4em;margin:14px 0 0;max-width:46ch;line-height:1.45}
+.tpiede{position:absolute;right:22px;bottom:12px;color:#d8caa6;font-size:13px;text-shadow:0 1px 0 #000}
+.tslot{background:#12151bd9;border:1px solid #ffffff22;border-radius:14px;padding:6px 16px 16px;backdrop-filter:blur(4px)}
+.carica{text-align:center;color:var(--muted)}.carica .tlogo{font-size:clamp(36px,6vw,72px);margin-bottom:8px}
+
+@media (min-width:861px){
+  body{background:radial-gradient(ellipse at 40% 45%,#1d212b 0%,#12141a 55%,#0a0b0f 100%)}
+  .app{grid-template-columns:minmax(0,1fr) 340px;gap:10px 14px;padding:10px 16px 14px}
+  header{padding:4px 2px 8px;border-bottom:1px solid #ffffff14;gap:18px;flex-wrap:nowrap}
+  header .logo{font-size:22px;white-space:nowrap}
+  header .chap{white-space:nowrap;color:#b9b2a0}
+  .board-wrap{background:
+      radial-gradient(ellipse at center,#0000 55%,#000a 100%),
+      repeating-linear-gradient(45deg,#ffffff05 0 2px,#0000 2px 14px),
+      repeating-linear-gradient(-45deg,#ffffff04 0 2px,#0000 2px 14px),#0d0f14;
+    border-radius:12px;box-shadow:inset 0 0 0 1px #ffffff12,inset 0 0 60px #000a;padding:14px}
+  #board{border:0;box-shadow:0 0 0 2px #7a5c27,0 0 0 5px #16181d,0 0 0 6px #b08a3e,0 0 0 9px #0c0d11,0 26px 60px #000d}
+  aside{gap:10px;overflow:hidden}
+  aside .card{background:linear-gradient(180deg,#22262f,#191c23);border:1px solid #ffffff1c;box-shadow:inset 0 1px 0 #ffffff12,inset 0 2px 0 0 #d2a24c22,0 6px 18px #0006}
+  aside #info{order:1;flex:none;max-height:58vh;overflow:auto}
+  aside .terreno{order:2;flex:none}
+  aside .azioni{order:3;flex:none}
+  aside .azioni .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  aside .azioni .btn{display:flex;justify-content:space-between;align-items:center}
+  aside #bEnd{grid-column:1/-1;padding:12px;font-size:16px}
+  aside .legend{display:none}
+  aside .card:has(#log){order:4;flex:1;min-height:70px;overflow:auto;display:flex;flex-direction:column}
+  .combatlog{max-height:none;flex:1}
+  .camp{width:min(1120px,100%);height:min(90vh,880px)}
+  .dlg{width:min(860px,100%)}
+  .dlg .txt{font-size:19px}
+  .menu button{padding:9px 14px;font-size:16px}
+}
+@media (max-width:860px){
+  .obtop{display:none}
+  #bSchermo{display:none}
+  .hbtn{margin-left:auto}
+  .card.terreno{display:none}
+  kbd{display:none}
+  .due{grid-template-columns:1fr}
+  .tcol{left:18px;justify-content:flex-start;padding-top:8vh}
+  .tpiede{display:none}
+  .orig input[type=range]{width:130px}
+}

@@ -2,6 +2,9 @@
 import { G, $, $$, h, velo, chiudiVelo } from "./stato.js";
 import { ritratto } from "./ritratti.js";
 import { storia } from "./dialoghi.js";
+import { avviaCielo } from "./titolo-scena.js";
+import { opzioni, aiuto, frecce } from "./menu.js";
+import { suona, musica } from "./suono.js";
 import { giocaCapitolo, preparaBattaglia, riprendiBattaglia, schedaStat } from "./battaglia.js";
 import { ETICHETTE, unitaCompagnia } from "../motore/unita.js";
 import { statoCoppia, prossimoLivello, livelloNumero, prontoDaLeggere } from "../motore/supporti.js";
@@ -13,13 +16,13 @@ const salva = () => salvaSlot(G.slot, G.partita);
 const titoloCapitolo = (id) => G.dati.capitoli[id].titolo;
 let scheda = "comp";
 
-function inizia(id) { G.inBattaglia = true; return giocaCapitolo(id); }
+function inizia(id) { G.inBattaglia = true; musica("battaglia"); return giocaCapitolo(id); }
 
 // ------------------------------------------------------------------ titolo
 const mediaLivelli = (p) => { const l = Object.values(p.compagnia).map((c) => c.lv); return Math.round(l.reduce((a, b) => a + b, 0) / l.length); };
 const quando = (ms) => ms ? new Date(ms).toLocaleString("it-IT", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
 
-export function titolo(avviso = "") {
+export function titolo(avviso = "", vista = "menu") {
   const D = G.dati;
   $("#prep")?.remove();
   G.inBattaglia = false;
@@ -28,41 +31,71 @@ export function titolo(avviso = "") {
   G.partita = inUso ? inUso.partita : nuovaPartita(D);
   const primo = D.campagna.capitoli[0];
   preparaBattaglia(G.partita.prossimo || primo);
-  G.chiusa = true; // la mappa dietro al titolo è solo uno sfondo
-  const comuni = D.campagna.capitoli.filter((id) => !D.capitoli[id].rotta).length, conRotte = D.campagna.capitoli.length > comuni;
-  const tattica = (G.ia || D.regole.ia || "classica") === "tattica";
-  const riga = (s) => {
-    const p = s.partita;
-    if (!p) return `<div class="slot vuoto"><div class="sn">Slot ${s.n}</div><div class="si muted">Vuoto</div>
-      <div class="sb"><button class="btn mini sNuova" data-n="${s.n}">Nuova partita</button><button class="btn mini sImporta" data-n="${s.n}">Importa file</button></div></div>`;
-    const inCorso = p.sospesa && D.capitoli[p.sospesa.cap];
-    const dove = inCorso ? `In battaglia · ${titoloCapitolo(p.sospesa.cap)} · turno ${p.sospesa.turno}` : p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
-    return `<div class="slot${s.n === G.slot ? " on" : ""}"><div class="sn">Slot ${s.n}</div>
-      <div class="si"><b>${h(dove)}</b><br><small>Livello medio ${mediaLivelli(p)} · ${p.oro || 0} oro${p.bandiere.rotta ? " · rotta " + h(D.campagna.rotte[p.bandiere.rotta].nome) : ""} · ${quando(s.quando)}</small></div>
-      <div class="sb"><button class="btn mini primary sContinua" data-n="${s.n}">Continua</button><button class="btn mini sCapitoli" data-n="${s.n}">Capitoli</button>
-        <button class="btn mini sEsporta" data-n="${s.n}">Esporta</button><button class="btn mini sCopia" data-n="${s.n}">Copia</button><button class="btn mini sCancella" data-n="${s.n}">Cancella</button></div></div>`;
-  };
-  velo(`<div class="end title" role="dialog" aria-label="Titolo"><div class="kicker">La Compagnia della Brace</div><h2>${h(D.campagna.titolo)}</h2>
-    <p>Un gioco tattico a turni. ${comuni} capitoli scritti finora${conRotte ? ", più quelli delle tre rotte" : ""}.</p>
-    <div class="slots">${slot.map(riga).join("")}</div>
-    <div id="tList"></div>
-    <p class="muted small" id="tAvviso">${h(avviso || "La partita si salva da sola nello slot in uso, anche a metà battaglia: puoi chiudere quando vuoi.")}</p>
-    <div class="btns" style="justify-content:center"><button class="btn mini" id="tIA" aria-pressed="${tattica}">Nemici: ${tattica ? "tattici" : "semplici"}</button></div></div>`, true);
+  G.chiusa = true; // la mappa resta sotto, coperta dal titolo
+  musica("titolo");
+  const comuni = D.campagna.capitoli.filter((id) => !D.capitoli[id].rotta).length;
   const partitaDi = (n) => slot.find((s) => s.n === +n).partita;
   const attiva = (n) => { G.slot = +n; usaSlot(G.slot); G.partita = partitaDi(n); };
-  $$(".sContinua").forEach((b) => b.onclick = () => {
-    attiva(b.dataset.n);
+  const dove = (p) => p.sospesa && D.capitoli[p.sospesa.cap] ? `In battaglia: ${titoloCapitolo(p.sospesa.cap)}, turno ${p.sospesa.turno}` : p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
+  const continua = (n) => {
+    attiva(n);
     const p = G.partita;
-    if (p.sospesa) { G.inBattaglia = true; if (riprendiBattaglia()) return; G.inBattaglia = false; }
+    if (p.sospesa) { G.inBattaglia = true; if (riprendiBattaglia()) { musica("battaglia"); return; } G.inBattaglia = false; }
     if (!p.prossimo || p.completati.length) accampamento(); else inizia(p.prossimo);
-  });
+  };
+  const nuova = (n) => { G.slot = +n; usaSlot(G.slot); G.partita = nuovaPartita(D); salva(); inizia(primo); };
+
+  let dentro;
+  if (vista === "menu") {
+    dentro = `<nav class="tmenu" id="tmenu" aria-label="Menu principale">
+      ${inUso ? `<button class="tvoce" id="mContinua">Continua<small>${h(dove(inUso.partita))}</small></button>` : ""}
+      <button class="tvoce" id="mNuova">Nuova partita</button>
+      <button class="tvoce" id="mSalvataggi">Salvataggi</button>
+      <button class="tvoce" id="mOpzioni">Opzioni</button>
+      <button class="tvoce" id="mAiuto">Come si gioca</button></nav>
+      <p class="tnota" id="tAvviso">${h(avviso)}</p>`;
+  } else {
+    const riga = (s) => {
+      const p = s.partita;
+      if (!p) return `<div class="slot vuoto"><div class="sn">Slot ${s.n}</div><div class="si muted">Vuoto</div>
+        <div class="sb"><button class="btn mini sNuova" data-n="${s.n}">Nuova partita</button><button class="btn mini sImporta" data-n="${s.n}">Importa file</button></div></div>`;
+      return `<div class="slot${s.n === G.slot ? " on" : ""}"><div class="sn">Slot ${s.n}</div>
+        <div class="si"><b>${h(dove(p))}</b><br><small>Livello medio ${mediaLivelli(p)}, ${p.oro || 0} oro${p.bandiere.rotta ? ", rotta " + h(D.campagna.rotte[p.bandiere.rotta].nome) : ""}. Salvato ${quando(s.quando)}</small></div>
+        <div class="sb"><button class="btn mini primary sContinua" data-n="${s.n}">Continua</button><button class="btn mini sCapitoli" data-n="${s.n}">Capitoli</button>
+          <button class="btn mini sEsporta" data-n="${s.n}">Esporta</button><button class="btn mini sCopia" data-n="${s.n}">Copia</button><button class="btn mini sCancella" data-n="${s.n}">Cancella</button></div></div>`;
+    };
+    dentro = `<div class="tslot"><div class="slots">${slot.map(riga).join("")}</div><div id="tList"></div>
+      <p class="tnota" id="tAvviso">${h(avviso || "La partita si salva da sola nello slot in uso, anche a metà battaglia.")}</p>
+      <button class="btn" id="mIndietro">Indietro</button></div>`;
+  }
+  velo(`<div class="tscena" role="dialog" aria-label="Titolo"><canvas id="tcielo"></canvas>
+    <div class="tcol"><div class="tsopra">La Compagnia della Brace</div><h1 class="tlogo">Cieli di Ottone</h1>${dentro}</div>
+    <div class="tpiede">Un gioco tattico a turni. ${comuni} capitoli e tre rotte, finora.</div></div>`, true);
+  avviaCielo($("#tcielo"));
+  const scena = $(".tscena");
+  frecce(scena);
+  scena.querySelectorAll("button").forEach((b) => { b.addEventListener("mouseenter", () => suona("sfiora")); b.addEventListener("click", () => suona("clic")); });
+  const qui = () => titolo("", vista);
+
+  if (vista === "menu") {
+    if ($("#mContinua")) $("#mContinua").onclick = () => continua(G.slot);
+    $("#mNuova").onclick = () => { const libero = slot.find((s) => !s.partita); if (libero) nuova(libero.n); else titolo("Tutti e tre gli slot sono occupati: cancellane uno (o esportalo prima) per cominciare da capo.", "slot"); };
+    $("#mSalvataggi").onclick = () => titolo("", "slot");
+    $("#mOpzioni").onclick = () => opzioni(qui);
+    $("#mAiuto").onclick = () => aiuto(qui);
+    (scena.querySelector(".tvoce")).focus();
+    return;
+  }
+  $("#mIndietro").onclick = () => titolo("", "menu");
+  scena.addEventListener("keydown", (e) => { if (e.key === "Escape") titolo("", "menu"); });
+  $$(".sContinua").forEach((b) => b.onclick = () => continua(b.dataset.n));
   $$(".sCapitoli").forEach((b) => b.onclick = () => {
     attiva(b.dataset.n);
     $("#tList").innerHTML = `<p class="muted small">Slot ${G.slot}: rigioca un capitolo (i livelli restano quelli di adesso).</p>` + capitoliAperti(D, G.partita).map((id) => `<button class="btn chbtn" data-id="${id}">${h(titoloCapitolo(id))}</button>`).join("");
     $$(".chbtn").forEach((c) => c.onclick = () => inizia(c.dataset.id));
   });
-  $$(".sNuova").forEach((b) => b.onclick = () => { G.slot = +b.dataset.n; usaSlot(G.slot); G.partita = nuovaPartita(D); salva(); inizia(primo); });
-  $$(".sCancella").forEach((b) => b.onclick = () => { if (confirm(`Cancellare la partita dello slot ${b.dataset.n}? Non si può tornare indietro.`)) { cancellaSlot(+b.dataset.n); titolo(`Slot ${b.dataset.n} cancellato.`); } });
+  $$(".sNuova").forEach((b) => b.onclick = () => nuova(b.dataset.n));
+  $$(".sCancella").forEach((b) => b.onclick = () => { if (confirm(`Cancellare la partita dello slot ${b.dataset.n}? Non si può tornare indietro.`)) { cancellaSlot(+b.dataset.n); titolo(`Slot ${b.dataset.n} cancellato.`, "slot"); } });
   $$(".sEsporta").forEach((b) => b.onclick = () => {
     scaricaFile(`cieli-di-ottone-slot${b.dataset.n}-${new Date().toISOString().slice(0, 10)}.json`, testoEsportazione(partitaDi(b.dataset.n)));
     $("#tAvviso").textContent = "File scaricato: lo trovi tra i download. Per riprenderlo, usa \"Importa file\" su uno slot vuoto.";
@@ -70,19 +103,20 @@ export function titolo(avviso = "") {
   $$(".sCopia").forEach((b) => b.onclick = () => {
     const libero = slot.find((s) => !s.partita);
     if (!libero) { $("#tAvviso").textContent = "Non ci sono slot vuoti: cancellane uno per fare una copia."; return; }
-    salvaSlot(libero.n, partitaDi(b.dataset.n)); titolo(`Slot ${b.dataset.n} copiato nello slot ${libero.n}.`);
+    salvaSlot(libero.n, partitaDi(b.dataset.n)); titolo(`Slot ${b.dataset.n} copiato nello slot ${libero.n}.`, "slot");
   });
   $$(".sImporta").forEach((b) => b.onclick = async () => {
     const testo = await scegliFile();
     if (testo == null) return;
-    try { salvaSlot(+b.dataset.n, leggiEsportazione(D, testo)); G.slot = +b.dataset.n; usaSlot(G.slot); titolo(`Partita importata nello slot ${b.dataset.n}.`); }
+    try { salvaSlot(+b.dataset.n, leggiEsportazione(D, testo)); G.slot = +b.dataset.n; usaSlot(G.slot); titolo(`Partita importata nello slot ${b.dataset.n}.`, "slot"); }
     catch (e) { $("#tAvviso").textContent = e.message; }
   });
-  $("#tIA").onclick = () => { G.ia = tattica ? "classica" : "tattica"; scriviPreferenza("ia", G.ia); titolo(tattica ? "Nemici semplici: avanzano e colpiscono, come nel primo prototipo." : "Nemici tattici: si ritirano, proteggono i guaritori, aspettano i compagni."); };
+  $("#mIndietro").focus();
 }
 
 // ------------------------------------------------------------------ fine della battaglia
 export function sconfitta(motivo) {
+  musica(null); suona("disfatta");
   velo(`<div class="end" role="dialog"><h2>Sconfitta</h2><p>${h(motivo || "")}<br>Nessun problema: si riprova il capitolo con i livelli di prima.</p>
     <div class="btns" style="justify-content:center"><button class="btn primary" id="again">Riprova il capitolo</button><button class="btn" id="goTitle">Titolo</button></div></div>`, true);
   $("#again").onclick = () => inizia(G.b.cap.id);
@@ -92,6 +126,7 @@ export function vittoria() {
   const D = G.dati, p = G.partita, b = G.b, cap = b.cap;
   if (cap.scelta && !p.bandiere.rotta) return sceltaRotta();
   const turni = b.turno;
+  musica(null); suona("vittoria");
   const { pasto, ricompensa } = concludiCapitolo(D, p, b);
   salva();
   G.inBattaglia = false;
@@ -120,6 +155,7 @@ function sceltaRotta() {
 export function accampamento() {
   const D = G.dati, p = G.partita, R = D.regole, prossimo = p.prossimo;
   G.inBattaglia = false;
+  musica("campo");
   const schede = [["comp", "Compagnia"], ["arm", "Armeria"], ["mer", "Mercato"], ["sup", "Supporti"], ["cuc", "Cucina"], ["dia", "Diario"]];
   const pronti = D.coppie.filter(([a, b]) => p.compagnia[a] && p.compagnia[b] && prontoDaLeggere(R, statoCoppia(p.supporti, a, b))).length;
   const rotta = p.bandiere.rotta ? " " + D.campagna.rotte[p.bandiere.rotta].nome : "";
@@ -128,7 +164,7 @@ export function accampamento() {
     <div class="campbody" id="campBody"></div>
     <div class="campfoot">${prossimo ? `<button class="btn primary" id="goNext">${h(titoloCapitolo(prossimo))}</button>` : `<span class="muted">La storia continua${h(rotta)} nei prossimi capitoli.</span>`}
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
-  $$(".tab").forEach((b) => b.onclick = () => { scheda = b.dataset.t; accampamento(); });
+  $$(".tab").forEach((b) => b.onclick = () => { scheda = b.dataset.t; suona("clic"); accampamento(); });
   if (prossimo) $("#goNext").onclick = () => inizia(prossimo);
   $("#goTitle").onclick = () => titolo();
   const corpo = $("#campBody"), membri = D.personaggi.ordine.filter((id) => p.compagnia[id]);
@@ -147,7 +183,7 @@ export function accampamento() {
         <div class="skill"><b>${h(u.abilita.nome)}</b> · ${h(u.abilita.descrizione)}</div>
         <div class="weap"><small>${oggetti}</small></div>${promo}</div>`;
     }).join("") + `</div>`;
-    $$(".pbtn").forEach((b) => b.onclick = () => { promuovi(D, p, b.dataset.id, +b.dataset.k); salva(); accampamento(); });
+    $$(".pbtn").forEach((b) => b.onclick = () => { promuovi(D, p, b.dataset.id, +b.dataset.k); suona("promozione"); salva(); accampamento(); });
   }
 
   if (scheda === "arm") {
@@ -184,8 +220,8 @@ export function accampamento() {
       + `<div class="sez">Vendi dal deposito</div>` + (vendibili.length || oggVendibili.length ? "" : `<p class="muted">Nel deposito non c'è niente che il mercato compri.</p>`)
       + vendibili.map((a) => `<div class="riga"><div class="nome">${h(D.armi[a].nome)} ×${dep.armi.filter((x) => x === a).length}</div><button class="btn mini vendi" data-t="armi" data-id="${a}">Vendi · ${prezzoVendita(D, "armi", a)}</button></div>`).join("")
       + oggVendibili.map((i) => `<div class="riga"><div class="nome">${h(D.oggetti[i.id].nome)} ×${i.q}</div><button class="btn mini vendi" data-t="oggetti" data-id="${i.id}">Vendi · ${prezzoVendita(D, "oggetti", i.id)}</button></div>`).join("");
-    $$(".compra").forEach((b) => b.onclick = () => { compra(D, p, b.dataset.t, b.dataset.id); salva(); accampamento(); });
-    $$(".vendi").forEach((b) => b.onclick = () => { vendi(D, p, b.dataset.t, b.dataset.id); salva(); accampamento(); });
+    $$(".compra").forEach((b) => b.onclick = () => { suona(compra(D, p, b.dataset.t, b.dataset.id) ? "errore" : "moneta"); salva(); accampamento(); });
+    $$(".vendi").forEach((b) => b.onclick = () => { suona(vendi(D, p, b.dataset.t, b.dataset.id) ? "errore" : "moneta"); salva(); accampamento(); });
   }
 
   if (scheda === "sup") {

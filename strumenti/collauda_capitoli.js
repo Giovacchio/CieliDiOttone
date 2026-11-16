@@ -20,7 +20,7 @@ p.on("pageerror", (e) => errori.push(e.message + "\n" + (e.stack || "").split("\
 p.on("dialog", (d) => d.accept());
 await p.route("**/*", (r) => r.request().url().includes("localhost") ? r.continue() : r.abort());
 await p.goto(`http://localhost:${PORTA}/`);
-await p.waitForSelector(".sNuova", { state: "attached" });
+await p.waitForSelector("#mNuova");
 const esito = await p.evaluate(async () => {
   const G = window.__cdo, { mossaBot } = await import("/strumenti/bot.js"), { campoDistanze } = await import("/js/motore/movimento.js");
   const UI = await import("/js/interfaccia/battaglia.js"), S = await import("/js/interfaccia/schermate.js"), C = await import("/js/motore/campagna.js");

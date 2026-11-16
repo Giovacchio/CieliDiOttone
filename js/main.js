@@ -3,7 +3,9 @@ import { caricaDati, leggiDalWeb, controllaDati } from "./dati.js";
 import { G, h, velo } from "./interfaccia/stato.js";
 import { collegaComandi } from "./interfaccia/battaglia.js";
 import { titolo } from "./interfaccia/schermate.js";
-import { leggiPreferenza, scriviPreferenza, slotInUso } from "./salvataggi.js";
+import { slotInUso } from "./salvataggi.js";
+import { caricaPreferenze } from "./interfaccia/menu.js";
+import { avviaAudio } from "./interfaccia/suono.js";
 
 function mostraErrori(errori) {
   velo(`<div class="errori" role="alert"><h2>C'è un problema nei dati del gioco</h2>
@@ -18,8 +20,9 @@ try {
   if (errori.length) mostraErrori(errori);
   else {
     G.slot = slotInUso();
-    G.ia = ["classica", "tattica"].includes(leggiPreferenza("ia")) ? leggiPreferenza("ia") : null;
-    collegaComandi({ alTitolo: titolo, velocita: leggiPreferenza("fast") === "1", cambiaVelocita: (si) => scriviPreferenza("fast", si ? "1" : "0") });
+    caricaPreferenze();
+    for (const ev of ["pointerdown", "keydown"]) window.addEventListener(ev, avviaAudio, { capture: true });
+    collegaComandi({ alTitolo: titolo });
     titolo();
   }
 } catch (e) {

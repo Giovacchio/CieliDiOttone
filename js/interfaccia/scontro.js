@@ -15,7 +15,7 @@ function lato(u, st, classe) {
 }
 export function apriScena(a, d, f) {
   chiudiScena();
-  if (G.velocita < 1) return;
+  if (G.velocita < 1 || G.scene === false) return;
   scena = document.createElement("div");
   scena.className = "scena"; scena.setAttribute("aria-hidden", "true");
   // l'alleato sta sempre a sinistra, qualunque sia chi attacca

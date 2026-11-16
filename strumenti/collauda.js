@@ -27,10 +27,12 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   p.on("console", (m) => { if (m.type() === "error" && !/Failed to load resource|ERR_/.test(m.text())) errori.push(`${nome} console: ${m.text()}`); });
   await p.route("**/*", (r) => r.request().url().includes("localhost") ? r.continue() : r.abort());
   await p.goto(`http://localhost:${PORTA}/`);
-  await p.waitForSelector(".sNuova", { timeout: 8000, state: "attached" }); await p.waitForTimeout(300); await p.screenshot({ path: path.join(dove, `${nome}_0.png`) });
+  await p.waitForSelector("#mNuova", { timeout: 8000 }); await p.waitForTimeout(900);
   const foto = (n) => p.screenshot({ path: path.join(dove, `${nome}_${n}.png`) });
   await foto("1_titolo");
-  await p.click(".sNuova");
+  await p.keyboard.press("ArrowDown"); await p.keyboard.press("ArrowUp");
+  nota(await p.evaluate(() => document.activeElement?.id === "mNuova"), "titolo: il menu si usa con le frecce");
+  await p.keyboard.press("Enter");
   await p.waitForSelector(".cartello"); await p.waitForTimeout(900); await foto("1b_cartello"); await p.click(".cartello");
   await p.waitForSelector("#prepVia");
   const tocca0 = async (x, y) => { const lato = await p.evaluate(() => window.__cdo.lato), r = await p.locator("#board").boundingBox(); await p.mouse.click(r.x + (x + .5) * lato, r.y + (y + .5) * lato); await p.waitForTimeout(150); };
@@ -70,7 +72,19 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   for (let i = 0; i < 40; i++) { if (await p.locator("#lvok").count()) await p.click("#lvok"); if (!(await p.evaluate(() => window.__cdo.occupato))) break; await p.waitForTimeout(150); }
   nota((await stato()).giova.agito, "attacco eseguito");
   await p.click("#bDanger"); await foto("6_zone_nemiche");
-  await p.click("#bEnd");
+  // tastiera: Tab sceglie chi deve ancora agire, frecce e Invio lo muovono, Esc lo riporta indietro
+  await p.keyboard.press("Tab");
+  const scelto = await p.evaluate(() => { const G = window.__cdo; return G.sel ? { id: G.sel.id, x: G.sel.x, y: G.sel.y, modo: G.modo } : null; });
+  nota(scelto && scelto.modo === "scelta", "tastiera: Tab seleziona il prossimo personaggio");
+  const verso = await p.evaluate(() => { const G = window.__cdo, u = G.sel; return [["ArrowLeft", -1, 0], ["ArrowUp", 0, -1], ["ArrowDown", 0, 1], ["ArrowRight", 1, 0]].find(([, dx, dy]) => G.raggio.some((t) => t.x === u.x + dx && t.y === u.y + dy))[0]; });
+  await p.keyboard.press(verso); await p.waitForTimeout(100); await foto("6b_percorso_tastiera"); await p.keyboard.press("Enter"); await p.waitForTimeout(500);
+  nota(await p.locator(".menu").count() === 1 && await p.evaluate((s) => window.__cdo.sel.x !== s.x || window.__cdo.sel.y !== s.y, scelto), "tastiera: frecce e Invio muovono e aprono il menu");
+  await p.keyboard.press("Escape"); await p.keyboard.press("Escape"); await p.waitForTimeout(150);
+  nota(await p.evaluate((s) => { const G = window.__cdo, u = G.b.trova(s.id); return G.modo === "riposo" && u.x === s.x && u.y === s.y; }, scelto), "tastiera: Esc due volte rimette tutto a posto");
+  await p.keyboard.press("Escape"); await p.waitForSelector("#pRiprendi"); await foto("6c_pausa"); await p.keyboard.press("Escape");
+  await p.keyboard.press("h"); await p.waitForSelector("#aOk"); await foto("6d_come_si_gioca"); await p.click("#aOk");
+  await p.keyboard.press("e"); await p.waitForSelector("#cSi"); await foto("6e_conferma_fine_turno");
+  await p.click("#cSi");
   await p.waitForFunction(() => { const G = window.__cdo; if (document.querySelector("#lvok")) document.querySelector("#lvok").click(); if (document.querySelector("#dlg")) document.querySelector("#dlg").click(); return G.chiusa || (G.b.turno === 2 && G.b.fase === "giocatore" && !G.occupato); }, null, { timeout: 30000, polling: 100 });
   nota(true, "fase nemica e ritorno al giocatore"); await foto("7_turno2");
   // accampamento: si conclude il capitolo "a mano" e si apre ogni scheda
@@ -102,17 +116,20 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   nota(await p.evaluate(() => window.__cdo.b.trova("giova").oggetti.find((o) => o.id === "tonico").q === 4), "scambio: un tonico passa a Giova");
   await p.locator(".menu button", { hasText: "Attendi" }).click(); await p.waitForTimeout(300);
   // salvataggi: titolo con gli slot, battaglia sospesa, copia ed esportazione
-  await p.click("#bMenu"); await p.waitForSelector(".sContinua"); await foto("13_titolo_slot");
+  const aiSalvataggi = async () => { await p.click("#bMenu"); await p.click("#pTitolo"); await p.waitForSelector("#mSalvataggi"); await p.waitForTimeout(400); await foto("13a_titolo"); await p.click("#mSalvataggi"); await p.waitForSelector(".sContinua"); };
+  await aiSalvataggi(); await foto("13_titolo_slot");
   nota(/In battaglia/.test(await p.locator(".slot.on").innerText()), "la battaglia a metà risulta salvata nello slot");
-  await p.reload(); await p.waitForSelector(".sContinua"); await p.click(".sContinua"); await p.waitForTimeout(400);
+  await p.reload(); await p.waitForSelector("#mContinua"); await p.click("#mContinua"); await p.waitForTimeout(400);
   nota(await p.evaluate(() => { const G = window.__cdo, l = G.b.trova("lethy"); return G.b.cap.id === "c1" && !G.chiusa && l.agito && G.b.trova("giova").oggetti.find((o) => o.id === "tonico").q === 4; }), "dopo aver chiuso e riaperto la pagina la battaglia riprende dov'era"); await foto("14_ripresa");
-  await p.click("#bMenu"); await p.waitForSelector(".sContinua");
+  await aiSalvataggi();
   await p.click(".sCopia"); await p.waitForTimeout(200);
   nota(await p.locator(".sContinua").count() === 2, "salvataggi: copia in un altro slot");
   const [scaricato] = await Promise.all([p.waitForEvent("download"), p.click(".sEsporta")]);
   nota(/cieli-di-ottone-slot1/.test(scaricato.suggestedFilename()), "salvataggi: esportazione in un file");
-  await p.click("#tIA"); nota(await p.evaluate(() => window.__cdo.ia === "classica"), "opzione nemici semplici/tattici");
-  await p.click("#tIA");
+  await p.click("#mIndietro"); await p.click("#mOpzioni"); await p.waitForSelector("#oIA"); await foto("15_opzioni");
+  await p.click("#oIA"); nota(await p.evaluate(() => window.__cdo.ia === "classica"), "opzioni: nemici semplici/tattici");
+  await p.click("#oIA"); await p.click("#oOk");
+  nota(await p.locator("#mNuova").count() === 1, "dalle opzioni si torna al menu");
   await contesto.close();
 }
 await browser.close(); server.kill();

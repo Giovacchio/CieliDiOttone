@@ -23,7 +23,7 @@ Per provare il gioco sul proprio computer: `node strumenti/servi.js` e poi http:
 |---|---|
 | `dati/` | Tutto il contenuto: capitoli, supporti, personaggi, classi, armi, terreni, regole |
 | `js/motore/` | Le regole, senza grafica: `battaglia.js` (turni, scontri, obiettivi), `combattimento.js` (formule), `movimento.js`, `ia.js` e `ia-tattica.js`, `supporti.js`, `inventario.js` (armi, deposito, mercato), `campagna.js` (tra un capitolo e l'altro) |
-| `js/interfaccia/` | Lo schermo: battaglia, dialoghi, accampamento, titolo, mappa dipinta, ritratti, `effetti.js` (particelle e atmosfera delle mappe), `scontro.js` (scena di scontro). Nessuna libreria esterna: tutta la grafica è disegnata dal codice |
+| `js/interfaccia/` | Lo schermo: battaglia, dialoghi, accampamento, titolo, mappa dipinta, ritratti, `effetti.js` (particelle e atmosfera delle mappe), `scontro.js` (scena di scontro), `suono.js` (effetti e musica generati dal codice), `menu.js` (opzioni, pausa, come si gioca), `titolo-scena.js` (lo sfondo animato del titolo). Nessuna libreria esterna: tutta la grafica è disegnata dal codice |
 | `test/` | Test automatici |
 | `strumenti/` | Controllo dei dati, simulatore, collaudo nel browser, confronto con il prototipo |
 | `prototipo/` | Il prototipo originale in un file solo: resta come riferimento per il confronto |

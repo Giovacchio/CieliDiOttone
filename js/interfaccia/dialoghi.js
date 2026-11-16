@@ -2,6 +2,7 @@
 import { G, $, h, velo, chiudiVelo } from "./stato.js";
 import { ritratto } from "./ritratti.js";
 import { unitaCompagnia } from "../motore/unita.js";
+import { suona } from "./suono.js";
 
 // Chi parla: un'unità della battaglia, un membro della Compagnia, oppure un personaggio di png.json.
 export function chiParla(id) {
@@ -40,7 +41,7 @@ export function storia(righe) {
       completa = () => { clearInterval(timer); t.textContent = testo; finito = true; d.classList.add("pronto"); };
       if (G.velocita < 1 || matchMedia("(prefers-reduced-motion: reduce)").matches) completa();
       else timer = setInterval(() => { n += 2; t.textContent = testo.slice(0, n); if (n >= testo.length) completa(); }, 22);
-      const avanti = () => { if (!finito) completa(); else { i++; mostra(); } };
+      const avanti = () => { if (!finito) completa(); else { suona("pagina"); i++; mostra(); } };
       d.focus();
       d.onclick = avanti;
       d.onkeydown = (e) => {
