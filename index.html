@@ -108,6 +108,19 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
 .end h2{font-family:var(--display);font-weight:400;font-size:34px;margin:0 0 8px;color:var(--brass)}
 .end p{color:var(--muted);line-height:1.5}
 .combatlog{font-size:13px;color:var(--muted);max-height:130px;overflow:auto;line-height:1.45}
+
+.goal{background:rgba(224,178,92,.28);outline:2px dashed #e0b25c;outline-offset:-3px;animation:gp 1.6s ease-in-out infinite}
+@keyframes gp{50%{background:rgba(224,178,92,.5)}}
+.dlg.narr{justify-content:center;text-align:center;background:linear-gradient(#16181e,#0e0f13)}
+.dlg.narr .txt{font-family:var(--display);font-style:italic;color:#e8dcc0;font-size:19px}
+.end .reward{color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.end table.party{margin:10px auto 0;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.end table.party td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left}
+.end.title h2{font-size:44px;letter-spacing:.04em}
+.end .kicker{color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-size:12px}
+.tbtns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+#tList{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:40vh;overflow:auto}
+.chbtn{text-align:left}
 @media (max-width:860px){
   body{overflow:auto}
   .app{height:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto}
@@ -119,12 +132,13 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
 <div class="app">
   <header>
     <div class="logo">Cieli di Ottone</div>
-    <div class="chap" id="chap">Prologo · La Fonderia di Corvara</div>
+    <div class="chap" id="chap"></div>
     <div class="phase p" id="phase">Turno 1 · Giocatore</div>
   </header>
   <div class="board-wrap" id="wrap">
     <div id="board">
       <canvas id="bg"></canvas>
+      <div class="layer" id="lGoal"></div>
       <div class="layer" id="lDanger"></div>
       <div class="layer" id="lRange"></div>
       <div class="layer" id="lUnits"></div>
@@ -139,10 +153,11 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
         <button class="btn primary" id="bEnd">Fine turno</button>
         <button class="btn" id="bDanger">Zone nemiche</button>
         <button class="btn" id="bCancel">Annulla</button>
+        <button class="btn" id="bMenu">Titolo</button>
       </div>
     </div>
     <div class="card legend">
-      <b>Obiettivo:</b> sconfiggi il Capitano Vorn sulla fornace. Se Giova cade, la missione fallisce; gli altri si ritirano e tornano al prossimo capitolo.<br>
+      <b>Obiettivo:</b> <span id="goalTxt"></span> Se Giova cade, la missione fallisce; gli altri si ritirano e tornano al prossimo capitolo.<br>
       <b>Triangolo del ferro:</b> spada › ascia › lancia › spada.<br>
       <b>Triangolo dell'ingegno:</b> etere › congegni › polvere › etere.<br>
       <b>Comandi:</b> tocca un'unità, poi una casella blu. Tasto destro o Esc per tornare indietro.<br>
@@ -156,43 +171,53 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
 <script>
 "use strict";
 /* ============================== DATI ============================== */
-const MAP = [
-  "ff....rr..XXgggg",
-  "f.....r...XgggFg",
-  "..f.......Xggggg",
-  "...rr..www.gbbbb",
-  "bbbbbbbbbbbbbggg",
-  "...f...www..gg..",
-  "..ff...www.rr...",
-  ".......www....f.",
-  "f..r...bbb......",
-  "ff.....www...fff",
-];
-const ROWS = MAP.length, COLS = MAP[0].length;
+// Terreni: costo di movimento per tipo (inf fanteria, arm corazza, cav cavallo, fly volo), difesa, schivata
 const TER = {
-  ".": {n:"Pianura", c:{inf:1,arm:1,fly:1}, d:0, a:0},
-  "f": {n:"Bosco", c:{inf:2,arm:3,fly:1}, d:1, a:20},
-  "r": {n:"Macerie", c:{inf:2,arm:2,fly:1}, d:1, a:10},
-  "g": {n:"Grata", c:{inf:1,arm:1,fly:1}, d:0, a:0},
-  "b": {n:"Binari", c:{inf:1,arm:1,fly:1}, d:0, a:0},
-  "w": {n:"Canale", c:{inf:99,arm:99,fly:1}, d:0, a:10},
-  "X": {n:"Muro", c:{inf:99,arm:99,fly:99}, d:0, a:0},
-  "F": {n:"Fornace", c:{inf:2,arm:2,fly:2}, d:1, a:15, heal:.1},
+  ".": {n:"Pianura", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "s": {n:"Strada", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "L": {n:"Lampione", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "f": {n:"Bosco", c:{inf:2,arm:3,cav:3,fly:1}, d:1, a:20},
+  "r": {n:"Macerie", c:{inf:2,arm:2,cav:3,fly:1}, d:1, a:10},
+  "m": {n:"Rocce", c:{inf:3,arm:99,cav:99,fly:1}, d:2, a:20},
+  "k": {n:"Casse", c:{inf:2,arm:2,cav:3,fly:1}, d:1, a:10},
+  "g": {n:"Selciato", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "b": {n:"Binari", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "=": {n:"Pontile", c:{inf:1,arm:1,cav:1,fly:1}, d:0, a:0},
+  "w": {n:"Canale", c:{inf:99,arm:99,cav:99,fly:1}, d:0, a:10},
+  "~": {n:"Fiume", c:{inf:99,arm:99,cav:99,fly:1}, d:0, a:10},
+  "X": {n:"Muro", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
+  "H": {n:"Casa", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
+  "T": {n:"Radice gigante", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
+  "c": {n:"Vena d'etere", c:{inf:2,arm:2,cav:3,fly:1}, d:1, a:10, heal:.1},
+  "F": {n:"Fornace", c:{inf:2,arm:2,cav:2,fly:2}, d:1, a:15, heal:.1},
 };
 // triangoli: chi batte chi
 const BEATS = {spada:"ascia", ascia:"lancia", lancia:"spada", etere:"congegni", congegni:"polvere", polvere:"etere"};
 const WEAP = {
   spada:   {n:"Spada di ferro", t:"spada", mt:5, hit:90, cr:0, r:[1,1]},
+  spadaA:  {n:"Spada d'acciaio", t:"spada", mt:8, hit:80, cr:0, r:[1,1]},
+  sciabola:{n:"Sciabola d'ottone", t:"spada", mt:9, hit:85, cr:10, r:[1,1]},
   lancia:  {n:"Lancia di ferro", t:"lancia", mt:7, hit:80, cr:0, r:[1,1]},
+  lanciaA: {n:"Lancia d'acciaio", t:"lancia", mt:10, hit:70, cr:0, r:[1,1]},
+  picca:   {n:"Picca da sella", t:"lancia", mt:8, hit:80, cr:0, r:[1,1]},
   ascia:   {n:"Ascia di ferro", t:"ascia", mt:8, hit:75, cr:0, r:[1,1]},
-  arco:    {n:"Arco corto", t:"arco", mt:6, hit:85, cr:0, r:[2,2]},
+  arrembaggio:{n:"Ascia da arrembaggio", t:"ascia", mt:11, hit:75, cr:5, r:[1,1]},
+  fuso:    {n:"Mazza del Fuso", t:"ascia", mt:10, hit:70, cr:5, r:[1,1]},
+  arco:    {n:"Arco corto", t:"arco", mt:6, hit:85, cr:0, r:[2,2], eff:"fly"},
+  arcoL:   {n:"Arco lungo", t:"arco", mt:8, hit:75, cr:0, r:[2,3], eff:"fly"},
   moschetto:{n:"Moschetto", t:"polvere", mt:8, hit:75, cr:5, r:[2,2]},
   scintilla:{n:"Scintilla", t:"etere", mt:5, hit:90, cr:0, r:[1,2], mag:true},
+  luce:    {n:"Luce di radice", t:"etere", mt:6, hit:90, cr:0, r:[1,2], mag:true, ic:"leaf"},
+  giudizio:{n:"Giudizio verde", t:"etere", mt:9, hit:80, cr:5, r:[1,2], mag:true, ic:"leaf"},
   martello:{n:"Martello a vapore", t:"ascia", mt:10, hit:70, cr:5, r:[1,1]},
+  sega:    {n:"Sega a vapore", t:"congegni", mt:9, hit:70, cr:0, r:[1,1]},
   kit:     {n:"Kit da campo", t:"cura", heal:10, r:[1,1], staff:true},
   stocco:  {n:"Stocco di famiglia", t:"spada", mt:4, hit:95, cr:10, r:[1,1], eff:"arm", ic:"stocco"},
+  stoccoA: {n:"Stocco d'argento del nonno", t:"spada", mt:7, hit:95, cr:15, r:[1,1], eff:"arm", ic:"stocco"},
   rovo:    {n:"Rovo", t:"etere", mt:5, hit:90, cr:0, r:[1,2], mag:true, ic:"leaf"},
+  spine:   {n:"Spine del rovo antico", t:"etere", mt:8, hit:85, cr:5, r:[1,2], mag:true, ic:"leaf"},
   elisir:  {n:"Elisir verde", t:"cura", heal:10, r:[1,1], staff:true, ic:"flask"},
+  elisirF: {n:"Elisir di Nonna Tessa", t:"cura", heal:16, r:[1,2], staff:true, ic:"flask"},
 };
 // Icone: game-icons.net (Lorc, Delapouite, Skoll), licenza CC BY 3.0
 const ICON = {
@@ -210,46 +235,457 @@ const ICON = {
 function mkUnit(o){ return Object.assign({acted:false, exp:0, items:[], hp:o.st.hp}, o); }
 const STAT_KEYS = ["hp","for","mag","abi","vel","fort","def","res"];
 const STAT_LAB = {hp:"PV",for:"For",mag:"Mag",abi:"Abi",vel:"Vel",fort:"Fort",def:"Dif",res:"Res"};
-let units = [];
-function setupUnits(){
-  units = [
-    mkUnit({id:"giova", name:"Giova", cls:"Stratega", team:"ally", lv:1, x:2,y:6, move:"inf", mov:5, w:"spada", leader:true,
-      st:{hp:22,for:6,mag:2,abi:8,vel:7,fort:6,def:6,res:3}, gr:{hp:75,for:45,mag:15,abi:60,vel:50,fort:55,def:35,res:25},
-      skill:{n:"Calcolo del rischio", d:"Giova e gli alleati entro 2 caselle: +10 precisione."},
-      items:[{n:"Tonico", q:3}], look:{skin:"#e8bf9c", hair:"#b5401f", style:"tuft", beard:true, coat:"#3b5f8a", acc:"epaulette"}}),
-    mkUnit({id:"lethy", name:"Lethy", cls:"Spadaccina", team:"ally", lv:1, x:1,y:7, move:"inf", mov:5, w:"stocco",
-      st:{hp:17,for:5,mag:1,abi:9,vel:11,fort:5,def:3,res:3}, gr:{hp:60,for:40,mag:10,abi:60,vel:70,fort:50,def:20,res:25},
-      skill:{n:"Stoccata", d:"Lo stocco infligge danno triplo ai corazzati."},
-      items:[{n:"Tonico", q:2}], look:{skin:"#f2d2b8", hair:"#5a3a26", under:"#f1eee8", style:"bob", coat:"#2f4a6e", acc:"jabot"}}),
-    mkUnit({id:"wata", name:"Wata", cls:"Etermante delle Radici", team:"ally", lv:1, x:3,y:7, move:"inf", mov:5, w:"rovo",
-      st:{hp:17,for:1,mag:7,abi:6,vel:6,fort:6,def:2,res:7}, gr:{hp:55,for:10,mag:60,abi:45,vel:45,fort:55,def:15,res:50},
-      skill:{n:"Famiglio felino", d:"Prospy, il suo gatto arancione, la avvisa dei colpi: +10 schivata.", cat:true},
-      items:[{n:"Tonico", q:1}], look:{skin:"#eecaa8", hair:"#7b4fb0", style:"longv", coat:"#5f8a55", acc:"leaf", eye:"#3f7a3a"}}),
-    mkUnit({id:"mars", name:"Mars", cls:"Druida alchimista", team:"ally", lv:1, x:2,y:8, move:"inf", mov:5, w:"elisir",
-      st:{hp:17,for:2,mag:6,abi:5,vel:6,fort:5,def:3,res:6}, gr:{hp:60,for:15,mag:50,abi:45,vel:45,fort:45,def:20,res:45},
-      skill:{n:"Spirito libero", d:"Ama le esperienze nuove: ottiene il 50% di PE in più."},
-      items:[{n:"Tonico", q:2}], look:{skin:"#c99a74", hair:"#141214", style:"curly", coat:"#8a6a3f", acc:"vial"}}),
-    // nemici: Corona di Ottone
-    mkUnit({id:"e1", name:"Soldato della Corona", cls:"Lanciere", team:"enemy", lv:1, x:11,y:4, move:"inf", mov:5, w:"lancia", ai:"attack",
-      st:{hp:18,for:6,mag:0,abi:4,vel:4,fort:1,def:4,res:0}}),
-    mkUnit({id:"e2", name:"Predone di fonderia", cls:"Guerriero", team:"enemy", lv:1, x:12,y:6, move:"inf", mov:5, w:"ascia", ai:"range",
-      st:{hp:21,for:7,mag:0,abi:3,vel:4,fort:0,def:3,res:0}}),
-    mkUnit({id:"e3", name:"Fuciliere della Corona", cls:"Fuciliere", team:"enemy", lv:2, x:13,y:3, move:"inf", mov:4, w:"moschetto", ai:"range",
-      st:{hp:16,for:6,mag:0,abi:6,vel:5,fort:1,def:2,res:1}}),
-    mkUnit({id:"e4", name:"Etermante rinnegato", cls:"Etermante", team:"enemy", lv:2, x:12,y:1, move:"inf", mov:5, w:"scintilla", ai:"range",
-      st:{hp:15,for:0,mag:5,abi:4,vel:5,fort:1,def:1,res:4}}),
-    mkUnit({id:"e5", name:"Predone di fonderia", cls:"Guerriero", team:"enemy", lv:1, x:6,y:1, move:"inf", mov:5, w:"ascia", ai:"attack",
-      st:{hp:20,for:7,mag:0,abi:3,vel:3,fort:0,def:3,res:0}}),
-    mkUnit({id:"e6", name:"Guardia corazzata", cls:"Corazzato", team:"enemy", lv:2, x:13,y:8, move:"arm", mov:4, w:"lancia", ai:"range",
-      st:{hp:22,for:7,mag:0,abi:4,vel:1,fort:0,def:9,res:0}}),
-    mkUnit({id:"boss", name:"Capitano Vorn", cls:"Capitano", team:"enemy", lv:4, x:14,y:1, move:"inf", mov:5, w:"martello", ai:"stay", boss:true,
-      st:{hp:26,for:9,mag:0,abi:6,vel:5,fort:3,def:6,res:2}}),
-  ];
-  units.forEach(u=>u.hp=u.st.hp);
+
+// Classi dei nemici: statistiche al livello 1 e crescita media per livello
+const CLASSES = {
+  Lanciere:  {name:"Soldato della Corona", w:"lancia", move:"inf", mov:5, st:{hp:18,for:6,mag:0,abi:4,vel:4,fort:1,def:4,res:0}, gr:{hp:.8,for:.45,abi:.35,vel:.3,fort:.2,def:.35,res:.1}},
+  Guerriero: {name:"Predone", w:"ascia", move:"inf", mov:5, st:{hp:20,for:7,mag:0,abi:3,vel:3,fort:0,def:3,res:0}, gr:{hp:.9,for:.5,abi:.3,vel:.3,fort:.2,def:.25,res:.05}},
+  Fuciliere: {name:"Fuciliere della Corona", w:"moschetto", move:"inf", mov:4, st:{hp:16,for:6,mag:0,abi:6,vel:5,fort:1,def:2,res:1}, gr:{hp:.6,for:.4,abi:.5,vel:.35,fort:.2,def:.2,res:.15}},
+  Etermante: {name:"Etermante rinnegato", w:"scintilla", move:"inf", mov:5, st:{hp:15,for:0,mag:5,abi:4,vel:5,fort:1,def:1,res:4}, gr:{hp:.55,for:.05,mag:.5,abi:.35,vel:.4,fort:.2,def:.1,res:.4}},
+  Custode:   {name:"Custode delle Radici", w:"luce", move:"inf", mov:5, st:{hp:17,for:1,mag:6,abi:5,vel:5,fort:2,def:2,res:6}, gr:{hp:.6,for:.1,mag:.5,abi:.4,vel:.35,fort:.25,def:.15,res:.45}},
+  Corazzato: {name:"Guardia corazzata", w:"lancia", move:"arm", mov:4, st:{hp:22,for:7,mag:0,abi:4,vel:1,fort:0,def:9,res:0}, gr:{hp:.85,for:.45,abi:.3,vel:.1,fort:.1,def:.5,res:.05}},
+  Cavaliere: {name:"Cavaliere d'ottone", w:"picca", move:"cav", mov:7, st:{hp:19,for:6,mag:0,abi:5,vel:6,fort:1,def:5,res:1}, gr:{hp:.75,for:.4,abi:.35,vel:.35,fort:.2,def:.3,res:.1}},
+  Arciere:   {name:"Arciere", w:"arco", move:"inf", mov:5, st:{hp:16,for:5,mag:0,abi:6,vel:5,fort:2,def:2,res:1}, gr:{hp:.6,for:.4,abi:.45,vel:.4,fort:.25,def:.15,res:.15}},
+  Lama:      {name:"Mercenario", w:"spada", move:"inf", mov:5, st:{hp:17,for:5,mag:0,abi:7,vel:8,fort:2,def:3,res:1}, gr:{hp:.65,for:.4,abi:.45,vel:.5,fort:.3,def:.2,res:.15}},
+  Medico:    {name:"Medico da campo", w:"kit", move:"inf", mov:5, st:{hp:15,for:0,mag:4,abi:3,vel:4,fort:2,def:1,res:4}, gr:{hp:.5,for:0,mag:.4,abi:.3,vel:.3,fort:.3,def:.1,res:.35}},
+  Aeronauta: {name:"Aeronauta", w:"lancia", move:"fly", mov:6, st:{hp:17,for:5,mag:0,abi:5,vel:7,fort:2,def:3,res:3}, gr:{hp:.65,for:.4,abi:.4,vel:.45,fort:.25,def:.2,res:.25}},
+  Segatrice: {name:"Segatrice a vapore", w:"sega", move:"arm", mov:4, st:{hp:24,for:8,mag:0,abi:3,vel:1,fort:0,def:8,res:0}, gr:{hp:.9,for:.45,abi:.2,vel:.05,fort:0,def:.45,res:0}},
+};
+let UID = 0;
+function foe(cls, lv, x, y, o={}){
+  const C = CLASSES[cls], st = {};
+  for(const k of STAT_KEYS) st[k] = C.st[k] + Math.floor((C.gr[k]||0)*(lv-1) + .5);
+  return mkUnit(Object.assign({id:"e"+(UID++), name:C.name, cls, team:"enemy", lv, x, y, move:C.move, mov:C.mov, w:C.w, ai:"attack", st}, o));
 }
+
+// La Compagnia della Brace: dati fissi (le statistiche che crescono stanno in "party")
+const PARTY_BASE = {
+  giova: {id:"giova", name:"Giova", cls:"Stratega", move:"inf", mov:5, w:"spada", leader:true,
+    st:{hp:22,for:6,mag:2,abi:8,vel:7,fort:6,def:6,res:3}, gr:{hp:75,for:45,mag:15,abi:60,vel:50,fort:55,def:35,res:25},
+    skill:{n:"Calcolo del rischio", d:"Giova e gli alleati entro 2 caselle: +10 precisione."},
+    items:[{n:"Tonico", q:3}], look:{skin:"#e8bf9c", hair:"#b5401f", style:"tuft", beard:true, coat:"#3b5f8a", acc:"epaulette"}},
+  lethy: {id:"lethy", name:"Lethy", cls:"Spadaccina", move:"inf", mov:5, w:"stocco",
+    st:{hp:17,for:5,mag:1,abi:9,vel:11,fort:5,def:3,res:3}, gr:{hp:60,for:40,mag:10,abi:60,vel:70,fort:50,def:20,res:25},
+    skill:{n:"Stoccata", d:"Lo stocco infligge danno triplo ai corazzati."},
+    items:[{n:"Tonico", q:2}], look:{skin:"#f2d2b8", hair:"#5a3a26", under:"#f1eee8", style:"bob", coat:"#2f4a6e", acc:"jabot"}},
+  wata: {id:"wata", name:"Wata", cls:"Etermante delle Radici", move:"inf", mov:5, w:"rovo",
+    st:{hp:17,for:1,mag:7,abi:6,vel:6,fort:6,def:2,res:7}, gr:{hp:55,for:10,mag:60,abi:45,vel:45,fort:55,def:15,res:50},
+    skill:{n:"Famiglio felino", d:"Prospy, il suo gatto arancione, la avvisa dei colpi: +10 schivata.", cat:true},
+    items:[{n:"Tonico", q:1}], look:{skin:"#eecaa8", hair:"#7b4fb0", style:"longv", coat:"#5f8a55", acc:"leaf", eye:"#3f7a3a"}},
+  mars: {id:"mars", name:"Mars", cls:"Druida alchimista", move:"inf", mov:5, w:"elisir",
+    st:{hp:17,for:2,mag:6,abi:5,vel:6,fort:5,def:3,res:6}, gr:{hp:60,for:15,mag:50,abi:45,vel:45,fort:45,def:20,res:45},
+    skill:{n:"Spirito libero", d:"Ama le esperienze nuove: ottiene il 50% di PE in più."},
+    items:[{n:"Tonico", q:2}], look:{skin:"#c99a74", hair:"#141214", style:"curly", coat:"#8a6a3f", acc:"vial"}},
+};
+const PARTY_ORDER = ["giova","lethy","wata","mars"];
+const clone = o => JSON.parse(JSON.stringify(o));
+function freshParty(){ const p={}; for(const id of PARTY_ORDER){ const b=PARTY_BASE[id]; p[id]={lv:1, exp:0, st:clone(b.st), items:clone(b.items), w:b.w}; } return p; }
+let party = freshParty();
+
+// Personaggi della storia che parlano nei dialoghi (e a volte combattono)
+const NPC = {
+  narr:     {name:"", narr:true},
+  ferrante: {name:"Ispettrice Ferrante", team:"enemy", cls:"Ispettrice", look:{skin:"#ecc8a8", hair:"#d9cfae", style:"short", coat:"#6e1f1c", acc:"epaulette", eye:"#5a6a78"}},
+  grigio:   {name:"Il Signor Grigio", team:"ally", cls:"Mediatore", look:{skin:"#dcb898", hair:"#8a8a8a", style:"bald", coat:"#55565c", beard:true, eye:"#3a3a3a"}},
+  maelis:   {name:"Sorella Maelis", team:"ally", cls:"Saggia delle Radici", look:{skin:"#e2c0a2", hair:"#2f3a2a", style:"hood", coat:"#2f5a46", acc:"leaf", eye:"#5aa070"}},
+  tessa:    {name:"Nonna Tessa", team:"ally", cls:"Capo villaggio", look:{skin:"#d9b08c", hair:"#e8e4dc", style:"short", coat:"#7a5a3a", eye:"#4a3020"}},
+  brann:    {name:"Brann Mezzosale", team:"enemy", cls:"Capo dei Corvi", look:{skin:"#c48e6a", hair:"#2a2622", style:"messy", coat:"#28414a", beard:"full", eye:"#2a1c14"}},
+  gorran:   {name:"Gorran il Fuso", team:"enemy", cls:"Capo predone", look:{skin:"#b98a68", hair:"#3a2a1e", style:"bald", coat:"#5a3a22", beard:"full", scar:true, eye:"#2a1c14"}},
+  thalen:   {name:"Custode Thalen", team:"enemy", cls:"Custode anziano", look:{skin:"#d8b49a", hair:"#c8c8c0", style:"hood", coat:"#1f4a36", beard:"full", eye:"#7ac08a"}},
+  erba:     {name:"Erba, guaritrice", team:"ally", cls:"Guaritrice", look:{skin:"#c99a74", hair:"#6a4a2a", style:"longv", coat:"#6a7a4a", eye:"#4a3020"}},
+  odo:      {name:"Caposquadra Odo", team:"enemy", cls:"Caposquadra", look:{skin:"#d0a882", hair:"#4a3a2a", style:"helm", coat:"#6a5a3a", beard:true, eye:"#2a1c14"}},
+};
+
+/* ============================== CAPITOLI ==============================
+   Ogni capitolo è solo dati: mappa, schieramento, obiettivo, nemici, eventi, dialoghi, ricompensa.
+   goal.type: "boss" (sconfiggi il comandante) · "rout" (sconfiggi tutti) · "survive" (resisti N turni, alt:"boss" per vincere anche battendo il comandante)
+              "reach" (Giova raggiunge goal.tile; goal.limit = turno massimo)                                                                */
+const CROWN = c => ({skin:"#d9b08c", hair:"#3a2b22", style:"helm", coat:c||"#7a2e29", eye:"#2a1c14"});
+const CORVO = {skin:"#c99674", hair:"#1e1a18", style:"messy", coat:"#28414a", eye:"#2a1c14"};
+const ROOT  = {skin:"#d8b49a", hair:"#2a3a2a", style:"hood", coat:"#1f4a36", eye:"#7ac08a"};
+const GUARD = {skin:"#d0a882", hair:"#333", style:"helm", coat:"#2f5a46", eye:"#2a1c14"};
+const CHAPTERS = [
+/* ---------------------------------------------------------------- PROLOGO */
+{ id:"prologo", title:"Prologo · La Fonderia di Corvara", theme:"city", act:"Atto I · La Brace",
+  map:[
+  "ff....rr..XXgggg",
+  "f.....r...XgggFg",
+  "..f.......Xggggg",
+  "...rr..www.gbbbb",
+  "bbbbbbbbbbbbbggg",
+  "...f...www..gg..",
+  "..ff...www.rr...",
+  ".......www....f.",
+  "f..r...bbb......",
+  "ff.....www...fff"],
+  deploy:[[2,6],[1,7],[3,7],[2,8]],
+  goal:{type:"boss", text:"Sconfiggi il Capitano Vorn sulla fornace."},
+  enemies:()=>[
+    mkUnit({id:"e1", name:"Soldato della Corona", cls:"Lanciere", team:"enemy", lv:1, x:11,y:4, move:"inf", mov:5, w:"lancia", ai:"attack", st:{hp:18,for:6,mag:0,abi:4,vel:4,fort:1,def:4,res:0}}),
+    mkUnit({id:"e2", name:"Predone di fonderia", cls:"Guerriero", team:"enemy", lv:1, x:12,y:6, move:"inf", mov:5, w:"ascia", ai:"range", st:{hp:21,for:7,mag:0,abi:3,vel:4,fort:0,def:3,res:0}}),
+    mkUnit({id:"e3", name:"Fuciliere della Corona", cls:"Fuciliere", team:"enemy", lv:2, x:13,y:3, move:"inf", mov:4, w:"moschetto", ai:"range", st:{hp:16,for:6,mag:0,abi:6,vel:5,fort:1,def:2,res:1}}),
+    mkUnit({id:"e4", name:"Etermante rinnegato", cls:"Etermante", team:"enemy", lv:2, x:12,y:1, move:"inf", mov:5, w:"scintilla", ai:"range", st:{hp:15,for:0,mag:5,abi:4,vel:5,fort:1,def:1,res:4}}),
+    mkUnit({id:"e5", name:"Predone di fonderia", cls:"Guerriero", team:"enemy", lv:1, x:6,y:1, move:"inf", mov:5, w:"ascia", ai:"attack", st:{hp:20,for:7,mag:0,abi:3,vel:3,fort:0,def:3,res:0}}),
+    mkUnit({id:"e6", name:"Guardia corazzata", cls:"Corazzato", team:"enemy", lv:2, x:13,y:8, move:"arm", mov:4, w:"lancia", ai:"range", st:{hp:22,for:7,mag:0,abi:4,vel:1,fort:0,def:9,res:0}}),
+    mkUnit({id:"boss", name:"Capitano Vorn", cls:"Capitano", team:"enemy", lv:4, x:14,y:1, move:"inf", mov:5, w:"martello", ai:"stay", boss:true,
+      quote:"Mercenari delle Leghe nella mia fonderia? Vi rispedisco a casa in una cassa, come l'etere.", st:{hp:26,for:9,mag:0,abi:6,vel:5,fort:3,def:6,res:2}}),
+  ],
+  intro:[
+    ["narr","Valdaria. La magia e le macchine vivono della stessa luce: l'etere, il cristallo che cresce lentamente tra le Radici, le foreste più antiche del mondo."],
+    ["narr","La Corona di Ottone lo scava per le sue fonderie. Il Concilio delle Radici lo custodisce per sé. Le Leghe Libere lo vendono a chi paga."],
+    ["narr","E la Compagnia della Brace, quattro amici prima che mercenari, ha appena accettato di rubarne un carico."],
+    ["giova","La fonderia di Corvara. Ho contato le guardie due volte: sette, più il capitano. Se giochiamo bene, nessuno di noi si fa male."],
+    ["lethy","Sette soltanto? A casa avevamo più camerieri. Possiamo sfidarli a duello uno alla volta, vero?"],
+    ["wata","Lethy... non funziona così. Prospy, resta vicina a me: là dentro l'etere è triste, lo sento."],
+    ["mars","Io invece sono curiosissima: una fornace a etere! Chi si ferisce venga da me, ho un elisir nuovo da provare. Funziona quasi sicuramente."],
+    ["giova","Quasi? ...Va bene. Compagnia della Brace, si punta alla fornace. Scelta ottimale, rischio calcolato."],
+  ],
+  victory:[
+    ["boss","Credete di aver vinto? Quei cristalli non sono pietre. Chiedete al vostro committente cosa c'è dentro..."],
+    ["wata","Giova... il cristallo è caldo. Prospy gli soffia contro, come se dentro respirasse qualcosa."],
+    ["mars","Posso tenerne un frammento? Solo per studiarlo. Promesso."],
+    ["lethy","Se vale tanto, mio padre ne comprerebbe una cassa. Ah, forse non è il momento."],
+    ["giova","Lo portiamo via tutto. Si consegna a Porto Ambra, come da contratto. E poi il nostro committente ci deve delle risposte."],
+  ],
+  reward:{text:"Bottino: una cassa di etere, nascosta sotto un carico di patate."},
+},
+/* ---------------------------------------------------------------- CAPITOLO 1 */
+{ id:"c1", title:"Capitolo 1 · Binari nella nebbia", theme:"country", act:"Atto I · La Brace",
+  map:[
+  "fff.....ff..mm~~ff",
+  "ff..HH...f...m==.f",
+  "f...ss......f.~~..",
+  "....s...ff..r.~~..",
+  "....s...f.....~~.r",
+  "bbbbbbbbbbbbbbbbbb",
+  "..f.....r.....~~..",
+  ".ff....m...ff.~~f.",
+  "ff....mm....f.~~ff",
+  "fff.......fff.~~ff"],
+  deploy:[[6,5],[7,4],[5,6],[5,4]],
+  goal:{type:"reach", tile:[17,5], text:"Porta Giova oltre il ponte di Fossa Grigia, sulla casella d'ottone a est. Dal turno 2 arriva la cavalleria della Corona da ovest."},
+  enemies:()=>[
+    foe("Lanciere",2,11,4),
+    foe("Lanciere",2,12,6,{ai:"range"}),
+    foe("Arciere",2,12,0,{ai:"range", name:"Arciere della Corona", look:CROWN()}),
+    foe("Corazzato",2,15,5,{ai:"stay"}),
+    foe("Arciere",2,17,2,{ai:"range", name:"Arciere della Corona", look:CROWN()}),
+    foe("Lama",2,16,1,{ai:"range", name:"Duellante della Corona", look:CROWN("#8a3a2a")}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[
+      ["ferrante","Compagnia della Brace! Sono l'Ispettrice Ferrante, Ufficio dell'Etere. Quel carico appartiene alla Corona."],
+      ["ferrante","Arrendetevi e vi garantisco un processo giusto. Scappate, e vi riporto a Corvara in catene."],
+      ["giova","Cavalleria meccanica: due caselle di movimento più di noi. In velocità non la battiamo. Avanti al ponte, e chi resta indietro non resta solo."]],
+      spawn:()=>[foe("Cavaliere",2,0,4), foe("Cavaliere",2,0,6)]},
+    {turn:4, phase:"enemy", lines:[["ferrante","Non devono passare il fiume! Secondo squadrone, avanti!"]],
+      spawn:()=>[foe("Cavaliere",3,0,5), foe("Cavaliere",2,0,3)]},
+  ],
+  intro:[
+    ["narr","Due giorni dopo Corvara. La Compagnia viaggia verso le Leghe Libere con la cassa di etere nascosta sotto le patate."],
+    ["giova","Il confine è oltre il ponte di Fossa Grigia. Se lo passiamo, la Corona non può seguirci senza dichiarare guerra alle Leghe."],
+    ["lethy","Quindi è come la linea di fondo nella pallacorda: chi la supera vince il punto. Adoro la pallacorda."],
+    ["mars","Io stanotte ho dormito sopra la cassa. Ho sognato una voce che cantava. Credo fosse l'etere. Oppure le patate."],
+    ["wata","Non erano le patate, Mars. Prospy non vuole più starle vicino... e io nemmeno, a dire il vero."],
+    ["giova","Ne parliamo quando saremo al sicuro. Nebbia fitta, binari dritti fino al ponte. Ci muoviamo insieme e non ci fermiamo."],
+  ],
+  victory:[
+    ["giova","Siamo oltre. Terra delle Leghe Libere."],
+    ["ferrante","Questa non è finita, stratega. Sai almeno cosa trasporti? Io sì. Ed è per questo che lo rivoglio."],
+    ["lethy","Che maniere. Neanche un saluto."],
+    ["wata","Giova... ha detto \"cosa\", non \"quanto vale\"."],
+    ["giova","L'ho sentito anch'io. Prima consegniamo il carico, poi le domande al committente. Tutte quante."],
+  ],
+  reward:{text:"Sul carro abbandonato dalla Corona: un tonico in più per ognuno.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1],["mars","Tonico",1]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 2 */
+{ id:"c2", title:"Capitolo 2 · Le capre di Merlaia", theme:"night", act:"Atto I · La Brace",
+  map:[
+  "ff..mm.....mm.ff",
+  "f..f.........f.f",
+  "...HH..L...HH...",
+  "...HH.ssss..HH..",
+  "ssssssssssssssss",
+  "..L...ss.H.L....",
+  "f..HH.ss.HH...f.",
+  "ff....ss.....fff",
+  "~~~~~~==~~~~=~~~",
+  "f..f..ss...ff..f"],
+  deploy:[[7,4],[8,5],[6,5],[7,3]],
+  goal:{type:"survive", turns:6, alt:"boss", text:"Resisti fino all'alba (6 turni) oppure sconfiggi Gorran il Fuso. Le capre sono nel recinto in piazza: i predoni devono passare da voi."},
+  enemies:()=>[
+    foe("Guerriero",3,5,0,{name:"Predone di Gorran"}),
+    foe("Guerriero",2,2,1,{name:"Predone di Gorran"}),
+    foe("Arciere",3,11,0,{ai:"range", name:"Bracconiere"}),
+    foe("Lama",3,13,1,{name:"Tagliagole"}),
+    foe("Guerriero",3,7,9,{name:"Predone di Gorran"}),
+    foe("Arciere",2,11,9,{ai:"range", name:"Bracconiere"}),
+    foe("Guerriero",5,15,9,{id:"boss", boss:true, name:"Gorran il Fuso", w:"fuso", ai:"range", look:NPC.gorran.look,
+      quote:"Il fuso gira, ragazzino. Stanotte gira per me: capre, grano e quella bella cassa che brilla."}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["narr","Dalle colline a nord scendono altre torce."]], spawn:()=>[foe("Guerriero",3,0,1,{name:"Predone di Gorran"}), foe("Lama",2,15,1,{name:"Tagliagole"})]},
+    {turn:3, phase:"player", lines:[["gorran","Cos'è, avete paura del buio? Ve lo accendo io il villaggio!"],["mars","Ha appena minacciato di bruciare un villaggio pieno di capre. Giova, adesso sono offesa anch'io."]]},
+    {turn:4, phase:"enemy", lines:[["narr","Due predoni arrivano dalla strada dell'est e da quella dell'ovest."]], spawn:()=>[foe("Lama",3,15,4,{name:"Tagliagole"}), foe("Guerriero",3,0,4,{name:"Predone di Gorran"})]},
+    {turn:5, phase:"enemy", lines:[["narr","L'ultimo assalto prima dell'alba."]], spawn:()=>[foe("Arciere",3,4,0,{name:"Bracconiere", ai:"attack"}), foe("Guerriero",4,12,9,{name:"Predone di Gorran"})]},
+  ],
+  intro:[
+    ["narr","Merlaia, primo villaggio delle Leghe Libere. Un mulino, un pozzo, trecento capre."],
+    ["tessa","Mercenari? Allora siete arrivati al momento giusto. O a quello sbagliato. I predoni di Gorran scendono dalle colline stanotte."],
+    ["giova","Quanti sono?"],
+    ["tessa","Abbastanza da prendersi le capre, il grano e, dicono in giro, una cassa che brilla. Ne sapete niente?"],
+    ["mars","Noi? Una cassa che brilla? Assolutamente... sì. È nostra."],
+    ["lethy","Signora, la Compagnia della Brace non lascia mai un ospite in difficoltà. Lo dice sempre mio padre. Di solito prima di proporre un interesse del dodici per cento."],
+    ["giova","Niente interessi. Ci hanno seguiti per colpa nostra, quindi tocca a noi. Le capre nel recinto in piazza, noi teniamo le strade e il ponte fino all'alba."],
+    ["wata","Prospy ha già trovato un'amica. Una capra nera. Prospy dice che si chiama... Fagiolo."],
+    ["giova","Allora difendiamo anche Fagiolo. Sei turni fino all'alba: con la luce i predoni non si arrischiano in pianura."],
+  ],
+  victory:[
+    ["tessa","L'alba! E le capre ci sono tutte. Anzi, ce n'è una in più: credo che Fagiolo si sia portata un'amica."],
+    ["giova","Un predone mi ha detto che a Porto Ambra pagano tre volte il prezzo per la nostra cassa. Qualcuno ha messo in giro la voce."],
+    ["wata","Qualcuno vuole che tutti ci diano la caccia?"],
+    ["giova","Oppure vuole vedere chi arriva vivo a destinazione. In tutti e due i casi, il nostro committente sa più di quanto ci ha detto."],
+    ["tessa","Ragazza, tu. Quella con il gatto. Prendi questo ramo: viene dal rovo antico dietro il mulino. Nelle mani giuste punge più di una lancia."],
+    ["tessa","E tu, quella con le fiale. Ecco la ricetta del mio elisir. Niente etere, mi raccomando: solo erbe, miele e pazienza."],
+    ["mars","Niente etere. Certo. Ovviamente. ...Magari un pizzico."],
+  ],
+  reward:{text:"Wata riceve le Spine del rovo antico (magia più forte). Mars impara l'Elisir di Nonna Tessa (cura di più e a distanza 1-2).", w:{wata:"spine", mars:"elisirF"}},
+},
+/* ---------------------------------------------------------------- CAPITOLO 3 */
+{ id:"c3", title:"Capitolo 3 · I Corvi di Sale", theme:"city", pave:true, act:"Atto I · La Brace",
+  map:[
+  "HHH.gggggg.HHHHH",
+  "HHH.gLggkg.HHHHH",
+  "....gggggg....k.",
+  "k.gggggkkggggg..",
+  "gggLgggggggLgggg",
+  "gggggkggggggg=ww",
+  "ggkggggggkggg=ww",
+  "wwwww=wwwwww==ww",
+  "wwwww=wwwwwwwwww",
+  "wwwww==wwwwwwwww"],
+  deploy:[[4,2],[5,1],[3,2],[4,0]],
+  goal:{type:"boss", text:"Sconfiggi Brann Mezzosale, capo dei Corvi di Sale, sul pontile."},
+  enemies:()=>[
+    foe("Lama",4,8,3,{name:"Corvo di Sale", look:CORVO}),
+    foe("Lama",4,10,4,{name:"Corvo di Sale", look:CORVO, ai:"range"}),
+    foe("Arciere",4,14,2,{name:"Corvo balestriere", look:CORVO, ai:"range"}),
+    foe("Guerriero",4,6,5,{name:"Corvo di Sale", look:CORVO, ai:"range"}),
+    foe("Fuciliere",4,10,6,{name:"Corvo archibugiere", look:CORVO, ai:"range"}),
+    foe("Arciere",4,5,8,{name:"Corvo balestriere", look:CORVO, ai:"range"}),
+    foe("Guerriero",5,11,5,{name:"Corvo di Sale", look:CORVO, ai:"range"}),
+    foe("Lama",4,15,3,{name:"Corvo di Sale", look:CORVO}),
+    foe("Guerriero",7,12,7,{id:"boss", boss:true, name:"Brann Mezzosale", w:"arrembaggio", ai:"stay", look:NPC.brann.look,
+      quote:"Giova lo stratega! Vediamo se i tuoi calcoli reggono l'acqua salata."}),
+  ],
+  events:[
+    {turn:3, phase:"enemy", lines:[["brann","Ragazzi, giù dalla barca! C'è da lavorare!"]], spawn:()=>[foe("Guerriero",4,5,9,{name:"Corvo di Sale", look:CORVO}), foe("Lama",4,6,9,{name:"Corvo di Sale", look:CORVO})]},
+    {turn:5, phase:"enemy", lines:[["narr","Un altro Corvo sbuca dai vicoli dietro di voi."]], spawn:()=>[foe("Lama",5,0,4,{name:"Corvo di Sale", look:CORVO})]},
+  ],
+  intro:[
+    ["narr","Porto Ambra, cuore delle Leghe Libere. Qui tutto ha un prezzo, anche il silenzio."],
+    ["grigio","Puntuali, malgrado tutto. Il mio cliente apprezzerà. Lasciate la cassa sul molo tre e il resto del compenso è vostro."],
+    ["giova","Il tuo cliente ha un nome?"],
+    ["grigio","Il mio cliente ha dei soldi, che è meglio di un nome."],
+    ["lethy","Questo posto lo conosco! Da bambina venivo qui con papà a veder arrivare le navi. Laggiù c'è la banca di famiglia... speriamo che nessuno mi riconosca vestita così."],
+    ["brann","Che commovente. La figlia dei banchieri che fa la mercenaria. Io sono Brann, dei Corvi di Sale, e quella cassa mi serve."],
+    ["grigio","Brann! Ti ho pagato per sorvegliare il molo, non per..."],
+    ["brann","E qualcun altro mi paga il doppio per portargliela. Le Leghe funzionano così, Grigio. Lo sai meglio di me."],
+    ["wata","Prospy gli soffia contro. E non soffia mai alle persone, solo alle cose cattive."],
+    ["giova","Doppio gioco e un molo stretto. Niente inseguimenti tra le casse: dritti a Brann. Senza di lui i Corvi scappano."],
+  ],
+  victory:[
+    ["brann","Va bene, va bene! Me ne vado. Ma ascolta, stratega: chi mi ha pagato il doppio portava un mantello verde. Pensaci."],
+    ["grigio","Bene... molto bene. Ora che il molo è tranquillo posso dirvelo: il mio cliente vuole incontrarvi di persona. Stanotte, al magazzino delle Lanterne."],
+    ["wata","Un mantello verde... come quelli del Concilio delle Radici."],
+    ["lethy","Il Concilio paga i Corvi per rubare la cassa che il Concilio stesso ci ha fatto rubare? È come comprare due volte lo stesso cavallo."],
+    ["giova","A meno che nel Concilio non vadano tutti d'accordo. Stanotte lo scopriamo."],
+    ["lethy","Intanto faccio un salto in banca. Se papà mi vede con questa spada di ferro gli viene un colpo."],
+    ["narr","Lethy torna un'ora dopo con lo stocco d'argento del nonno e una lettera di papà che dice soltanto: \"Mangia\"."],
+  ],
+  reward:{text:"Lethy riceve lo Stocco d'argento del nonno. Con il compenso di Grigio, Giova compra una Spada d'acciaio.", w:{lethy:"stoccoA", giova:"spadaA"}},
+},
+/* ---------------------------------------------------------------- CAPITOLO 4 */
+{ id:"c4", title:"Capitolo 4 · Il magazzino delle Lanterne", theme:"night", pave:true, act:"Atto I · La Brace",
+  map:[
+  "gggLggggXXXXgggg",
+  "gkggggggXXXXgLgg",
+  "ggggkgggggggggkg",
+  "XXXgggLgggkgggXX",
+  "XXXgggggggggLggg",
+  "gggkggXXXggggkgg",
+  "gLggggXXXgggggLg",
+  "gggggggggkggXXXX",
+  "kgggLgggggggXXXX",
+  "gggggggkgggggggg"],
+  deploy:[[5,4],[6,4],[4,5],[5,5]],
+  guests:()=>[mkUnit({id:"maelis", name:"Sorella Maelis", cls:"Saggia delle Radici", team:"ally", guest:true, lv:6, x:4, y:4, move:"inf", mov:5, w:"luce",
+    st:{hp:20,for:1,mag:9,abi:7,vel:7,fort:5,def:3,res:9}, gr:{}, look:NPC.maelis.look,
+    skill:{n:"Ospite", d:"Combatte con voi in questo capitolo. Se cade, si ritira."}})],
+  goal:{type:"boss", text:"Sconfiggi l'Ispettrice Ferrante. Sorella Maelis combatte con voi. Attenti agli aeronauti dal cielo."},
+  enemies:()=>[
+    foe("Lanciere",6,9,2),
+    foe("Lanciere",6,10,4,{ai:"range"}),
+    foe("Fuciliere",6,2,0,{ai:"range"}),
+    foe("Fuciliere",5,14,2,{ai:"range"}),
+    foe("Corazzato",5,11,5,{ai:"range"}),
+    foe("Medico",4,14,0,{ai:"range", look:CROWN("#e8e0d0")}),
+    foe("Lama",5,2,8,{name:"Duellante della Corona", look:CROWN("#8a3a2a")}),
+    foe("Lanciere",6,11,8),
+    foe("Lama",8,13,1,{id:"boss", boss:true, retreat:true, name:"Ispettrice Ferrante", w:"sciabola", ai:"stay", look:NPC.ferrante.look,
+      quote:"Sai perché la Corona ha bisogno dell'etere, stratega? Negli ospedali di Corvara le lampade non si spengono mai. Mia sorella è viva grazie a quelle lampade."}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["ferrante","Aeronauti! Giù dal dirigibile!"],["mars","Volano! Con le ali di ottone! Giova, possiamo tenerne uno?"],["giova","No."]],
+      spawn:()=>[foe("Aeronauta",6,15,9,{look:CROWN("#9a6a2a")}), foe("Aeronauta",6,0,0,{look:CROWN("#9a6a2a")})]},
+    {turn:4, phase:"enemy", lines:[["narr","Il dirigibile scende ancora: altri due aeronauti."]],
+      spawn:()=>[foe("Aeronauta",5,7,0,{look:CROWN("#9a6a2a")}), foe("Aeronauta",6,0,9,{look:CROWN("#9a6a2a")})]},
+  ],
+  intro:[
+    ["narr","Magazzino delle Lanterne, mezzanotte."],
+    ["maelis","Compagnia della Brace. Sono Sorella Maelis, del Concilio delle Radici. Sono io il vostro committente."],
+    ["giova","E sei anche quella che ha pagato i Corvi per rubarci la cassa?"],
+    ["maelis","No. È stato qualcun altro del Concilio. Non tutti i miei fratelli approvano che si usino mercenari: preferirebbero che il carico sparisse e basta."],
+    ["wata","Sorella, cosa c'è nei cristalli? Prospy li odia, e io sento come... qualcuno che piange."],
+    ["maelis","...Tu li senti? Allora sei più vicina alle Radici di molti nostri anziani. Te lo dirò quando saremo al sicuro, nelle foreste. Non qui."],
+    ["ferrante","Nessuno andrà nelle foreste stanotte. Ufficio dell'Etere! Circondate il magazzino!"],
+    ["lethy","Di nuovo lei! Ci segue come un pretendente respinto."],
+    ["giova","Fanteria dalle strade, e lassù c'è un dirigibile. Maelis, combatti con noi?"],
+    ["maelis","Il Concilio non combatte la Corona apertamente. Ma questo carico a lei non lo lascio. Sì."],
+    ["giova","Allora puntiamo all'Ispettrice: lei comanda, gli altri obbediscono. Maelis, tu resta vicina a Wata."],
+  ],
+  victory:[
+    ["ferrante","Ritirata! ...Non finisce qui. Sorella Maelis, digli cosa fate nelle foreste a chi tocca le vostre Radici. Diglielo, se hai il coraggio."],
+    ["maelis","..."],
+    ["giova","Almeno una cosa vera l'ha detta: tutti sanno cosa c'è nei cristalli, tranne noi."],
+    ["maelis","Venite con me nelle Radici. Vi pago il doppio e vi mostro tutto. Avete la mia parola."],
+    ["lethy","Il doppio! Papà sarebbe fiero. Più o meno."],
+    ["wata","Io voglio sapere. Per i cristalli. Per chi piange lì dentro."],
+    ["mars","Foreste antiche, piante mai viste, etere allo stato puro... io ci sto prima ancora che tu finisca la frase."],
+    ["giova","Allora è deciso. Scelta ottimale... anche se stavolta non ho tutti i numeri."],
+    ["narr","Fine dell'Atto I · La Brace"],
+  ],
+  reward:{text:"Maelis paga in anticipo: due tonici a Giova e a Mars.", items:[["giova","Tonico",2],["mars","Tonico",2]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 5 */
+{ id:"c5", title:"Capitolo 5 · Sentieri di radice", theme:"forest", act:"Atto II · Le Radici",
+  map:[
+  "TTff..f~~T..ff.T",
+  "Tf...ff~~...c..T",
+  "f..c...~~.f..rkf",
+  "..ff...~~..rr...",
+  "T.....f~~..r.k.T",
+  "sssssss==sssssss",
+  "T..c...~~..k.r.T",
+  "..f...f~~...rr..",
+  "Tf..c..~~.c..ffT",
+  "TTff...~~..fTTTT"],
+  deploy:[[2,5],[3,4],[2,6],[1,5]],
+  guests:()=>[mkUnit({id:"maelis", name:"Sorella Maelis", cls:"Saggia delle Radici", team:"ally", guest:true, lv:7, x:1, y:4, move:"inf", mov:5, w:"luce",
+    st:{hp:21,for:1,mag:10,abi:7,vel:7,fort:5,def:3,res:10}, gr:{}, look:NPC.maelis.look,
+    skill:{n:"Ospite", d:"Combatte con voi in questo capitolo. Se cade, si ritira."}})],
+  goal:{type:"rout", text:"Sconfiggi tutti i nemici. L'etere batte i congegni: Wata e Maelis sono forti contro le segatrici a vapore. Le vene d'etere curano il 10% a inizio turno."},
+  enemies:()=>[
+    foe("Segatrice",6,11,3),
+    foe("Segatrice",6,13,6,{ai:"range"}),
+    foe("Segatrice",7,12,7,{ai:"range"}),
+    foe("Corazzato",5,9,5,{ai:"range"}),
+    foe("Lanciere",6,10,2,{name:"Scorta della Corona"}),
+    foe("Fuciliere",5,14,4,{ai:"range"}),
+    foe("Arciere",5,12,1,{ai:"range", name:"Arciere della Corona", look:CROWN()}),
+    foe("Lanciere",7,14,2,{id:"odo", name:"Caposquadra Odo", ai:"range", w:"lanciaA", look:NPC.odo.look,
+      quote:"Ogni albero che abbatto illumina una strada di Corvara per un anno. Voi cosa illuminate, mercenari?"}),
+  ],
+  events:[
+    {turn:3, phase:"enemy", lines:[["odo","Squadra del sud, accendete le seghe! Prendeteli alle spalle!"]], spawn:()=>[foe("Segatrice",6,3,9), foe("Lanciere",6,5,9,{name:"Scorta della Corona"})]},
+    {turn:5, phase:"enemy", lines:[["narr","Altri uomini della Corona arrivano dal fondo del sentiero."]], spawn:()=>[foe("Arciere",6,10,9,{name:"Arciere della Corona", look:CROWN()}), foe("Lanciere",7,14,0,{name:"Scorta della Corona"})]},
+  ],
+  intro:[
+    ["narr","Atto II · Le Radici"],
+    ["narr","Tre giorni di cammino a est di Porto Ambra, gli alberi diventano così grandi che il sole arriva a terra solo a mezzogiorno."],
+    ["wata","Ci siamo. Le Radici. Sentite? ...No, certo che non sentite. È come stare dentro un respiro enorme."],
+    ["mars","Io sento odore di muschio, resina e... olio bruciato?"],
+    ["maelis","Segatrici. La Corona manda squadre di taglio anche qui, anche se il trattato lo vieta. Abbattono un albero antico e raccolgono i cristalli tra le radici."],
+    ["lethy","Segare un albero di mille anni? È come usare l'arazzo di famiglia per pulirsi gli stivali!"],
+    ["giova","Quante segatrici?"],
+    ["maelis","Tre, forse quattro, con la scorta. Sono corazzate, ma l'etere le manda in tilt."],
+    ["giova","Wata e Maelis contro le macchine, Lethy sulle guardie corazzate, io e Mars a coprire. Possibilmente senza feriti."],
+    ["wata","Prospy ha già il pelo dritto. Andiamo."],
+  ],
+  victory:[
+    ["wata","L'albero tagliato... sotto la corteccia ci sono i cristalli. Tantissimi. Sono caldi. Come mani."],
+    ["maelis","Wata. Allontanati da lì."],
+    ["wata","C'è una voce dentro. Ripete un nome. \"Ilvo\". Chi è Ilvo?"],
+    ["maelis","...Era un guardaboschi. È morto qui, cent'anni fa."],
+    ["giova","Maelis. Cosa sono i cristalli?"],
+    ["maelis","Al villaggio di Fondoscuro vi dirò tutto, lo giuro sulle Radici. Ma prima dobbiamo arrivarci."],
+    ["mars","Io intanto ho preso appunti. Tanti appunti. Alcuni sono disegni di funghi, ma sono appunti seri."],
+  ],
+  reward:{text:"Tra le macerie del campo di taglio: un tonico per Lethy e uno per Wata.", items:[["lethy","Tonico",1],["wata","Tonico",1]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 6 */
+{ id:"c6", title:"Capitolo 6 · Fondoscuro", theme:"forest", act:"Atto II · Le Radici",
+  map:[
+  "fffTT..f...HH.ff",
+  "ff..c...ss.ss..f",
+  "f..HH..s..HH...f",
+  "...HH..s..HH.c..",
+  "ssssssss...ff...",
+  "..f..HH.s..f..rr",
+  "~~~~=~~~=~~~~~~~",
+  "f.....f.s...f..f",
+  "ff.c....s....fff",
+  "fff.....s...ffff"],
+  deploy:[[8,8],[7,9],[9,9],[8,9]],
+  goal:{type:"reach", tile:[12,1], limit:7, text:"Porta Giova davanti alla casa della guaritrice (casella d'ottone) entro il turno 7, prima che il fuoco arrivi al tetto. I Custodi usano l'etere: conta la Resistenza, non la Difesa."},
+  enemies:()=>[
+    foe("Custode",5,8,4,{ai:"range", look:ROOT}),
+    foe("Custode",5,12,3,{look:ROOT}),
+    foe("Arciere",6,13,3,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Corazzato",6,8,6,{ai:"stay", name:"Guardia di radice", look:GUARD}),
+    foe("Custode",5,3,4,{look:ROOT}),
+    foe("Arciere",6,11,5,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Lanciere",7,9,1,{ai:"range", name:"Guardia del Concilio", look:GUARD}),
+    foe("Custode",9,13,1,{id:"boss", boss:true, retreat:true, name:"Custode Thalen", w:"giudizio", ai:"stay", look:NPC.thalen.look,
+      quote:"Mercenari. Combattete per chi paga, e oggi chi vi paga è un villaggio di ladri. Le Radici non sono una farmacia."}),
+  ],
+  events:[
+    {turn:3, phase:"player", lines:[["narr","Il fumo si alza dalla casa della guaritrice. Le fiamme salgono lungo la parete."],["erba","Fate presto! I bambini sono ancora dentro!"]]},
+    {turn:3, phase:"enemy", lines:[["thalen","Altri Custodi, al ponte! Che nessuno li lasci passare!"]], spawn:()=>[foe("Custode",5,15,4,{look:ROOT})]},
+    {turn:5, phase:"enemy", lines:[], spawn:()=>[foe("Lanciere",7,15,9,{name:"Guardia del Concilio", look:GUARD})]},
+  ],
+  intro:[
+    ["narr","Fondoscuro, villaggio ai margini delle Radici."],
+    ["maelis","No... quelli sono Custodi. Il Concilio è già qui."],
+    ["thalen","Abitanti di Fondoscuro. Avete raccolto cristalli dalle Radici senza il permesso del Concilio. Il raccolto sarà distrutto, e i guaritori verranno con noi a Lucegrande per il giudizio."],
+    ["erba","Avevamo la febbre grigia in ogni casa! Il Concilio non ha mandato nessuno! I cristalli sono stati l'unica cura!"],
+    ["thalen","Le Radici non sono una farmacia. Bruciate la casa della guaritrice."],
+    ["giova","Maelis?"],
+    ["maelis","Thalen è un Custode anziano. Se alzo una mano contro di lui, il Concilio mi caccia. E senza di me non saprete mai la verità."],
+    ["wata","Ci sono dei bambini in quella casa, Giova."],
+    ["giova","...Lo so. Facciamo così: Maelis resta indietro e non ci ha mai visti. Noi siamo solo mercenari delle Leghe."],
+    ["lethy","Finalmente un torneo in cui so subito da che parte stare."],
+    ["mars","Io porto gli elisir per la febbre. Non ho mai curato la febbre grigia. Sarà un'esperienza nuova!"],
+    ["giova","Alla casa della guaritrice prima che il fuoco arrivi al tetto. Sette turni, non uno di più."],
+  ],
+  victory:[
+    ["erba","Siete arrivati! I bambini sono usciti dal retro. Grazie... chiunque siate."],
+    ["thalen","Mercenari delle Leghe. Ricorderò le vostre facce. E il Concilio ricorderà chi vi ha portati fin qui."],
+    ["narr","Thalen e i Custodi si ritirano nel bosco. Il tetto della guaritrice regge, appena."],
+    ["maelis","Mi ha vista. Lo sapeva già."],
+    ["giova","Allora non hai più niente da perdere. Parla."],
+    ["maelis","Non qui. Stanotte, al Pozzo delle Voci. Lì il segreto si può sentire, oltre che raccontare."],
+    ["wata","Prospy ha smesso di soffiare. Per la prima volta da Corvara. Credo che voglia andare al pozzo."],
+    ["giova","Fino a ieri sapevo per chi combattevamo. Oggi abbiamo combattuto contro chi ci paga. Non è nei miei calcoli, e va bene così."],
+  ],
+  reward:{text:"Erba regala a Mars le sue erbe contro la febbre grigia: due tonici. Il villaggio dà a Giova un tonico.", items:[["mars","Tonico",2],["giova","Tonico",1]]},
+},
+];
 
 /* ============================== STATO ============================== */
 let T = 48;                // lato casella in px
+let MAP = [], ROWS = 0, COLS = 0, CH = null, CHI = 0, SPEED = 1;
+let units = [];
 let turn = 1, phase = "player", busy = false;
 let sel = null, origin = null, mode = "idle", reach = null, dangerOn = false, ended = false;
 const $ = s => document.querySelector(s);
@@ -265,8 +701,19 @@ const W = u => WEAP[u.w];
 /* ============================== RENDER MAPPA ============================== */
 function rnd(seed){ let s = seed>>>0; return ()=>{ s = (s*1664525+1013904223)>>>0; return s/4294967296; }; }
 const K = (x,y) => inMap(x,y) ? MAP[y][x] : null;
-const isWet = (x,y) => { const k=K(x,y); return k==="w" || (k==="b" && (K(x,y-1)==="w" || K(x,y+1)==="w")); };
-const isPaved = (x,y) => { const k=K(x,y); return k==="g" || k==="F"; };
+const WATER = k => k==="w" || k==="~";
+const isWet = (x,y) => { const k=K(x,y); if(WATER(k)) return true;
+  if(k==="b") return WATER(K(x,y-1)) || WATER(K(x,y+1));
+  if(k==="=") return WATER(K(x,y-1)) || WATER(K(x,y+1)) || WATER(K(x-1,y)) || WATER(K(x+1,y));
+  return false; };
+const isNatural = (x,y) => K(x,y)==="~" || [[0,1],[0,-1],[1,0],[-1,0]].some(([dx,dy])=>K(x+dx,y+dy)==="~") && K(x,y)!=="w";
+const THEMES = {
+  city:   {base:"#5c6c3a", blobs:["#73844a","#4e5f33","#808c4f","#46572f","#6a7a40"], blade:"rgba(170,190,110,.28)"},
+  country:{base:"#6a7b3e", blobs:["#84964f","#5a6b36","#93a05a","#506232","#7a8a46"], blade:"rgba(200,215,130,.32)"},
+  forest: {base:"#33482f", blobs:["#3f5a37","#2a3d27","#4b6a3e","#24352a","#3a5240"], blade:"rgba(140,190,120,.25)", mist:true},
+  night:  {base:"#56663a", blobs:["#6a7a44","#4a5a32","#77844a","#425230","#62723e"], blade:"rgba(170,190,110,.22)", night:true},
+};
+const isPaved = (x,y) => { const k=K(x,y); return k==="g" || k==="F" || (CH && CH.pave && [".","k","L","r"].includes(k)); };
 function blob(cx,cy,r,col,a){ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r); g.addColorStop(0,col); g.addColorStop(1,"rgba(0,0,0,0)");
   ctx.globalAlpha=a; ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r,0,7); ctx.fill(); ctx.globalAlpha=1; }
 function drawMap(){
@@ -275,10 +722,19 @@ function drawMap(){
   ctx.setTransform(dpr,0,0,dpr,0,0); ctx.lineCap="round"; ctx.lineJoin="round";
   const tiles = (fn) => { for(let y=0;y<ROWS;y++) for(let x=0;x<COLS;x++) fn(x,y,MAP[y][x],x*T,y*T,rnd(x*928371+y*12345+7)); };
 
+  const TH = THEMES[(CH&&CH.theme)||"city"], lights=[];
   // 1. prato dipinto: base + macchie morbide che sfumano tra le caselle
-  ctx.fillStyle="#5c6c3a"; ctx.fillRect(0,0,MW,MH);
-  tiles((x,y,k,X,Y,r)=>{ for(let i=0;i<4;i++) blob(X+r()*T, Y+r()*T, T*(.45+r()*.55), ["#73844a","#4e5f33","#808c4f","#46572f","#6a7a40"][Math.floor(r()*5)], .5); });
-  tiles((x,y,k,X,Y,r)=>{ ctx.strokeStyle="rgba(170,190,110,.28)"; ctx.lineWidth=1;
+  ctx.fillStyle=TH.base; ctx.fillRect(0,0,MW,MH);
+  tiles((x,y,k,X,Y,r)=>{ for(let i=0;i<4;i++) blob(X+r()*T, Y+r()*T, T*(.45+r()*.55), TH.blobs[Math.floor(r()*5)], .5); });
+  // strade sterrate
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="s" && k!=="L") return; const road=(a,b)=>["s","L","="].includes(K(a,b));
+    if(k==="L" && ![[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>road(x+dx,y+dy))) return;
+    ctx.fillStyle="#86704d"; ctx.beginPath(); ctx.arc(X+T/2,Y+T/2,T*.4,0,7); ctx.fill();
+    if(road(x-1,y)||x===0) ctx.fillRect(X,Y+T*.1,T/2,T*.8); if(road(x+1,y)||x===COLS-1) ctx.fillRect(X+T/2,Y+T*.1,T/2,T*.8);
+    if(road(x,y-1)||y===0) ctx.fillRect(X+T*.1,Y,T*.8,T/2); if(road(x,y+1)||y===ROWS-1) ctx.fillRect(X+T*.1,Y+T/2,T*.8,T/2);
+    for(let i=0;i<10;i++){ ctx.fillStyle=r()<.5?"rgba(60,45,25,.25)":"rgba(220,200,150,.18)"; ctx.fillRect(X+T*.15+r()*T*.7, Y+T*.15+r()*T*.7, 2, 2); }
+    ctx.strokeStyle="rgba(60,45,25,.18)"; ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(X+T*.3,Y+T*.2); ctx.lineTo(X+T*.32,Y+T*.8); ctx.moveTo(X+T*.7,Y+T*.2); ctx.lineTo(X+T*.68,Y+T*.8); ctx.stroke(); });
+  tiles((x,y,k,X,Y,r)=>{ if(k==="s") return; ctx.strokeStyle=TH.blade; ctx.lineWidth=1;
     for(let i=0;i<6;i++){ const gx=X+r()*T, gy=Y+r()*T; ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(gx+(r()-.5)*3, gy-3-r()*3); ctx.stroke(); } });
 
   // 2. selciato del quartiere della fonderia
@@ -297,7 +753,8 @@ function drawMap(){
 
   // 3. canali con argini di pietra
   tiles((x,y,k,X,Y,r)=>{ if(!isWet(x,y)) return;
-    const g=ctx.createLinearGradient(X,Y,X,Y+T); g.addColorStop(0,"#21474f"); g.addColorStop(.5,"#2c5d66"); g.addColorStop(1,"#23505a");
+    const nat=isNatural(x,y), g=ctx.createLinearGradient(X,Y,X,Y+T);
+    if(nat){ g.addColorStop(0,"#2a5a5a"); g.addColorStop(.5,"#346c68"); g.addColorStop(1,"#2b5e5c"); } else { g.addColorStop(0,"#21474f"); g.addColorStop(.5,"#2c5d66"); g.addColorStop(1,"#23505a"); }
     ctx.fillStyle=g; ctx.fillRect(X,Y,T,T);
     for(let i=0;i<3;i++){ const yy=Y+T*(.22+i*.28)+r()*4, xx=X+r()*T*.4; ctx.strokeStyle=`rgba(180,235,230,${.18+r()*.2})`; ctx.lineWidth=1.4;
       ctx.beginPath(); ctx.moveTo(xx,yy); ctx.quadraticCurveTo(xx+T*.15,yy-3,xx+T*.3,yy); ctx.quadraticCurveTo(xx+T*.45,yy+3,xx+T*.55,yy); ctx.stroke(); }
@@ -306,6 +763,7 @@ function drawMap(){
       const hz=dy!==0, ex = dx===1 ? X+T-E : X, ey = dy===1 ? Y+T-E : Y, w = hz?T:E, h = hz?E:T;
       const sg = hz ? ctx.createLinearGradient(0,dy<0?Y+E:Y+T-E,0,dy<0?Y+E*2.5:Y+T-E*2.5) : ctx.createLinearGradient(dx<0?X+E:X+T-E,0,dx<0?X+E*2.5:X+T-E*2.5,0);
       sg.addColorStop(0,"rgba(0,0,0,.45)"); sg.addColorStop(1,"rgba(0,0,0,0)"); ctx.fillStyle=sg; ctx.fillRect(X,Y,T,T);
+      if(isNatural(x,y)){ ctx.fillStyle="#6e5b3c"; ctx.fillRect(ex,ey,w,h); ctx.fillStyle="rgba(120,150,70,.6)"; for(let i=0;i<5;i++) hz ? ctx.fillRect(ex+r()*w,ey+(dy<0?0:h-3),3,3) : ctx.fillRect(ex+(dx<0?0:w-3),ey+r()*h,3,3); return; }
       ctx.fillStyle="#7b776d"; ctx.fillRect(ex,ey,w,h);
       ctx.fillStyle="rgba(255,255,255,.18)"; hz ? ctx.fillRect(ex,ey,w,1.5) : ctx.fillRect(ex,ey,1.5,h);
       ctx.strokeStyle="rgba(40,36,30,.6)"; ctx.lineWidth=1;
@@ -321,6 +779,52 @@ function drawMap(){
       const v=Math.floor(r()*20); ctx.fillStyle=`rgb(${128+v},${120+v},${108+v})`; poly(0,0); ctx.fill();
       ctx.fillStyle="rgba(255,255,255,.22)"; ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); ctx.lineTo(cx,cy); ctx.lineTo(pts[n-1][0],pts[n-1][1]); ctx.closePath(); ctx.fill(); }
     if(r()<.5){ ctx.strokeStyle="#9a7b3c"; ctx.lineWidth=2; ctx.beginPath(); const bx=X+T*(.2+r()*.5), by=Y+T*(.3+r()*.4); ctx.moveTo(bx,by); ctx.lineTo(bx+T*.25,by+T*.08); ctx.stroke(); } });
+
+
+  // 4b. pontili di legno
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="=") return; const hz = K(x-1,y)==="=" || K(x+1,y)==="=" || !(K(x,y-1)==="=" || K(x,y+1)==="=") && !WATER(K(x-1,y));
+    const wet=isWet(x,y);
+    if(wet){ ctx.fillStyle="rgba(0,0,0,.35)"; ctx.fillRect(X+3,Y+4,T,T); }
+    ctx.fillStyle="#7a5a3c"; ctx.fillRect(X,Y,T,T);
+    ctx.strokeStyle="rgba(35,22,12,.55)"; ctx.lineWidth=1;
+    for(let i=1;i<6;i++){ ctx.beginPath(); if(hz){ ctx.moveTo(X+i*T/6,Y); ctx.lineTo(X+i*T/6,Y+T); } else { ctx.moveTo(X,Y+i*T/6); ctx.lineTo(X+T,Y+i*T/6); } ctx.stroke(); }
+    for(let i=0;i<6;i++){ ctx.fillStyle=`rgba(255,230,180,${r()*.08})`; hz ? ctx.fillRect(X+i*T/6+1,Y,T/6-2,T) : ctx.fillRect(X,Y+i*T/6+1,T,T/6-2); }
+    if(wet){ ctx.fillStyle="#4a3424"; [[.08,.08],[.92,.08],[.08,.92],[.92,.92]].forEach(([a,b])=>{ ctx.beginPath(); ctx.arc(X+a*T,Y+b*T,T*.06,0,7); ctx.fill(); }); } });
+
+  // 4c. rocce
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="m") return;
+    blob(X+T/2,Y+T*.6,T*.6,"#3a3a32",.6);
+    for(let i=0;i<3;i++){ const cx=X+T*(.25+r()*.5), cy=Y+T*(.3+r()*.45), s=T*(.2+r()*.12), n=6, pts=[];
+      for(let j=0;j<n;j++){ const a=j/n*6.283+r()*.4, d=s*(.75+r()*.35); pts.push([cx+Math.cos(a)*d, cy+Math.sin(a)*d*.75]); }
+      const poly=(ox,oy)=>{ ctx.beginPath(); pts.forEach(([px,py],j)=>j?ctx.lineTo(px+ox,py+oy):ctx.moveTo(px+ox,py+oy)); ctx.closePath(); };
+      ctx.fillStyle="rgba(0,0,0,.4)"; poly(3,4); ctx.fill(); ctx.fillStyle="#77736a"; poly(0,0); ctx.fill();
+      ctx.fillStyle="#9a958a"; ctx.beginPath(); ctx.moveTo(pts[3][0],pts[3][1]); ctx.lineTo(pts[4][0],pts[4][1]); ctx.lineTo(pts[5][0],pts[5][1]); ctx.lineTo(cx,cy); ctx.closePath(); ctx.fill();
+      ctx.fillStyle="#565249"; ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); ctx.lineTo(pts[1][0],pts[1][1]); ctx.lineTo(pts[2][0],pts[2][1]); ctx.lineTo(cx,cy); ctx.closePath(); ctx.fill();
+      ctx.fillStyle="rgba(110,140,70,.5)"; ctx.fillRect(cx-s*.3,cy-s*.55,3,2); } });
+
+  // 4d. casse del porto
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="k") return;
+    const box=(bx,by,s)=>{ ctx.fillStyle="rgba(0,0,0,.4)"; ctx.fillRect(bx+3,by+4,s,s);
+      ctx.fillStyle="#9a7346"; ctx.fillRect(bx,by,s,s); ctx.strokeStyle="#5a3e22"; ctx.lineWidth=2; ctx.strokeRect(bx+1,by+1,s-2,s-2);
+      ctx.beginPath(); ctx.moveTo(bx+2,by+2); ctx.lineTo(bx+s-2,by+s-2); ctx.stroke();
+      ctx.fillStyle="rgba(255,235,190,.18)"; ctx.fillRect(bx+2,by+2,s-4,2); };
+    box(X+T*.1,Y+T*.38,T*.46); box(X+T*.46,Y+T*.12,T*.4); if(r()<.5) box(X+T*.52,Y+T*.56,T*.34); });
+
+  // 4e. cristalli d'etere
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="c") return;
+    blob(X+T/2,Y+T*.6,T*.55,"#2e4a48",.7);
+    for(let i=0;i<4;i++){ const bx=X+T*(.22+r()*.56), by=Y+T*(.55+r()*.3), h=T*(.22+r()*.25), w=T*(.07+r()*.05), lean=(r()-.5)*T*.15;
+      ctx.fillStyle="rgba(0,0,0,.3)"; ctx.beginPath(); ctx.ellipse(bx+3,by+2,w*1.4,w*.6,0,0,7); ctx.fill();
+      ctx.fillStyle="#3fb8b0"; ctx.beginPath(); ctx.moveTo(bx-w,by); ctx.lineTo(bx-w+lean,by-h); ctx.lineTo(bx+lean,by-h-w*1.4); ctx.lineTo(bx+w+lean,by-h); ctx.lineTo(bx+w,by); ctx.closePath(); ctx.fill();
+      ctx.fillStyle="#a8fff4"; ctx.beginPath(); ctx.moveTo(bx-w,by); ctx.lineTo(bx-w+lean,by-h); ctx.lineTo(bx+lean,by-h-w*1.4); ctx.lineTo(bx+lean*.5,by); ctx.closePath(); ctx.fill(); }
+    lights.push([X+T/2,Y+T*.5,T*1.1,"#60f0e0",.3]); });
+
+  // 4f. lampioni
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="L") return; const px=X+T*.78, py=Y+T*.2;
+    ctx.fillStyle="rgba(0,0,0,.35)"; ctx.beginPath(); ctx.ellipse(px+4,Y+T*.86,T*.1,T*.04,0,0,7); ctx.fill();
+    ctx.fillStyle="#2a2620"; ctx.fillRect(px-1.5,py,3,T*.66); ctx.fillStyle="#c9a24f"; ctx.fillRect(px-4,py-2,8,3);
+    ctx.fillStyle="#ffe49a"; ctx.beginPath(); ctx.arc(px,py-6,4.5,0,7); ctx.fill(); ctx.strokeStyle="#5a4a2a"; ctx.lineWidth=1; ctx.stroke();
+    lights.push([px,py-6,T*1.4,"#ffc060",.4]); });
 
   // 5. binari e ponti
   tiles((x,y,k,X,Y,r)=>{ if(k!=="b") return;
@@ -352,16 +856,52 @@ function drawMap(){
   tiles((x,y,k,X,Y,r)=>{ if(k!=="X") return;
     const front = K(x,y+1)!=="X", fh = front ? T*.36 : 0;
     ctx.fillStyle="#3b3842"; ctx.fillRect(X,Y,T,T-fh);
-    for(let row=0; row*T/5 < T-fh; row++){ const ry=Y+row*T/5; ctx.fillStyle=row%2?"#45414d":"#4b4754"; ctx.fillRect(X,ry,T,T/5-1);
+    for(let row=0; row*T/5 < T-fh; row++){ const ry=Y+row*T/5; ctx.fillStyle=row%2?"#4f4a58":"#575262"; ctx.fillRect(X,ry,T,T/5-1);
       ctx.fillStyle="rgba(0,0,0,.25)"; for(let i=(row%2)*T/8;i<T;i+=T/4) ctx.fillRect(X+i,ry,1,T/5-1); }
-    if(K(x-1,y)!=="X"){ ctx.fillStyle="rgba(255,255,255,.1)"; ctx.fillRect(X,Y,2,T-fh); }
+    ctx.fillStyle="#9c7c42"; if(K(x,y-1)!=="X") ctx.fillRect(X,Y,T,2.5); if(K(x-1,y)!=="X") ctx.fillRect(X,Y,2.5,T-fh); if(K(x+1,y)!=="X") ctx.fillRect(X+T-2.5,Y,2.5,T-fh);
+    if(K(x-1,y)!=="X"){ ctx.fillStyle="rgba(255,255,255,.1)"; ctx.fillRect(X+2.5,Y,2,T-fh); }
     if(K(x+1,y)!=="X"){ ctx.fillStyle="rgba(0,0,0,.3)"; ctx.fillRect(X+T-3,Y,3,T-fh); }
     if(front){ const fy=Y+T-fh; ctx.fillStyle="#6b4536"; ctx.fillRect(X,fy,T,fh);
       ctx.fillStyle="rgba(30,15,10,.45)"; for(let row=0;row<3;row++){ ctx.fillRect(X,fy+row*fh/3,T,1); for(let i=(row%2)*T/8;i<T;i+=T/4) ctx.fillRect(X+i,fy+row*fh/3,1,fh/3); }
       ctx.fillStyle="#b08d4a"; ctx.fillRect(X,fy,T,2.5);
       const wx=X+T*.36, wy=fy+fh*.28; ctx.fillStyle="#2a1c14"; ctx.fillRect(wx-1,wy-1,T*.28+2,fh*.5+2);
       const wg=ctx.createLinearGradient(0,wy,0,wy+fh*.5); wg.addColorStop(0,"#ffd98a"); wg.addColorStop(1,"#e0892e"); ctx.fillStyle=wg; ctx.fillRect(wx,wy,T*.28,fh*.5);
-      ctx.globalCompositeOperation="lighter"; blob(wx+T*.14, wy+fh*.3, T*.5, "#ffb050", .25); ctx.globalCompositeOperation="source-over"; } });
+      lights.push([wx+T*.14, wy+fh*.3, T*.7, "#ffb050", .3]); } });
+
+
+  // 6b. case con tetto di coppi
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="H") return;
+    const front = K(x,y+1)!=="H", fh = front ? T*.4 : 0, roofH=T-fh;
+    const g=ctx.createLinearGradient(0,Y,0,Y+roofH); g.addColorStop(0,"#a24a32"); g.addColorStop(.5,"#8a3b28"); g.addColorStop(1,"#6a2c1e");
+    ctx.fillStyle=g; ctx.fillRect(X,Y,T,roofH);
+    ctx.strokeStyle="rgba(40,12,6,.35)"; ctx.lineWidth=1;
+    for(let row=0; row*T/6<roofH; row++){ ctx.beginPath(); ctx.moveTo(X,Y+row*T/6); ctx.lineTo(X+T,Y+row*T/6); ctx.stroke();
+      for(let i=(row%2)*T/10;i<T;i+=T/5){ ctx.beginPath(); ctx.moveTo(X+i,Y+row*T/6); ctx.lineTo(X+i,Y+row*T/6+T/6); ctx.stroke(); } }
+    if(K(x,y-1)!=="H"){ ctx.fillStyle="#c66a4a"; ctx.fillRect(X,Y,T,2.5); }
+    if(K(x-1,y)!=="H"){ ctx.fillStyle="rgba(255,255,255,.12)"; ctx.fillRect(X,Y,2,roofH); }
+    if(K(x+1,y)!=="H"){ ctx.fillStyle="rgba(0,0,0,.3)"; ctx.fillRect(X+T-3,Y,3,roofH); }
+    if(front){ const fy=Y+roofH; ctx.fillStyle="#cdbb92"; ctx.fillRect(X,fy,T,fh);
+      ctx.fillStyle="#5a3e26"; ctx.fillRect(X,fy,T,3); ctx.fillRect(X,fy+fh-3,T,3); ctx.fillRect(X+2,fy,3,fh); ctx.fillRect(X+T-5,fy,3,fh);
+      if((x+y)%2===0){ ctx.fillStyle="#4a2e1a"; ctx.fillRect(X+T*.4,fy+fh*.25,T*.22,fh*.75-3); }
+      else { const wx=X+T*.32, wy=fy+fh*.28, ww=T*.34, wh=fh*.42; ctx.fillStyle="#3a2414"; ctx.fillRect(wx-1,wy-1,ww+2,wh+2);
+        ctx.fillStyle=TH.night?"#ffd27a":"#9fc2cf"; ctx.fillRect(wx,wy,ww,wh); ctx.fillStyle="#3a2414"; ctx.fillRect(wx+ww/2-.5,wy,1,wh);
+        if(TH.night) lights.push([wx+ww/2,wy+wh/2,T*.9,"#ffb050",.35]); } } });
+  tiles((x,y,k,X,Y)=>{ if(k!=="H") return;
+    if(K(x+1,y)!=="H" && inMap(x+1,y)){ const g=ctx.createLinearGradient(X+T,0,X+T*1.3,0); g.addColorStop(0,"rgba(0,0,0,.35)"); g.addColorStop(1,"rgba(0,0,0,0)"); ctx.fillStyle=g; ctx.fillRect(X+T,Y+T*.15,T*.3,T); }
+    if(K(x,y+1)!=="H" && inMap(x,y+1)){ const g=ctx.createLinearGradient(0,Y+T,0,Y+T*1.25); g.addColorStop(0,"rgba(0,0,0,.35)"); g.addColorStop(1,"rgba(0,0,0,0)"); ctx.fillStyle=g; ctx.fillRect(X+T*.1,Y+T,T,T*.25); } });
+
+  // 6c. radici giganti
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="T") return;
+    const cx=X+T/2, cy=Y+T/2;
+    ctx.strokeStyle="#3a2a1e"; ctx.lineWidth=T*.16;
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{ if(K(x+dx,y+dy)==="T"){ ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+dx*T,cy+dy*T); ctx.stroke(); } });
+    ctx.fillStyle="rgba(0,0,0,.45)"; ctx.beginPath(); ctx.ellipse(cx+4,cy+6,T*.5,T*.42,0,0,7); ctx.fill();
+    const g=ctx.createRadialGradient(cx-T*.15,cy-T*.15,2,cx,cy,T*.5); g.addColorStop(0,"#7a5a3e"); g.addColorStop(.7,"#5a4030"); g.addColorStop(1,"#3a2a1e");
+    ctx.fillStyle=g; ctx.beginPath();
+    for(let j=0;j<10;j++){ const a=j/10*6.283, d=T*(.42+r()*.1); j?ctx.lineTo(cx+Math.cos(a)*d,cy+Math.sin(a)*d):ctx.moveTo(cx+Math.cos(a)*d,cy+Math.sin(a)*d); } ctx.closePath(); ctx.fill();
+    ctx.strokeStyle="rgba(30,18,10,.5)"; ctx.lineWidth=1.2; for(let i=0;i<4;i++){ ctx.beginPath(); ctx.arc(cx,cy,T*(.1+i*.08),r()*3,r()*3+2.5); ctx.stroke(); }
+    ctx.fillStyle="rgba(110,160,80,.7)"; for(let i=0;i<5;i++){ ctx.beginPath(); ctx.arc(cx+(r()-.5)*T*.6, cy-T*.2+(r()-.5)*T*.3, T*(.04+r()*.04),0,7); ctx.fill(); }
+    if(r()<.4){ ctx.fillStyle="#8ff5ea"; ctx.beginPath(); ctx.arc(cx+T*.25,cy+T*.2,2,0,7); ctx.fill(); lights.push([cx+T*.25,cy+T*.2,T*.5,"#60f0e0",.25]); } });
 
   // 7. ombre portate (luce da in alto a sinistra)
   tiles((x,y,k,X,Y)=>{ if(k!=="X") return;
@@ -378,7 +918,7 @@ function drawMap(){
     const g=ctx.createRadialGradient(cx,cy+R*.1,1,cx,cy,R*.55); g.addColorStop(0,"#fff1b0"); g.addColorStop(.4,"#ffad3d"); g.addColorStop(1,"#a8361c");
     ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,R*.52,0,7); ctx.fill();
     for(let i=0;i<4;i++){ ctx.fillStyle=`rgba(120,115,110,${.35-i*.07})`; ctx.beginPath(); ctx.arc(cx+T*(.12+i*.1), Y+T*(.12-i*.06)+4, T*(.09+i*.04), 0, 7); ctx.fill(); }
-    ctx.globalCompositeOperation="lighter"; blob(cx,cy,T*1.5,"#ff8a2a",.32); ctx.globalCompositeOperation="source-over"; });
+    lights.push([cx,cy,T*1.5,"#ff8a2a",.32]); });
 
   // 9. alberi, ordinati dall'alto in basso per la profondità
   const trees=[]; tiles((x,y,k,X,Y,r)=>{ if(k!=="f") return; const n=2+(r()<.6?1:0);
@@ -393,6 +933,12 @@ function drawMap(){
     ctx.fillStyle="#76a356"; parts.forEach(([px,py,pr])=>{ ctx.beginPath(); ctx.arc(px-pr*.35,py-pr*.38,pr*.32,0,7); ctx.fill(); });
     ctx.fillStyle="rgba(200,230,150,.35)"; ctx.beginPath(); ctx.arc(cx-s*.5,cy-s*.7,s*.12,0,7); ctx.fill(); });
 
+  // 9b. nebbia della foresta e raggi di luce
+  if(TH.mist){ const rr=rnd(99); for(let i=0;i<COLS*ROWS/6;i++) blob(rr()*MW, rr()*MH, T*(1+rr()*1.5), "#cfe8d0", .07);
+    ctx.globalCompositeOperation="lighter"; for(let i=0;i<4;i++){ const bx=rr()*MW; const g=ctx.createLinearGradient(bx,0,bx+MH*.5,MH); g.addColorStop(0,"rgba(255,240,180,.10)"); g.addColorStop(1,"rgba(255,240,180,0)");
+      ctx.fillStyle=g; ctx.beginPath(); ctx.moveTo(bx,0); ctx.lineTo(bx+T*1.2,0); ctx.lineTo(bx+T*1.2+MH*.5,MH); ctx.lineTo(bx+MH*.5,MH); ctx.closePath(); ctx.fill(); } ctx.globalCompositeOperation="source-over"; }
+  if(TH.night){ ctx.fillStyle="rgba(10,16,44,.55)"; ctx.fillRect(0,0,MW,MH); }
+  ctx.globalCompositeOperation="lighter"; lights.forEach(([lx,ly,lr,lc,la])=>blob(lx,ly,lr,lc,TH.night?la*1.6:la)); ctx.globalCompositeOperation="source-over";
   // 10. luce calda da sinistra, ombra fredda a destra, vignettatura
   const lg=ctx.createLinearGradient(0,0,MW,MH); lg.addColorStop(0,"rgba(255,214,150,.12)"); lg.addColorStop(.55,"rgba(0,0,0,0)"); lg.addColorStop(1,"rgba(15,25,55,.25)");
   ctx.fillStyle=lg; ctx.fillRect(0,0,MW,MH);
@@ -409,8 +955,9 @@ function fit(){
   const aw = wrap.clientWidth - 4, ah = narrow ? 9999 : wrap.clientHeight - 4;
   T = Math.max(narrow ? 34 : 22, Math.floor(Math.min(aw/COLS, ah/ROWS, 64)));
   board.style.width = COLS*T+"px"; board.style.height = ROWS*T+"px";
-  drawMap(); renderUnits(); renderRanges(); renderDanger();
+  drawMap(); renderGoal(); renderUnits(); renderRanges(); renderDanger();
 }
+function renderGoal(){ const L=$("#lGoal"); L.innerHTML=""; const g=CH&&CH.goal; if(g && g.type==="reach") L.appendChild(cellDiv(g.tile[0],g.tile[1],"goal")); }
 
 /* ============================== RITRATTI ============================== */
 let PID = 0;
@@ -549,7 +1096,7 @@ function renderDanger(){
   for(const k of all){ const [x,y]=k.split(",").map(Number); L.appendChild(cellDiv(x,y,"dz")); }
 }
 function targets(u, m){
-  if(m==="heal") return alive("ally").filter(o=>o!==u && o.hp<o.st.hp && dist(o,u)===1);
+  if(m==="heal") return alive("ally").filter(o=>o!==u && o.hp<o.st.hp && inRange(u,u.x,u.y,o.x,o.y));
   return alive(u.team==="ally"?"enemy":"ally").filter(o=>inRange(u,u.x,u.y,o.x,o.y));
 }
 
@@ -558,7 +1105,7 @@ function tri(a, b){ // vantaggio del triangolo: +1, 0, -1
   const ta=W(a).t, tb=W(b).t; if(BEATS[ta]===tb) return 1; if(BEATS[tb]===ta) return -1; return 0; }
 function calc(a, b, ax=a.x, ay=a.y){
   const wa=W(a), tA=ter(ax,ay), tB=ter(b.x,b.y), t=tri(a,b);
-  const mt = (wa.eff==="arm" && b.move==="arm") ? wa.mt*3 : wa.mt;
+  const mt = ((wa.eff==="arm" && b.move==="arm") || (wa.eff==="fly" && b.move==="fly")) ? wa.mt*3 : wa.mt;
   const atk = (wa.mag? a.st.mag : a.st.for) + mt + t;
   const def = (wa.mag? b.st.res : b.st.def) + tB.d;
   const dmg = Math.max(0, atk-def);
@@ -575,7 +1122,7 @@ function forecast(a, b){
   return {A, B, counter};
 }
 const roll2 = () => (Math.random()*100 + Math.random()*100)/2; // colpo "vero": media di due tiri
-const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const sleep = ms => new Promise(r=>setTimeout(r,ms*SPEED));
 function log(t){ const L=$("#log"); L.insertAdjacentHTML("afterbegin", `<div>${t}</div>`); }
 function floatText(u, txt, color){
   const d=document.createElement("div"); d.className="float"; d.textContent=txt; d.style.color=color;
@@ -609,7 +1156,7 @@ async function fight(a, b){
 }
 async function defeat(u){
   const el=$("#u_"+u.id); if(el){ el.style.transition="opacity .5s"; el.style.opacity="0"; } await sleep(450);
-  if(u.team==="ally") log(`<b>${u.name}</b> è ferito e si ritira dalla battaglia.`); else log(`${u.name} è sconfitto.`);
+  if(u.team==="ally") log(`<b>${u.name}</b> è ferito e si ritira dalla battaglia.`); else log(u.retreat ? `<b>${u.name}</b> è battuto e si ritira.` : `${u.name} è sconfitto.`);
   renderUnits(); renderDanger();
 }
 async function gainExp(u, g){
@@ -675,17 +1222,19 @@ function showForecast(a, b){
   </div>`);
   $("#fcOk").focus();
   $("#fcNo").onclick=()=>{ closeOverlay(); };
-  $("#fcOk").onclick=async()=>{ closeOverlay(); const u=sel; mode="busy"; renderRanges(); await fight(u,b); if(!ended) finishAct(u); };
+  $("#fcOk").onclick=async()=>{ closeOverlay(); const u=sel; mode="busy"; renderRanges();
+    if(b.quote && !b.quoted){ b.quoted=true; await storyP([[b.id, b.quote]]); }
+    await fight(u,b); if(!ended) finishAct(u); };
 }
 async function doHeal(u, t){
   const h = Math.min(W(u).heal + u.st.mag, t.st.hp - t.hp); t.hp += h; floatText(t, "+"+h, "#8de08f");
-  log(`${u.name} cura ${t.name}: +${h} PV.`); renderUnits(); await sleep(300); await gainExp(u, 12); finishAct(u);
+  log(`${u.name} cura ${t.name}: +${h} PV.`); renderUnits(); await sleep(300); await gainExp(u, 20); finishAct(u);
 }
 
 /* ============================== FLUSSO DEL TURNO ============================== */
 function finishAct(u){
   u.acted = true; sel=null; origin=null; mode="idle"; reach=null; closeMenu(); renderUnits(); renderRanges(); renderDanger(); showInfo(u);
-  checkEnd(); if(!ended && alive("ally").every(a=>a.acted)) setTimeout(endPlayerPhase, 350);
+  checkEnd(); if(!ended && alive("ally").every(a=>a.acted)) setTimeout(endPlayerPhase, 350*SPEED);
 }
 function cancel(){
   if(busy || phase!=="player") return;
@@ -712,7 +1261,9 @@ async function onCell(x,y){
   if(mode==="target"){ const t=targets(sel,"target").find(o=>o.x===x&&o.y===y); if(t) showForecast(sel,t); return; }
   if(mode==="heal"){ const t=targets(sel,"heal").find(o=>o.x===x&&o.y===y); if(t){ mode="busy"; renderRanges(); await doHeal(sel,t); } return; }
 }
-function setPhase(){ const p=$("#phase"); p.className="phase "+(phase==="player"?"p":"e"); p.textContent=`Turno ${turn} · ${phase==="player"?"Giocatore":"Nemico"}`; }
+function setPhase(){ const p=$("#phase"); p.className="phase "+(phase==="player"?"p":"e");
+  const g=CH&&CH.goal, lim = g ? (g.type==="survive" ? g.turns : g.limit) : 0;
+  p.textContent=`Turno ${turn}${lim?"/"+lim:""} · ${phase==="player"?"Giocatore":"Nemico"}`; }
 async function banner(txt, cls){ const b=document.createElement("div"); b.className="banner "+cls; b.textContent=txt; document.body.appendChild(b); await sleep(1150); b.remove(); }
 function fornaceHeal(team){
   for(const u of alive(team)){ const t=ter(u.x,u.y); if(t.heal && u.hp<u.st.hp){ const h=Math.min(Math.ceil(u.st.hp*t.heal),u.st.hp-u.hp); u.hp+=h; floatText(u,"+"+h,"#8de08f"); } }
@@ -721,76 +1272,169 @@ function fornaceHeal(team){
 async function endPlayerPhase(){
   if(busy || ended || phase!=="player") return;
   sel=null; mode="idle"; closeMenu(); renderRanges(); phase="enemy"; setPhase(); busy=true;
-  await banner("Fase nemica","e"); fornaceHeal("enemy");
+  await banner("Fase nemica","e"); await runEvents("enemy"); fornaceHeal("enemy");
   for(const e of alive("enemy")){ if(ended) break; await enemyAct(e); }
   busy=false; if(ended) return;
+  const g=CH.goal;
+  if(g.type==="survive" && turn>=g.turns){ victory(); return; }
+  if(g.type==="reach" && g.limit && turn>=g.limit){ ended=true; endScreen(false, "Troppo tardi: non siete arrivati in tempo."); return; }
   turn++; phase="player"; for(const u of units) u.acted=false; setPhase(); renderUnits(); renderDanger();
-  await banner("Fase del giocatore","p"); fornaceHeal("ally");
+  await banner("Fase del giocatore","p"); await runEvents("player"); fornaceHeal("ally");
 }
 async function enemyAct(e){
   if(e.hp<=0) return;
   const foes = alive("ally"); if(!foes.length) return;
-  const opts = e.ai==="stay" ? [{x:e.x,y:e.y}] : reachable(e);
+  const ai = (e.wake && turn>=e.wake) ? "attack" : e.ai;
+  const opts = ai==="stay" ? [{x:e.x,y:e.y}] : reachable(e);
+  if(W(e).staff){ // guaritore: cura il compagno più ferito che riesce a raggiungere
+    let best=null;
+    for(const t of opts) for(const o of alive("enemy")){ if(o===e || o.hp>=o.st.hp || Math.abs(t.x-o.x)+Math.abs(t.y-o.y)!==1) continue;
+      const miss=o.st.hp-o.hp; if(!best || miss>best.miss) best={t,o,miss}; }
+    if(best){ e.x=best.t.x; e.y=best.t.y; renderUnits(); await sleep(300);
+      const h=Math.min(W(e).heal+e.st.mag, best.miss); best.o.hp+=h; floatText(best.o,"+"+h,"#8de08f"); log(`${e.name} cura ${best.o.name}: +${h} PV.`); renderUnits(); await sleep(250); }
+    return;
+  }
   let best=null;
   for(const t of opts) for(const f of foes){ if(!inRange(e,t.x,t.y,f.x,f.y)) continue;
     const ox=e.x, oy=e.y; e.x=t.x; e.y=t.y; const fc=forecast(e,f); e.x=ox; e.y=oy;
     const exp = fc.A.hit/100*fc.A.dmg*(fc.A.dbl?2:1); const kill = fc.A.dmg*(fc.A.dbl?2:1) >= f.hp ? 40 : 0;
     const back = fc.counter ? fc.B.hit/100*fc.B.dmg*(fc.B.dbl?2:1) : 0;
-    const s = exp + kill - back*0.6 + ter(t.x,t.y).a*0.05 + (f.leader?3:0);
+    const s = exp + kill - back*0.6 + ter(t.x,t.y).a*0.05 + (f.leader?3:0) + (W(f).staff?2:0);
     if(!best || s>best.s) best={s,t,f}; }
-  // "range": aspetta finché qualcuno entra nella sua portata con il movimento
   if(!best){
-    if(e.ai!=="attack") return;
-    // si avvicina al bersaglio più vicino lungo un percorso valido
-    let tgt=null, bd=1e9; for(const f of foes){ const d=dist(e,f); if(d<bd){bd=d;tgt=f;} }
-    let step=null, sd=1e9; for(const t of opts){ const d=Math.abs(t.x-tgt.x)+Math.abs(t.y-tgt.y); if(d<sd){sd=d;step=t;} }
-    if(step){ e.x=step.x; e.y=step.y; renderUnits(); await sleep(320); }
+    if(ai!=="attack") return;
+    // si avvicina al bersaglio più vicino (distanza a piedi, non in linea d'aria)
+    const dmap = distField(e, foes); let step=null, sd=1e9;
+    for(const t of opts){ const d=dmap.get(t.x+","+t.y) ?? 1e6; if(d<sd){sd=d;step=t;} }
+    if(step && (step.x!==e.x || step.y!==e.y)){ e.x=step.x; e.y=step.y; renderUnits(); await sleep(320); }
     return;
   }
   sel=e; showInfo(e);
   if(best.t.x!==e.x || best.t.y!==e.y){ e.x=best.t.x; e.y=best.t.y; renderUnits(); await sleep(320); }
   await fight(e, best.f); sel=null; checkEnd(); await sleep(150);
 }
-function checkEnd(){
-  if(ended) return;
-  const boss = units.find(u=>u.boss); const leader = units.find(u=>u.leader);
-  if(boss.hp<=0){ ended=true; setTimeout(()=>story(VICTORY, ()=>endScreen(true)), 500); }
-  else if(leader.hp<=0){ ended=true; setTimeout(()=>endScreen(false), 500); }
-}
-function endScreen(win){
-  overlay(`<div class="end" role="dialog"><h2>${win?"Vittoria":"Sconfitta"}</h2>
-    <p>${win?`La fonderia è vostra. Turni impiegati: ${turn}.<br>Questo è solo il prologo: il resto della campagna arriverà nei prossimi capitoli.`:"Giova è caduto: la Compagnia si ritira tra il fumo della fonderia."}</p>
-    <button class="btn primary" id="again">Gioca di nuovo</button></div>`, true);
-  $("#again").onclick=()=>{ closeOverlay(); start(); };
+// distanza di cammino da ogni casella al nemico più vicino (ignora le unità, rispetta il terreno)
+function distField(u, targets){
+  const D=new Map(), q=[]; for(const t of targets){ D.set(t.x+","+t.y,0); q.push([t.x,t.y,0]); }
+  while(q.length){ q.sort((a,b)=>a[2]-b[2]); const [x,y,c]=q.shift(); if(c>(D.get(x+","+y)??1e9)) continue;
+    for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx=x+dx, ny=y+dy; if(!inMap(nx,ny)) continue;
+      const cost=ter(x,y).c[u.move]; if(cost>=99) continue; const nc=c+cost, k=nx+","+ny;
+      if(nc < (D.get(k)??1e9)){ D.set(k,nc); q.push([nx,ny,nc]); } } }
+  return D;
 }
 
-/* ============================== STORIA ============================== */
-const INTRO = [
-  ["giova","La fonderia di Corvara. Ho contato le guardie due volte: sette, più il capitano. Se giochiamo bene, nessuno di noi si fa male."],
-  ["lethy","Sette soltanto? A casa avevamo più camerieri. Possiamo sfidarli a duello uno alla volta, vero?"],
-  ["wata","Lethy... non funziona così. Prospy, resta vicina a me: là dentro l'etere è triste, lo sento."],
-  ["mars","Io invece sono curiosissima: una fornace a etere! Chi si ferisce venga da me, ho un elisir nuovo da provare. Funziona quasi sicuramente."],
-  ["giova","Quasi? ...Va bene. Compagnia della Brace, si punta alla fornace. Scelta ottimale, rischio calcolato."],
-];
-const VICTORY = [
-  ["boss","Credete di aver vinto? Quei cristalli non sono pietre. Chiedete al vostro committente cosa c'è dentro..."],
-  ["wata","Giova... il cristallo è caldo. Prospy gli soffia contro, come se dentro respirasse qualcosa."],
-  ["mars","Posso tenerne un frammento? Solo per studiarlo. Promesso."],
-  ["lethy","Se vale tanto, mio padre ne comprerebbe una cassa. Ah, forse non è il momento."],
-  ["giova","Lo portiamo via tutto. E poi il nostro committente ci deve delle risposte."],
-];
+/* ============================== CAPITOLI ============================== */
+const SAVE_KEY = "cieli-di-ottone-v1";
+let firedEvents = new Set(), chapterStartParty = null;
+function loadSave(){ try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY)||"null"); return s && s.v===1 ? s : null; }catch(e){ return null; } }
+function writeSave(next){ try{ const old=loadSave(); localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, next, party, best:Math.max(next, old?.best||0)})); }catch(e){} }
+function setupChapter(i){
+  CHI=i; CH=CHAPTERS[i]; MAP=CH.map; ROWS=MAP.length; COLS=MAP[0].length; UID=0;
+  chapterStartParty = clone(party); units=[];
+  PARTY_ORDER.forEach((id,k)=>{ const b=PARTY_BASE[id], p=party[id], d=CH.deploy[k]; if(!d) return;
+    units.push(mkUnit(Object.assign(clone(b), {team:"ally", lv:p.lv, exp:p.exp, st:clone(p.st), items:clone(p.items), w:p.w, x:d[0], y:d[1]}))); });
+  if(CH.guests) units.push(...CH.guests());
+  units.push(...CH.enemies());
+  units.forEach(u=>u.hp=u.st.hp);
+  firedEvents=new Set(); won=false; turn=1; phase="player"; busy=false; sel=null; mode="idle"; reach=null; ended=false; dangerOn=false;
+  $("#bDanger").classList.remove("on");
+  $("#chap").textContent=CH.title; $("#goalTxt").textContent=CH.goal.text;
+  $("#log").innerHTML="<div>Il registro della battaglia apparirà qui.</div>"; setPhase(); fit(); showInfo(null);
+}
+async function playChapter(i){
+  closeOverlay(); setupChapter(i);
+  await storyP(CH.intro); await runEvents("player"); await banner("Fase del giocatore","p");
+}
+function freeTileNear(u, x, y){
+  for(let r=0;r<8;r++) for(let dx=-r;dx<=r;dx++) for(const dy of r-Math.abs(dx) ? [r-Math.abs(dx), -(r-Math.abs(dx))] : [0]){
+    const nx=x+dx, ny=y+dy; if(inMap(nx,ny) && ter(nx,ny).c[u.move]<99 && !at(nx,ny)) return {x:nx,y:ny}; }
+  return null;
+}
+async function runEvents(ph){
+  for(const ev of (CH.events||[])){ if(ev.turn!==turn || ev.phase!==ph || firedEvents.has(ev)) continue;
+    firedEvents.add(ev);
+    if(ev.lines && ev.lines.length) await storyP(ev.lines);
+    if(ev.spawn){ let n=0; for(const u of ev.spawn()){ const p=freeTileNear(u,u.x,u.y); if(!p) continue; u.x=p.x; u.y=p.y; u.hp=u.st.hp; units.push(u); n++; }
+      if(n){ log(`<b>Rinforzi nemici:</b> ${n}.`); renderUnits(); renderDanger(); await sleep(400); } }
+  }
+}
+function pendingSpawns(){ return (CH.events||[]).some(e=>e.spawn && !firedEvents.has(e) && e.turn>=turn); }
+function checkEnd(){
+  if(ended) return;
+  const leader=units.find(u=>u.leader), g=CH.goal, boss=units.find(u=>u.boss);
+  if(!leader || leader.hp<=0){ ended=true; setTimeout(()=>endScreen(false, "Giova è caduto: la Compagnia si ritira."), 500*SPEED); return; }
+  let win=false;
+  if((g.type==="boss" || g.alt==="boss") && boss && boss.hp<=0) win=true;
+  if((g.type==="rout" || g.type==="survive") && !alive("enemy").length && !pendingSpawns()) win=true;
+  if(g.type==="reach" && leader.x===g.tile[0] && leader.y===g.tile[1]) win=true;
+  if(win) victory();
+}
+let won=false;
+function victory(){ if(won) return; won=true; ended=true; setTimeout(()=>storyP(CH.victory).then(chapterComplete), 500*SPEED); }
+function chapterComplete(){
+  // la Compagnia porta con sé livelli, statistiche e oggetti
+  for(const u of units){ if(u.team!=="ally" || u.guest || !party[u.id]) continue;
+    party[u.id] = {lv:u.lv, exp:u.exp, st:clone(u.st), items:clone(u.items), w:u.w}; }
+  const R = CH.reward || {};
+  for(const [id,w] of Object.entries(R.w||{})) if(party[id]) party[id].w = w;
+  for(const [id,n,q] of (R.items||[])){ const it=party[id]?.items; if(!it) continue; const f=it.find(i=>i.n===n); f ? f.q+=q : it.push({n, q}); }
+  writeSave(CHI+1);
+  const next = CHAPTERS[CHI+1];
+  const rows = PARTY_ORDER.map(id=>{ const p=party[id], b=PARTY_BASE[id];
+    return `<tr><td>${b.name}</td><td>Lv ${p.lv}</td><td>PV ${p.st.hp}</td><td>${WEAP[p.w].n}</td></tr>`; }).join("");
+  overlay(`<div class="end" role="dialog" aria-label="Capitolo completato"><h2>Capitolo completato</h2>
+    <p>${CH.title}<br>Turni impiegati: ${turn}</p>
+    ${R.text?`<p class="reward">${R.text}</p>`:""}
+    <table class="party">${rows}</table>
+    <div class="btns" style="justify-content:center;margin-top:14px">
+      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua nei prossimi capitoli: il Pozzo delle Voci aspetta la Compagnia.</p>`}
+      <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
+  if(next) $("#goNext").onclick=()=>playChapter(CHI+1);
+  $("#goTitle").onclick=()=>titleScreen();
+}
+function endScreen(win, why){
+  overlay(`<div class="end" role="dialog"><h2>Sconfitta</h2><p>${why||""}<br>Nessun problema: si riprova il capitolo con i livelli di prima.</p>
+    <div class="btns" style="justify-content:center"><button class="btn primary" id="again">Riprova il capitolo</button><button class="btn" id="goTitle">Titolo</button></div></div>`, true);
+  $("#again").onclick=()=>{ party=clone(chapterStartParty); playChapter(CHI); };
+  $("#goTitle").onclick=()=>{ party=clone(chapterStartParty); titleScreen(); };
+}
+function titleScreen(){
+  const s=loadSave(); if(s && s.party) party=s.party; else party=freshParty();
+  const last=CHAPTERS.length-1, next = s ? Math.min(s.next, last) : 0, done = s && s.next>last;
+  setupChapter(next);
+  overlay(`<div class="end title" role="dialog" aria-label="Titolo"><div class="kicker">La Compagnia della Brace</div><h2>Cieli di Ottone</h2>
+    <p>Un gioco tattico a turni. ${CHAPTERS.length} capitoli scritti finora.</p>
+    <div class="tbtns">
+      ${s && !done ? `<button class="btn primary" id="tCont">Continua · ${CHAPTERS[next].title}</button>` : ""}
+      ${done ? `<p class="reward">Hai completato tutti i capitoli scritti finora. Il seguito è in arrivo.</p>` : ""}
+      <button class="btn ${s && !done?"":"primary"}" id="tNew">Nuova partita</button>
+      ${s ? `<button class="btn" id="tSel">Scegli capitolo</button>` : ""}
+    </div><div id="tList"></div></div>`, true);
+  if($("#tCont")) $("#tCont").onclick=()=>playChapter(next);
+  $("#tNew").onclick=()=>{ party=freshParty(); writeSave(0); playChapter(0); };
+  if($("#tSel")) $("#tSel").onclick=()=>{
+    const best=Math.min(Math.max(s.best||0, s.next), last);
+    $("#tList").innerHTML = CHAPTERS.slice(0,best+1).map((c,i)=>`<button class="btn chbtn" data-i="${i}">${c.title}</button>`).join("");
+    document.querySelectorAll(".chbtn").forEach(b=>b.onclick=()=>playChapter(+b.dataset.i)); };
+}
+
+/* ============================== DIALOGHI ============================== */
+function speaker(id){ const u=units.find(x=>x.id===id); if(u) return u; const n=NPC[id]; return n ? Object.assign({id, team:"ally"}, n) : units[0]; }
 function story(lines, done){
   let i=0;
   const show=()=>{
     if(i>=lines.length){ closeOverlay(); done&&done(); return; }
-    const [id,txt]=lines[i]; const u=units.find(x=>x.id===id) || units[0];
-    overlay(`<div class="dlg" id="dlg" role="dialog" aria-label="Dialogo" tabindex="0"><div class="portrait">${portrait(u)}</div><div style="min-width:0">
+    const [id,txt]=lines[i]; const u=speaker(id);
+    overlay(u.narr
+      ? `<div class="dlg narr" id="dlg" role="dialog" aria-label="Narrazione" tabindex="0"><div style="min-width:0;flex:1"><div class="txt">${txt}</div><div class="hint">Tocca o premi Invio per continuare · Esc per saltare</div></div></div>`
+      : `<div class="dlg" id="dlg" role="dialog" aria-label="Dialogo" tabindex="0"><div class="portrait">${portrait(u)}</div><div style="min-width:0">
       <div class="who">${u.name}</div><div class="txt">${txt}</div><div class="hint">Tocca o premi Invio per continuare · Esc per saltare</div></div></div>`);
     const d=$("#dlg"); d.focus(); d.onclick=()=>{ i++; show(); };
     d.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); i++; show(); } if(e.key==="Escape"){ i=lines.length; show(); } };
   };
   show();
 }
+const storyP = lines => new Promise(res => lines && lines.length ? story(lines, res) : res());
 
 /* ============================== INPUT ============================== */
 function cellFromEvent(e){ const r=board.getBoundingClientRect(); return {x:Math.floor((e.clientX-r.left)/T), y:Math.floor((e.clientY-r.top)/T)}; }
@@ -800,16 +1444,12 @@ board.addEventListener("mousemove", e=>{ const {x,y}=cellFromEvent(e); const c=$
   c.hidden=false; Object.assign(c.style,{left:x*T+"px",top:y*T+"px",width:T+"px",height:T+"px"}); });
 board.addEventListener("mouseleave", ()=>$("#cursor").hidden=true);
 window.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.querySelector(".dlg")) cancel(); });
-$("#bEnd").onclick=()=>{ if(phase==="player" && !busy){ cancel(); endPlayerPhase(); } };
+$("#bEnd").onclick=()=>{ if(phase==="player" && !busy && !ended){ cancel(); endPlayerPhase(); } };
 $("#bCancel").onclick=()=>cancel();
 $("#bDanger").onclick=()=>{ dangerOn=!dangerOn; $("#bDanger").classList.toggle("on",dangerOn); renderDanger(); };
+$("#bMenu").onclick=()=>{ if(!busy){ party=clone(chapterStartParty); titleScreen(); } };
 window.addEventListener("resize", ()=>{ clearTimeout(window.__rz); window.__rz=setTimeout(fit,120); });
 
-function start(){
-  setupUnits(); turn=1; phase="player"; busy=false; sel=null; mode="idle"; reach=null; ended=false;
-  $("#log").innerHTML="<div>Il registro della battaglia apparirà qui.</div>"; setPhase(); fit(); showInfo(null);
-  story(INTRO, ()=>banner("Fase del giocatore","p"));
-}
-start();
+titleScreen();
 </script>
 </body></html>
