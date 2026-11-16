@@ -39,6 +39,8 @@ test("storia e bilanciamento sono quelli del prototipo (capitoli, supporti, prom
   assert.equal(file.length, 16);
   for (const f of file) {
     const a = leggi(tmp, "capitoli/" + f), b = leggi(path.join(RADICE, "dati"), "capitoli/" + f);
+    // i capitoli 13 del prototipo finivano con "il resto arriverà presto": ora il resto c'è, quella riga è stata tolta
+    if (/arriverà presto/.test(a.vittoria.at(-1)[1])) a.vittoria.pop();
     for (const k of campi) assert.deepEqual(b[k], a[k], `${f}: "${k}" è cambiato rispetto al prototipo`);
     assert.deepEqual(b.ricompensa.armi, a.ricompensa.armi, f); assert.deepEqual(b.ricompensa.oggetti, a.ricompensa.oggetti, f);
   }
@@ -118,7 +120,8 @@ test("rotte: dopo il capitolo 12 si prosegue solo sulla rotta scelta", () => {
   const p = nuovaPartita(dati);
   p.bandiere.rotta = "radici";
   assert.equal(capitoloDopo(dati, p, "c12"), "c13r");
-  assert.equal(capitoloDopo(dati, p, "c13r"), null);
+  assert.equal(capitoloDopo(dati, p, "c13r"), "c14r");
+  assert.equal(capitoloDopo(dati, p, "c17r"), null);
   p.completati = ["prologo", "c1"]; p.prossimo = "c2";
   assert.deepEqual(capitoliAperti(dati, p), ["prologo", "c1", "c2"]);
 });

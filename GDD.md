@@ -56,9 +56,21 @@ Gioco tattico a turni su griglia, ispirato ai tattici classici (Radiant Dawn, Th
 | 12 | Ritorno a Fossa Grigia | Resisti 6 turni | Corona e Concilio contro la Compagnia; **scelta della rotta**: Ferrante (Corona), Maelis (Concilio) o Leghe Libere |
 | 13 | La Sovrana / Lucegrande in fiamme / La piazza di Porto Ambra | per rotta | Primo capitolo dell'Atto IV di ciascuna rotta |
 
+### Atto IV, capitoli 14-17 (scritti e giocabili, uno per rotta)
+
+| Cap. | Rotta della Corona (con Ferrante) | Rotta delle Radici (con Maelis) | Rotta delle Leghe Libere |
+|---|---|---|---|
+| 14 | **Il Consiglio della Corona** · raggiungi il portone: Ferrante consegna gli ordini di Strand, Tullo dice i quarantadue nomi | **Alberi alti come torri** · comandante: l'"idea pessima" di Mars, respingere lo sbarco di Dreyl tra gli alberi giganti | **Il cantiere di Fagiolo Secondo** · resisti: la nave storta di Mars va in acqua; Brann passa con la Compagnia |
+| 15 | **L'Incudine** · comandante: abbordaggio della cannoniera che sta per bombardare Cenerossa | **La Tempra** · raggiungi la sala caldaie: si salta su un dirigibile da un albero e Mars lo "addormenta" | **Il primo volo** · comandante: la Capitana Voss arpiona Fagiolo Secondo |
+| 16 | **Galleria nove** · proteggi Odo: il primo Canto del Silenzio, provato su una miniera piena di uomini | **Fondoscuro, di nuovo** · proteggi Erba: stavolta la Compagnia arriva in tempo | **Mantelli verdi a Merlaia** · proteggi Nonna Tessa (e le capre) |
+| 17 | **L'Ufficio dell'Etere** · Strand: la risposta di Giova a "fai il conto, stratega" | **Il Canto del Silenzio** · Arven: smette di cantare e, per la prima volta, ascolta | **Due bandiere** · Dalca: Corona e Concilio marciano insieme, la Compagnia li divide a Fossa Grigia |
+
+Ogni rotta finisce con un gancio per l'Atto V: nella rotta della Corona resta il Canto di Arven, in quella delle Radici la flotta di Strand, in quella delle Leghe tutti e due.
+Nuovi comandanti: il Maggiore Dalca (esegue gli ordini, e lo sa), il Comandante Rauk, il Capitano Dreyl, la Custode Ysolde ("vi sto chiedendo di lasciarle riposare").
+
 Antagonisti con una ragione credibile: **Strand** (Corona, "ogni lampada salva dieci vite"), **Arven** (Concilio, "il Silenzio è pietà"), **Thalen** (Concilio, "le Radici non sono una farmacia"). Personaggi della storia: Ferrante, Maelis, il Signor Grigio, Nonna Tessa, Brann, Erba.
 
-Da scrivere: capitoli 14-17 per ciascuna rotta (battaglie sui dirigibili, Strand e Arven come boss finali a seconda della rotta) e Atto V (18-20) con finali ed epiloghi.
+Da scrivere: Atto V (18-20) con finali ed epiloghi per ogni rotta.
 
 ## 4. Cast
 
@@ -95,6 +107,18 @@ Il cast usa i **nickname** degli amici. Personaggi della Compagnia della Brace g
 | Mars | Capelli corti, ricci e neri; gilet marrone pieno di tasche e fiale, occhialini |
 
 I prompt per generare i ritratti sono in `ritratti/PROMPT_RITRATTI.md`.
+
+### Personaggi che entrano nell'Atto IV (personaggi del mondo, non ispirati ad amici)
+
+Entrano all'inizio del capitolo 14. Nives e Tullo su tutte le rotte; il terzo dipende dalla rotta. Ognuno ha due promozioni e almeno un filo di supporti C/B/A.
+
+| Personaggio | Classe | Voce | Abilità | Supporti |
+|---|---|---|---|---|
+| **Nives** (tutte le rotte) | Corriera del vento · lancia, vola | Spavalda, superstiziosa, generosa. Postina del cielo: non dice mai "cadere", conta in "tacche", chiama Giova "capo conti". Ha consegnato troppe lettere col bordo nero | **Corrente ascendente:** +15 schivata | Lethy (le ali azzurre), Giova (presagi che in realtà sono misure) |
+| **Tullo** (tutte le rotte) | Fuciliere di Cenerossa · polvere | Poche parole, asciutto. Minatore di galleria nove: tiene un quaderno con i quarantadue nomi. Il fratello Berto è sceso al posto suo | **Polso fermo:** +10 precisione, +5 critico | Wata (la voce nella lampada), Mars (la polvere senza cristallo, "Tre Dita") |
+| **Ferrante** (Corona) | Ispettrice · spada | Rigida, tutto regolamento, impara a dire grazie. Ha timbrato per quindici anni registri che non ha letto | **Ordine serrato:** aura, +5 schivata e +5 critico | Giova (gli undici articoli, la sciabola 0417, l'articolo dodici) |
+| **Maelis** (Radici) | Saggia delle Radici · etere e cure | Calma, materna, stanca dei segreti. Sapeva dei cristalli da dodici anni | **Benedizione delle Radici:** cura 3 PV a chi le sta accanto | Wata (nove anni di noviziato contro un gatto; il cristallo che ride) |
+| **Brann** (Leghe) | Capo dei Corvi · ascia | Mercenario simpatico e venale: "niente di personale". Scopre di avere un prezzo sotto cui se ne va | **Niente di personale:** +2 danni, +5 critico | Lethy (le lezioni di contrattazione, la forchetta storta) |
 
 Altri amici si aggiungeranno con la stessa scheda.
 

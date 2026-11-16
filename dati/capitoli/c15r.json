@@ -1,0 +1,90 @@
+{
+  "id": "c15r",
+  "titolo": "Capitolo 15 · La Tempra",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "cielo",
+  "rotta": "radici",
+  "mappa": [
+    "oooooooooooooooo",
+    "ooDDDDDDDDDDDDoo",
+    "oDDDkDDDXXDDkDDo",
+    "oDDDDDDDXXDDDDDo",
+    "=DDDDDDDDDDDDDDo",
+    "=DDDDDDDDDDDDDDo",
+    "oDDDkDDDXXDDkDDo",
+    "oDDDDDDDXXDDDDDo",
+    "ooDDDDDDDDDDDDoo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[0,4],[0,5],[1,4],[1,5],[1,3],[1,6],[2,4]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [14,4],
+    "limite": 9,
+    "testo": "Porta Giova alla sala caldaie a poppa (la casella d'ottone) entro il turno 9, prima che la Tempra si liberi dai rami. Sulla porta c'è il Capomacchinista Horn: non si sposta da solo."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":17,"x":6,"y":4,"ia":"attacca"},
+    {"classe":"Lanciere","lv":17,"x":6,"y":5,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":17,"x":5,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":17,"x":5,"y":7,"ia":"portata"},
+    {"classe":"Corazzato","lv":18,"x":10,"y":4,"ia":"fermo"},
+    {"classe":"Corazzato","lv":18,"x":10,"y":5,"ia":"fermo"},
+    {"classe":"Arciere","lv":17,"x":12,"y":3,"ia":"portata"},
+    {"classe":"Arciere","lv":17,"x":12,"y":6,"ia":"portata"},
+    {"classe":"Lama","lv":18,"x":13,"y":5,"ia":"portata"},
+    {"classe":"Medico","lv":16,"x":13,"y":3,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Guerriero",
+      "nome": "Capomacchinista Horn",
+      "lv": 19,
+      "x": 14,
+      "y": 4,
+      "arma": "martello",
+      "ia": "fermo",
+      "siRitira": true,
+      "bonus": {"hp":18,"def":5,"res":2},
+      "frase": "Nella mia sala caldaie non entra nessuno senza guanti. E voi non avete nemmeno bussato.",
+      "aspetto": {"skin":"#b98a66","hair":"#3a3a3a","style":"bald","coat":"#4a3a2a","beard":"full","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["narr","Uno scossone: un ramo cede. La Tempra si sta liberando."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":17,"x":7,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":7,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":18,"x":15,"y":2,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":15,"y":7,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","All'alba, dalla cima dell'albero più alto delle Radici. Sotto, di un salto, il ponte della Tempra."],
+    ["lethy","Dichiaro ufficialmente che questo non è previsto da nessun torneo."],
+    ["nives","Regola uno: non dite la parola. Regola due: ginocchia morbide. Regola tre: se sbagliate ponte, vi ripesco io. Forse."],
+    ["tullo","In miniera si scende. Questa cosa del salire per poi saltare giù non mi convince."],
+    ["maelis","Le radici terranno la nave ancora per poco. Sento i rami piangere. Se riprende quota, brucerà Lucegrande dall'alto."],
+    ["mars","La sala caldaie è a poppa. Se ci arrivo le faccio bere un mio decotto e la nave si addormenta. Tecnicamente è sabotaggio, ma con ingredienti naturali."],
+    ["giova","Nove turni prima che si liberi. Ponte dritto, paratia al centro, guardie pesanti in mezzo. Arrivo io alla porta delle caldaie, voi apritemi la strada."]
+  ],
+  "vittoria": [
+    ["narr","Giova spalanca la porta della sala caldaie. Mars entra con tre fiale e un sorriso preoccupante."],
+    ["mars","Decotto di radice dormiente, doppia dose. ...Sentite? Le eliche fanno \"mmmh\". Si è addormentata."],
+    ["nives","Una nave della Corona presa da un albero. Quando lo racconto all'ufficio postale non mi credono."],
+    ["maelis","Per la prima volta il Concilio ha una nave. Arven direbbe che è una bestemmia."],
+    ["wata","Le voci dei cristalli nella caldaia... le sto sentendo. Sono stanche. Erano di Fondoscuro."],
+    ["tullo","Fondoscuro. Il villaggio che si curava di nascosto."],
+    ["maelis","E dove Arven è tornato stanotte. I miei esploratori dicono che canta. Giova, se finisce quel canto, quelle voci si spengono per sempre."],
+    ["giova","Allora la Tempra fa il suo primo viaggio per noi. Rotta su Fondoscuro."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "Nella stiva della Tempra: tre tonici e polvere asciutta per Tullo.",
+    "oggetti": [{"a":"tullo","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Siamo saltati sulla Tempra da un albero e Mars l'ha fatta addormentare. Ora il Concilio di Maelis ha una nave."
+}

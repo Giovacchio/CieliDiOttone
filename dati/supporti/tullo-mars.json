@@ -1,0 +1,34 @@
+{
+  "coppia": ["tullo","mars"],
+  "C": [
+    ["mars","Tullo! La tua polvere da sparo. Posso assaggiarla?"],
+    ["tullo","No."],
+    ["mars","Annusarla? Scaldarla un pochino? Mescolarla con la menta?"],
+    ["tullo","No. No. E perché la menta."],
+    ["mars","Perché nessuno l'ha mai provato! Magari spara e rinfresca l'alito al nemico."],
+    ["tullo","In miniera c'era uno come te. Si chiamava Tre Dita."],
+    ["mars","Bel nome! Perché Tre Di... ah."],
+    ["tullo","La polvere sta nel mio sacco. La menta nel tuo. I sacchi non si parlano."]
+  ],
+  "B": [
+    ["mars","Tullo, guarda! Senza toccare la tua polvere. Solo salnitro mio, carbone mio e un po' di etere macinato."],
+    ["tullo","Etere. Macinato. Hai macinato un cristallo."],
+    ["mars","Uno piccolissimo! Era già rotto! ...Perché fai quella faccia?"],
+    ["tullo","In galleria nove facevamo saltare la roccia con le cariche della Corona. Dentro c'era polvere di cristallo. Per farle rendere di più."],
+    ["mars","Oh."],
+    ["tullo","Ogni botto, i vecchi minatori si toglievano il cappello. Non sapevamo perché. Lo facevano e basta."],
+    ["mars","...Lo sentivano. Senza saperlo, lo sentivano."],
+    ["mars","La butto. No: la seppellisco. Con una foglia sopra. Scusa, Tullo. Io provo tutto, ma questo no. Questo non lo provo più."]
+  ],
+  "A": [
+    ["tullo","Mars. Ho provato la tua polvere nuova. Quella senza cristallo."],
+    ["mars","E? E? Dimmi tutto, anche le cose brutte!"],
+    ["tullo","Fa meno fumo. Tira dritto. E sa di menta."],
+    ["mars","LO SAPEVO che la menta c'entrava!"],
+    ["tullo","Trent'anni che sparo con la roba della Corona. È la prima volta che premo il grilletto senza togliermi il cappello."],
+    ["mars","Allora la facciamo per tutti. Per ogni fuciliere delle Leghe. Ricetta aperta, niente segreti: polvere che non brucia nessuno."],
+    ["tullo","Le serve un nome."],
+    ["mars","\"Polvere Tre Dita\"?"],
+    ["tullo","...Gli sarebbe piaciuto. Ma sul sacco scrivici anche \"non assaggiare\". Per quelli come te."]
+  ]
+}

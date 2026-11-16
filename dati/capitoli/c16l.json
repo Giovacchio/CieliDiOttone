@@ -1,0 +1,128 @@
+{
+  "id": "c16l",
+  "titolo": "Capitolo 16 · Mantelli verdi a Merlaia",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "notte",
+  "rotta": "libere",
+  "mappa": [
+    "ff....HH....f.ff",
+    "f..L..HH.......f",
+    "....gggggg..f...",
+    ".f..g.kk.g......",
+    "....g.kk.g..HH..",
+    "..L.gggggg..HH..",
+    ".....ss.....L...",
+    "f..m.ss..f.....f",
+    "ff...ss.....m.ff",
+    "fff..ss......fff"
+  ],
+  "schieramento": [[4,2],[5,2],[4,3],[4,4],[5,4],[5,5],[4,5]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "proteggi": "tessa",
+    "testo": "Proteggi Nonna Tessa per 6 turni, finché Fagiolo Secondo non ha caricato il villaggio. Oppure sconfiggi la Custode Ysolde. Se Tessa cade, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "tessa",
+      "titolo": "Capo villaggio",
+      "nome": "Nonna Tessa",
+      "lv": 10,
+      "x": 5,
+      "y": 3,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "kit",
+      "stat": {"hp":42,"for":2,"mag":7,"abi":6,"vel":4,"fort":12,"def":10,"res":12},
+      "aspetto": {"skin":"#d8b094","hair":"#d8d8d8","style":"bob","coat":"#7a4a5a","eye":"#4a3a2a"},
+      "abilita": {"nome":"Le capre prima","descrizione":"Non sale sulla nave finché non sono salite tutte le capre. Non si muove. Se cade, la missione fallisce."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Custode","lv":17,"x":11,"y":2,"ia":"attacca","nome":"Punitore del Concilio","aspetto":"radici"},
+    {"classe":"Custode","lv":17,"x":10,"y":6,"ia":"attacca","nome":"Punitore del Concilio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":1,"y":2,"ia":"attacca","nome":"Guardia del Concilio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":2,"y":6,"ia":"attacca","nome":"Guardia del Concilio","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":12,"y":6,"ia":"attacca","nome":"Arciere del Concilio","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":9,"y":0,"ia":"attacca","nome":"Arciere del Concilio","aspetto":"radici"},
+    {"classe":"Corazzato","lv":17,"x":11,"y":4,"ia":"portata","nome":"Guardia di radice","aspetto":"radici"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [
+        ["tessa","Mantelli verdi! Dicono che leggere i nomi dei morti è sacrilegio. Io i miei morti li chiamo per nome da ottant'anni, e nessuno si è mai lamentato."]
+      ],
+      "rinforzi": [
+        {"classe":"Custode","lv":17,"x":15,"y":3,"ia":"attacca","nome":"Punitore del Concilio","aspetto":"radici"},
+        {"classe":"Custode","lv":17,"x":15,"y":5,"ia":"attacca","nome":"Punitore del Concilio","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Lama","lv":17,"x":5,"y":9,"ia":"attacca","nome":"Lama del Concilio","aspetto":"radici"},
+        {"classe":"Lama","lv":17,"x":6,"y":9,"ia":"attacca","nome":"Lama del Concilio","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [
+        ["ysolde","Merlaia ha letto il Registro ad alta voce, davanti ai bambini. Il Concilio risponde come ha sempre risposto: togliendo ciò che non sapete custodire."]
+      ],
+      "rinforzi": [
+        {
+          "id": "ysolde",
+          "classe": "Custode",
+          "nome": "Custode Ysolde",
+          "lv": 19,
+          "x": 15,
+          "y": 4,
+          "arma": "giudizio",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":18,"def":5,"res":5,"vel":2},
+          "frase": "Tu le senti, vero, ragazza col gatto? Allora sai che ti sto chiedendo di lasciarle riposare.",
+          "aspetto": {"skin":"#e6cdb4","hair":"#c9c2a8","style":"longv","coat":"#d8d2bc","acc":"leaf","eye":"#8ad0a0"}
+        },
+        {"classe":"Medico","lv":16,"x":15,"y":6,"ia":"attacca","nome":"Guaritore del Concilio","aspetto":"radici"},
+        {"classe":"Corazzato","lv":17,"x":14,"y":4,"ia":"attacca","nome":"Guardia di radice","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Merlaia, di notte. Il villaggio delle capre, dove la Compagnia aveva combattuto la sua seconda battaglia. Fagiolo Secondo atterra storta nel campo."],
+    ["tessa","Giova! Sei dimagrito. E quella cos'è, una zucca volante?"],
+    ["mars","È una nave, nonna Tessa! L'ho fatta io!"],
+    ["tessa","Si vede, cara."],
+    ["wata","Nonna Tessa, i punitori del Concilio stanno arrivando dal bosco. Avete letto i nomi in piazza e loro..."],
+    ["tessa","Lo so cosa fanno loro. Portate su i bambini e le capre. Io salgo per ultima: una capo villaggio non lascia indietro nemmeno una capra. Soprattutto Ginevra, che morde."],
+    ["brann","Stratega, lo dico da esperto: difendere delle capre non rende."],
+    ["tullo","Rende, Brann. Solo non in monete."],
+    ["giova","Sei turni per caricare il villaggio. Cerchio intorno a Tessa, in piazza. L'altra volta erano predoni. Stavolta sono quelli che ci avevano assunti."]
+  ],
+  "vittoria": [
+    ["narr","L'ultima capra sale sulla passerella mordendo un carpentiere. Nonna Tessa la segue, senza fretta."],
+    ["ysolde","Vi siete fatti nemici la Corona e il Concilio per un villaggio di capre."],
+    ["tessa","Signorina, alla mia età ho imparato una cosa: chi ti chiede di stare zitta per il tuo bene di solito ha qualcosa da nascondere. Buonanotte."],
+    ["narr","Ysolde si ritira nel bosco. Ma dal crinale Nives torna in picchiata, senza fiato."],
+    ["nives","Capo conti. Dal cielo si vede tutto. A ovest la colonna di Strand, cavalleria e cannoni. A est i mantelli di Arven. Marciano sulla stessa strada. Insieme."],
+    ["lethy","Insieme? Si odiano!"],
+    ["brann","Lezione uno, signorina: due che si odiano vanno d'accordissimo, finché c'è un terzo da rovinare. E il terzo siamo noi."],
+    ["giova","La strada è quella di Fossa Grigia. Dove tutto è cominciato. Ci arriviamo prima noi."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "Nonna Tessa vi mette in mano un Sigillo di ottone \"che usavo come fermacarte\" e due tonici.",
+    "oggetti": [{"a":"tullo","id":"sigillo","q":1},{"a":"wata","id":"tonico","q":2}]
+  },
+  "diario": "Abbiamo portato via Merlaia, capre comprese. Corona e Concilio ora marciano insieme contro le Leghe."
+}

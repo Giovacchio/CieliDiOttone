@@ -1,0 +1,102 @@
+{
+  "id": "c17r",
+  "titolo": "Capitolo 17 · Il Canto del Silenzio",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "foresta-notte",
+  "rotta": "radici",
+  "mappa": [
+    "TTTT..cTTc..TTTT",
+    "TT....c..c....TT",
+    "T...f......f...T",
+    "..c....ff....c..",
+    "......f..f......",
+    ".f............f.",
+    "....T......T....",
+    "..f....~~....f..",
+    "T.....~~~~.....T",
+    "TT....~~~~....TT"
+  ],
+  "schieramento": [[3,8],[4,8],[5,8],[2,8],[3,9],[4,9],[5,9]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Gran Custode Arven nel Cuore delle Radici prima che finisca il Canto. Sta su una vena d'etere che lo cura a ogni turno."
+  },
+  "nemici": [
+    {"classe":"Custode","lv":19,"x":5,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":19,"x":10,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":19,"x":8,"y":4,"ia":"portata","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":19,"x":4,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Lanciere","lv":19,"x":11,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Corazzato","lv":20,"x":7,"y":2,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Corazzato","lv":20,"x":8,"y":2,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Arciere","lv":19,"x":3,"y":2,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":19,"x":12,"y":2,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Medico","lv":18,"x":9,"y":1,"ia":"portata","nome":"Guaritore di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":19,"x":7,"y":4,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Custode","lv":19,"x":7,"y":1,"ia":"portata","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {
+      "id": "arven",
+      "classe": "Custode",
+      "titolo": "Gran Custode",
+      "nome": "Gran Custode Arven",
+      "lv": 22,
+      "x": 6,
+      "y": 1,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":24,"def":7,"res":7,"vel":3,"mag":1},
+      "frase": "Siete tornati a spezzare il cerchio. Ascoltate, prima. Ascoltate quanto urlano. E poi ditemi che il Silenzio non è pietà.",
+      "aspetto": {"skin":"#cfae92","hair":"#f0eee6","style":"hood","coat":"#e6e0cc","beard":"full","eye":"#8ad0a0"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["arven","Cantori, chiudete il cerchio. Manca una strofa."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":19,"x":0,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Custode","lv":19,"x":15,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["wata","Le voci si stanno abbassando... Giova, fate presto. Non riesco più a sentire Ilvo."]],
+      "rinforzi": [
+        {"classe":"Lama","lv":19,"x":0,"y":5,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+        {"classe":"Lama","lv":19,"x":15,"y":5,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Il Cuore delle Radici. Il cerchio dei cantori è di nuovo chiuso, e al centro Arven canta una nota sola, lunghissima."],
+    ["maelis","È il Canto intero. Se arriva all'ultima strofa, ogni cristallo di Valdaria si spegne. Le lampade, le cure, le navi. E tutte le voci."],
+    ["mars","Tutte? Anche la mia fiala che canticchiava?"],
+    ["wata","Tutte, Mars."],
+    ["mars","Allora no. Io provo ogni cosa una volta, ma un mondo zitto no. Non lo voglio provare."],
+    ["tullo","C'è mio fratello, in una lampada. Stona. Non lo fa stare zitto nessuno."],
+    ["nives","Niente corvi, stanotte. Non ne ho visto neanche uno. ...Vuol dire che decidiamo noi."],
+    ["lethy","È il nostro torneo, allora. Finale. Arven al centro, noi all'angolo."],
+    ["giova","L'altra volta abbiamo spezzato il cerchio e lui è scappato. Stavolta arriviamo fino a lui. Dritti al centro."]
+  ],
+  "vittoria": [
+    ["arven","...La nota. L'ho persa. Sessant'anni che la tengo, e l'ho persa."],
+    ["wata","Gran Custode. Ascolti adesso. Senza cantarci sopra."],
+    ["narr","Arven tace. Nel Cuore, per la prima volta da quando è Gran Custode, sente le voci senza coprirle."],
+    ["arven","Non... urlano. Stanno parlando tra loro. Uno racconta una barzelletta. È pessima."],
+    ["tullo","Quello è mio fratello."],
+    ["maelis","Hai cantato per sessant'anni perché non sopportavi il rumore, Arven. Non era dolore. Era gente."],
+    ["arven","Prendi il bastone, Maelis. Il Concilio è tuo. Aprilo, chiudilo, fanne quello che vuoi. Io resto qui ad ascoltare. Ho molto da recuperare."],
+    ["giova","Il Canto è finito. Ma siamo scesi da una nave per arrivare qui, e in cielo ce ne sono ancora quaranta."],
+    ["narr","Fine dell'Atto IV. Strand, saputo che il Concilio è cambiato, ha fatto decollare tutta la flotta. L'Atto V, l'ultima brace, arriverà presto."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Maelis, nuova Gran Custode, apre le dispense del Concilio: due tonici a testa per i veterani.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"lethy","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "Arven ha smesso di cantare e ha ascoltato. Il Concilio ora è di Maelis. In cielo, però, c'è la flotta di Strand."
+}

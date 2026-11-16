@@ -30,7 +30,8 @@ export class Battaglia {
       if (pasto) { u.pasto = { ...pasto.stat }; for (const [s, v] of Object.entries(pasto.stat)) u.stat[s] += v; }
       this.unita.push(u);
     });
-    for (const d of capitolo.ospiti || []) this.unita.push(this._crea(d));
+    // un ospite che nel frattempo è entrato nella Compagnia (capitolo rigiocato) non compare due volte
+    for (const d of capitolo.ospiti || []) if (!this.unita.some((u) => u.id === d.id)) this.unita.push(this._crea(d));
     for (const d of capitolo.nemici || []) this.unita.push(this._crea(d));
     for (const u of this.unita) u.pv = u.stat.hp;
   }

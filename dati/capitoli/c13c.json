@@ -96,9 +96,8 @@
     ["ferrante","Gli ordini di Cenerossa. Firmati, timbrati, datati. ...Ci siamo."],
     ["giova","Con questi Strand non può più dire di non sapere. Il Consiglio della Corona dovrà ascoltare."],
     ["wata","Le voci dei minatori... le sento anche da quassù. Sono più calme."],
-    ["mars","Possiamo tenere la nave? Solo un po'? La chiamerei Fagiolo Secondo."],
-    ["narr","La Sovrana vira verso Corvara. Il resto della rotta della Corona arriverà presto."]
+    ["mars","Possiamo tenere la nave? Solo un po'? La chiamerei Fagiolo Secondo."]
   ],
-  "ricompensa": {"oro": 800, "testo":"Nella cabina di Voss: due tonici per Lethy.","oggetti":[{"a":"lethy","id":"tonico","q":2}]},
+  "ricompensa": {"oro":800,"testo":"Nella cabina di Voss: due tonici per Lethy.","oggetti":[{"a":"lethy","id":"tonico","q":2}]},
   "diario": "Abbiamo preso la Sovrana e gli ordini firmati di Strand."
 }

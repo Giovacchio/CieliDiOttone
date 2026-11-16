@@ -1,0 +1,123 @@
+{
+  "id": "c16r",
+  "titolo": "Capitolo 16 · Fondoscuro, di nuovo",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "foresta-notte",
+  "rotta": "radici",
+  "mappa": [
+    "TT..f....f..HHTT",
+    "T...HH.....fHH.T",
+    "....HH..L.......",
+    ".f.....ggg...f..",
+    "......ggcgg.....",
+    "..L...ggggg..L..",
+    ".f.....ggg....f.",
+    "..HH........HH..",
+    "T.HH..f...f.HH.T",
+    "TT....f......fTT"
+  ],
+  "schieramento": [[7,4],[9,4],[8,3],[8,5],[7,5],[9,5],[7,3]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "proteggi": "erba",
+    "testo": "Proteggi Erba al pozzo di Fondoscuro per 6 turni, finché la gente non è al sicuro sulla Tempra. Oppure sconfiggi la Custode Ysolde. Se Erba cade, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "erba",
+      "titolo": "Guaritrice",
+      "nome": "Erba, guaritrice",
+      "lv": 10,
+      "x": 8,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "kit",
+      "stat": {"hp":46,"for":1,"mag":8,"abi":6,"vel":6,"fort":10,"def":11,"res":13},
+      "aspetto": {"skin":"#d2a888","hair":"#7a5a3a","style":"bob","coat":"#6a7a4a","acc":"leaf","eye":"#4a6a3a"},
+      "abilita": {
+        "nome": "Non lascio il pozzo",
+        "descrizione": "Tiene sveglie le voci del pozzo finché il villaggio non è partito. Non si muove. Se cade, la missione fallisce."
+      }
+    }
+  ],
+  "nemici": [
+    {"classe":"Custode","lv":17,"x":2,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":17,"x":13,"y":5,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":8,"y":0,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":8,"y":9,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":1,"y":6,"ia":"attacca","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":14,"y":2,"ia":"attacca","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Corazzato","lv":17,"x":3,"y":5,"ia":"attacca","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Corazzato","lv":17,"x":12,"y":4,"ia":"attacca","nome":"Guardia di radice","aspetto":"radici"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [
+        ["erba","Arrivano da tutti e quattro i sentieri. L'ultima volta che il Concilio è venuto qui ci ha portato via le medicine. Stavolta vuole portarci via i morti."]
+      ],
+      "rinforzi": [
+        {"classe":"Custode","lv":17,"x":0,"y":4,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Custode","lv":17,"x":15,"y":4,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"}
+      ]
+    },
+    {"turno":3,"fase":"nemico","rinforzi":[{"classe":"Lama","lv":16,"x":7,"y":0,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}]},
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [
+        ["ysolde","Sorella Maelis. Ti ho insegnato io il primo canto. Fatti da parte e lascia che insegni l'ultimo a questo pozzo."],
+        ["maelis","Mi hai insegnato anche a tacere, Ysolde. Ho disimparato."]
+      ],
+      "rinforzi": [
+        {
+          "id": "ysolde",
+          "classe": "Custode",
+          "nome": "Custode Ysolde",
+          "lv": 19,
+          "x": 15,
+          "y": 5,
+          "arma": "giudizio",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":18,"def":5,"res":5,"vel":2},
+          "frase": "Tu le senti, vero, ragazza col gatto? Allora sai che ti sto chiedendo di lasciarle riposare.",
+          "aspetto": {"skin":"#e6cdb4","hair":"#c9c2a8","style":"longv","coat":"#d8d2bc","acc":"leaf","eye":"#8ad0a0"}
+        },
+        {"classe":"Medico","lv":16,"x":15,"y":6,"ia":"attacca","nome":"Guaritore di Arven","aspetto":"radici"},
+        {"classe":"Corazzato","lv":17,"x":14,"y":4,"ia":"attacca","nome":"Guardia di radice","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Fondoscuro, di notte. Il villaggio che il Custode Thalen aveva punito per essersi curato da solo. La Tempra è ormeggiata sopra i tetti."],
+    ["erba","Siete tornati. E con una nave del nemico. Vi avevo giudicati male: siete più matti di come sembravate."],
+    ["maelis","Erba, i fedeli di Arven stanno venendo qui. Vogliono cantare il Silenzio sul vostro pozzo: è il più antico delle Radici dopo il Cuore."],
+    ["erba","Nel pozzo c'è mia madre. E sua madre. Io da qui non mi muovo. Fate salire i bambini sulla vostra nave e lasciatemi cantare la mia, di canzone."],
+    ["wata","Prospy si è seduto accanto a lei. Credo che resti anche lui."],
+    ["lethy","L'ultima volta siamo arrivati tardi, a Fondoscuro. Stavolta siamo in anticipo. Lo trovo un miglioramento."],
+    ["giova","Quattro sentieri, un pozzo al centro, sei turni per imbarcare tutti. Cerchio stretto intorno a Erba. Nessuno la tocca."]
+  ],
+  "vittoria": [
+    ["narr","La Tempra si alza con tutto il villaggio a bordo. Sul pozzo, il canto di Erba copre quello dei Custodi, finché quelli smettono."],
+    ["ysolde","Maelis. Quando le voci urleranno ancora, e urleranno, ricordati che ti avevo offerto il silenzio."],
+    ["maelis","Quando urleranno, Ysolde, andrò a chiedere loro perché. È la differenza tra noi due."],
+    ["erba","Mia madre dice che avete un bel gatto. E che il rosso cucina meglio di come combatte. Non so come lo sappia."],
+    ["giova","...Ha ragione su tutte e due."],
+    ["wata","Giova, le voci del pozzo sanno dov'è Arven. È al Cuore delle Radici. Ha ricominciato il cerchio, e stavolta ha con sé tutti i cantori che gli restano."],
+    ["tullo","Allora si va al Cuore. Ho ancora qualche colpo, e nessuno con un nome sopra."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "La gente di Fondoscuro lascia quello che ha: un Sigillo di ottone raccolto anni fa nel bosco e due tonici.",
+    "oggetti": [{"a":"tullo","id":"sigillo","q":1},{"a":"wata","id":"tonico","q":2}]
+  },
+  "diario": "A Fondoscuro, stavolta, siamo arrivati in tempo. Erba ha tenuto il pozzo e il villaggio è salvo."
+}

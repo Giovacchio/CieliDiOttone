@@ -1,0 +1,34 @@
+{
+  "coppia": ["nives","giova"],
+  "C": [
+    ["giova","Nives, mi serve la tua velocità in salita, il peso che porti e quanto resisti controvento. Per i conti."],
+    ["nives","Otto tacche, due sacchi di posta e \"dipende da come mi sono svegliata\"."],
+    ["giova","\"Dipende\" non è un numero."],
+    ["nives","Il vento non legge i tuoi quaderni, capo conti. Stamattina ho visto un corvo volare a sinistra: oggi niente picchiate."],
+    ["giova","Un corvo. A sinistra."],
+    ["nives","Ride pure. L'ultima che ha riso è atterrata in un pollaio."],
+    ["giova","...Segno: \"picchiate: dipende dal corvo\". Tra parentesi metto un punto interrogativo."],
+    ["nives","Mettine due. Uno è per il corvo."]
+  ],
+  "B": [
+    ["giova","Ho contato. Su undici presagi che mi hai detto, nove si sono avverati."],
+    ["nives","Visto? Il cielo parla."],
+    ["giova","No. Ho capito cosa guardi davvero. Il corvo a sinistra vuol dire vento da est. Il fumo basso vuol dire pioggia. Non sono presagi: sono misure."],
+    ["nives","Non dirlo ad alta voce. Se le chiamo misure smettono di funzionare."],
+    ["giova","Perché?"],
+    ["nives","Perché una misura sbagliata è colpa mia. Un presagio sbagliato è colpa del corvo. Lassù, da sola, fa differenza."],
+    ["giova","Lo capisco più di quanto pensi. Anch'io conto tutto per non dover dire \"ho deciso io\"."],
+    ["nives","Allora siamo due bugiardi, capo conti. Tu con i numeri, io con i corvi."]
+  ],
+  "A": [
+    ["nives","Oggi mi hai mandata in picchiata. Col corvo a sinistra."],
+    ["giova","Vento da est, quindi alle loro spalle. Per te era a favore. Ho fatto il conto con le tue misure."],
+    ["nives","E se andava male?"],
+    ["giova","Allora era colpa mia. Non del corvo, non dei numeri. L'ho deciso io."],
+    ["nives","...Sai che è la prima volta che qualcuno si prende la colpa prima che io decolli?"],
+    ["giova","Rischio calcolato. La parte che non si calcola me la tengo io."],
+    ["nives","Allora io mi tengo l'altra metà. Da oggi i presagi li scrivo nel tuo quaderno. Con le tacche, come piace a te."],
+    ["giova","E il punto interrogativo del corvo?"],
+    ["nives","Quello resta. Un po' di mistero, capo. Altrimenti che cielo è."]
+  ]
+}

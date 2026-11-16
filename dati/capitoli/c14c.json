@@ -1,0 +1,94 @@
+{
+  "id": "c14c",
+  "titolo": "Capitolo 14 · Il Consiglio della Corona",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "citta",
+  "rotta": "corona",
+  "selciato": true,
+  "mappa": [
+    "HHHHHHggggHHHHHH",
+    "HHHHHHgLLgHHHHHH",
+    "..k..gggggg..k..",
+    "sssgggkggkgggsss",
+    "ggggggXXXXgggggg",
+    "sssggggggggggsss",
+    "..Lgggkggkggg.L.",
+    "HHH.gggggggg.HHH",
+    "HHH.gLggggLg.HHH",
+    "HHH.ssssssss.HHH"
+  ],
+  "schieramento": [[7,9],[8,9],[6,9],[9,9],[7,8],[8,8],[5,9]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [7,0],
+    "limite": 10,
+    "testo": "Porta Giova al portone del Consiglio (la casella d'ottone in alto) entro il turno 10, prima che la seduta venga sciolta. Il Maggiore Dalca ci sta sopra: va spostato con le cattive."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":15,"x":5,"y":5,"ia":"attacca"},
+    {"classe":"Lanciere","lv":15,"x":10,"y":5,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":15,"x":4,"y":3,"ia":"portata"},
+    {"classe":"Fuciliere","lv":15,"x":11,"y":3,"ia":"portata"},
+    {"classe":"Lama","lv":15,"x":7,"y":5,"ia":"attacca"},
+    {"classe":"Arciere","lv":15,"x":2,"y":2,"ia":"portata"},
+    {"classe":"Corazzato","lv":16,"x":6,"y":1,"ia":"fermo"},
+    {"classe":"Corazzato","lv":16,"x":9,"y":1,"ia":"fermo"},
+    {"classe":"Medico","lv":14,"x":8,"y":1,"ia":"portata"},
+    {"classe":"Lama","lv":16,"x":8,"y":3,"ia":"portata"},
+    {"classe":"Lanciere","lv":16,"x":7,"y":2,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Corazzato",
+      "nome": "Maggiore Dalca",
+      "lv": 17,
+      "x": 7,
+      "y": 0,
+      "arma": "lanciaA",
+      "ia": "fermo",
+      "bonus": {"hp":16,"def":4,"res":2},
+      "siRitira": true,
+      "frase": "Ferma lì, Ferrante. Ho l'ordine di tenere chiuso quel portone e io gli ordini li eseguo. Dovresti ricordartelo: me l'hai insegnato tu.",
+      "aspetto": {"skin":"#d2a582","hair":"#2c2c30","style":"greathelm","coat":"#5a1e1c","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["boss","Cavalleria dell'Ufficio, chiudete i lati della piazza!"]],
+      "rinforzi": [{"classe":"Cavaliere","lv":15,"x":0,"y":5,"ia":"attacca"},{"classe":"Cavaliere","lv":15,"x":15,"y":5,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["nives","Ali in arrivo da nord, capo conti. Due. Quelli li conosco: volano come mattoni, ma pungono."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":16,"x":0,"y":2,"ia":"attacca"},{"classe":"Aeronauta","lv":16,"x":15,"y":2,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Corvara alta, piazza del Consiglio. La Sovrana è ormeggiata sopra i tetti, con a bordo gli ordini firmati di Strand."],
+    ["ferrante","Il Consiglio siede fino a mezzogiorno. Se non entro con quegli ordini prima che Strand faccia sciogliere la seduta, domani saranno carta straccia."],
+    ["narr","Dal cielo plana una figura con due ali d'ottone rattoppate, e atterra su un lampione."],
+    ["nives","Posta celere delle Leghe! Convocazione per l'ispettrice Ferrante, firmata da tre consiglieri su nove. ...E la piazza è piena di gente armata. Nessuno me l'aveva detto. Tre tacche di sfortuna."],
+    ["giova","Sai combattere, con quelle ali?"],
+    ["nives","So non farmi prendere. È quasi uguale. Mi chiamo Nives. Se entrate là dentro voglio esserci: ho consegnato troppe lettere col bordo nero partite da quell'ufficio."],
+    ["tullo","E io voglio parlare. Tullo, galleria nove, Cenerossa. Il Consiglio vuole un testimone? Eccolo. Ho anche il fucile, se il testimone non basta."],
+    ["lethy","Un'aviatrice e un minatore prima di colazione. La Compagnia cresce più in fretta dei debiti di papà."],
+    ["giova","Benvenuti nella Brace. Il portone è in cima alla piazza: dieci turni. Il Maggiore Dalca ci sta piantato davanti. Lo spostiamo, ed entro."]
+  ],
+  "vittoria": [
+    ["narr","Il portone si apre. Nove consiglieri in toga si voltano. Ferrante posa gli ordini di Cenerossa sul tavolo, uno alla volta."],
+    ["ferrante","Quarantadue firme del Direttore Strand. Una per ogni uomo lasciato morire in galleria nove."],
+    ["tullo","Quarantadue. Posso dirvi i nomi. Li so tutti."],
+    ["narr","Tullo li dice. Nessuno lo interrompe."],
+    ["giova","Il Consiglio ha votato: Strand è sospeso e convocato. Ma \"convocato\" non vuol dire \"arreso\"."],
+    ["ferrante","No. Vuol dire che adesso proverà a cancellare le prove. E le prove sono a Cenerossa."],
+    ["nives","Allora si vola. Finalmente una consegna che mi piace."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "Il Consiglio riconosce la Compagnia come scorta dell'ispettrice: un Sigillo di ottone e due tonici.",
+    "oggetti": [{"a":"giova","id":"sigillo","q":1},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "Ferrante ha portato gli ordini di Strand al Consiglio. Tullo ha detto i quarantadue nomi. Con noi ora ci sono anche lui e Nives."
+}

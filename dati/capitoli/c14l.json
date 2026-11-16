@@ -1,0 +1,106 @@
+{
+  "id": "c14l",
+  "titolo": "Capitolo 14 · Il cantiere di Fagiolo Secondo",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "citta",
+  "rotta": "libere",
+  "selciato": true,
+  "mappa": [
+    "HHHH.ssss.kkHHHH",
+    "HHHH.gggg.k.HHHH",
+    "..L..gggg....L..",
+    "sssgggkkgggsssss",
+    "ggggggggggggggww",
+    "ggggkggggkggggww",
+    "sssgggggggggwwww",
+    "..L.gggggg..wwww",
+    "HHH.gkggkg.wwwww",
+    "HHH.ssssss.wwwww"
+  ],
+  "schieramento": [[6,4],[7,4],[8,4],[6,5],[7,5],[8,5],[7,6]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "testo": "Difendi il cantiere per 6 turni, finché lo scafo di Fagiolo Secondo non è in acqua. Oppure sconfiggi il Sovrintendente Kessel, quando si farà vedere."
+  },
+  "nemici": [
+    {"classe":"Lama","lv":15,"x":6,"y":0,"ia":"attacca"},
+    {"classe":"Lama","lv":15,"x":8,"y":0,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":15,"x":5,"y":1,"ia":"portata"},
+    {"classe":"Fuciliere","lv":15,"x":8,"y":1,"ia":"portata"},
+    {"classe":"Guerriero","lv":15,"x":0,"y":3,"ia":"attacca","nome":"Corvo di Sale","aspetto":"corvo"},
+    {"classe":"Guerriero","lv":15,"x":0,"y":6,"ia":"attacca","nome":"Corvo di Sale","aspetto":"corvo"},
+    {"classe":"Arciere","lv":15,"x":1,"y":5,"ia":"attacca","nome":"Corvo balestriere","aspetto":"corvo"},
+    {"classe":"Lama","lv":15,"x":5,"y":9,"ia":"attacca","nome":"Corvo di Sale","aspetto":"corvo"},
+    {"classe":"Lama","lv":15,"x":8,"y":9,"ia":"attacca","nome":"Corvo di Sale","aspetto":"corvo"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [
+        ["brann","Quelli a ovest erano miei ragazzi, fino a ieri. Strand li ha ricomprati. Tsk. Li avevo educati male: si vendono al primo che passa."],
+        ["lethy","Signor Brann, la sua indignazione è un capolavoro."]
+      ],
+      "rinforzi": [{"classe":"Corazzato","lv":16,"x":6,"y":0,"ia":"attacca"},{"classe":"Corazzato","lv":16,"x":7,"y":0,"ia":"attacca"}]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["nives","Ali dal mare! Due! Volano bassi sull'acqua per non farsi vedere. Dilettanti: si vedono benissimo."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":16,"x":15,"y":4,"ia":"attacca"},{"classe":"Aeronauta","lv":16,"x":15,"y":6,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["kessel","Una nave delle Leghe. Costruita da un'alchimista. Con un nome da minestra. Bruciatela, e facciamola finita con questa farsa."]],
+      "rinforzi": [
+        {
+          "id": "kessel",
+          "classe": "Fuciliere",
+          "titolo": "Sovrintendente",
+          "nome": "Sovrintendente Kessel",
+          "lv": 18,
+          "x": 7,
+          "y": 0,
+          "arma": "moschetto",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":20,"def":6,"vel":2,"res":2},
+          "frase": "Cenerossa era un'azienda modello prima che arrivaste voi. Modello!",
+          "aspetto": "corona"
+        },
+        {"classe":"Cavaliere","lv":16,"x":0,"y":4,"ia":"attacca"},
+        {"classe":"Cavaliere","lv":16,"x":0,"y":5,"ia":"attacca"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Porto Ambra, il cantiere del molo vecchio. Sullo scalo c'è uno scafo storto, verniciato di verde, con scritto a mano: FAGIOLO SECONDO."],
+    ["mars","È bellissima. Ha due caldaie, tre eliche e un compartimento per le erbe. L'ho progettata io! Con l'aiuto di quattordici carpentieri molto pazienti."],
+    ["lethy","Sta dritta?"],
+    ["mars","Sta quasi dritta."],
+    ["narr","Sul molo aspettano tre persone: un uomo con un'ascia da arrembaggio, una donna con due ali d'ottone e un minatore con un fucile."],
+    ["brann","Stratega! Le Leghe mi hanno assunto per difendere la vostra barca. Il triplo del triplo, pagato in anticipo. Lo so, lo so: a Porto Ambra vi ho venduti. Niente di personale. Oggi sono dalla vostra, ed è personalissimo: ho già speso l'anticipo."],
+    ["nives","Nives, posta celere delle Leghe. Una nave nuova ha bisogno di qualcuno che conosca il cielo. E in piazza, ieri, ho sentito leggere i nomi. Ne ho consegnate troppe, di lettere col bordo nero."],
+    ["tullo","Tullo. Galleria nove. C'ero anch'io in piazza, quando Grigio ha letto. Ho sentito il nome di mio fratello detto ad alta voce per la prima volta. Vi devo qualcosa. Pago col fucile."],
+    ["giova","Un mercenario, una postina e un minatore. Benvenuti nella Brace. Lo scafo va in acqua tra sei turni: Corona da nord, Corvi da ovest e da sud. Teniamo lo scalo."]
+  ],
+  "vittoria": [
+    ["narr","Lo scafo scivola sullo scalo e tocca l'acqua. Resta a galla. Poi, tra il fumo delle due caldaie, si alza. Storto, ma si alza."],
+    ["mars","VOLA! Fagiolo Secondo vola! ...Pende un po' a sinistra. È carattere."],
+    ["kessel","Questa... questa non è una nave, è un insulto all'ingegneria! Ritirata!"],
+    ["brann","Stratega, una domanda da professionista. Quando Strand mi offrirà il quadruplo, e lo farà, cosa mi dite voi?"],
+    ["giova","Che noi il quadruplo non ce l'abbiamo. Abbiamo una nave storta e un posto a tavola."],
+    ["brann","...Bah. Vedremo. Intanto si mangia?"],
+    ["nives","Prima si vola, vecchio. Il cielo sopra il golfo è pieno di navi della Corona, e la nostra ha appena fatto il primo starnuto."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "I carpentieri del cantiere regalano un Sigillo di ottone trovato in una stiva e due tonici.",
+    "oggetti": [{"a":"giova","id":"sigillo","q":1},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "Fagiolo Secondo vola (storta). Con noi ora ci sono Brann, Nives e Tullo."
+}

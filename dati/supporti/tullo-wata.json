@@ -1,0 +1,33 @@
+{
+  "coppia": ["tullo","wata"],
+  "C": [
+    ["wata","Tullo, cosa scrivi sempre in quel quaderno? Scusa, non volevo spiare. Prospy sì, invece. Ci si è seduto sopra."],
+    ["tullo","Nomi. Galleria nove, Cenerossa. Quarantadue."],
+    ["wata","Sono... quelli che non sono usciti?"],
+    ["tullo","Quelli che la Corona ha scritto come \"perdite d'esercizio\". Io li scrivo come si chiamavano."],
+    ["wata","Posso leggerli? Ad alta voce, intendo. Alle voci piace essere chiamate."],
+    ["tullo","...Il gatto può restare seduto."],
+    ["wata","Lo prendo per un sì. Anche Prospy."]
+  ],
+  "B": [
+    ["wata","Tullo, c'è una voce che ti segue. Da giorni. Sta nel cristallo della tua lampada."],
+    ["tullo","Le lampade della miniera le caricavano con l'etere che scavavamo noi. Lo so da dove viene."],
+    ["wata","Dice una cosa sola. \"Il turno era mio.\""],
+    ["tullo","..."],
+    ["tullo","Berto. Mio fratello. Quel giorno ero di turno io. Avevo la febbre e lui è sceso al posto mio."],
+    ["wata","Non è arrabbiato, Tullo. Non lo dice come un rimprovero. Lo dice come uno che ha scelto."],
+    ["tullo","Trent'anni di miniera e non ho mai pianto davanti a un gatto. Non comincio oggi."],
+    ["wata","Prospy si è girato dall'altra parte apposta. È un gatto molto discreto."]
+  ],
+  "A": [
+    ["tullo","Wata. Ho finito il quaderno. Quarantadue nomi, e sotto ognuno una riga. Chi era. Cosa faceva ridere gli altri."],
+    ["wata","Me lo fai leggere?"],
+    ["tullo","L'ultima pagina è per Berto. Non sapevo cosa scrivere. Poi ho scritto: \"Il turno era suo. Il resto dei turni li faccio io.\""],
+    ["wata","La voce nella lampada ha smesso di ripetere. Adesso canticchia. È una canzone da osteria, credo. Un po' stonata."],
+    ["tullo","Era stonato come una carriola. È lui."],
+    ["wata","Quando tutto sarà finito lo portiamo alle Radici, il quaderno. Così i nomi stanno dove stanno le voci."],
+    ["tullo","Ci vengo. A una condizione."],
+    ["wata","Quale?"],
+    ["tullo","Il gatto porta il quaderno. Ormai ci dorme sopra, è più suo che mio."]
+  ]
+}

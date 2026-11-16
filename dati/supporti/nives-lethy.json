@@ -1,0 +1,33 @@
+{
+  "coppia": ["nives","lethy"],
+  "C": [
+    ["lethy","Nives, quelle ali le fanno su misura? Vorrei ordinarne un paio. In azzurro, possibilmente."],
+    ["nives","Le ho fatte io con i pezzi di tre caldaie e un ombrello. Non si ordinano, signorina: si meritano."],
+    ["lethy","E come si meritano?"],
+    ["nives","Regola uno: mai dire la parola con la C mentre sei in aria. Quella che finisce in \"adere\"."],
+    ["lethy","Cadere?"],
+    ["nives","ECCO. Adesso devo fare tre giri su me stessa e toccare ottone. Tre tacche di sfortuna, hai idea?"],
+    ["lethy","A casa mia si tocca argento. È più efficace, credo. Costa di più."],
+    ["nives","...Mi sa che andremo d'accordo, tu e io. Ma la parola con la C non la dici più."]
+  ],
+  "B": [
+    ["nives","Ti ho vista oggi. Sei veloce. Per una che sta coi piedi per terra, intendo."],
+    ["lethy","Il mio maestro diceva che ero la più veloce della sala. Poi ho scoperto che la sala era lunga dodici passi."],
+    ["nives","Io portavo la posta tra Porto Ambra e le miniere. Sei ore di volo, da sola. La velocità serviva a non pensare."],
+    ["lethy","A non pensare a cosa?"],
+    ["nives","Alle lettere. Ne consegnavo una a settimana con il bordo nero. Sapevo cosa c'era scritto prima di chi la apriva."],
+    ["lethy","...A casa nostra le lettere col bordo nero le apriva il maggiordomo. Non ci avevo mai pensato, a chi le portava."],
+    ["nives","Adesso ci pensi. È già più di quanto abbia fatto la maggior parte dei destinatari."],
+    ["lethy","La prossima volta che voli, portami. Non per le ali. Voglio vedere quanto è lungo, davvero, un posto."]
+  ],
+  "A": [
+    ["lethy","Dodici minuti. Mi hai tenuta lassù dodici minuti e non ho detto la parola con la C nemmeno una volta."],
+    ["nives","L'hai pensata forte, però. Ti si leggeva in faccia."],
+    ["lethy","Dall'alto la villa di papà è grande come un bottone. Tutta la mia vita di prima stava in un bottone."],
+    ["nives","È il regalo del cielo: ti fa vedere quanto era piccolo quello che ti sembrava tutto."],
+    ["lethy","E a te cosa ha fatto vedere?"],
+    ["nives","Che le lettere col bordo nero partivano tutte dallo stesso ufficio. Per questo sono qui e non a portare la posta."],
+    ["lethy","Allora facciamo un patto da torneo: tu mi insegni il cielo, io ti copro quando atterri. Sono veloce, sai. In dodici passi."],
+    ["nives","Affare fatto, signorina. E le ali azzurre te le costruisco io. Ma l'ombrello lo porti tu."]
+  ]
+}

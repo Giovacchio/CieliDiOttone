@@ -1,5 +1,5 @@
 {
-  "ordine": ["giova","lethy","wata","mars"],
+  "ordine": ["giova","lethy","wata","mars","nives","tullo","ferrante","maelis","brann"],
   "giova": {
     "nome": "Giova",
     "classe": "Stratega",
@@ -61,5 +61,101 @@
     "abilita": {"nome":"Spirito libero","descrizione":"Ama le esperienze nuove: ottiene il 50% di PE in più.","effetti":[{"tipo":"esperienza","moltiplica":1.5}]},
     "oggetti": [{"id":"tonico","q":2}],
     "aspetto": {"skin":"#c99a74","hair":"#141214","style":"curly","coat":"#8a6a3f","acc":"vial"}
+  },
+  "nives": {
+    "nome": "Nives",
+    "classe": "Corriera del vento",
+    "movimento": "volo",
+    "mov": 6,
+    "arma": "lanciaA",
+    "usa": ["lancia"],
+    "entra": ["c14c","c14r","c14l"],
+    "lv": 13,
+    "stat": {"hp":28,"for":12,"mag":2,"abi":14,"vel":16,"fort":10,"def":8,"res":7},
+    "crescita": {"hp":60,"for":45,"mag":10,"abi":50,"vel":60,"fort":45,"def":25,"res":30},
+    "abilita": {
+      "nome": "Corrente ascendente",
+      "descrizione": "Vola sopra ogni terreno e sa sempre da dove tira il vento: +15 schivata. Occhio agli archi.",
+      "effetti": [{"tipo":"bonus","schivata":15}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#d9a47c","hair":"#27445c","style":"short","coat":"#b5652a","acc":"epaulette","eye":"#2f6f8a"}
+  },
+  "tullo": {
+    "nome": "Tullo",
+    "classe": "Fuciliere di Cenerossa",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "moschetto",
+    "usa": ["polvere"],
+    "entra": ["c14c","c14r","c14l"],
+    "lv": 13,
+    "stat": {"hp":27,"for":13,"mag":1,"abi":16,"vel":11,"fort":8,"def":7,"res":5},
+    "crescita": {"hp":60,"for":50,"mag":5,"abi":60,"vel":40,"fort":35,"def":30,"res":20},
+    "abilita": {
+      "nome": "Polso fermo",
+      "descrizione": "Trent'anni di piccone gli hanno lasciato mani che non tremano: +10 precisione, +5 critico.",
+      "effetti": [{"tipo":"bonus","precisione":10,"critico":5}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#b98a66","hair":"#4a4640","style":"bald","coat":"#5a5247","beard":"full","scar":true,"eye":"#3a3026"}
+  },
+  "ferrante": {
+    "nome": "Ferrante",
+    "classe": "Ispettrice",
+    "movimento": "fanteria",
+    "mov": 6,
+    "arma": "spadaA",
+    "usa": ["spada"],
+    "entra": "c14c",
+    "lv": 13,
+    "stat": {"hp":31,"for":12,"mag":1,"abi":14,"vel":14,"fort":7,"def":9,"res":5},
+    "crescita": {"hp":65,"for":45,"mag":5,"abi":50,"vel":50,"fort":30,"def":40,"res":25},
+    "abilita": {
+      "nome": "Ordine serrato",
+      "descrizione": "Chi le sta entro 2 caselle tiene la formazione: +5 schivata e +5 critico.",
+      "effetti": [{"tipo":"aura","raggio":2,"schivata":5,"critico":5}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"}
+  },
+  "maelis": {
+    "nome": "Maelis",
+    "classe": "Saggia delle Radici",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "giudizio",
+    "armi": ["kit"],
+    "usa": ["etere","cura"],
+    "entra": "c14r",
+    "lv": 13,
+    "stat": {"hp":28,"for":2,"mag":15,"abi":12,"vel":10,"fort":8,"def":5,"res":14},
+    "crescita": {"hp":50,"for":5,"mag":55,"abi":45,"vel":40,"fort":40,"def":15,"res":55},
+    "abilita": {
+      "nome": "Benedizione delle Radici",
+      "descrizione": "A inizio turno chi le sta accanto recupera 3 PV. Sa colpire con l'etere e curare.",
+      "effetti": [{"tipo":"curaVicini","pv":3}]
+    },
+    "oggetti": [{"id":"tonico","q":1}],
+    "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"}
+  },
+  "brann": {
+    "nome": "Brann",
+    "classe": "Capo dei Corvi",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "arrembaggio",
+    "usa": ["ascia"],
+    "entra": "c14l",
+    "lv": 14,
+    "stat": {"hp":36,"for":15,"mag":0,"abi":10,"vel":10,"fort":6,"def":9,"res":3},
+    "crescita": {"hp":80,"for":55,"mag":0,"abi":35,"vel":35,"fort":25,"def":35,"res":10},
+    "abilita": {
+      "nome": "Niente di personale",
+      "descrizione": "Picchia per mestiere, e il mestiere lo sa fare: +2 danni, +5 critico.",
+      "effetti": [{"tipo":"bonus","danno":2,"critico":5}]
+    },
+    "oggetti": [{"id":"tonico","q":1}],
+    "aspetto": {"skin":"#c48e6a","hair":"#2a2622","style":"messy","coat":"#28414a","beard":"full","eye":"#2a1c14"}
   }
 }

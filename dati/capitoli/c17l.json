@@ -1,0 +1,101 @@
+{
+  "id": "c17l",
+  "titolo": "Capitolo 17 · Due bandiere",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "campagna",
+  "rotta": "libere",
+  "mappa": [
+    "ff....f....m..ff",
+    "f...........m..f",
+    "....r.....f.....",
+    "..f.....ss......",
+    "bbbbbbbbssbbbbbb",
+    "........ss...r..",
+    "...m....ss....f.",
+    ".f......ss......",
+    "f....f..ss..f..f",
+    "ff......ss....ff"
+  ],
+  "schieramento": [[8,9],[9,9],[7,9],[10,9],[8,8],[9,8],[7,8]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Maggiore Dalca, che comanda l'avanguardia delle due bandiere: Corona a ovest, Concilio a est. Tengono insieme solo finché lui è in piedi."
+  },
+  "nemici": [
+    {"classe":"Cavaliere","lv":19,"x":3,"y":3,"ia":"attacca"},
+    {"classe":"Cavaliere","lv":19,"x":5,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":19,"x":7,"y":3,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":19,"x":6,"y":1,"ia":"portata"},
+    {"classe":"Corazzato","lv":20,"x":8,"y":3,"ia":"portata"},
+    {"classe":"Corazzato","lv":20,"x":9,"y":3,"ia":"portata"},
+    {"classe":"Custode","lv":19,"x":12,"y":3,"ia":"attacca","nome":"Custode di Arven","aspetto":"radici"},
+    {"classe":"Custode","lv":19,"x":13,"y":2,"ia":"attacca","nome":"Custode di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":19,"x":14,"y":4,"ia":"attacca","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":19,"x":11,"y":1,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Medico","lv":18,"x":9,"y":1,"ia":"portata"},
+    {"classe":"Guerriero","lv":19,"x":7,"y":2,"ia":"attacca"},
+    {"classe":"Lama","lv":19,"x":12,"y":5,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":19,"x":5,"y":4,"ia":"attacca"},
+    {
+      "id": "boss",
+      "classe": "Cavaliere",
+      "nome": "Maggiore Dalca",
+      "lv": 21,
+      "x": 8,
+      "y": 0,
+      "arma": "lanciaA",
+      "ia": "portata",
+      "sveglia": 4,
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":22,"def":6,"for":2,"vel":1,"res":2},
+      "frase": "Ordini di Strand, benedizione di Arven. Non mi era mai capitato di avere due padroni. Vi assicuro che è scomodo quanto sembra.",
+      "aspetto": {"skin":"#d2a582","hair":"#2c2c30","style":"greathelm","coat":"#5a1e1c","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["boss","Ali della Corona, sui fianchi! E i signori del Concilio facciano la cortesia di non colpire i miei!"]],
+      "rinforzi": [{"classe":"Aeronauta","lv":19,"x":0,"y":2,"ia":"attacca"},{"classe":"Aeronauta","lv":19,"x":15,"y":2,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [
+        ["lethy","Altra cavalleria dai binari! Giova, dicevi che arrivavamo prima noi!"],
+        ["giova","Siamo arrivati prima. Non ho detto che sarebbero arrivati in pochi."]
+      ],
+      "rinforzi": [{"classe":"Cavaliere","lv":19,"x":0,"y":4,"ia":"attacca"},{"classe":"Cavaliere","lv":19,"x":15,"y":4,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","La piana di Fossa Grigia. I binari, il ponte, la nebbia. Da nord scendono due bandiere affiancate: l'ingranaggio d'ottone e la foglia verde."],
+    ["lethy","È uno spettacolo. Orribile, ma uno spettacolo. Papà pagherebbe per avere un quadro così, e poi lo metterebbe in cantina."],
+    ["wata","Strand e Arven hanno fatto un patto. Si dividono le Radici e mettono a tacere il Registro. Le voci hanno paura di tutti e due allo stesso modo."],
+    ["brann","Stratega. Ieri notte è arrivato un messaggero di Strand. Il quintuplo, più una nave. Vera, non storta."],
+    ["giova","E?"],
+    ["brann","E ho contrattato due ore, per abitudine. Poi gli ho detto di no. Non chiedetemi perché. Non lo so. Mi fa male dappertutto."],
+    ["mars","È la coscienza, Brann! Ne ho una pomata."],
+    ["tullo","Dietro di noi ci sono le milizie di sei città. Bottegai, pescatori, minatori. Hanno letto i nomi e sono venuti. Se cede l'avanguardia, tocca a loro."],
+    ["nives","Vento da sud. Alle nostre spalle. Niente corvi. È tutto quello che posso dire, e stavolta lo chiamo misura."],
+    ["giova","L'avanguardia è di Dalca: è l'unico che Corona e Concilio ascoltano tutti e due. Se cade lui, le due bandiere smettono di marciare insieme. Dritti al centro."]
+  ],
+  "vittoria": [
+    ["boss","...Suonate la ritirata. Tutte e due le trombe, se riuscite a mettervi d'accordo su chi suona per primo."],
+    ["narr","Non ci riescono. La colonna della Corona ripiega a ovest, i mantelli verdi a est. In mezzo alla piana resta la nebbia, e la milizia delle Leghe che non ha ancora capito di avere vinto."],
+    ["lethy","Abbiamo... abbiamo battuto due eserciti?"],
+    ["giova","Un'avanguardia. Ma li abbiamo divisi, e divisi fanno meno paura."],
+    ["tullo","I bottegai stanno piangendo. I pescatori pure. I minatori no. I minatori stanno contando chi manca. Non manca nessuno."],
+    ["brann","Per la cronaca: ho combattuto gratis. Che resti tra noi. Ho una reputazione."],
+    ["wata","Giova. Le voci... non sono contente. Dicono due cose insieme. \"Stanno salendo tutte le navi.\" E \"sta ricominciando il canto.\""],
+    ["narr","Fine dell'Atto IV. Sconfitti sul campo, Strand fa decollare la flotta e Arven torna al Cuore delle Radici. L'Atto V, l'ultima brace, arriverà presto."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Le sei città delle Leghe mandano doni alla Compagnia: due tonici a testa per i veterani.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"lethy","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "A Fossa Grigia abbiamo spezzato l'alleanza delle due bandiere. Ora Strand prepara la flotta e Arven il canto."
+}

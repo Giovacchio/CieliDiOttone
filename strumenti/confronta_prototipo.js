@@ -81,6 +81,9 @@ const vecchio = await pagina.evaluate(async (N) => {
 await browser.close();
 
 const dati = await datiDaDisco();
+// il prototipo conosce solo i primi 16 capitoli e i quattro personaggi iniziali: il confronto si ferma lì
+dati.campagna.capitoli = dati.campagna.capitoli.filter((id) => /^(prologo|c\d|c1[0-2]|c13[crl])$/.test(id));
+dati.personaggi.ordine = ["giova", "lethy", "wata", "mars"];
 let diversi = 0, battaglie = 0;
 for (let c = 0; c < N; c++) {
   const nuovo = [];

@@ -1,0 +1,36 @@
+{
+  "coppia": ["maelis","wata"],
+  "C": [
+    ["maelis","Wata, tu non hai mai studiato a Lucegrande, vero? Chi ti ha insegnato ad ascoltare l'etere?"],
+    ["wata","Nessuno. Cioè... un rovo dietro casa. E poi Prospy, che soffia quando una voce è triste."],
+    ["maelis","Al Concilio servono nove anni di noviziato per sentire quello che tu senti con un gatto in braccio."],
+    ["wata","Mi dispiace! Non volevo saltare la fila."],
+    ["maelis","Non scusarti. Nove anni servono soprattutto a insegnarci a non dire quello che sentiamo."],
+    ["wata","E tu cosa senti, adesso?"],
+    ["maelis","Che il tuo gatto mi sta giudicando."],
+    ["wata","Oh, quello lo fa con tutti. Vuol dire che gli piaci."]
+  ],
+  "B": [
+    ["wata","Maelis, quando hai capito che nei cristalli c'erano persone... da quanto lo sapevi, prima di dircelo?"],
+    ["maelis","Dodici anni."],
+    ["wata","Dodici..."],
+    ["maelis","Ogni novizia lo scopre al quarto anno. Ci fanno giurare il silenzio \"per non spaventare il mondo\". Io ho giurato. E per dodici anni ho curato la gente con le voci di qualcun altro."],
+    ["wata","Le sentivi?"],
+    ["maelis","Ho imparato a non sentirle. È la cosa che mi riesce meglio e quella di cui mi vergogno di più."],
+    ["wata","Prospy non sta soffiando. Se tu fossi cattiva, soffierebbe."],
+    ["maelis","I gatti non assolvono, piccola."],
+    ["wata","No. Ma non sbagliano."]
+  ],
+  "A": [
+    ["maelis","Wata. Ho fatto una cosa che non facevo da dodici anni. Ho ascoltato. Tutta la notte, senza chiudermi."],
+    ["wata","E com'è stato?"],
+    ["maelis","Come aprire una finestra in una casa chiusa da troppo tempo. C'era una voce di Fondoscuro. Una bambina. Voleva sapere se il suo cane sta bene."],
+    ["wata","E sta bene?"],
+    ["maelis","Ho mandato una novizia a controllare. Sta bene. Ingrassato, pare."],
+    ["wata","Glielo hai detto?"],
+    ["maelis","Gliel'ho detto. Ha riso. Wata, in dodici anni di guarigioni non avevo mai sentito ridere un cristallo."],
+    ["wata","Allora quando avrai il tuo Concilio nuovo, il noviziato lo facciamo durare un giorno. Il primo giorno si ascolta e basta."],
+    ["maelis","E chi lo insegna, un corso così?"],
+    ["wata","Io porto il rovo. Prospy porta il giudizio."]
+  ]
+}

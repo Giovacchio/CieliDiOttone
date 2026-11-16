@@ -87,5 +87,107 @@
         "effetti": [{"tipo":"esperienza","moltiplica":1.5}]
       }
     }
+  ],
+  "nives": [
+    {
+      "classe": "Capitana di stormo",
+      "stat": {"vel":2,"for":2,"hp":3},
+      "mov": 1,
+      "abilita": {
+        "nome": "Ali d'ottone",
+        "descrizione": "+15 schivata, e chi le vola o le cammina entro 2 caselle colpisce meglio: +5 precisione.",
+        "effetti": [{"tipo":"bonus","schivata":15},{"tipo":"aura","raggio":2,"precisione":5}]
+      }
+    },
+    {
+      "classe": "Lancia di tempesta",
+      "stat": {"for":3,"abi":2,"hp":2},
+      "mov": 0,
+      "abilita": {
+        "nome": "Picchiata",
+        "descrizione": "+15 schivata e +15 critico: arriva dall'alto e non avvisa.",
+        "effetti": [{"tipo":"bonus","schivata":15,"critico":15}]
+      }
+    }
+  ],
+  "tullo": [
+    {
+      "classe": "Artigliere",
+      "stat": {"for":4,"def":2,"hp":3},
+      "mov": 0,
+      "abilita": {
+        "nome": "Carica doppia",
+        "descrizione": "+10 precisione, +5 critico e +2 danni con le armi a polvere.",
+        "effetti": [{"tipo":"bonus","precisione":10,"critico":5},{"tipo":"bonus","danno":2,"seArma":{"tipo":"polvere"}}]
+      }
+    },
+    {
+      "classe": "Tiratore scelto",
+      "stat": {"vel":4,"abi":3,"hp":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Un nome per colpo",
+        "descrizione": "+15 precisione e +15 critico: non spreca un tiro.",
+        "effetti": [{"tipo":"bonus","precisione":15,"critico":15}]
+      }
+    }
+  ],
+  "ferrante": [
+    {
+      "classe": "Generale della Corona",
+      "stat": {"def":3,"for":2,"hp":4},
+      "mov": 0,
+      "abilita": {
+        "nome": "Linea di ferro",
+        "descrizione": "Chi le sta entro 3 caselle ha +10 schivata e +5 critico.",
+        "effetti": [{"tipo":"aura","raggio":3,"schivata":10,"critico":5}]
+      }
+    },
+    {
+      "classe": "Giudice d'ottone",
+      "stat": {"abi":3,"vel":2,"for":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Articolo per articolo",
+        "descrizione": "Chi le sta entro 2 caselle ha +5 schivata e +10 critico.",
+        "effetti": [{"tipo":"aura","raggio":2,"schivata":5,"critico":10}]
+      }
+    }
+  ],
+  "maelis": [
+    {
+      "classe": "Custode dei nomi",
+      "stat": {"mag":3,"res":3,"hp":2},
+      "mov": 0,
+      "abilita": {"nome":"Coro delle Radici","descrizione":"A inizio turno chi le sta accanto recupera 6 PV.","effetti":[{"tipo":"curaVicini","pv":6}]}
+    },
+    {
+      "classe": "Voce delle Radici",
+      "stat": {"mag":2,"vel":3,"fort":3},
+      "mov": 1,
+      "abilita": {
+        "nome": "Canto che protegge",
+        "descrizione": "A inizio turno chi le sta accanto recupera 3 PV; chi le sta entro 2 caselle ha +10 schivata.",
+        "effetti": [{"tipo":"curaVicini","pv":3},{"tipo":"aura","raggio":2,"schivata":10}]
+      }
+    }
+  ],
+  "brann": [
+    {
+      "classe": "Berserker di Sale",
+      "stat": {"for":4,"hp":6},
+      "mov": 0,
+      "abilita": {"nome":"Pagato in anticipo","descrizione":"+3 danni e +10 critico.","effetti":[{"tipo":"bonus","danno":3,"critico":10}]}
+    },
+    {
+      "classe": "Ammiraglio dei Corvi",
+      "stat": {"def":3,"vel":2,"hp":3},
+      "mov": 1,
+      "abilita": {
+        "nome": "Vecchia volpe di porto",
+        "descrizione": "+2 danni, +5 critico e +10 schivata.",
+        "effetti": [{"tipo":"bonus","danno":2,"critico":5,"schivata":10}]
+      }
+    }
   ]
 }

@@ -120,8 +120,7 @@
     ["grigio","Faccio il mediatore da trent'anni. È la prima volta che consegno qualcosa senza chiedere niente in cambio. Che sensazione orribile. Lo rifarei."],
     ["lethy","Le Leghe ora sanno. Domani lo sapranno Corona e Concilio, e sapranno che lo sanno tutti."],
     ["giova","Allora domani verranno a prenderselo insieme. E le Leghe avranno bisogno di navi."],
-    ["mars","Navi! Finalmente! Posso progettarne una io?"],
-    ["narr","Il resto della rotta delle Leghe Libere arriverà presto."]
+    ["mars","Navi! Finalmente! Posso progettarne una io?"]
   ],
   "ricompensa": {
     "oro": 800,

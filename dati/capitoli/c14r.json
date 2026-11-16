@@ -1,0 +1,93 @@
+{
+  "id": "c14r",
+  "titolo": "Capitolo 14 · Alberi alti come torri",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "foresta",
+  "rotta": "radici",
+  "mappa": [
+    "ff..T....f..T.ff",
+    "f....f.......f.f",
+    "..T....c....T...",
+    "....f......f....",
+    ".f....T..T....f.",
+    "......T..T......",
+    "..f..........f..",
+    "T....c....f....T",
+    ".f.......f....f.",
+    "ff..T......T..ff"
+  ],
+  "schieramento": [[0,5],[1,5],[2,5],[0,4],[2,4],[1,6],[0,6]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Capitano Dreyl, che guida lo sbarco della Corona tra gli alberi giganti. I suoi aeronauti passano sopra ogni ostacolo."
+  },
+  "nemici": [
+    {"classe":"Aeronauta","lv":15,"x":12,"y":3,"ia":"attacca"},
+    {"classe":"Aeronauta","lv":15,"x":13,"y":6,"ia":"attacca"},
+    {"classe":"Aeronauta","lv":15,"x":11,"y":8,"ia":"attacca"},
+    {"classe":"Lanciere","lv":15,"x":10,"y":4,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":15,"x":13,"y":2,"ia":"portata"},
+    {"classe":"Corazzato","lv":16,"x":11,"y":5,"ia":"portata"},
+    {"classe":"Arciere","lv":15,"x":14,"y":7,"ia":"portata"},
+    {"classe":"Medico","lv":14,"x":15,"y":5,"ia":"portata"},
+    {"classe":"Lama","lv":15,"x":12,"y":6,"ia":"attacca"},
+    {"classe":"Guerriero","lv":15,"x":13,"y":4,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Aeronauta",
+      "nome": "Capitano Dreyl",
+      "lv": 17,
+      "x": 14,
+      "y": 4,
+      "arma": "lanciaA",
+      "ia": "portata",
+      "sveglia": 4,
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":18,"def":5,"for":1,"res":2},
+      "frase": "Una foresta non è una fortezza, mercenari. È legna. E la Corona ha molte seghe.",
+      "aspetto": {"skin":"#d9b08c","hair":"#8a6a3a","style":"tricorn","coat":"#6e1f1c","acc":"epaulette","eye":"#3a4a5a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["boss","Seconda ondata, giù dalle cime! Prendete le piattaforme!"]],
+      "rinforzi": [{"classe":"Aeronauta","lv":15,"x":15,"y":1,"ia":"attacca"},{"classe":"Aeronauta","lv":15,"x":15,"y":8,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["wata","Le segatrici! Le sento mordere fin da qui. Prospy, non guardare."]],
+      "rinforzi": [{"classe":"Segatrice","lv":15,"x":15,"y":5,"ia":"attacca"},{"classe":"Segatrice","lv":15,"x":14,"y":5,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Le Radici a nord di Lucegrande. Sopra le cime, le navi di Strand calano funi e aeronauti."],
+    ["mars","Ecco l'idea. Gli alberi giganti sono più alti dei dirigibili quando scendono a sbarcare. Saliamo noi, aspettiamo, e quando una nave si abbassa... ci saltiamo sopra."],
+    ["lethy","È un'idea pessima."],
+    ["mars","L'avevo detto!"],
+    ["maelis","È pessima, ed è l'unica. Il Concilio non ha navi. Da stanotte ha me, un bastone e voi. Combatto al vostro fianco, se mi volete."],
+    ["wata","Ti vogliamo. Prospy ha già scelto dove dormire nel tuo mantello."],
+    ["narr","Tra i rami plana una figura con due ali d'ottone rattoppate."],
+    ["nives","Posta celere delle Leghe, e stavolta la posta sono io. Nives. Per saltare su una nave vi serve qualcuno che ci sia già salito. Ne ho abbordate nove. Otto per sbaglio."],
+    ["tullo","Tullo, di Cenerossa. Sono venuto a Lucegrande per leggere un nome nel Registro. L'ho letto. Adesso resto: chi ha scritto quel registro in bella copia sta su quelle navi."],
+    ["giova","Benvenuti nella Brace, tutti e tre. Prima teniamo le piattaforme: finché Dreyl comanda lo sbarco, nessuna nave scende abbastanza."]
+  ],
+  "vittoria": [
+    ["boss","Ritirata! Risalite le funi! ...Avete vinto un bosco, mercenari. Il cielo resta nostro."],
+    ["nives","Per ora, capitano. Per ora."],
+    ["maelis","Le navi si alzano. Tutte tranne una: la Tempra ha un'elica impigliata nei rami. Resterà bassa fino all'alba."],
+    ["mars","Bassa quanto?"],
+    ["maelis","Quanto un salto da un albero molto alto."],
+    ["mars","VISTO? Idea pessima, risultato ottimo. Giova, questa segnala nei tuoi quaderni."],
+    ["giova","Segno: \"saltare su un dirigibile da un albero\". Rischio: tutto. Lo facciamo all'alba."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "I Custodi fedeli a Maelis consegnano un Sigillo di ottone preso agli ufficiali e due tonici.",
+    "oggetti": [{"a":"giova","id":"sigillo","q":1},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "Abbiamo respinto lo sbarco di Dreyl tra gli alberi giganti. Con noi ora combattono Maelis, Nives e Tullo."
+}

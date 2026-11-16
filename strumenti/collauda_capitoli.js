@@ -72,6 +72,6 @@ await browser.close(); server.kill();
 console.log(esito.join("\n"));
 console.log(errori.length ? "ERRORI:\n" + errori.join("\n") : "nessun errore JavaScript");
 const fine = (rotta, ultimo) => esito.some((r) => r.startsWith(`${rotta} ${ultimo}: vinto`));
-const complete = fine("corona", "c13c") && fine("radici", "c13r") && fine("libere", "c13l");
+const complete = fine("corona", "c17c") && fine("radici", "c17r") && fine("libere", "c17l");
 console.log(complete ? "tutte e tre le rotte giocate fino in fondo" : "ATTENZIONE: qualche rotta non è arrivata in fondo");
 process.exit(errori.length || !complete ? 1 : 0);

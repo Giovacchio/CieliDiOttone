@@ -1,0 +1,91 @@
+{
+  "id": "c15l",
+  "titolo": "Capitolo 15 · Il primo volo",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "cielo",
+  "rotta": "libere",
+  "mappa": [
+    "oooooooooooooooo",
+    "ooDDDDDooooDDDoo",
+    "oDDkDDD===DDDDDo",
+    "oDDDDDDoooDDkDDo",
+    "oDDXXDDoooDDDDDo",
+    "oDDXXDDoooDDDDDo",
+    "oDDDDDDoooDDkDDo",
+    "oDDkDDD===DDDDDo",
+    "ooDDDDDooooDDDoo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[1,3],[1,4],[1,5],[1,6],[2,3],[2,6],[2,5]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi la Capitana Voss, che ha agganciato Fagiolo Secondo con la lancia d'abbordaggio della Sovrana. Le passerelle sono due."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":17,"x":10,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":17,"x":10,"y":7,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":17,"x":11,"y":4,"ia":"portata"},
+    {"classe":"Fuciliere","lv":17,"x":11,"y":5,"ia":"portata"},
+    {"classe":"Arciere","lv":17,"x":13,"y":3,"ia":"portata"},
+    {"classe":"Arciere","lv":17,"x":13,"y":6,"ia":"portata"},
+    {"classe":"Corazzato","lv":18,"x":12,"y":4,"ia":"portata"},
+    {"classe":"Medico","lv":16,"x":14,"y":5,"ia":"portata"},
+    {"classe":"Lama","lv":17,"x":12,"y":2,"ia":"attacca"},
+    {"classe":"Guerriero","lv":17,"x":12,"y":7,"ia":"attacca"},
+    {
+      "id": "boss",
+      "classe": "Lama",
+      "nome": "Capitana Voss",
+      "lv": 20,
+      "x": 14,
+      "y": 4,
+      "arma": "sciabola",
+      "ia": "portata",
+      "sveglia": 4,
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":20,"def":6,"for":1,"res":2},
+      "frase": "Vent'anni di servizio e mi mandano ad abbordare un ortaggio volante. Arrendetevi, e nel rapporto scriverò che era una nave.",
+      "aspetto": {"skin":"#c99674","hair":"#3a2a22","style":"tricorn","coat":"#5a1e1c","acc":"epaulette","eye":"#3a3a3a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["boss","Aeronauti, sul ponte nemico! E qualcuno mi dica perché quella nave è verde."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":17,"x":8,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":8,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":18,"x":8,"y":4,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":8,"y":5,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Sopra il golfo di Porto Ambra. Primo volo di Fagiolo Secondo. Dura undici minuti prima che la Sovrana la agganci."],
+    ["mars","Ci hanno arpionati! La MIA nave! Ha undici minuti di vita e già la bucano!"],
+    ["brann","Lancia d'abbordaggio della Corona. Ne ho subite sei. Di solito a questo punto si tratta."],
+    ["lethy","Non trattiamo, signor Brann."],
+    ["brann","Lo temevo."],
+    ["tullo","In galleria, quando la roccia ti viene addosso, non scappi. Punti i piedi e spingi. È uguale."],
+    ["nives","Vento da est. Per chi abborda da ovest è contro. Buon presagio. ...Buona misura, capo conti. Come vuoi tu."],
+    ["giova","Due passerelle. Voss sta a poppa della sua lancia e si muoverà solo se le portiamo la battaglia in casa. Andiamo a prendercela."]
+  ],
+  "vittoria": [
+    ["boss","...Basta così. Staccate l'arpione. Stratega, una cosa: quella nave pende a sinistra."],
+    ["mars","È carattere!"],
+    ["boss","È un difetto alla seconda caldaia. Fatela guardare. ...Non l'avete sentito da me."],
+    ["narr","La Sovrana si allontana. Dal ponte di Fagiolo Secondo si vedono le città delle Leghe, una dopo l'altra, accendere i fuochi di segnalazione."],
+    ["lethy","Sono le piazze. Stanno leggendo il Registro. Tutte."],
+    ["wata","E le voci rispondono. Da ogni lampada, da ogni lanterna. Prospy fa le fusa: non l'aveva mai fatto, in aria."],
+    ["brann","Bello. Commovente. Ma ho visto del fumo dove non ci sono città. Verso le colline di Merlaia."],
+    ["giova","Merlaia. Nonna Tessa. Rotta sulle colline, Mars. Anche storti."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "Voss, andandosene, ha \"dimenticato\" una cassa sul ponte: tre tonici.",
+    "oggetti": [{"a":"tullo","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Primo volo di Fagiolo Secondo, e primo abbordaggio respinto. Le piazze delle Leghe stanno leggendo i nomi."
+}

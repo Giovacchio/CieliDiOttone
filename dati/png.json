@@ -78,5 +78,29 @@
     "squadra": "nemico",
     "titolo": "Caposquadra",
     "aspetto": {"skin":"#d0a882","hair":"#4a3a2a","style":"helm","coat":"#6a5a3a","beard":true,"eye":"#2a1c14"}
+  },
+  "dalca": {
+    "nome": "Maggiore Dalca",
+    "squadra": "nemico",
+    "titolo": "Maggiore dell'Ufficio dell'Etere",
+    "aspetto": {"skin":"#d2a582","hair":"#2c2c30","style":"greathelm","coat":"#5a1e1c","eye":"#2a1c14"}
+  },
+  "rauk": {
+    "nome": "Comandante Rauk",
+    "squadra": "nemico",
+    "titolo": "Comandante dell'Incudine",
+    "aspetto": {"skin":"#c08a62","hair":"#6a3a22","style":"messy","coat":"#4a2620","beard":"full","scar":true,"eye":"#2a1c14"}
+  },
+  "ysolde": {
+    "nome": "Custode Ysolde",
+    "squadra": "nemico",
+    "titolo": "Prima cantora del Silenzio",
+    "aspetto": {"skin":"#e6cdb4","hair":"#c9c2a8","style":"longv","coat":"#d8d2bc","acc":"leaf","eye":"#8ad0a0"}
+  },
+  "dreyl": {
+    "nome": "Capitano Dreyl",
+    "squadra": "nemico",
+    "titolo": "Capitano di squadriglia",
+    "aspetto": {"skin":"#d9b08c","hair":"#8a6a3a","style":"tricorn","coat":"#6e1f1c","acc":"epaulette","eye":"#3a4a5a"}
   }
 }

@@ -1,0 +1,120 @@
+{
+  "id": "c16c",
+  "titolo": "Capitolo 16 · Galleria nove",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "miniera",
+  "rotta": "corona",
+  "mappa": [
+    "################",
+    "#....r....#....#",
+    "#.cc.....b.....#",
+    "#.cc..##.b..r..#",
+    "#.....##.b.....#",
+    "bbbbbbbbbbbbbbbb",
+    "#..r..##.....c.#",
+    "#.....##..r....#",
+    "#....r.........#",
+    "################"
+  ],
+  "schieramento": [[3,4],[4,4],[3,5],[4,5],[2,5],[5,4],[4,3]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "proteggi": "odo",
+    "testo": "Proteggi il Caposquadra Odo e le radici trapiantate per 6 turni, finché i minatori non sono usciti. Oppure sconfiggi la Custode Ysolde. Se Odo cade, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "odo",
+      "titolo": "Caposquadra",
+      "nome": "Caposquadra Odo",
+      "lv": 10,
+      "x": 2,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "ascia",
+      "stat": {"hp":48,"for":9,"mag":0,"abi":7,"vel":5,"fort":8,"def":13,"res":10},
+      "aspetto": {"skin":"#b98a66","hair":"#6a6a6a","style":"helm","coat":"#6a5a40","beard":true,"eye":"#3a3026"},
+      "abilita": {"nome":"L'ultimo a uscire","descrizione":"Tiene aperto l'argano finché l'ultimo minatore non è fuori. Non si muove. Se cade, la missione fallisce."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Custode","lv":17,"x":12,"y":2,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":17,"x":12,"y":7,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":11,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Lanciere","lv":17,"x":13,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Corazzato","lv":17,"x":10,"y":4,"ia":"portata","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":14,"y":1,"ia":"attacca","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":17,"x":14,"y":8,"ia":"attacca","nome":"Arciere di Arven","aspetto":"radici"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["narr","Dal buio della galleria est arriva un canto senza parole. I cristalli nelle lampade si affievoliscono."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":17,"x":15,"y":5,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Lama","lv":17,"x":14,"y":5,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["tullo","Alle spalle! Sono passati dal pozzo vecchio. Solo chi ha lavorato qui lo conosce... o chi ha letto il Registro."]],
+      "rinforzi": [{"classe":"Lama","lv":16,"x":0,"y":5,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["ysolde","Minatori, mercenari, ispettrici: uscite. Le voci di questa galleria hanno urlato abbastanza. Il Silenzio comincia da qui."]],
+      "rinforzi": [
+        {
+          "id": "ysolde",
+          "classe": "Custode",
+          "nome": "Custode Ysolde",
+          "lv": 19,
+          "x": 14,
+          "y": 5,
+          "arma": "giudizio",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":18,"def":5,"res":5,"vel":2},
+          "frase": "Tu le senti, vero, ragazza col gatto? Allora sai che ti sto chiedendo di lasciarle riposare.",
+          "aspetto": {"skin":"#e6cdb4","hair":"#c9c2a8","style":"longv","coat":"#d8d2bc","acc":"leaf","eye":"#8ad0a0"}
+        },
+        {"classe":"Medico","lv":16,"x":15,"y":4,"ia":"attacca","nome":"Guaritore di Arven","aspetto":"radici"},
+        {"classe":"Corazzato","lv":17,"x":13,"y":6,"ia":"attacca","nome":"Guardia di radice","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Cenerossa, galleria nove. Le radici trapiantate brillano nel buio. Intorno, i minatori corrono verso l'argano."],
+    ["odo","Tullo! Ti davamo per morto. Gli incappucciati sono entrati dal lato est: cantano, e le lampade si spengono una dopo l'altra."],
+    ["wata","È il Canto del Silenzio. Arven lo sta provando qui, su una radice sola. Se funziona, lo farà su tutte."],
+    ["ferrante","Spegnere l'etere di una miniera con duecento uomini dentro. Senza lampade, senza argano, senza aria."],
+    ["mars","E senza voci. Wata, se le spengono... dove vanno?"],
+    ["wata","Da nessuna parte, Mars. È questo il punto."],
+    ["odo","Io l'argano non lo mollo finché l'ultimo dei miei non è su. Sei turni di salita, se non si inceppa."],
+    ["giova","Allora per sei turni questa galleria è nostra. Teniamo i binari e le radici. Nessuno passa."]
+  ],
+  "vittoria": [
+    ["narr","L'ultimo carrello sale. Il canto si interrompe a metà di una nota. Le lampade tornano a brillare, una dopo l'altra."],
+    ["ysolde","Avete salvato duecento uomini e condannato quarantadue voci a restare sveglie in una miniera. Fate voi il conto, stratega."],
+    ["giova","L'ho già sentita, questa frase. Da Strand. Parlate con la stessa voce, voi due, e non ve ne accorgete."],
+    ["tullo","Le quarantadue voci le conosco per nome, signora. Chiedetelo a loro, se vogliono il vostro silenzio."],
+    ["narr","Ysolde si ritira nel pozzo vecchio. Wata resta a lungo con la mano sulla radice."],
+    ["wata","Dicono grazie. E dicono un'altra cosa: \"l'uomo dei conti è tornato in ufficio\"."],
+    ["ferrante","Strand. È a Corvara, nell'Ufficio dell'Etere, e sta bruciando i registri. Andiamo a finirla."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "I minatori di Cenerossa fanno una colletta: un Sigillo di ottone trovato in un vecchio armadietto e due tonici.",
+    "oggetti": [{"a":"tullo","id":"sigillo","q":1},{"a":"wata","id":"tonico","q":2}]
+  },
+  "diario": "In galleria nove abbiamo fermato il primo Canto del Silenzio. Duecento minatori sono usciti vivi."
+}

@@ -1,0 +1,35 @@
+{
+  "coppia": ["brann","lethy"],
+  "C": [
+    ["lethy","Signor Brann, lei una volta ha cercato di vendere la mia Compagnia. Due volte, a essere precisi."],
+    ["brann","Tre, signorina. La terza non ve ne siete accorti. Niente di personale."],
+    ["lethy","Mio padre dice che un uomo che si vende a tutti in fondo è l'unico di cui si conosce il prezzo. Lo trova rassicurante."],
+    ["brann","Suo padre è il banchiere Valdoro? Gli devo dei soldi."],
+    ["lethy","Tutti gli devono dei soldi. È il suo modo di avere amici."],
+    ["brann","Ah! Mi piace, la ragazza. Quanto vuole per non dirgli che sono qui?"],
+    ["lethy","Niente. Ma mi insegni a contrattare. A casa non ho mai dovuto pagare nulla, e ho scoperto che è un difetto."],
+    ["brann","Prima lezione, gratis: non dire mai \"niente\". Costa carissimo."]
+  ],
+  "B": [
+    ["brann","Seconda lezione. Ogni cosa ha due prezzi: quello che chiedi e quello sotto cui te ne vai. Il tuo qual è?"],
+    ["lethy","Per cosa?"],
+    ["brann","Per te, signorina. Se domani papà scrive \"torna a casa o ti diseredo\". A quanto te ne vai dalla Compagnia?"],
+    ["lethy","L'ha già scritto. Il mese scorso."],
+    ["brann","...E?"],
+    ["lethy","E ho risposto che a casa ho sette forchette e nessuno con cui usarle. Qui ne ho una, storta, e mangio con sei persone."],
+    ["brann","Trent'anni che compro e vendo gente. Una che rifiuta un'eredità per una forchetta storta non l'avevo mai incontrata."],
+    ["lethy","E lei, signor Brann? Il suo prezzo sotto cui se ne va?"],
+    ["brann","Non ce l'ho mai avuto. È sempre stato quello il mio guaio."]
+  ],
+  "A": [
+    ["lethy","Brann. Oggi Strand le ha fatto arrivare un'offerta. L'ho visto, il messaggero. Il triplo, come al solito?"],
+    ["brann","Il quintuplo. Più una nave."],
+    ["lethy","E ha rifiutato."],
+    ["brann","Ho contrattato due ore, per abitudine. Poi ho detto di no. Il messaggero è svenuto. Credo sia la prima volta nella storia di Porto Ambra."],
+    ["lethy","Perché?"],
+    ["brann","Terza lezione, signorina, e questa me l'ha insegnata lei: ho trovato il prezzo sotto cui me ne vado. È una forchetta storta al tavolo giusto."],
+    ["lethy","Allora ho un regalo. Dalla villa. L'ho fatto spedire apposta."],
+    ["brann","Una forchetta d'argento. ...Con le iniziali di suo padre."],
+    ["lethy","Gliela doveva lei, dei soldi. Ora siamo pari: lui ha un debitore in meno e lei ha un amico. Niente di personale."]
+  ]
+}

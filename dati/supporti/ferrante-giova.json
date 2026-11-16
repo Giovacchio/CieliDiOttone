@@ -1,0 +1,34 @@
+{
+  "coppia": ["ferrante","giova"],
+  "C": [
+    ["ferrante","Stratega. Il vostro accampamento viola undici articoli del regolamento di campo della Corona."],
+    ["giova","Undici. Li hai contati."],
+    ["ferrante","Articolo quattro: il fuoco di cucina a meno di sei passi dalle tende. Articolo nove: un gatto nella dispensa."],
+    ["giova","Prospy è il responsabile della dispensa. Ha più esperienza di tutti noi coi topi."],
+    ["ferrante","Articolo undici: il comandante cucina di persona. Un comandante non cucina."],
+    ["giova","Assaggia e poi dimmi se vuoi far rispettare l'articolo undici."],
+    ["ferrante","..."],
+    ["ferrante","L'articolo undici è sospeso. In via provvisoria. Gli altri dieci restano."]
+  ],
+  "B": [
+    ["giova","Ferrante, la sciabola che mi hai dato. Sull'elsa c'è inciso un numero. 0417."],
+    ["ferrante","Il mio numero di matricola. Me la consegnarono il giorno del giuramento. \"Per la luce di ogni casa.\""],
+    ["giova","E me l'hai regalata."],
+    ["ferrante","Ho passato quindici anni a far rispettare la legge di un ufficio che uccideva i suoi operai e lo scriveva nei registri in bella calligrafia. Io quei registri li timbravo."],
+    ["giova","Non sapevi cosa c'era sotto."],
+    ["ferrante","Non ho chiesto. Per un'ispettrice è peggio. È l'unico articolo che conta e l'ho violato per quindici anni."],
+    ["giova","Allora perché dare la sciabola proprio a me?"],
+    ["ferrante","Perché tu chiedi sempre. Anche quando la risposta rovina il conto."]
+  ],
+  "A": [
+    ["ferrante","Ho scritto un articolo nuovo. Il dodicesimo. Vorrei il tuo parere prima di proporlo al Consiglio."],
+    ["giova","Leggi."],
+    ["ferrante","\"Nessun registro della Corona può contenere un numero al posto di un nome.\""],
+    ["giova","È corto."],
+    ["ferrante","Gli altri undici li ho scritti lunghi perché nessuno li leggesse fino in fondo. Questo lo devono leggere tutti."],
+    ["giova","Allora ti restituisco questa. La sciabola. 0417 dovrebbe portarla chi ha scritto l'articolo dodici."],
+    ["ferrante","No. Tienila. Ma fai incidere il tuo nome sotto il numero. Così chi la trova, un giorno, saprà che dietro la matricola c'erano due persone."],
+    ["giova","Affare fatto. E l'articolo undici?"],
+    ["ferrante","Abolito. In via definitiva. Stasera cucini tu, è un ordine."]
+  ]
+}

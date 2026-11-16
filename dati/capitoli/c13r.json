@@ -105,8 +105,7 @@
     ["narr","All'alba i fedeli di Arven si ritirano. Ma sopra le cime degli alberi compaiono le sagome dei dirigibili della Corona."],
     ["maelis","Strand. Ha aspettato che ci indebolissimo a vicenda."],
     ["giova","Allora il prossimo campo di battaglia è il cielo. E il Concilio non ha navi."],
-    ["mars","Però ha alberi alti come torri. E io ho un'idea. Pessima, probabilmente. Ma è un'idea."],
-    ["narr","Il resto della rotta del Concilio arriverà presto."]
+    ["mars","Però ha alberi alti come torri. E io ho un'idea. Pessima, probabilmente. Ma è un'idea."]
   ],
   "ricompensa": {
     "oro": 800,

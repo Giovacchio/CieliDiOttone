@@ -10,12 +10,15 @@ const schedaIniziale = (b) => ({ lv: b.lv || 1, pe: 0, stat: clona(b.stat), ogge
 
 // Fa entrare nella Compagnia i personaggi che si uniscono entro il capitolo indicato.
 // Un personaggio senza "entra" c'è dall'inizio; con "entra": "c5" arriva quando si sta per giocare il capitolo c5.
+// "entra" può essere una lista (un capitolo per rotta): vale il primo che sta sul percorso della partita.
 export function aggiornaCompagnia(dati, partita, idCapitolo) {
   const lista = dati.campagna.capitoli, qui = idCapitolo ? lista.indexOf(idCapitolo) : lista.length;
   for (const id of dati.personaggi.ordine) {
     const b = dati.personaggi[id];
     if (partita.compagnia[id] || !b) continue;
-    if (!b.entra || (lista.indexOf(b.entra) >= 0 && lista.indexOf(b.entra) <= qui)) partita.compagnia[id] = schedaIniziale(b);
+    const ingressi = [].concat(b.entra || []);
+    const arriva = !ingressi.length || ingressi.some((c) => dati.capitoli[c] && sulPercorso(partita, dati.capitoli[c]) && lista.indexOf(c) <= qui);
+    if (arriva) partita.compagnia[id] = schedaIniziale(b);
   }
   return partita;
 }

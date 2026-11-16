@@ -31,6 +31,12 @@ Per provare il gioco sul proprio computer: `node strumenti/servi.js` e poi http:
 Il motore consegna "fatti" (`{tipo:"colpo", ...}`) e l'interfaccia li anima: per questo test e simulatore
 girano senza browser, in un paio di secondi.
 
+## A che punto è la storia
+
+Scritti e giocabili: prologo, capitoli 1-12 e, per ognuna delle tre rotte (`c`orona, `r`adici, `l`ibere), i capitoli 13-17 (`c13c` … `c17l`).
+Manca l'Atto V (capitoli 18-20, finali ed epiloghi): la trama, i ganci lasciati dai capitoli 17 e le voci dei personaggi sono in `GDD.md`.
+In `dati/campagna.json` i capitoli delle rotte sono in ordine di numero (13 di tutte, poi 14 di tutte…): tienilo così, perché mercato e arrivi dei personaggi guardano la posizione nella lista.
+
 ## Aggiungere un capitolo
 
 1. Crea `dati/capitoli/c14c.json` (l'`id` dentro il file deve essere uguale al nome del file).
@@ -102,7 +108,7 @@ girano senza browser, in un paio di secondi.
 ```
 
 - `"usa"`: i tipi di arma che sa portare (`spada`, `lancia`, `ascia`, `arco`, `etere`, `congegni`, `polvere`, `cura`). Una promozione può aggiungerne con `"usa"`.
-- `"entra"`: il capitolo in cui si unisce (senza, c'è dall'inizio). `"lv"` e `"stat"` sono quelli con cui arriva; `crescita` è la probabilità (%) di +1 a ogni livello.
+- `"entra"`: il capitolo in cui si unisce (senza, c'è dall'inizio). Può essere una lista, un capitolo per rotta (`["c14c","c14r","c14l"]`): vale quello che sta sulla rotta scelta. Con un solo capitolo di rotta (`"c14c"`) il personaggio entra solo su quella rotta. `"lv"` e `"stat"` sono quelli con cui arriva; `crescita` è la probabilità (%) di +1 a ogni livello.
 - Ricorda di dare al capitolo abbastanza caselle di `schieramento`.
 - **Effetti delle abilità** (si possono combinare):
   `aura` (`raggio`, e `precisione`/`schivata`/`critico` a tutta la squadra entro il raggio),

@@ -69,7 +69,7 @@ export function controllaDati(dati) {
     stat(dove, p.stat); stat(dove + " (crescita)", p.crescita);
     if (!dati.armi[p.arma]) err(dove, `l'arma "${p.arma}" non esiste`);
     else if (p.usa && !p.usa.includes(dati.armi[p.arma].tipo)) err(dove, `"usa" non comprende il tipo della sua arma (${dati.armi[p.arma].tipo})`);
-    if (p.entra && !dati.campagna.capitoli.includes(p.entra)) err(dove, `"entra": il capitolo "${p.entra}" non è in campagna.json`);
+    for (const c of [].concat(p.entra || [])) if (!dati.campagna.capitoli.includes(c)) err(dove, `"entra": il capitolo "${c}" non è in campagna.json`);
     if (!movimenti.includes(p.movimento)) err(dove, `movimento "${p.movimento}" sconosciuto`);
     abilita(dove, p.abilita); oggetti(dove, p.oggetti);
     for (const [k, P] of (dati.promozioni[id] || []).entries()) {

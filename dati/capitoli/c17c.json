@@ -1,0 +1,96 @@
+{
+  "id": "c17c",
+  "titolo": "Capitolo 17 · L'Ufficio dell'Etere",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "notte",
+  "rotta": "corona",
+  "selciato": true,
+  "mappa": [
+    "HHHHHXXXXXXHHHHH",
+    "HHHHHXggggXHHHHH",
+    "..L..XgFFgX..L..",
+    "ssssgggggggsssss",
+    "ggggkgggggkggggg",
+    "ssssggggggggssss",
+    "..L.gkggggkg.L..",
+    "HHH.gggggggg.HHH",
+    "HHH.gLggggLg.HHH",
+    "HHH.ssssssss.HHH"
+  ],
+  "schieramento": [[7,9],[8,9],[6,9],[9,9],[7,8],[8,8],[5,9]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Direttore Strand nel suo ufficio. Sta sulla fornace dell'archivio, che lo cura a ogni turno: non dategli tregua."
+  },
+  "nemici": [
+    {"classe":"Corazzato","lv":20,"x":6,"y":3,"ia":"fermo"},
+    {"classe":"Corazzato","lv":20,"x":9,"y":3,"ia":"fermo"},
+    {"classe":"Fuciliere","lv":19,"x":6,"y":1,"ia":"portata"},
+    {"classe":"Fuciliere","lv":19,"x":9,"y":1,"ia":"portata"},
+    {"classe":"Lanciere","lv":19,"x":5,"y":5,"ia":"attacca"},
+    {"classe":"Lanciere","lv":19,"x":10,"y":5,"ia":"attacca"},
+    {"classe":"Lama","lv":19,"x":7,"y":5,"ia":"attacca"},
+    {"classe":"Arciere","lv":19,"x":2,"y":2,"ia":"portata"},
+    {"classe":"Arciere","lv":19,"x":13,"y":2,"ia":"portata"},
+    {"classe":"Medico","lv":18,"x":6,"y":2,"ia":"portata"},
+    {"classe":"Corazzato","lv":20,"x":7,"y":3,"ia":"portata"},
+    {"classe":"Guerriero","lv":19,"x":8,"y":5,"ia":"attacca"},
+    {
+      "id": "strand",
+      "classe": "Fuciliere",
+      "titolo": "Direttore dell'Ufficio dell'Etere",
+      "nome": "Direttore Strand",
+      "lv": 22,
+      "x": 7,
+      "y": 2,
+      "arma": "moschetto",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":24,"def":7,"res":6,"abi":3},
+      "frase": "Entra pure, stratega. Ti avevo chiesto di fare il conto. Dieci lampade d'ospedale per ogni minatore. L'hai fatto? Allora dimmi dov'è l'errore.",
+      "aspetto": {"skin":"#d8b89a","hair":"#9a9a9a","style":"short","coat":"#2c2f3a","acc":"jabot","eye":"#4a5560"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["strand","Guardia dell'Ufficio, alle finestre. Con calma. Non c'è motivo di alzare la voce."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":19,"x":0,"y":3,"ia":"attacca"},{"classe":"Aeronauta","lv":19,"x":15,"y":3,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Cavaliere","lv":19,"x":0,"y":5,"ia":"attacca"},{"classe":"Cavaliere","lv":19,"x":15,"y":5,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Corvara, di notte. L'Ufficio dell'Etere ha tutte le finestre accese. Dal camino dell'archivio esce fumo di carta."],
+    ["ferrante","Sta bruciando i registri. Quindici anni di timbri. Molti sono miei."],
+    ["giova","Mi aveva detto: \"fai il conto, stratega\". L'ho fatto ogni notte da Corvara a oggi."],
+    ["lethy","E torna?"],
+    ["giova","Torna. È questo che non gli perdono."],
+    ["mars","Io ho una teoria: un conto giusto con le persone sbagliate dentro è come una pozione giusta con il veleno al posto dell'acqua. Stessa ricetta. Risultato diverso."],
+    ["tullo","Io non ho teorie. Ho un quaderno e un fucile. Andiamo."],
+    ["nives","Vento da est, fumo basso, e un corvo a sinistra. ...Sapete che vi dico? Stanotte il corvo si sbaglia."],
+    ["giova","Strand è in fondo, sulla fornace dell'archivio. Sfondiamo la guardia e gli portiamo la risposta."]
+  ],
+  "vittoria": [
+    ["strand","...Allora dimmelo. L'errore. Trent'anni che lo cerco anch'io, sai."],
+    ["giova","Il conto è giusto. Hai sbagliato chi l'ha fatto. Nessuno dei quarantadue ha potuto dire sì o no. Un conto dove chi paga non lo sa non è un conto: è un furto. Me l'ha insegnato un'alchimista."],
+    ["mars","L'avevo inventato sul momento! Però era vero."],
+    ["strand","E le lampade? Gli ospedali? Domani mattina chi le accende?"],
+    ["ferrante","Noi. Con l'etere che c'è, razionato, e con i nomi scritti su ogni cassa. Articolo dodici. L'ho scritto io."],
+    ["narr","Le guardie del Consiglio portano via Strand. Non oppone resistenza. Chiede solo di poter spegnere lui la fornace dell'archivio."],
+    ["tullo","Quarantadue. Fatto."],
+    ["wata","Giova... Prospy ha il pelo dritto. Non per Strand. È il canto. Non è più una radice sola: viene da est, da tutte."],
+    ["narr","Fine dell'Atto IV. Arven ha cominciato il Canto del Silenzio nel Cuore delle Radici. L'Atto V, l'ultima brace, arriverà presto."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Il Consiglio della Corona apre l'armeria alla Compagnia: due tonici a testa per i veterani.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"lethy","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]
+  },
+  "diario": "Strand è caduto, e gli abbiamo portato la risposta al suo conto. Ma da est sale il Canto del Silenzio."
+}

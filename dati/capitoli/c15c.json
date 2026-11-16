@@ -1,0 +1,88 @@
+{
+  "id": "c15c",
+  "titolo": "Capitolo 15 · L'Incudine",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "cielo",
+  "rotta": "corona",
+  "mappa": [
+    "oooooooooooooooo",
+    "oDDDDDoooDDDDDDo",
+    "oDDkDD===DDkDDDo",
+    "oDDDDDoooDDDXXDo",
+    "oDDDDDoooDDDXXDo",
+    "oDDkDD===DDDDDDo",
+    "oDDDDDoooDDkDDDo",
+    "oDDDDDoooDDDDDDo",
+    "ooDDDoooooDDDDoo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[1,3],[1,4],[2,3],[2,4],[1,5],[2,6],[1,6]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Comandante Rauk sull'Incudine prima che sganci le bombe su Cenerossa. I due ponti si passano solo dalle passerelle."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":17,"x":9,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":17,"x":9,"y":5,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":17,"x":11,"y":3,"ia":"portata"},
+    {"classe":"Fuciliere","lv":17,"x":11,"y":6,"ia":"portata"},
+    {"classe":"Corazzato","lv":17,"x":10,"y":4,"ia":"portata"},
+    {"classe":"Arciere","lv":17,"x":13,"y":1,"ia":"portata"},
+    {"classe":"Lama","lv":18,"x":12,"y":7,"ia":"attacca"},
+    {"classe":"Medico","lv":16,"x":14,"y":6,"ia":"portata"},
+    {"classe":"Lama","lv":17,"x":14,"y":4,"ia":"portata"},
+    {"classe":"Guerriero","lv":17,"x":12,"y":2,"ia":"attacca"},
+    {
+      "id": "boss",
+      "classe": "Guerriero",
+      "nome": "Comandante Rauk",
+      "lv": 19,
+      "x": 14,
+      "y": 3,
+      "arma": "martello",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":20,"def":6,"vel":2,"res":2},
+      "frase": "Strand mi ha tirato fuori da una fonderia e mi ha dato una nave. Voi cosa offrite, un processo? Venite a prendervelo, il timone!",
+      "aspetto": {"skin":"#c08a62","hair":"#6a3a22","style":"messy","coat":"#4a2620","beard":"full","scar":true,"eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["boss","Squadriglia, in aria! Tagliate le passerelle a chi le attraversa!"]],
+      "rinforzi": [{"classe":"Aeronauta","lv":17,"x":7,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":7,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":18,"x":15,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":17,"x":15,"y":9,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Sopra Cenerossa. L'Incudine, la cannoniera di Strand, punta la prua verso gli ingressi delle gallerie."],
+    ["ferrante","Vuole far crollare la miniera. Niente gallerie, niente radici trapiantate, niente prove. E dentro ci sono ancora i turni del mattino."],
+    ["tullo","Duecento uomini. Lo so perché oggi toccava alla mia squadra."],
+    ["mars","La Sovrana può affiancarla! Ho chiesto al timoniere. Ha detto \"signorina, scenda dal timone\", ma secondo me era un sì."],
+    ["nives","Io volo tra i due ponti. Voi usate le passerelle e non guardate giù. E nessuno dica quella parola."],
+    ["lethy","Quale parola?"],
+    ["nives","Quella."],
+    ["giova","Due passerelle, quindi due colli di bottiglia. Rauk sta a poppa, dietro la paratia. Passiamo, e il timone è nostro."]
+  ],
+  "vittoria": [
+    ["boss","...Timone vostro. Bah. Ditelo voi a Strand che ho perso la sua nave. Io a Corvara non ci torno."],
+    ["narr","L'Incudine vira lontano dalla miniera. Sotto, dagli ingressi delle gallerie, escono i turni del mattino. Guardano in su."],
+    ["tullo","Quelli là sotto non sanno ancora cosa stava per cadergli in testa. Meglio così. Glielo racconto io, con calma, davanti a un bicchiere."],
+    ["wata","Le radici là dentro... tremano. Non per le bombe. Qualcuno, giù in fondo, sta cantando."],
+    ["ferrante","Cantando? In una miniera della Corona?"],
+    ["giova","Arven. Se Strand è alle corde, il Concilio non starà a guardare. Scendiamo. Subito."]
+  ],
+  "ricompensa": {
+    "oro": 800,
+    "testo": "Nella stiva dell'Incudine: tre tonici e una cassa di polvere asciutta.",
+    "oggetti": [{"a":"tullo","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Abbiamo preso l'Incudine prima che bombardasse Cenerossa. Dal fondo della miniera, però, sale un canto."
+}
