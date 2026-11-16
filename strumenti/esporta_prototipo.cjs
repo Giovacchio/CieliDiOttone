@@ -26,7 +26,7 @@ function testo(v, rientro = "", chiave = "") {
   return "{\n" + Object.entries(v).map(([k, x]) => dentro + JSON.stringify(k) + ": " + testo(x, dentro, k)).join(",\n") + "\n" + rientro + "}";
 }
 function scrivi(file, v) {
-  const f = path.join(radice, "dati", file);
+  const f = path.join(process.env.CDO_USCITA || path.join(radice, "dati"), file);
   fs.mkdirSync(path.dirname(f), { recursive: true });
   fs.writeFileSync(f, testo(v) + "\n");
 }

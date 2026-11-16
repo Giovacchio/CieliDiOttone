@@ -6,16 +6,19 @@ Gioco tattico a turni su griglia, nel browser, da PC e da telefono. Mondo fantas
 
 ## Stato
 
-- **Prologo giocabile** (prototipo): movimento, combattimento con previsione, due triangoli delle armi, livelli, abilità uniche, IA nemica, dialoghi.
-- **Prossimo passo:** il motore definitivo a moduli con dati in JSON (vedi `MESSAGGIO_PER_FABLE.md`).
+- **16 capitoli giocabili**: prologo, capitoli 1-12, scelta della rotta e primo capitolo di ognuna delle tre rotte.
+- Motore a moduli con tutti i contenuti in file JSON (`dati/`): aggiungere un capitolo vuol dire scrivere un JSON.
+- Supporti, promozioni, accampamento, salvataggio automatico.
 
 ## File
 
 | File | Cosa contiene |
 |---|---|
-| `index.html` | Il gioco (per ora tutto in un file) |
-| `GDD.md` | Documento di design: mondo, trama, cast, classi, formule, supporti, accampamento |
-| `MESSAGGIO_PER_FABLE.md` | Istruzioni per costruire il motore definitivo |
+| `index.html`, `css/`, `js/` | Il gioco |
+| `dati/` | Capitoli, dialoghi, personaggi, classi, armi, regole |
+| `LEGGIMI.md` | Come aggiungere capitoli, personaggi, supporti e promozioni |
+| `GDD.md` | Documento di design: mondo, trama, cast, classi, formule |
+| `prototipo/` | Il primo prototipo in un file solo (riferimento) |
 
 ## Compagnia della Brace
 
@@ -27,5 +30,4 @@ Giova (Stratega), Wata (Etermante delle Radici), Lethy (Spadaccina), Mars (Druid
 
 ## Strumenti
 
-- `strumenti/controlla_mappe.js`: controlla che unità e obiettivi di ogni capitolo stiano su caselle valide e raggiungibili (`node strumenti/controlla_mappe.js`).
-- `strumenti/simula_campagna.js`: fa giocare la campagna a un bot e stampa vittorie, turni e livelli per capitolo (`node strumenti/simula_campagna.js 5`). Richiedono Playwright.
+Vedi `LEGGIMI.md`: controllo dei dati, test, simulatore della campagna, collaudo nel browser.

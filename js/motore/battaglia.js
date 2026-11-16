@@ -20,8 +20,8 @@ export class Battaglia {
     this.scattati = new Set(); this.contatore = 0; this.unita = [];
 
     const pasto = bandiere.pasto && dati.pasti[bandiere.pasto];
-    dati.personaggi.ordine.forEach((id, k) => {
-      if (!compagnia[id]) return;
+    // chi è già nella Compagnia occupa le caselle di schieramento nell'ordine di personaggi.json
+    dati.personaggi.ordine.filter((id) => compagnia[id]).forEach((id, k) => {
       const dove = posizioni ? posizioni[id] : capitolo.schieramento[k];
       if (!dove) return;
       const u = unitaCompagnia(dati, compagnia, id);

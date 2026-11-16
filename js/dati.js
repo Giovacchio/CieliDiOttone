@@ -4,13 +4,11 @@
 import { NON_SI_PASSA } from "./motore/movimento.js";
 import { chiaveCoppia } from "./motore/supporti.js";
 
-const FILE = ["campagna", "regole", "terreni", "armi", "oggetti", "classi", "aspetti", "icone", "personaggi", "png", "promozioni", "pasti"];
-const FACOLTATIVI = { mercato: { armi: [], oggetti: [] } };
+const FILE = ["campagna", "regole", "terreni", "armi", "oggetti", "classi", "aspetti", "icone", "personaggi", "png", "promozioni", "pasti", "mercato"];
 
 export async function caricaDati(leggi) {
   const dati = {};
   await Promise.all(FILE.map(async (f) => { dati[f] = await leggi(f + ".json"); }));
-  await Promise.all(Object.entries(FACOLTATIVI).map(async ([f, vuoto]) => { try { dati[f] = await leggi(f + ".json"); } catch { dati[f] = vuoto; } }));
   dati.capitoli = {};
   await Promise.all(dati.campagna.capitoli.map(async (id) => { dati.capitoli[id] = await leggi(`capitoli/${id}.json`); }));
   dati.supporti = {}; dati.coppie = [];
@@ -23,7 +21,9 @@ export async function caricaDati(leggi) {
 }
 
 export const leggiDalWeb = (base = "dati/") => async (percorso) => {
-  const r = await fetch(base + percorso, { cache: "no-cache" });
+  let r;
+  try { r = await fetch(base + percorso, { cache: "no-cache" }); }
+  catch (e) { throw new Error(`Non riesco a scaricare dati/${percorso}: controlla la connessione e ricarica la pagina.`); }
   if (!r.ok) throw new Error(`Non trovo il file dati/${percorso}`);
   try { return await r.json(); } catch (e) { throw new Error(`Il file dati/${percorso} non è un JSON valido: ${e.message}`); }
 };

@@ -5,17 +5,23 @@ import { chiaveCoppia, statoCoppia, prossimoLivello } from "./supporti.js";
 
 export const VERSIONE = 2;
 
-export function nuovaCompagnia(dati) {
-  const c = {};
+const schedaIniziale = (b) => ({ lv: b.lv || 1, pe: 0, stat: clona(b.stat), oggetti: clona(b.oggetti || []), armi: [b.arma, ...(b.armi || [])], arma: b.arma, promo: null });
+
+// Fa entrare nella Compagnia i personaggi che si uniscono entro il capitolo indicato.
+// Un personaggio senza "entra" c'è dall'inizio; con "entra": "c5" arriva quando si sta per giocare il capitolo c5.
+export function aggiornaCompagnia(dati, partita, idCapitolo) {
+  const lista = dati.campagna.capitoli, qui = idCapitolo ? lista.indexOf(idCapitolo) : lista.length;
   for (const id of dati.personaggi.ordine) {
     const b = dati.personaggi[id];
-    c[id] = { lv: 1, pe: 0, stat: clona(b.stat), oggetti: clona(b.oggetti || []), armi: [b.arma], arma: b.arma, promo: null };
+    if (partita.compagnia[id] || !b) continue;
+    if (!b.entra || (lista.indexOf(b.entra) >= 0 && lista.indexOf(b.entra) <= qui)) partita.compagnia[id] = schedaIniziale(b);
   }
-  return c;
+  return partita;
 }
 export function nuovaPartita(dati) {
-  return { v: VERSIONE, prossimo: dati.campagna.capitoli[0], completati: [], compagnia: nuovaCompagnia(dati),
+  const p = { v: VERSIONE, prossimo: dati.campagna.capitoli[0], completati: [], compagnia: {},
     bandiere: {}, supporti: {}, oro: 0, deposito: { armi: [], oggetti: [] } };
+  return aggiornaCompagnia(dati, p, p.prossimo);
 }
 
 // Un capitolo è "sul percorso" se non appartiene a una rotta, o appartiene a quella scelta.
@@ -33,11 +39,12 @@ export function capitoliAperti(dati, partita) {
 }
 // Se sono stati aggiunti capitoli nuovi dopo che la partita era arrivata in fondo, la storia riprende da lì.
 export function riallinea(dati, partita) {
-  if (partita.prossimo && dati.capitoli[partita.prossimo]) return partita;
+  partita.completati ||= []; partita.bandiere ||= {}; partita.supporti ||= {}; partita.deposito ||= { armi: [], oggetti: [] }; partita.oro ||= 0;
+  if (partita.prossimo && dati.capitoli[partita.prossimo]) return aggiornaCompagnia(dati, partita, partita.prossimo);
   const fatti = partita.completati.filter((id) => dati.capitoli[id]);
   const ultimo = fatti.length ? fatti.reduce((a, b) => dati.campagna.capitoli.indexOf(a) > dati.campagna.capitoli.indexOf(b) ? a : b) : null;
   partita.prossimo = ultimo ? capitoloDopo(dati, partita, ultimo) : dati.campagna.capitoli[0];
-  return partita;
+  return aggiornaCompagnia(dati, partita, partita.prossimo);
 }
 
 function aggiungiOggetto(lista, id, q) {
@@ -67,14 +74,16 @@ export function concludiCapitolo(dati, partita, b) {
   if (R.oro) partita.oro = (partita.oro || 0) + R.oro;
   if (!partita.completati.includes(b.cap.id)) partita.completati.push(b.cap.id);
   partita.prossimo = capitoloDopo(dati, partita, b.cap.id);
+  aggiornaCompagnia(dati, partita, partita.prossimo);
   return { pasto, ricompensa: R };
 }
 
 // --- promozioni
 export function contaOggetto(partita, id) {
-  let n = 0;
-  for (const p of Object.values(partita.compagnia)) n += p.oggetti.find((i) => i.id === id)?.q || 0;
-  return n + (partita.deposito?.oggetti.find((i) => i.id === id)?.q || 0);
+  const somma = (lista) => (lista || []).reduce((n, i) => n + (i.id === id ? i.q : 0), 0);
+  let n = somma(partita.deposito?.oggetti);
+  for (const p of Object.values(partita.compagnia)) n += somma(p.oggetti);
+  return n;
 }
 function consumaOggetto(dati, partita, id) {
   for (const pid of dati.personaggi.ordine) {
@@ -111,6 +120,7 @@ export const conversazione = (dati, a, b, livello) => dati.supporti[chiaveCoppia
 export function migraV1(dati, s) {
   const OGG = { "Tonico": "tonico", "Sigillo di ottone": "sigillo" };
   const p = nuovaPartita(dati), lista = dati.campagna.capitoli;
+  aggiornaCompagnia(dati, p, null);
   for (const [id, v] of Object.entries(s.party || {})) {
     if (!p.compagnia[id]) continue;
     const armi = [v.w];

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cieli di Ottone</title>
+<meta name="description" content="Cieli di Ottone: gioco tattico a turni nel browser.">
+<meta name="theme-color" content="#14161a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/stile.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">Cieli di Ottone</div>
+    <div class="chap" id="chap"></div>
+    <div class="phase p" id="phase">Turno 1 · Giocatore</div>
+  </header>
+  <div class="board-wrap" id="wrap">
+    <div id="board">
+      <canvas id="bg"></canvas>
+      <div class="layer" id="lGoal"></div>
+      <div class="layer" id="lDanger"></div>
+      <div class="layer" id="lRange"></div>
+      <div class="layer" id="lUnits"></div>
+      <div class="layer" id="lFx"></div>
+      <div class="cell cursor" id="cursor" hidden></div>
+    </div>
+  </div>
+  <aside>
+    <div class="card" id="info"><div class="empty">Tocca un'unità per vedere le sue statistiche. Le tue sono blu, i nemici rossi.</div></div>
+    <div class="card">
+      <div class="btns">
+        <button class="btn primary" id="bEnd">Fine turno</button>
+        <button class="btn" id="bDanger">Zone nemiche</button>
+        <button class="btn" id="bCancel">Annulla</button>
+        <button class="btn" id="bFast" aria-pressed="false">Veloce</button>
+        <button class="btn" id="bMenu">Titolo</button>
+      </div>
+    </div>
+    <div class="card legend">
+      <b>Obiettivo:</b> <span id="goalTxt"></span> Se <span id="capoTxt">Giova</span> cade, la missione fallisce; gli altri si ritirano e tornano al prossimo capitolo.<br>
+      <b>Triangolo del ferro:</b> spada › ascia › lancia › spada.<br>
+      <b>Triangolo dell'ingegno:</b> etere › congegni › polvere › etere.<br>
+      <b>Comandi:</b> tocca un'unità, poi una casella blu. Tasto destro o Esc per tornare indietro.<br>
+      <small>Icone delle armi: <a href="https://game-icons.net" target="_blank" rel="noopener" style="color:var(--muted)">game-icons.net</a> (Lorc, Delapouite, Skoll), CC BY 3.0.</small>
+    </div>
+    <div class="card"><div class="combatlog" id="log" aria-live="polite"></div></div>
+  </aside>
+</div>
+<div id="ovl"></div>
+<noscript><p style="padding:20px">Per giocare serve JavaScript.</p></noscript>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

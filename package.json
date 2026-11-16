@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Gioco tattico a turni nel browser. Nessun build: questo file serve solo per i test e gli strumenti.",
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "simula": "node strumenti/simula_campagna.js",
     "controlla": "node strumenti/controlla_dati.js",
     "servi": "node strumenti/servi.js"
