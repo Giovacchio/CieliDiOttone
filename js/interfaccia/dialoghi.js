@@ -19,23 +19,32 @@ export function chiParla(id) {
 }
 
 // Mostra le battute ["chi", "testo", "espressione facoltativa"]; la promessa si chiude all'ultima.
+// Il testo compare una lettera alla volta: il primo tocco lo completa, il secondo passa alla battuta dopo.
+// Gli alleati parlano da sinistra, gli avversari da destra.
 export function storia(righe) {
   return new Promise((fine) => {
     if (!righe || !righe.length) return fine();
-    let i = 0;
+    let i = 0, timer = null, completa = () => {};
+    const chiudi = () => { clearInterval(timer); chiudiVelo(); fine(); };
     const mostra = () => {
-      if (i >= righe.length) { chiudiVelo(); return fine(); }
-      const [id, testo, espressione] = righe[i], u = chiParla(id);
+      clearInterval(timer);
+      if (i >= righe.length) return chiudi();
+      const [id, testo, espressione] = righe[i], u = chiParla(id), nemico = u.squadra === "nemico";
       const aiuto = `<div class="hint">Tocca o premi Invio per continuare · Esc per saltare</div>`;
       velo(u.narratore
-        ? `<div class="dlg narr" id="dlg" role="dialog" aria-label="Narrazione" tabindex="0"><div style="min-width:0;flex:1"><div class="txt">${h(testo)}</div>${aiuto}</div></div>`
-        : `<div class="dlg" id="dlg" role="dialog" aria-label="Dialogo" tabindex="0"><div class="portrait">${ritratto(G.dati, u, false, espressione)}</div><div style="min-width:0">
-            <div class="who">${h(u.nome)}</div><div class="txt">${h(testo)}</div>${aiuto}</div></div>`);
-      const d = $("#dlg");
+        ? `<div class="dlg narr" id="dlg" role="dialog" aria-label="Narrazione" tabindex="0"><div style="min-width:0;flex:1"><div class="txt" id="dtxt" aria-label="${h(testo)}"></div>${aiuto}</div></div>`
+        : `<div class="dlg ${nemico ? "ne" : "al"}" id="dlg" role="dialog" aria-label="Dialogo" tabindex="0"><div class="portrait">${ritratto(G.dati, u, false, espressione)}</div><div style="min-width:0;flex:1">
+            <div class="who">${h(u.nome)}</div><div class="txt" id="dtxt" aria-label="${h(testo)}"></div>${aiuto}</div></div>`);
+      const d = $("#dlg"), t = $("#dtxt");
+      let n = 0, finito = false;
+      completa = () => { clearInterval(timer); t.textContent = testo; finito = true; d.classList.add("pronto"); };
+      if (G.velocita < 1 || matchMedia("(prefers-reduced-motion: reduce)").matches) completa();
+      else timer = setInterval(() => { n += 2; t.textContent = testo.slice(0, n); if (n >= testo.length) completa(); }, 22);
+      const avanti = () => { if (!finito) completa(); else { i++; mostra(); } };
       d.focus();
-      d.onclick = () => { i++; mostra(); };
+      d.onclick = avanti;
       d.onkeydown = (e) => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); i++; mostra(); }
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); avanti(); }
         if (e.key === "Escape") { e.stopPropagation(); i = righe.length; mostra(); }
       };
     };

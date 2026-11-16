@@ -26,7 +26,7 @@ const esito = await p.evaluate(async () => {
   const UI = await import("/js/interfaccia/battaglia.js"), S = await import("/js/interfaccia/schermate.js"), C = await import("/js/motore/campagna.js");
   G.velocita = 0.02;
   const attesa = (ms) => new Promise((r) => setTimeout(r, ms));
-  const clicca = setInterval(() => { for (const s of ["#dlg", "#lvok", "#prepVia"]) document.querySelector(s)?.click(); }, 15);
+  const clicca = setInterval(() => { for (const s of ["#dlg", "#lvok", "#prepVia", ".cartello"]) document.querySelector(s)?.click(); }, 15);
   const righe = [], tentativi = {};
   for (const rotta of ["corona", "radici", "libere"]) {
     G.partita = C.nuovaPartita(G.dati); G.slot = 3;

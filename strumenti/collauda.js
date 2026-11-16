@@ -31,6 +31,7 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   const foto = (n) => p.screenshot({ path: path.join(dove, `${nome}_${n}.png`) });
   await foto("1_titolo");
   await p.click(".sNuova");
+  await p.waitForSelector(".cartello"); await p.waitForTimeout(900); await foto("1b_cartello"); await p.click(".cartello");
   await p.waitForSelector("#prepVia");
   const tocca0 = async (x, y) => { const lato = await p.evaluate(() => window.__cdo.lato), r = await p.locator("#board").boundingBox(); await p.mouse.click(r.x + (x + .5) * lato, r.y + (y + .5) * lato); await p.waitForTimeout(150); };
   const slot = await p.evaluate(() => window.__cdo.b.cap.schieramento);
@@ -65,6 +66,7 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   await tocca(nemico.x, nemico.y);
   nota(await p.locator(".forecast").count() === 1, "previsione del combattimento"); await foto("5_previsione");
   await p.click("#fcOk");
+  await p.waitForSelector(".scena"); await p.waitForTimeout(700); await foto("5b_scena_scontro");
   for (let i = 0; i < 40; i++) { if (await p.locator("#lvok").count()) await p.click("#lvok"); if (!(await p.evaluate(() => window.__cdo.occupato))) break; await p.waitForTimeout(150); }
   nota((await stato()).giova.agito, "attacco eseguito");
   await p.click("#bDanger"); await foto("6_zone_nemiche");
@@ -87,7 +89,7 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   nota(await p.evaluate(() => { const l = window.__cdo.partita.compagnia.lethy; return l.arma === "spada" && l.armi.length === 2; }), "armeria: spada data a Lethy e impugnata"); await foto("9b_armeria");
   await p.click('.tab[data-t="sup"]'); await p.click(".sread"); await p.waitForSelector("#dlg"); await p.keyboard.press("Escape"); await p.waitForTimeout(150);
   nota(await p.evaluate(() => window.__cdo.partita.supporti["giova|wata"].livello === "C"), "supporto C letto");
-  await p.click("#goNext"); await p.click("#prepVia"); await p.waitForSelector("#dlg"); await p.keyboard.press("Escape");
+  await p.click("#goNext"); await p.click(".cartello"); await p.click("#prepVia"); await p.waitForSelector("#dlg"); await p.waitForTimeout(700); await foto("9c_dialogo_nuovo"); await p.keyboard.press("Escape");
   await p.waitForFunction(() => !document.querySelector(".banner") && !window.__cdo.occupato);
   nota(await p.evaluate(() => window.__cdo.b.cap.id === "c1"), "capitolo successivo"); await foto("10_capitolo1");
   // scambio in battaglia e scelta dell'arma

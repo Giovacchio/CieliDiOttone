@@ -23,7 +23,7 @@ Per provare il gioco sul proprio computer: `node strumenti/servi.js` e poi http:
 |---|---|
 | `dati/` | Tutto il contenuto: capitoli, supporti, personaggi, classi, armi, terreni, regole |
 | `js/motore/` | Le regole, senza grafica: `battaglia.js` (turni, scontri, obiettivi), `combattimento.js` (formule), `movimento.js`, `ia.js` e `ia-tattica.js`, `supporti.js`, `inventario.js` (armi, deposito, mercato), `campagna.js` (tra un capitolo e l'altro) |
-| `js/interfaccia/` | Lo schermo: battaglia, dialoghi, accampamento, titolo, mappa dipinta, ritratti |
+| `js/interfaccia/` | Lo schermo: battaglia, dialoghi, accampamento, titolo, mappa dipinta, ritratti, `effetti.js` (particelle e atmosfera delle mappe), `scontro.js` (scena di scontro). Nessuna libreria esterna: tutta la grafica è disegnata dal codice |
 | `test/` | Test automatici |
 | `strumenti/` | Controllo dei dati, simulatore, collaudo nel browser, confronto con il prototipo |
 | `prototipo/` | Il prototipo originale in un file solo: resta come riferimento per il confronto |
@@ -70,6 +70,8 @@ girano senza browser, in un paio di secondi.
 - **mappa**: righe di testo tutte lunghe uguali; ogni carattere è un terreno di `dati/terreni.json`
   (`.` pianura, `f` bosco, `r` macerie, `w` canale, `X` muro, `F` fornace, `o` cielo, `D` ponte della nave…).
   Le coordinate partono da 0: `x` è la colonna, `y` la riga.
+- L'atmosfera animata dipende da tema e terreni, senza scrivere altro: riflessi sull'acqua, braci sulle fornaci (`F`), scintille sulle vene d'etere (`c`),
+  lucciole e lampioni accesi nei temi notturni, nuvole in `campagna` e `cielo`, foglie in `foresta`, pulviscolo in `miniera`.
 - **tema** (come viene dipinta): `citta`, `campagna`, `foresta`, `foresta-notte`, `notte`, `miniera`, `cielo`. `"selciato": true` lastrica le strade.
 - **schieramento**: le caselle di partenza della Compagnia, nell'ordine di `personaggi.json`.
 - **obiettivo.tipo**: `comandante` (batti chi ha `"comandante": true`), `tutti`, `resisti` (con `"turni"`; `"anche": "comandante"` per vincere anche così),

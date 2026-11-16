@@ -169,6 +169,7 @@ export class Battaglia {
     const colpi = [[a, d, f.A]];
     if (f.contrattacco) colpi.push([d, a, f.B]);
     if (f.A.doppio) colpi.push([a, d, f.A]); else if (f.contrattacco && f.B.doppio) colpi.push([d, a, f.B]);
+    yield { tipo: "scontro", a, d, previsione: f };
     for (const [x, y, st] of colpi) {
       if (x.pv <= 0 || y.pv <= 0) break;
       yield { tipo: "assalto", a: x, d: y };
@@ -183,6 +184,7 @@ export class Battaglia {
       } else yield { tipo: "mancato", a: x, d: y };
     }
     for (const u of [a, d]) if (u.pv <= 0) yield { tipo: "sconfitta", u };
+    yield { tipo: "fineScontro", a, d };
     // esperienza al personaggio alleato coinvolto
     const alleato = a.squadra === "alleato" ? a : (d.squadra === "alleato" ? d : null);
     const nemico = alleato === a ? d : a;

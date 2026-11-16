@@ -12,6 +12,8 @@ import { triangolo } from "../motore/combattimento.js";
 import { livelloNumero, statoCoppia } from "../motore/supporti.js";
 import { passaArma, passaOggetto, impugna } from "../motore/inventario.js";
 import { vittoria, sconfitta } from "./schermate.js";
+import * as FX from "./effetti.js";
+import { apriScena, chiudiScena, scenaAssalto, scenaColpo, scenaMancato, scenaAperta } from "./scontro.js";
 
 const tavola = () => $("#board");
 const elementi = new Map();   // unità → elemento sulla mappa
@@ -27,7 +29,7 @@ export function preparaBattaglia(idCapitolo, opzioni = {}, giaPronta = null) {
   Object.assign(G, { sel: null, origine: null, raggio: null, armaPrima: null, modo: "riposo", occupato: false, pericolo: false, chiusa: false });
   for (const el of elementi.values()) el.remove();
   elementi.clear();
-  $("#lFx").innerHTML = "";
+  $("#lFx").innerHTML = ""; $("#lPath").innerHTML = ""; chiudiScena();
   $("#bDanger").classList.remove("on");
   $("#chap").textContent = cap.titolo;
   $("#goalTxt").textContent = cap.obiettivo.testo;
@@ -41,6 +43,7 @@ export async function giocaCapitolo(idCapitolo, opzioni = {}) {
   G.partita.sospesa = null;
   const ricordate = G.partita.schieramenti[idCapitolo];
   preparaBattaglia(idCapitolo, { ...opzioni, ia: G.ia, posizioni: posizioniValide(idCapitolo, ricordate) });
+  await cartello(G.b.cap);
   await preparativi();
   await esegui(G.b.inizia());
   sospendi();
@@ -62,6 +65,21 @@ export function riprendiBattaglia() {
   registro(`Battaglia ripresa dal turno ${b.turno}.`);
   inquadra(b.capo());
   return true;
+}
+
+// Cartello d'apertura del capitolo: atto e titolo, poi svanisce da solo (o con un tocco).
+function cartello(cap) {
+  return new Promise((fine) => {
+    const [sopra, sotto] = cap.titolo.includes(" · ") ? cap.titolo.split(" · ") : ["", cap.titolo];
+    const c = document.createElement("div");
+    c.className = "cartello";
+    c.innerHTML = `<div><div class="catto">${h(cap.atto || "")}</div><div class="cnum">${h(sopra)}</div><div class="ctit">${h(sotto)}</div><div class="criga"></div></div>`;
+    document.body.appendChild(c);
+    let chiuso = false;
+    const chiudi = () => { if (chiuso) return; chiuso = true; c.classList.add("via"); setTimeout(() => { c.remove(); fine(); }, 350 * G.velocita); };
+    c.onclick = chiudi;
+    setTimeout(chiudi, 2300 * G.velocita);
+  });
 }
 
 // ------------------------------------------------------------------ schieramento prima della battaglia
@@ -126,6 +144,7 @@ export function adatta() {
   tavola().style.width = G.b.larghe * G.lato + "px";
   tavola().style.height = G.b.alte * G.lato + "px";
   disegnaMappa($("#bg"), G.b.cap, G.lato);
+  FX.impostaScena(G.b, G.lato);
   disegnaMeta(); disegnaUnita(); disegnaPortate(); disegnaPericolo();
 }
 function casella(x, y, classe) {
@@ -152,7 +171,7 @@ export function disegnaUnita() {
     if (u.pv <= 0 && !elementi.has(u)) continue;
     let el = elementi.get(u);
     if (!el) { el = document.createElement("div"); el.id = "u_" + u.id; L.appendChild(el); elementi.set(u, el); }
-    el.className = `unit ${alleato(u) ? "ally" : "enemy"}${u.comandante ? " boss" : ""}${u.agito && alleato(u) && b.fase === "giocatore" && !G.chiusa ? " done" : ""}`;
+    el.className = `unit ${alleato(u) ? "ally" : "enemy"}${u === G.sel && G.modo !== "nemico" ? " sel" : ""}${u.pv <= u.stat.hp * 0.3 ? " grave" : u.pv <= u.stat.hp * 0.6 ? " ferito" : ""}${u.comandante ? " boss" : ""}${u.agito && alleato(u) && b.fase === "giocatore" && !G.chiusa ? " done" : ""}`;
     Object.assign(el.style, { left: u.x * T + "px", top: u.y * T + "px", width: T + "px", height: T + "px" });
     if (el.dataset.arma !== u.arma) {
       el.dataset.arma = u.arma;
@@ -167,6 +186,7 @@ export function disegnaUnita() {
 export function disegnaPortate() {
   const L = $("#lRange"), b = G.b, u = G.sel;
   L.innerHTML = "";
+  for (const [v, el] of elementi) el.classList.toggle("sel", v === G.sel && G.modo !== "nemico" && G.modo !== "occupato");
   if (G.modo === "schiera") {
     for (const [x, y] of b.cap.schieramento) L.appendChild(casella(x, y, G.scambio && G.scambio.x === x && G.scambio.y === y ? "hl" : "mv"));
     return;
@@ -284,13 +304,16 @@ async function racconta(f) {
     case "rinforzi":
       registro(`<b>Rinforzi${f.unita.every((u) => !alleato(u)) ? " nemici" : ""}:</b> ${f.unita.length}.`);
       ridisegna(); inquadra(f.unita[0]);
-      for (const u of f.unita) effetto(u, "arrivo");
+      for (const u of f.unita) { effetto(u, "arrivo"); FX.arrivo(u); }
       await pausa(500); break;
     case "scelta": mostraInfo(f.u); inquadra(f.u); break;
     case "ritirata": registro(`${h(f.u.nome)} si ritira.`); break;
     case "muovi": inquadra(f.u); await cammina(f.u, f.da); await pausa(120); break;
+    case "scontro": inquadra(f.d); apriScena(f.a, f.d, f.previsione); if (scenaAperta()) await pausa(380); break;
+    case "fineScontro": if (scenaAperta()) { await pausa(520); chiudiScena(); } break;
     case "assalto": {
       const el = elementi.get(f.a), T = G.lato;
+      scenaAssalto(f.a);
       if (!el) break;
       el.classList.add("lunge");
       el.style.transform = `translate(${Math.sign(f.d.x - f.a.x) * T * .25}px,${Math.sign(f.d.y - f.a.y) * T * .25}px)`;
@@ -300,25 +323,27 @@ async function racconta(f) {
     case "colpo":
       numeroVolante(f.d, f.critico ? `CRITICO ${f.danno}` : String(f.danno), f.critico ? "#ffcf5a" : "#fff");
       effetto(f.d, f.critico ? "critico" : "colpito");
+      FX.colpo(armaDi(f.a), f.a, f.d, f.critico); scenaColpo(f.d, f.danno, f.critico);
       if (f.critico) { tavola().classList.remove("scossa"); void tavola().offsetWidth; tavola().classList.add("scossa"); }
       registro(`${h(f.a.nome)} colpisce ${h(f.d.nome)}${f.critico ? " con un critico" : ""}: ${f.danno} danni.`);
-      disegnaUnita(); await pausa(260); break;
+      disegnaUnita(); await pausa(scenaAperta() ? 430 : 260); break;
     case "mancato":
-      numeroVolante(f.d, "Mancato", "#9aa"); effetto(f.d, "schiva");
+      numeroVolante(f.d, "Mancato", "#9aa"); effetto(f.d, "schiva"); FX.mancato(f.a, f.d); scenaMancato(f.d);
       registro(`${h(f.a.nome)} manca ${h(f.d.nome)}.`);
-      await pausa(260); break;
+      await pausa(scenaAperta() ? 430 : 260); break;
     case "sconfitta": {
       const el = elementi.get(f.u);
       if (el) { el.style.transition = "opacity .5s"; el.style.opacity = "0"; }
+      FX.sconfitta(f.u);
       await pausa(450);
       svaniti.add(f.u);
       registro(alleato(f.u) ? `<b>${h(f.u.nome)}</b> è ferito e si ritira dalla battaglia.` : (f.u.siRitira ? `<b>${h(f.u.nome)}</b> è battuto e si ritira.` : `${h(f.u.nome)} è sconfitto.`));
       disegnaUnita(); disegnaPericolo(); break;
     }
     case "pe": registro(`${h(f.u.nome)} ottiene ${f.quanti} PE.`); break;
-    case "livello": await mostraLivello(f.u, f.aumenti); break;
+    case "livello": FX.livello(f.u); await pausa(350); await mostraLivello(f.u, f.aumenti); break;
     case "cura":
-      numeroVolante(f.t, "+" + f.pv, "#8de08f"); effetto(f.t, "curato");
+      numeroVolante(f.t, "+" + f.pv, "#8de08f"); effetto(f.t, "curato"); FX.cura(f.t);
       if (f.oggetto) registro(`${h(f.t.nome)} usa ${h(f.oggetto.nome)}: +${f.pv} PV.`);
       else if (f.u) registro(`${h(f.u.nome)} cura ${h(f.t.nome)}: +${f.pv} PV.`);
       disegnaUnita();
@@ -334,7 +359,7 @@ async function cammina(u, da) {
   const el = elementi.get(u), T = G.lato, passi = el ? percorso(G.b, u, da.x, da.y, u.x, u.y) : [];
   if (passi.length < 2) { disegnaUnita(); await pausa(passi.length ? 150 : 0); return; }
   el.style.transition = "left .08s linear, top .08s linear";
-  for (const p of passi) { el.style.left = p.x * T + "px"; el.style.top = p.y * T + "px"; await pausa(80); }
+  for (const p of passi) { el.style.left = p.x * T + "px"; el.style.top = p.y * T + "px"; FX.passo(p.x, p.y); await pausa(80); }
   el.style.transition = "";
   disegnaUnita();
 }
@@ -350,7 +375,7 @@ function effetto(u, classe) {
 function mostraLivello(u, aumenti) {
   return new Promise((fine) => {
     const righe = STAT.map((k) => `<div>${ETICHETTE[k]} <span class="${aumenti[k] ? "up" : ""}">${u.stat[k]}${aumenti[k] ? " +1" : ""}</span></div>`).join("");
-    velo(`<div class="lvl" role="dialog" aria-label="Livello superiore"><h3>${h(u.nome)} sale al livello ${u.lv}</h3><div class="g">${righe}</div>
+    velo(`<div class="lvl sale" role="dialog" aria-label="Livello superiore"><div class="lvtesta"><div class="portrait">${ritratto(G.dati, u)}</div><h3>${h(u.nome)}<br><small>sale al livello ${u.lv}</small></h3></div><div class="g">${righe}</div>
       <div style="margin-top:12px"><button class="btn primary" id="lvok">Continua</button></div></div>`, true);
     $("#lvok").focus();
     $("#lvok").onclick = () => { chiudiVelo(); fine(); };
@@ -450,7 +475,7 @@ function mostraPrevisione(a, d) {
 }
 // Esegue un'azione del giocatore, poi controlla se la fase è finita.
 async function agisci(u, generatore) {
-  G.modo = "occupato"; G.armaPrima = null; chiudiMenu(); disegnaPortate();
+  G.modo = "occupato"; G.armaPrima = null; chiudiMenu(); disegnaPortate(); disegnaPercorso(null);
   await esegui(generatore);
   Object.assign(G, { sel: null, origine: null, raggio: null, modo: "riposo" });
   if (G.chiusa) return;
@@ -498,7 +523,7 @@ async function suCasella(x, y) {
     if (G.raggio.some((t) => t.x === x && t.y === y)) {
       const v = G.sel;
       v.x = x; v.y = y; G.modo = "mosso";
-      disegnaPortate(); mostraInfo(v);
+      disegnaPercorso(null); disegnaPortate(); mostraInfo(v);
       await cammina(v, G.origine);
       if (G.modo === "mosso" && G.sel === v) apriMenu(v);
       return;
@@ -508,6 +533,22 @@ async function suCasella(x, y) {
   if (G.modo === "mosso") { annulla(); return; }   // tocco fuori dal menu = torna indietro
   if (G.modo === "bersaglio") { const t = b.bersagli(G.sel).find((o) => o.x === x && o.y === y); if (t) mostraPrevisione(G.sel, t); return; }
   if (G.modo === "cura") { const t = b.bersagli(G.sel).find((o) => o.x === x && o.y === y); if (t) agisci(G.sel, b.cura(G.sel, t)); return; }
+}
+
+// Freccia che mostra il cammino dell'unità selezionata fino alla casella sotto il puntatore.
+let ultimoPercorso = "";
+function disegnaPercorso(u, x, y) {
+  const firma = u ? `${u.id}:${u.x},${u.y}>${x},${y}:${G.lato}` : "";
+  if (firma === ultimoPercorso) return;
+  ultimoPercorso = firma;
+  const L = $("#lPath"), T = G.lato;
+  if (!u || (u.x === x && u.y === y)) { L.innerHTML = ""; return; }
+  const punti = [{ x: u.x, y: u.y }, ...percorso(G.b, u, u.x, u.y, x, y)].map((p) => `${(p.x + 0.5) * T},${(p.y + 0.5) * T}`);
+  const [px, py] = punti.at(-2).split(",").map(Number), [fx, fy] = punti.at(-1).split(",").map(Number), ang = Math.atan2(fy - py, fx - px) * 180 / Math.PI;
+  L.setAttribute("viewBox", `0 0 ${G.b.larghe * T} ${G.b.alte * T}`);
+  L.innerHTML = `<polyline points="${punti.join(" ")}" fill="none" stroke="#0b0d12" stroke-opacity=".55" stroke-width="${T * 0.26}" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="${punti.join(" ")}" fill="none" stroke="#dfeeff" stroke-width="${T * 0.13}" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M${-T * 0.02},${-T * 0.22} L${T * 0.26},0 L${-T * 0.02},${T * 0.22} Z" fill="#dfeeff" stroke="#0b0d12" stroke-opacity=".55" stroke-width="2" transform="translate(${fx},${fy}) rotate(${ang})"/>`;
 }
 
 // ------------------------------------------------------------------ collegamento ai comandi della pagina
@@ -538,7 +579,12 @@ export function collegaComandi({ alTitolo, velocita, cambiaVelocita }) {
     c.hidden = false;
     Object.assign(c.style, { left: x * T() + "px", top: y * T() + "px", width: T() + "px", height: T() + "px" });
   });
-  tavola().addEventListener("mouseleave", () => { $("#cursor").hidden = true; });
+  tavola().addEventListener("mousemove", (e) => {
+    if (!G.b) return;
+    const { x, y } = daEvento(e);
+    if (G.modo === "scelta" && G.sel && G.raggio && G.raggio.some((t) => t.x === x && t.y === y)) disegnaPercorso(G.sel, x, y); else disegnaPercorso(null);
+  });
+  tavola().addEventListener("mouseleave", () => { $("#cursor").hidden = true; disegnaPercorso(null); });
   window.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$(".dlg") && !G.chiusa) annulla(); });
   $("#bEnd").onclick = () => {
     if (!libero()) return;
