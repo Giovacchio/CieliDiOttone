@@ -2,7 +2,7 @@
 import { G, $, $$, h, velo, chiudiVelo } from "./stato.js";
 import { ritratto } from "./ritratti.js";
 import { storia } from "./dialoghi.js";
-import { giocaCapitolo, preparaBattaglia, schedaStat } from "./battaglia.js";
+import { giocaCapitolo, preparaBattaglia, riprendiBattaglia, schedaStat } from "./battaglia.js";
 import { ETICHETTE, unitaCompagnia } from "../motore/unita.js";
 import { statoCoppia, prossimoLivello, livelloNumero, prontoDaLeggere } from "../motore/supporti.js";
 import { nuovaPartita, concludiCapitolo, capitoliAperti, sulPercorso, contaOggetto, puoPromuovere, promuovi, leggiSupporto, conversazione } from "../motore/campagna.js";
@@ -35,7 +35,8 @@ export function titolo(avviso = "") {
     const p = s.partita;
     if (!p) return `<div class="slot vuoto"><div class="sn">Slot ${s.n}</div><div class="si muted">Vuoto</div>
       <div class="sb"><button class="btn mini sNuova" data-n="${s.n}">Nuova partita</button><button class="btn mini sImporta" data-n="${s.n}">Importa file</button></div></div>`;
-    const dove = p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
+    const inCorso = p.sospesa && D.capitoli[p.sospesa.cap];
+    const dove = inCorso ? `In battaglia · ${titoloCapitolo(p.sospesa.cap)} · turno ${p.sospesa.turno}` : p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
     return `<div class="slot${s.n === G.slot ? " on" : ""}"><div class="sn">Slot ${s.n}</div>
       <div class="si"><b>${h(dove)}</b><br><small>Livello medio ${mediaLivelli(p)} · ${p.oro || 0} oro${p.bandiere.rotta ? " · rotta " + h(D.campagna.rotte[p.bandiere.rotta].nome) : ""} · ${quando(s.quando)}</small></div>
       <div class="sb"><button class="btn mini primary sContinua" data-n="${s.n}">Continua</button><button class="btn mini sCapitoli" data-n="${s.n}">Capitoli</button>
@@ -45,11 +46,16 @@ export function titolo(avviso = "") {
     <p>Un gioco tattico a turni. ${comuni} capitoli scritti finora${conRotte ? ", più quelli delle tre rotte" : ""}.</p>
     <div class="slots">${slot.map(riga).join("")}</div>
     <div id="tList"></div>
-    <p class="muted small" id="tAvviso">${h(avviso || "La partita si salva da sola nello slot in uso, tra un capitolo e l'altro.")}</p>
+    <p class="muted small" id="tAvviso">${h(avviso || "La partita si salva da sola nello slot in uso, anche a metà battaglia: puoi chiudere quando vuoi.")}</p>
     <div class="btns" style="justify-content:center"><button class="btn mini" id="tIA" aria-pressed="${tattica}">Nemici: ${tattica ? "tattici" : "semplici"}</button></div></div>`, true);
   const partitaDi = (n) => slot.find((s) => s.n === +n).partita;
   const attiva = (n) => { G.slot = +n; usaSlot(G.slot); G.partita = partitaDi(n); };
-  $$(".sContinua").forEach((b) => b.onclick = () => { attiva(b.dataset.n); const p = G.partita; if (!p.prossimo || p.completati.length) accampamento(); else inizia(p.prossimo); });
+  $$(".sContinua").forEach((b) => b.onclick = () => {
+    attiva(b.dataset.n);
+    const p = G.partita;
+    if (p.sospesa) { G.inBattaglia = true; if (riprendiBattaglia()) return; G.inBattaglia = false; }
+    if (!p.prossimo || p.completati.length) accampamento(); else inizia(p.prossimo);
+  });
   $$(".sCapitoli").forEach((b) => b.onclick = () => {
     attiva(b.dataset.n);
     $("#tList").innerHTML = `<p class="muted small">Slot ${G.slot}: rigioca un capitolo (i livelli restano quelli di adesso).</p>` + capitoliAperti(D, G.partita).map((id) => `<button class="btn chbtn" data-id="${id}">${h(titoloCapitolo(id))}</button>`).join("");

@@ -6,7 +6,8 @@ import { ritratto } from "./ritratti.js";
 import { storia } from "./dialoghi.js";
 import { Battaglia } from "../motore/battaglia.js";
 import { STAT, ETICHETTE, oggetto } from "../motore/unita.js";
-import { caselleMinacciate, caselleColpibili, chiave } from "../motore/movimento.js";
+import { caselleMinacciate, caselleColpibili, chiave, percorso } from "../motore/movimento.js";
+import { salvaSlot } from "../salvataggi.js";
 import { triangolo } from "../motore/combattimento.js";
 import { livelloNumero, statoCoppia } from "../motore/supporti.js";
 import { passaArma, passaOggetto, impugna } from "../motore/inventario.js";
@@ -20,9 +21,9 @@ const armaDi = (u) => G.dati.armi[u.arma];
 const gittataTesto = (a) => a.gittata[0] === a.gittata[1] ? a.gittata[0] : a.gittata.join("-");
 
 // ------------------------------------------------------------------ preparazione
-export function preparaBattaglia(idCapitolo, opzioni = {}) {
+export function preparaBattaglia(idCapitolo, opzioni = {}, giaPronta = null) {
   const D = G.dati, cap = D.capitoli[idCapitolo], p = G.partita;
-  G.b = new Battaglia({ dati: D, capitolo: cap, compagnia: p.compagnia, supporti: p.supporti, bandiere: p.bandiere, ...opzioni });
+  G.b = giaPronta || new Battaglia({ dati: D, capitolo: cap, compagnia: p.compagnia, supporti: p.supporti, bandiere: p.bandiere, ...opzioni });
   Object.assign(G, { sel: null, origine: null, raggio: null, armaPrima: null, modo: "riposo", occupato: false, pericolo: false, chiusa: false });
   for (const el of elementi.values()) el.remove();
   elementi.clear();
@@ -36,10 +37,31 @@ export function preparaBattaglia(idCapitolo, opzioni = {}) {
 }
 export async function giocaCapitolo(idCapitolo, opzioni = {}) {
   chiudiVelo();
-  const ricordate = G.schieramenti[idCapitolo];
+  G.partita.schieramenti ||= {};
+  G.partita.sospesa = null;
+  const ricordate = G.partita.schieramenti[idCapitolo];
   preparaBattaglia(idCapitolo, { ...opzioni, ia: G.ia, posizioni: posizioniValide(idCapitolo, ricordate) });
   await preparativi();
   await esegui(G.b.inizia());
+  sospendi();
+}
+
+// ------------------------------------------------------------------ battaglia sospesa
+// A ogni mossa del giocatore la battaglia viene annotata nella partita e salvata: chiudendo la pagina si riprende da lì.
+export function sospendi() {
+  if (!G.b || G.chiusa || G.b.finita || G.b.fase !== "giocatore" || G.modo === "schiera") return;
+  G.partita.sospesa = G.b.esporta();
+  salvaSlot(G.slot, G.partita);
+}
+// Riapre la battaglia sospesa. Restituisce false se non c'è o non è più leggibile.
+export function riprendiBattaglia() {
+  const s = G.partita.sospesa, b = s ? Battaglia.riprendi(G.dati, s) : null;
+  if (!b) { G.partita.sospesa = null; return false; }
+  chiudiVelo();
+  preparaBattaglia(s.cap, {}, b);
+  registro(`Battaglia ripresa dal turno ${b.turno}.`);
+  inquadra(b.capo());
+  return true;
 }
 
 // ------------------------------------------------------------------ schieramento prima della battaglia
@@ -76,7 +98,7 @@ function preparativi() {
         ricrea(pos);
       });
       $("#prepVia").onclick = () => {
-        G.schieramenti[cap.id] = posizioniAttuali();
+        G.partita.schieramenti[cap.id] = posizioniAttuali();
         barra.remove(); G.modo = "riposo"; G.scambio = null; disegnaPortate(); pronto();
       };
       disegnaPortate();
@@ -266,7 +288,7 @@ async function racconta(f) {
       await pausa(500); break;
     case "scelta": mostraInfo(f.u); inquadra(f.u); break;
     case "ritirata": registro(`${h(f.u.nome)} si ritira.`); break;
-    case "muovi": inquadra(f.u); disegnaUnita(); await pausa(360); break;
+    case "muovi": inquadra(f.u); await cammina(f.u, f.da); await pausa(120); break;
     case "assalto": {
       const el = elementi.get(f.a), T = G.lato;
       if (!el) break;
@@ -307,6 +329,15 @@ async function racconta(f) {
     case "fine": break; // se ne occupa esegui(), a racconto finito
   }
 }
+// Fa camminare una pedina casella per casella lungo il percorso, invece di farla scivolare in linea retta.
+async function cammina(u, da) {
+  const el = elementi.get(u), T = G.lato, passi = el ? percorso(G.b, u, da.x, da.y, u.x, u.y) : [];
+  if (passi.length < 2) { disegnaUnita(); await pausa(passi.length ? 150 : 0); return; }
+  el.style.transition = "left .08s linear, top .08s linear";
+  for (const p of passi) { el.style.left = p.x * T + "px"; el.style.top = p.y * T + "px"; await pausa(80); }
+  el.style.transition = "";
+  disegnaUnita();
+}
 // Piccola animazione su una pedina (colpo, critico, schivata, cura, arrivo): è solo una classe CSS a tempo.
 function effetto(u, classe) {
   const el = elementi.get(u);
@@ -329,7 +360,7 @@ async function chiudiBattaglia() {
   G.chiusa = true; G.sel = null; G.modo = "riposo"; chiudiMenu(); disegnaPortate();
   await pausa(500);
   if (G.b.vinta) { await storia(G.b.cap.vittoria); vittoria(); }
-  else sconfitta(G.b.motivo);
+  else { G.partita.sospesa = null; salvaSlot(G.slot, G.partita); sconfitta(G.b.motivo); }
 }
 
 // ------------------------------------------------------------------ comandi del giocatore
@@ -424,6 +455,7 @@ async function agisci(u, generatore) {
   Object.assign(G, { sel: null, origine: null, raggio: null, modo: "riposo" });
   if (G.chiusa) return;
   ridisegna(); mostraInfo(u.pv > 0 ? u : null);
+  sospendi();
   if (G.b.tuttiHannoAgito()) { await pausa(350); fineTurno(); }
 }
 export async function fineTurno() {
@@ -431,7 +463,7 @@ export async function fineTurno() {
   Object.assign(G, { sel: null, origine: null, raggio: null, modo: "riposo" });
   chiudiMenu(); disegnaPortate();
   await esegui(G.b.fineFaseGiocatore());
-  if (!G.chiusa) { aggiornaFase(); ridisegna(); }
+  if (!G.chiusa) { aggiornaFase(); ridisegna(); sospendi(); }
 }
 export function annulla() {
   if (G.modo === "schiera") { G.scambio = null; disegnaPortate(); return; }
@@ -466,8 +498,8 @@ async function suCasella(x, y) {
     if (G.raggio.some((t) => t.x === x && t.y === y)) {
       const v = G.sel;
       v.x = x; v.y = y; G.modo = "mosso";
-      disegnaUnita(); disegnaPortate(); mostraInfo(v);
-      await pausa(130);
+      disegnaPortate(); mostraInfo(v);
+      await cammina(v, G.origine);
       if (G.modo === "mosso" && G.sel === v) apriMenu(v);
       return;
     }

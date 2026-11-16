@@ -37,6 +37,28 @@ export class Battaglia {
 
   _crea(d) { return creaUnita(this.dati, d, "e" + this.contatore++); }
 
+  // --- battaglia sospesa: tutto ciò che serve per riprenderla identica (anche i prossimi tiri di dado)
+  esporta() {
+    return { cap: this.cap.id, turno: this.turno, fase: this.fase, contatore: this.contatore, ia: this.tipoIA,
+      scattati: (this.cap.eventi || []).map((e, i) => this.scattati.has(e) ? i : -1).filter((i) => i >= 0),
+      dado: this.dado.stato ? this.dado.stato() : null, supporti: clona(this.supporti), unita: clona(this.unita) };
+  }
+  static riprendi(dati, s) {
+    const cap = dati.capitoli[s.cap];
+    if (!cap || !Array.isArray(s.unita)) return null;
+    const b = Object.create(Battaglia.prototype);
+    Object.assign(b, { dati, cap, dado: creaDado(s.dado ?? undefined), righe: cap.mappa, alte: cap.mappa.length, larghe: cap.mappa[0].length,
+      supporti: clona(s.supporti || {}), tipoIA: s.ia || dati.regole.ia || "classica", turno: s.turno, fase: "giocatore",
+      finita: false, vinta: false, motivo: "", contatore: s.contatore || 0, unita: clona(s.unita),
+      scattati: new Set((s.scattati || []).map((i) => (cap.eventi || [])[i]).filter(Boolean)) });
+    // le parti fisse (abilità, aspetto) si rileggono dai dati, così un salvataggio vecchio non blocca una correzione
+    for (const u of b.unita) if (u.compagnia && dati.personaggi[u.id]) {
+      const base = dati.personaggi[u.id], P = u.promo != null ? dati.promozioni[u.id]?.[u.promo] : null;
+      u.abilita = P ? P.abilita : base.abilita; u.aspetto = base.aspetto; u.crescita = base.crescita;
+    }
+    return b.capo() ? b : null;
+  }
+
   // --- domande sullo stato
   dentro(x, y) { return x >= 0 && y >= 0 && x < this.larghe && y < this.alte; }
   terreno(x, y) { return this.dati.terreni[this.righe[y][x]]; }

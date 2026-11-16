@@ -36,6 +36,7 @@ test("esportazione e importazione: andata e ritorno, e file sbagliati rifiutati 
   p.completati = ["prologo", "c1"]; p.prossimo = "c2"; p.oro = 99; p.supporti["giova|wata"] = { punti: 12, livello: "C" };
   const copia = S.leggiEsportazione(dati, S.testoEsportazione(p));
   assert.deepEqual(copia, p);
+  assert.equal(copia.sospesa, null);
   assert.throws(() => S.leggiEsportazione(dati, "ciao"), /non è un salvataggio/);
   assert.throws(() => S.leggiEsportazione(dati, JSON.stringify({ v: 99, compagnia: {} })), /non è un salvataggio/);
   const sporco = JSON.parse(S.testoEsportazione(p));
@@ -43,4 +44,24 @@ test("esportazione e importazione: andata e ritorno, e file sbagliati rifiutati 
   const pulito = S.leggiEsportazione(dati, JSON.stringify(sporco));
   assert.equal(pulito.compagnia.sconosciuto, undefined);
   assert.equal(pulito.prossimo, "c2", "riparte dal primo capitolo non ancora completato");
+});
+
+test("battaglia sospesa: ripresa a metà, prosegue esattamente come se non fosse mai stata interrotta", async () => {
+  const { Battaglia } = await import("../js/motore/battaglia.js");
+  const { creaDado } = await import("../js/motore/dado.js");
+  const { mossaBot } = await import("../strumenti/bot.js");
+  const scorri = (g) => { for (const _ of g) { /* niente */ } };
+  const nuova = () => { const p = nuovaPartita(dati); return new Battaglia({ dati, capitolo: dati.capitoli.c3, compagnia: p.compagnia, dado: creaDado(77), ia: "tattica" }); };
+  const turno = (b) => { for (const u of b.vivi("alleato")) if (!b.finita) mossaBot(b, u, null); if (!b.finita) scorri(b.fineFaseGiocatore()); };
+  const foto = (b) => JSON.stringify([b.turno, b.finita, b.vinta, b.unita.map((u) => [u.id, u.x, u.y, u.pv, u.lv, u.pe])]);
+  const intera = nuova(); scorri(intera.inizia());
+  for (let i = 0; i < 6; i++) turno(intera);
+  const spezzata = nuova(); scorri(spezzata.inizia());
+  for (let i = 0; i < 3; i++) turno(spezzata);
+  const salvata = JSON.parse(JSON.stringify(spezzata.esporta()));   // passa dal disco
+  const ripresa = Battaglia.riprendi(dati, salvata);
+  assert.equal(ripresa.turno, spezzata.turno);
+  for (let i = 0; i < 3; i++) turno(ripresa);
+  assert.equal(foto(ripresa), foto(intera));
+  assert.equal(Battaglia.riprendi(dati, { cap: "non-esiste", unita: [] }), null);
 });

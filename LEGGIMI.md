@@ -162,7 +162,9 @@ Per un'IA nuova: scrivi una funzione come `agisciTattica` e registrala con `regi
 
 ## Salvataggi
 
-Tre slot nel browser (`js/salvataggi.js`), salvataggio automatico nello slot in uso tra un capitolo e l'altro, esportazione e importazione in un file `.json`.
+Tre slot nel browser (`js/salvataggi.js`), esportazione e importazione in un file `.json`. La partita si salva da sola nello slot in uso:
+tra un capitolo e l'altro e anche a metà battaglia, dopo ogni mossa del giocatore (`partita.sospesa`, scritta da `Battaglia.esporta()` e riletta da `Battaglia.riprendi()`).
+Lo schieramento scelto per ogni capitolo resta in `partita.schieramenti`.
 Se cambi la forma della partita salvata, alza `VERSIONE` in `js/motore/campagna.js` e scrivi la conversione come è stato fatto per `migraV1`.
 
 ## Bilanciamento

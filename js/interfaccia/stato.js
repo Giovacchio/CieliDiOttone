@@ -11,7 +11,6 @@ export const G = {
   occupato: false,   // un'animazione o la fase nemica è in corso
   velocita: 1,
   ia: null,          // null = quella di regole.json; "classica" o "tattica" se scelta nelle opzioni
-  schieramenti: {},  // posizioni scelte per capitolo (valgono finché la pagina resta aperta)
   scambio: null, haScambiato: false,
   chiusa: true,      // la battaglia sullo schermo è solo uno sfondo (titolo) o è già finita
   inBattaglia: false, // i dialoghi cercano chi parla tra le unità sulla mappa

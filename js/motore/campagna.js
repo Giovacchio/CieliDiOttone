@@ -21,7 +21,7 @@ export function aggiornaCompagnia(dati, partita, idCapitolo) {
 }
 export function nuovaPartita(dati) {
   const p = { v: VERSIONE, prossimo: dati.campagna.capitoli[0], completati: [], compagnia: {},
-    bandiere: {}, supporti: {}, oro: 0, deposito: { armi: [], oggetti: [] } };
+    bandiere: {}, supporti: {}, oro: 0, deposito: { armi: [], oggetti: [] }, schieramenti: {}, sospesa: null };
   return aggiornaCompagnia(dati, p, p.prossimo);
 }
 
@@ -40,6 +40,8 @@ export function capitoliAperti(dati, partita) {
 }
 // Se sono stati aggiunti capitoli nuovi dopo che la partita era arrivata in fondo, la storia riprende da lì.
 export function riallinea(dati, partita) {
+  partita.schieramenti ||= {};
+  if (partita.sospesa && !dati.capitoli[partita.sospesa.cap]) partita.sospesa = null;
   partita.completati ||= []; partita.bandiere ||= {}; partita.supporti ||= {}; partita.deposito ||= { armi: [], oggetti: [] }; partita.oro ||= 0;
   if (partita.prossimo && dati.capitoli[partita.prossimo]) return aggiornaCompagnia(dati, partita, partita.prossimo);
   const fatti = partita.completati.filter((id) => dati.capitoli[id]);
@@ -62,6 +64,7 @@ export function concludiCapitolo(dati, partita, b) {
     Object.assign(partita.compagnia[u.id], { lv: u.lv, pe: u.pe, stat, oggetti: clona(u.oggetti), armi: [...u.armi], arma: u.arma });
   }
   partita.supporti = clona(b.supporti);
+  partita.sospesa = null;
   const pasto = partita.bandiere.pasto ? dati.pasti[partita.bandiere.pasto] : null;
   partita.bandiere.pasto = null;
   const R = b.cap.ricompensa || {};

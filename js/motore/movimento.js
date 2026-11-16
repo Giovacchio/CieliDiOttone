@@ -31,6 +31,31 @@ export function raggiungibili(b, u, daX = u.x, daY = u.y, mov = u.mov) {
   return caselle;
 }
 
+// Il cammino più breve, casella per casella, da (daX,daY) a (aX,aY) per quell'unità: serve all'animazione.
+export function percorso(b, u, daX, daY, aX, aY) {
+  const costo = new Map([[chiave(daX, daY), 0]]), prima = new Map(), coda = [[daX, daY, 0]];
+  while (coda.length) {
+    coda.sort((p, q) => p[2] - q[2]);
+    const [x, y, c] = coda.shift();
+    if (x === aX && y === aY) break;
+    for (const [dx, dy] of PASSI) {
+      const nx = x + dx, ny = y + dy;
+      if (!b.dentro(nx, ny)) continue;
+      const nc = c + b.terreno(nx, ny).costo[u.movimento];
+      if (nc >= NON_SI_PASSA) continue;
+      const o = b.unitaIn(nx, ny);
+      if (o && o !== u && o.squadra !== u.squadra) continue;
+      const k = chiave(nx, ny);
+      if (!costo.has(k) || costo.get(k) > nc) { costo.set(k, nc); prima.set(k, [x, y]); coda.push([nx, ny, nc]); }
+    }
+  }
+  const passi = [];
+  let k = chiave(aX, aY);
+  if (!prima.has(k)) return [{ x: aX, y: aY }];
+  for (let p = [aX, aY]; p; p = prima.get(chiave(p[0], p[1]))) { passi.unshift({ x: p[0], y: p[1] }); if (p[0] === daX && p[1] === daY) break; }
+  return passi.slice(1);
+}
+
 export function inGittata(arma, fx, fy, tx, ty) {
   const d = Math.abs(fx - tx) + Math.abs(fy - ty);
   return d >= arma.gittata[0] && d <= arma.gittata[1];

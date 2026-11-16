@@ -184,3 +184,15 @@ test("il dado a seme ripete la stessa sequenza", () => {
   assert.notEqual(sa[0], c.casuale());
   assert.ok(sa.every((n) => n >= 0 && n < 1));
 });
+
+test("percorso: passo dopo passo, aggirando muri e nemici", async () => {
+  const { percorso } = await import("../js/motore/movimento.js");
+  const { b, u } = prova({ mappa: ["..X..", ".....", "..X.."], posizioni: { giova: [0, 0] }, nemici: [{ classe: "Lanciere", lv: 1, x: 2, y: 1, ia: "fermo" }, { classe: "Lanciere", lv: 1, x: 4, y: 2, ia: "fermo" }] });
+  const g = u("giova");
+  assert.deepEqual(percorso(b, g, 0, 0, 1, 1), [{ x: 1, y: 0 }, { x: 1, y: 1 }]);
+  const lungo = percorso(b, g, 0, 0, 1, 2);
+  assert.equal(lungo.length, 3);
+  assert.deepEqual(lungo.at(-1), { x: 1, y: 2 });
+  for (let i = 1; i < lungo.length; i++) assert.equal(Math.abs(lungo[i].x - lungo[i - 1].x) + Math.abs(lungo[i].y - lungo[i - 1].y), 1);
+  assert.deepEqual(percorso(b, g, 0, 0, 0, 0), [{ x: 0, y: 0 }]);
+});

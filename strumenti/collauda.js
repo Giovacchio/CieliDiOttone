@@ -98,9 +98,13 @@ for (const [nome, viewport, tocco] of [["pc", { width: 1280, height: 800 }, fals
   await p.locator(".menu button", { hasText: "Scambia" }).click(); await p.waitForSelector(".scambio"); await foto("12_scambio");
   await p.click('.sogg[data-da="lethy"]'); await p.click("#scOk");
   nota(await p.evaluate(() => window.__cdo.b.trova("giova").oggetti.find((o) => o.id === "tonico").q === 4), "scambio: un tonico passa a Giova");
-  await p.keyboard.press("Escape");
-  // salvataggi: titolo con gli slot, copia ed esportazione
+  await p.locator(".menu button", { hasText: "Attendi" }).click(); await p.waitForTimeout(300);
+  // salvataggi: titolo con gli slot, battaglia sospesa, copia ed esportazione
   await p.click("#bMenu"); await p.waitForSelector(".sContinua"); await foto("13_titolo_slot");
+  nota(/In battaglia/.test(await p.locator(".slot.on").innerText()), "la battaglia a metà risulta salvata nello slot");
+  await p.reload(); await p.waitForSelector(".sContinua"); await p.click(".sContinua"); await p.waitForTimeout(400);
+  nota(await p.evaluate(() => { const G = window.__cdo, l = G.b.trova("lethy"); return G.b.cap.id === "c1" && !G.chiusa && l.agito && G.b.trova("giova").oggetti.find((o) => o.id === "tonico").q === 4; }), "dopo aver chiuso e riaperto la pagina la battaglia riprende dov'era"); await foto("14_ripresa");
+  await p.click("#bMenu"); await p.waitForSelector(".sContinua");
   await p.click(".sCopia"); await p.waitForTimeout(200);
   nota(await p.locator(".sContinua").count() === 2, "salvataggi: copia in un altro slot");
   const [scaricato] = await Promise.all([p.waitForEvent("download"), p.click(".sEsporta")]);

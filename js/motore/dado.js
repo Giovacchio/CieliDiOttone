@@ -3,6 +3,7 @@
 export function creaDado(seme) {
   let s = (seme === undefined ? (Date.now() ^ Math.floor(Math.random() * 2 ** 32)) : seme) >>> 0;
   return {
+    stato: () => s,   // per salvare una battaglia a metà: creaDado(stato) riprende la stessa sequenza
     casuale() {
       s = (s + 0x6D2B79F5) >>> 0;
       let t = s;
