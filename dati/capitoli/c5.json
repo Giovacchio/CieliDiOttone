@@ -98,6 +98,7 @@
     ["mars","Io intanto ho preso appunti. Tanti appunti. Alcuni sono disegni di funghi, ma sono appunti seri."]
   ],
   "ricompensa": {
+    "oro": 400,
     "testo": "Tra le macerie del campo di taglio: un tonico per Lethy e uno per Wata.",
     "oggetti": [{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1}]
   },

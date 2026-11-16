@@ -101,6 +101,7 @@
     ["mars","Niente etere. Certo. Ovviamente. ...Magari un pizzico."]
   ],
   "ricompensa": {
+    "oro": 250,
     "testo": "Wata riceve le Spine del rovo antico (magia più forte). Mars impara l'Elisir di Nonna Tessa (cura di più e a distanza 1-2).",
     "armi": {"wata":"spine","mars":"elisirF"}
   },

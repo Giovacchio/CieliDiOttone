@@ -124,6 +124,7 @@
     ["narr","Il resto della rotta delle Leghe Libere arriverà presto."]
   ],
   "ricompensa": {
+    "oro": 800,
     "testo": "La gente della piazza lascia doni alla Compagnia: due tonici a Giova e due a Wata.",
     "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2}]
   },

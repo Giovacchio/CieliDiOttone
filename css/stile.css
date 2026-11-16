@@ -159,3 +159,16 @@ img.png{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object
 .armi{margin-top:10px;font-size:14px;display:flex;flex-direction:column;gap:2px}
 .armi small{color:var(--muted)}
 .armi .imp::before{content:"▸ ";color:var(--brass)}
+.prep{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;background:var(--panel);border:1px solid var(--brass);border-radius:12px;padding:10px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;width:min(680px,calc(100vw - 16px));box-shadow:0 8px 30px #000a;font-size:14px}
+.prep .chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip.on{border-color:var(--brass);color:var(--brass)}
+.scambio{width:min(560px,100%)}
+.scols{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.scol{display:flex;flex-direction:column;gap:6px}
+.scol .btn{text-align:left}
+.oro{color:var(--brass);font-weight:600;font-variant-numeric:tabular-nums}
+.riga{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid #ffffff12}
+.riga .nome{flex:1;min-width:150px}
+.riga small{color:var(--muted)}
+.btn.mini{padding:5px 9px;font-size:13px}
+.sez{font-family:var(--display);color:var(--brass);margin:16px 0 4px;font-size:17px}

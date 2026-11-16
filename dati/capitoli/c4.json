@@ -105,6 +105,6 @@
     ["giova","Allora è deciso. Scelta ottimale... anche se stavolta non ho tutti i numeri."],
     ["narr","Fine dell'Atto I · La Brace"]
   ],
-  "ricompensa": {"testo":"Maelis paga in anticipo: due tonici a Giova e a Mars.","oggetti":[{"a":"giova","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]},
+  "ricompensa": {"oro": 350, "testo":"Maelis paga in anticipo: due tonici a Giova e a Mars.","oggetti":[{"a":"giova","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]},
   "diario": "Il committente è Sorella Maelis del Concilio. Ferrante ci ha attaccati con un dirigibile."
 }

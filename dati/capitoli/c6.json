@@ -84,6 +84,7 @@
     ["giova","Fino a ieri sapevo per chi combattevamo. Oggi abbiamo combattuto contro chi ci paga. Non è nei miei calcoli, e va bene così."]
   ],
   "ricompensa": {
+    "oro": 450,
     "testo": "Erba regala a Mars le sue erbe contro la febbre grigia: due tonici. Il villaggio dà a Giova un tonico.",
     "oggetti": [{"a":"mars","id":"tonico","q":2},{"a":"giova","id":"tonico","q":1}]
   },

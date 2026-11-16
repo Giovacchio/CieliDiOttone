@@ -129,6 +129,6 @@
     ["lethy","Se vale tanto, mio padre ne comprerebbe una cassa. Ah, forse non è il momento."],
     ["giova","Lo portiamo via tutto. Si consegna a Porto Ambra, come da contratto. E poi il nostro committente ci deve delle risposte."]
   ],
-  "ricompensa": {"testo":"Bottino: una cassa di etere, nascosta sotto un carico di patate."},
+  "ricompensa": {"oro": 150, "testo":"Bottino: una cassa di etere, nascosta sotto un carico di patate."},
   "diario": "Abbiamo rubato un carico di etere dalla fonderia di Corvara. Il capitano Vorn ha detto che i cristalli non sono pietre."
 }

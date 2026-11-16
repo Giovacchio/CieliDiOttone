@@ -108,6 +108,6 @@
     ["mars","Ho riempito tre fiale con l'acqua del pozzo. Una canticchia. Lo giuro."],
     ["giova","Andiamo a Lucegrande. Ma stavolta il piano di fuga lo preparo prima di entrare."]
   ],
-  "ricompensa": {"testo":"Maelis insegna a Wata il Giudizio verde, la magia dei Custodi.","armi":{"wata":"giudizio"}},
+  "ricompensa": {"oro": 500, "testo":"Maelis insegna a Wata il Giudizio verde, la magia dei Custodi.","armi":{"wata":"giudizio"}},
   "diario": "Al Pozzo delle Voci abbiamo capito che nei cristalli ci sono persone."
 }

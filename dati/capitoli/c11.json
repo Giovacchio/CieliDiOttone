@@ -93,6 +93,7 @@
     ["mars","Io intanto ho una notizia: la fiala che canticchiava ha smesso. Credo che abbia sentito il Cuore e si sia calmata. Credo. Spero."]
   ],
   "ricompensa": {
+    "oro": 700,
     "testo": "Maelis lascia due tonici a Mars, uno a Wata e un Sigillo di ottone trovato al Cuore.",
     "oggetti": [{"a":"mars","id":"tonico","q":2},{"a":"wata","id":"tonico","q":1},{"a":"wata","id":"sigillo","q":1}]
   },

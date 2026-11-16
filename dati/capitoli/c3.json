@@ -80,6 +80,7 @@
     ["narr","Lethy torna un'ora dopo con lo stocco d'argento del nonno e una lettera di papà che dice soltanto: \"Mangia\"."]
   ],
   "ricompensa": {
+    "oro": 300,
     "testo": "Lethy riceve lo Stocco d'argento del nonno. Con il compenso di Grigio, Giova compra una Spada d'acciaio.",
     "armi": {"lethy":"stoccoA","giova":"spadaA"}
   },

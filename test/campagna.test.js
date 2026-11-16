@@ -45,7 +45,8 @@ test("storia e bilanciamento sono quelli del prototipo (capitoli, supporti, prom
   for (const f of readdirSync(path.join(tmp, "supporti"))) assert.deepEqual(leggi(path.join(RADICE, "dati"), "supporti/" + f), leggi(tmp, "supporti/" + f), f);
   for (const f of ["promozioni.json", "classi.json", "armi.json", "terreni.json"]) {
     const a = leggi(tmp, f), b = leggi(path.join(RADICE, "dati"), f);
-    for (const k of Object.keys(a)) assert.deepEqual(b[k], a[k], `${f}: "${k}" è cambiato rispetto al prototipo`);
+    const senzaUsa = (v) => Array.isArray(v) ? v.map(({ usa, ...resto }) => resto) : v;   // "usa" è nato con l'inventario
+    for (const k of Object.keys(a)) assert.deepEqual(senzaUsa(b[k]), a[k], `${f}: "${k}" è cambiato rispetto al prototipo`);
   }
   const a = leggi(tmp, "personaggi.json"), b = leggi(path.join(RADICE, "dati"), "personaggi.json");
   for (const id of a.ordine) for (const k of ["stat", "crescita", "mov", "movimento", "arma"]) assert.deepEqual(b[id][k], a[id][k], `${id}.${k}`);

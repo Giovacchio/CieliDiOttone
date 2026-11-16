@@ -2,6 +2,7 @@
 // "partita" è l'oggetto che viene salvato.
 import { clona } from "./unita.js";
 import { chiaveCoppia, statoCoppia, prossimoLivello } from "./supporti.js";
+import { MAX_ARMI } from "./inventario.js";
 
 export const VERSIONE = 2;
 
@@ -69,6 +70,7 @@ export function concludiCapitolo(dati, partita, b) {
     if (!p) continue;
     if (!p.armi.includes(arma)) p.armi.unshift(arma);
     p.arma = arma;
+    while (p.armi.length > MAX_ARMI) partita.deposito.armi.push(p.armi.pop()); // troppe armi: l'ultima va al deposito
   }
   for (const o of R.oggetti || []) if (partita.compagnia[o.a]) aggiungiOggetto(partita.compagnia[o.a].oggetti, o.id, o.q);
   if (R.oro) partita.oro = (partita.oro || 0) + R.oro;
@@ -104,7 +106,7 @@ export function promuovi(dati, partita, id, k) {
   if (!P || !consumaOggetto(dati, partita, dati.regole.promozione.oggetto)) return false;
   for (const [s, v] of Object.entries(P.stat)) p.stat[s] += v;
   p.promo = k;
-  if (P.arma && !p.armi.includes(P.arma)) p.armi.push(P.arma);
+  if (P.arma && !p.armi.includes(P.arma)) { if (p.armi.length < MAX_ARMI) p.armi.push(P.arma); else partita.deposito.armi.push(P.arma); }
   return true;
 }
 

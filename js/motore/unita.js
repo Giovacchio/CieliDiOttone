@@ -1,4 +1,5 @@
 // Costruzione delle unità a partire dai dati (capitoli e Compagnia).
+import { tipiUsabili } from "./inventario.js";
 export const STAT = ["hp", "for", "mag", "abi", "vel", "fort", "def", "res"];
 export const ETICHETTE = { hp: "PV", for: "For", mag: "Mag", abi: "Abi", vel: "Vel", fort: "Fort", def: "Dif", res: "Res" };
 export const clona = (o) => JSON.parse(JSON.stringify(o));
@@ -42,7 +43,7 @@ export function unitaCompagnia(dati, compagnia, id) {
     id, nome: b.nome, classe: P ? P.classe : b.classe, squadra: "alleato", compagnia: true, capo: !!b.capo,
     lv: p.lv, pe: p.pe, x: 0, y: 0, promo: p.promo ?? null,
     movimento: P?.movimento ?? b.movimento, mov: b.mov + (P?.mov || 0),
-    armi: [...p.armi], arma: p.arma, oggetti: clona(p.oggetti),
+    armi: [...p.armi], arma: p.arma, oggetti: clona(p.oggetti), usa: tipiUsabili(dati, id, p.promo),
     aspetto: b.aspetto, abilita: P ? P.abilita : b.abilita, crescita: b.crescita,
     stat: { ...p.stat }, pv: p.stat.hp, agito: false,
   };

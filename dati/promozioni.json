@@ -80,6 +80,7 @@
       "stat": {"mag":2,"vel":2,"for":1,"hp":2},
       "mov": 1,
       "arma": "fiala",
+      "usa": ["congegni"],
       "abilita": {
         "nome": "Fiale esplosive",
         "descrizione": "50% di PE in più; oltre a curare, può lanciare fiale esplosive (gittata 1-2).",

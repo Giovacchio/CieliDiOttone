@@ -1,1 +1,15 @@
-{ "armi": [], "oggetti": [] }
+{
+  "armi": [
+    {"id": "spada", "prezzo": 300},
+    {"id": "scintilla", "prezzo": 350},
+    {"id": "kit", "prezzo": 300},
+    {"id": "luce", "prezzo": 550, "da": "c4"},
+    {"id": "spadaA", "prezzo": 700, "da": "c4"},
+    {"id": "fiala", "prezzo": 600, "da": "c6"},
+    {"id": "sciabola", "prezzo": 1500, "da": "c9"},
+    {"id": "giudizio", "prezzo": 1600, "da": "c9"}
+  ],
+  "oggetti": [
+    {"id": "tonico", "prezzo": 120}
+  ]
+}

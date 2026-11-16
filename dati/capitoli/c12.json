@@ -130,6 +130,7 @@
     ]
   },
   "ricompensa": {
+    "oro": 750,
     "testo": "Dopo la battaglia, la milizia delle Leghe rifornisce la Compagnia: un tonico a testa e un Sigillo di ottone.",
     "oggetti": [
       {"a":"giova","id":"tonico","q":1},

@@ -109,6 +109,7 @@
     ["narr","Il resto della rotta del Concilio arriverà presto."]
   ],
   "ricompensa": {
+    "oro": 800,
     "testo": "Gli archivisti ringraziano con tre tonici.",
     "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"mars","id":"tonico","q":1}]
   },

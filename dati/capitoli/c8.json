@@ -90,6 +90,7 @@
     ["narr","Fine dell'Atto II · Le Radici. Atto III, Il cristallo che respira: in arrivo."]
   ],
   "ricompensa": {
+    "oro": 550,
     "testo": "Dagli archivi del tribunale Giova recupera un Sigillo di ottone, che servirà per la promozione di classe.",
     "oggetti": [{"a":"giova","id":"sigillo","q":1}]
   },

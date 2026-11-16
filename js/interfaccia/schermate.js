@@ -6,6 +6,7 @@ import { giocaCapitolo, preparaBattaglia, schedaStat } from "./battaglia.js";
 import { ETICHETTE, unitaCompagnia } from "../motore/unita.js";
 import { statoCoppia, prossimoLivello, livelloNumero, prontoDaLeggere } from "../motore/supporti.js";
 import { nuovaPartita, concludiCapitolo, capitoliAperti, sulPercorso, contaOggetto, puoPromuovere, promuovi, leggiSupporto, conversazione } from "../motore/campagna.js";
+import { tipiUsabili, puoUsare, passaArma, passaOggetto, impugna, merce, compra, vendi, prezzoVendita, MAX_ARMI } from "../motore/inventario.js";
 import { caricaPartita, salvaPartita, cancellaPartita } from "../salvataggi.js";
 
 const salva = () => salvaPartita(G.partita);
@@ -64,7 +65,7 @@ export function vittoria() {
   }).join("");
   velo(`<div class="end" role="dialog" aria-label="Capitolo completato"><h2>Capitolo completato</h2>
     <p>${h(cap.titolo)}<br>Turni impiegati: ${turni}</p>
-    ${ricompensa.testo ? `<p class="reward">${h(ricompensa.testo)}</p>` : ""}${pasto ? `<p class="muted small">Il piatto di Giova (${h(pasto.nome)}) è finito: domani se ne cucina un altro.</p>` : ""}
+    ${ricompensa.testo ? `<p class="reward">${h(ricompensa.testo)}</p>` : ""}${ricompensa.oro ? `<p>Paga della missione: <span class="oro">+${ricompensa.oro} oro</span></p>` : ""}${pasto ? `<p class="muted small">Il piatto di Giova (${h(pasto.nome)}) è finito: domani se ne cucina un altro.</p>` : ""}
     <table class="party">${righe}</table>
     <div class="btns" style="justify-content:center;margin-top:14px">
       <button class="btn primary" id="goCamp">All'accampamento</button>
@@ -83,7 +84,7 @@ function sceltaRotta() {
 export function accampamento() {
   const D = G.dati, p = G.partita, R = D.regole, prossimo = p.prossimo;
   G.inBattaglia = false;
-  const schede = [["comp", "Compagnia"], ["sup", "Supporti"], ["cuc", "Cucina"], ["dia", "Diario"]];
+  const schede = [["comp", "Compagnia"], ["arm", "Armeria"], ["mer", "Mercato"], ["sup", "Supporti"], ["cuc", "Cucina"], ["dia", "Diario"]];
   const pronti = D.coppie.filter(([a, b]) => p.compagnia[a] && p.compagnia[b] && prontoDaLeggere(R, statoCoppia(p.supporti, a, b))).length;
   const rotta = p.bandiere.rotta ? " " + D.campagna.rotte[p.bandiere.rotta].nome : "";
   velo(`<div class="camp" role="dialog" aria-label="Accampamento">
@@ -111,6 +112,44 @@ export function accampamento() {
         <div class="weap"><small>${oggetti}</small></div>${promo}</div>`;
     }).join("") + `</div>`;
     $$(".pbtn").forEach((b) => b.onclick = () => { promuovi(D, p, b.dataset.id, +b.dataset.k); salva(); accampamento(); });
+  }
+
+  if (scheda === "arm") {
+    // armi e oggetti di ognuno, più il deposito comune: tutto si sposta con un tocco
+    const tipi = (id) => tipiUsabili(D, id, p.compagnia[id].promo), dep = p.deposito;
+    const numeri = (a) => a.cura != null ? `cura ${a.cura}+Mag · gittata ${a.gittata.join("-")}` : `Pot ${a.potenza} · Prec ${a.precisione} · Crit ${a.critico || 0} · gittata ${a.gittata.join("-")}`;
+    const chiDa = (cosa, id) => membri.filter((m) => cosa === "o" || (puoUsare(D, tipi(m), id) && p.compagnia[m].armi.length < MAX_ARMI))
+      .map((m) => `<button class="btn mini dai" data-c="${cosa}" data-id="${id}" data-a="${m}">a ${h(D.personaggi[m].nome)}</button>`).join("");
+    corpo.innerHTML = `<p class="muted">Ogni personaggio porta fino a ${MAX_ARMI} armi e combatte con quella in mano. Il resto sta nel deposito della Compagnia.</p>` + membri.map((id) => {
+      const c = p.compagnia[id];
+      return `<div class="sez">${h(D.personaggi[id].nome)}</div>` + c.armi.map((a) => `<div class="riga"><div class="nome">${h(D.armi[a].nome)}${a === c.arma ? " <small>· in mano</small>" : ""}<br><small>${numeri(D.armi[a])}</small></div>
+          ${a !== c.arma ? `<button class="btn mini imp" data-m="${id}" data-id="${a}">Impugna</button>` : ""}${c.armi.length > 1 ? `<button class="btn mini posa" data-c="a" data-m="${id}" data-id="${a}">Al deposito</button>` : ""}</div>`).join("")
+        + c.oggetti.filter((i) => i.q > 0).map((i) => `<div class="riga"><div class="nome">${h(D.oggetti[i.id].nome)} ×${i.q}<br><small>${h(D.oggetti[i.id].descrizione || "")}</small></div><button class="btn mini posa" data-c="o" data-m="${id}" data-id="${i.id}">Al deposito</button></div>`).join("");
+    }).join("") + `<div class="sez">Deposito</div>` + (dep.armi.length || dep.oggetti.length ? "" : `<p class="muted">Il deposito è vuoto.</p>`)
+      + dep.armi.map((a) => `<div class="riga"><div class="nome">${h(D.armi[a].nome)}<br><small>${numeri(D.armi[a])}</small></div>${chiDa("a", a) || `<small>nessuno può portarla adesso</small>`}</div>`).join("")
+      + dep.oggetti.filter((i) => i.q > 0).map((i) => `<div class="riga"><div class="nome">${h(D.oggetti[i.id].nome)} ×${i.q}</div>${chiDa("o", i.id)}</div>`).join("");
+    const poi = () => { salva(); accampamento(); };
+    $$(".imp").forEach((b) => b.onclick = () => { impugna(p.compagnia[b.dataset.m], b.dataset.id); poi(); });
+    $$(".posa").forEach((b) => b.onclick = () => { const c = p.compagnia[b.dataset.m]; if (b.dataset.c === "a") passaArma(D, c, dep, b.dataset.id, null); else passaOggetto(c, dep, b.dataset.id, 1); poi(); });
+    $$(".dai").forEach((b) => b.onclick = () => { const c = p.compagnia[b.dataset.a]; if (b.dataset.c === "a") passaArma(D, dep, c, b.dataset.id, tipi(b.dataset.a)); else passaOggetto(dep, c, b.dataset.id, 1); poi(); });
+  }
+
+  if (scheda === "mer") {
+    const M = merce(D, p), dep = p.deposito;
+    const chiUsa = (id) => membri.filter((m) => puoUsare(D, tipiUsabili(D, m, p.compagnia[m].promo), id)).map((m) => D.personaggi[m].nome).join(", ") || "nessuno, per ora";
+    const numeri = (a) => a.cura != null ? `cura ${a.cura}+Mag · gittata ${a.gittata.join("-")}` : `Pot ${a.potenza} · Prec ${a.precisione} · Crit ${a.critico || 0} · gittata ${a.gittata.join("-")}`;
+    const compraBtn = (tipo, v) => `<button class="btn mini compra" data-t="${tipo}" data-id="${v.id}" ${p.oro < v.prezzo ? "disabled" : ""}>Compra · ${v.prezzo}</button>`;
+    const vendibili = [...new Set(dep.armi)].filter((a) => prezzoVendita(D, "armi", a) != null);
+    const oggVendibili = dep.oggetti.filter((i) => i.q > 0 && prezzoVendita(D, "oggetti", i.id) != null);
+    corpo.innerHTML = `<p>Oro della Compagnia: <span class="oro">${p.oro}</span> <span class="muted">· quello che compri finisce nel deposito: lo distribuisci dall'Armeria. Nuova merce arriva andando avanti nella storia.</span></p>
+      <div class="sez">In vendita</div>`
+      + M.oggetti.map((v) => `<div class="riga"><div class="nome">${h(D.oggetti[v.id].nome)}<br><small>${h(D.oggetti[v.id].descrizione || "")}</small></div>${compraBtn("oggetti", v)}</div>`).join("")
+      + M.armi.map((v) => `<div class="riga"><div class="nome">${h(D.armi[v.id].nome)}<br><small>${numeri(D.armi[v.id])} · la usa: ${h(chiUsa(v.id))}</small></div>${compraBtn("armi", v)}</div>`).join("")
+      + `<div class="sez">Vendi dal deposito</div>` + (vendibili.length || oggVendibili.length ? "" : `<p class="muted">Nel deposito non c'è niente che il mercato compri.</p>`)
+      + vendibili.map((a) => `<div class="riga"><div class="nome">${h(D.armi[a].nome)} ×${dep.armi.filter((x) => x === a).length}</div><button class="btn mini vendi" data-t="armi" data-id="${a}">Vendi · ${prezzoVendita(D, "armi", a)}</button></div>`).join("")
+      + oggVendibili.map((i) => `<div class="riga"><div class="nome">${h(D.oggetti[i.id].nome)} ×${i.q}</div><button class="btn mini vendi" data-t="oggetti" data-id="${i.id}">Vendi · ${prezzoVendita(D, "oggetti", i.id)}</button></div>`).join("");
+    $$(".compra").forEach((b) => b.onclick = () => { compra(D, p, b.dataset.t, b.dataset.id); salva(); accampamento(); });
+    $$(".vendi").forEach((b) => b.onclick = () => { vendi(D, p, b.dataset.t, b.dataset.id); salva(); accampamento(); });
   }
 
   if (scheda === "sup") {

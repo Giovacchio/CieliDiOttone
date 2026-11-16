@@ -63,6 +63,7 @@
     ["giova","L'ho sentito anch'io. Prima consegniamo il carico, poi le domande al committente. Tutte quante."]
   ],
   "ricompensa": {
+    "oro": 200,
     "testo": "Sul carro abbandonato dalla Corona: un tonico in più per ognuno.",
     "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"mars","id":"tonico","q":1}]
   },

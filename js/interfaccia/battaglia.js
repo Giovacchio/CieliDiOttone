@@ -9,6 +9,7 @@ import { STAT, ETICHETTE, oggetto } from "../motore/unita.js";
 import { caselleMinacciate, caselleColpibili, chiave } from "../motore/movimento.js";
 import { triangolo } from "../motore/combattimento.js";
 import { livelloNumero, statoCoppia } from "../motore/supporti.js";
+import { passaArma, passaOggetto, impugna } from "../motore/inventario.js";
 import { vittoria, sconfitta } from "./schermate.js";
 
 const tavola = () => $("#board");
@@ -33,10 +34,64 @@ export function preparaBattaglia(idCapitolo, opzioni = {}) {
   $("#log").innerHTML = "<div>Il registro della battaglia apparirà qui.</div>";
   chiudiMenu(); aggiornaFase(); adatta(); mostraInfo(null);
 }
-export async function giocaCapitolo(idCapitolo, opzioni) {
+export async function giocaCapitolo(idCapitolo, opzioni = {}) {
   chiudiVelo();
-  preparaBattaglia(idCapitolo, opzioni);
+  const ricordate = G.schieramenti[idCapitolo];
+  preparaBattaglia(idCapitolo, { ...opzioni, ia: G.ia, posizioni: posizioniValide(idCapitolo, ricordate) });
+  await preparativi();
   await esegui(G.b.inizia());
+}
+
+// ------------------------------------------------------------------ schieramento prima della battaglia
+// Le posizioni ricordate valgono solo se parlano di personaggi che ci sono ancora e di caselle di questo capitolo.
+function posizioniValide(idCapitolo, pos) {
+  if (!pos) return null;
+  const cap = G.dati.capitoli[idCapitolo], caselle = new Set(cap.schieramento.map(([x, y]) => x + "," + y));
+  const capo = G.dati.personaggi.ordine.find((id) => G.dati.personaggi[id].capo);
+  const ok = Object.entries(pos).every(([id, p]) => G.partita.compagnia[id] && caselle.has(p[0] + "," + p[1]));
+  return ok && pos[capo] ? pos : null;
+}
+const posizioniAttuali = () => Object.fromEntries(G.b.unita.filter((u) => u.compagnia).map((u) => [u.id, [u.x, u.y]]));
+function preparativi() {
+  return new Promise((pronto) => {
+    const D = G.dati, cap = G.b.cap, membri = D.personaggi.ordine.filter((id) => G.partita.compagnia[id]);
+    G.modo = "schiera"; G.scambio = null;
+    const barra = document.createElement("div");
+    barra.className = "prep"; barra.id = "prep";
+    document.body.appendChild(barra);
+    const ricrea = (pos) => { preparaBattaglia(cap.id, { ia: G.ia, posizioni: pos }); G.modo = "schiera"; disegna(); };
+    const disegna = () => {
+      const inCampo = new Set(G.b.unita.filter((u) => u.compagnia).map((u) => u.id)), scelta = membri.length > cap.schieramento.length;
+      barra.innerHTML = `<div><b>Preparativi</b> · tocca due caselle azzurre per scambiare di posto.${scelta ? ` Posti: ${inCampo.size}/${cap.schieramento.length}.` : ""}</div>
+        ${scelta ? `<div class="chips">${membri.map((id) => `<button class="btn chip${inCampo.has(id) ? " on" : ""}" data-id="${id}" ${D.personaggi[id].capo ? "disabled" : ""}>${h(D.personaggi[id].nome)}</button>`).join("")}</div>` : ""}
+        <button class="btn primary" id="prepVia">Inizia la battaglia</button>`;
+      barra.querySelectorAll(".chip").forEach((c) => c.onclick = () => {
+        const pos = posizioniAttuali(), id = c.dataset.id;
+        if (pos[id]) delete pos[id];
+        else {
+          const libera = cap.schieramento.find(([x, y]) => !Object.values(pos).some((p) => p[0] === x && p[1] === y));
+          if (!libera) { registro("Non ci sono posti liberi: togli prima qualcuno."); return; }
+          pos[id] = libera;
+        }
+        ricrea(pos);
+      });
+      $("#prepVia").onclick = () => {
+        G.schieramenti[cap.id] = posizioniAttuali();
+        barra.remove(); G.modo = "riposo"; G.scambio = null; disegnaPortate(); pronto();
+      };
+      disegnaPortate();
+    };
+    G.toccaSchiera = (x, y) => {
+      if (!cap.schieramento.some(([sx, sy]) => sx === x && sy === y)) { const u = G.b.unitaIn(x, y); mostraInfo(u || null); return; }
+      const qui = G.b.unitaIn(x, y);
+      if (!G.scambio) { G.scambio = { x, y }; mostraInfo(qui || null); disegnaPortate(); return; }
+      const la = G.b.unitaIn(G.scambio.x, G.scambio.y);
+      if (la) { la.x = x; la.y = y; }
+      if (qui) { qui.x = G.scambio.x; qui.y = G.scambio.y; }
+      G.scambio = null; disegnaUnita(); disegnaPortate(); disegnaPericolo();
+    };
+    disegna();
+  });
 }
 
 // ------------------------------------------------------------------ disegno
@@ -89,6 +144,10 @@ export function disegnaUnita() {
 export function disegnaPortate() {
   const L = $("#lRange"), b = G.b, u = G.sel;
   L.innerHTML = "";
+  if (G.modo === "schiera") {
+    for (const [x, y] of b.cap.schieramento) L.appendChild(casella(x, y, G.scambio && G.scambio.x === x && G.scambio.y === y ? "hl" : "mv"));
+    return;
+  }
   if (!u) return;
   if (G.modo === "scelta" && G.raggio) {
     const mosse = new Set(G.raggio.map((t) => chiave(t.x, t.y)));
@@ -277,8 +336,35 @@ function apriMenu(u) {
     const O = D.oggetti[i.id];
     if (i.q > 0 && O.tipo === "cura" && u.pv < u.stat.hp) voci.push([O.nome, () => agisci(u, b.usaOggetto(u, i.id)), `×${i.q}`]);
   }
+  if (u.armi.length > 1) voci.push(["Impugna", () => menu(u, [["Quale arma tieni in mano?"], ...u.armi.map((id) => [D.armi[id].nome, () => { impugna(u, id); disegnaUnita(); mostraInfo(u); apriMenu(u); }, id === u.arma ? "in mano" : ""])])]);
+  const vicini = u.compagnia ? b.vivi("alleato").filter((o) => o !== u && o.compagnia && Math.abs(o.x - u.x) + Math.abs(o.y - u.y) === 1) : [];
+  if (vicini.length) voci.push(["Scambia", () => vicini.length === 1 ? apriScambio(u, vicini[0]) : menu(u, [["Con chi?"], ...vicini.map((o) => [o.nome, () => apriScambio(u, o)])])]);
   voci.push(["Attendi", () => agisci(u, b.attendi(u))]);
   menu(u, voci);
+}
+// Scambio di armi e oggetti tra due personaggi vicini: non consuma il turno.
+function apriScambio(u, o) {
+  const D = G.dati;
+  chiudiMenu();
+  let avviso = "";
+  const colonna = (chi, altro) => `<div class="scol"><div class="uname">${h(chi.nome)}</div>
+    ${chi.armi.map((id) => `<button class="btn sarma" data-da="${chi.id}" data-id="${id}">${h(D.armi[id].nome)}${id === chi.arma ? " <small>in mano</small>" : ""}</button>`).join("")}
+    ${chi.oggetti.filter((i) => i.q > 0).map((i) => `<button class="btn sogg" data-da="${chi.id}" data-id="${i.id}">${h(D.oggetti[i.id].nome)} ×${i.q}</button>`).join("")}
+    <div class="muted small">Tocca per dare a ${h(altro.nome)}</div></div>`;
+  const mostra = () => {
+    velo(`<div class="lvl scambio" role="dialog" aria-label="Scambio"><h3>Scambio</h3><div class="scols">${colonna(u, o)}${colonna(o, u)}</div>
+      <div class="muted small" style="min-height:1.2em">${h(avviso)}</div><div style="margin-top:10px"><button class="btn primary" id="scOk">Fatto</button></div></div>`, true);
+    const passa = (tipo) => (e) => {
+      const da = e.currentTarget.dataset.da === u.id ? u : o, a = da === u ? o : u, id = e.currentTarget.dataset.id;
+      avviso = tipo === "arma" ? passaArma(D, da, a, id, a.usa) : passaOggetto(da, a, id, 1);
+      if (!avviso) G.haScambiato = true;
+      mostra();
+    };
+    $$(".sarma").forEach((p) => p.onclick = passa("arma"));
+    $$(".sogg").forEach((p) => p.onclick = passa("oggetto"));
+    $("#scOk").onclick = () => { chiudiVelo(); disegnaUnita(); mostraInfo(u); apriMenu(u); };
+  };
+  mostra();
 }
 function mostraPrevisione(a, d) {
   const b = G.b, f = b.previsione(a, d), R = G.dati.regole;
@@ -316,14 +402,16 @@ export async function fineTurno() {
   if (!G.chiusa) { aggiornaFase(); ridisegna(); }
 }
 export function annulla() {
+  if (G.modo === "schiera") { G.scambio = null; disegnaPortate(); return; }
   if (!libero()) return;
-  if (veloAperto()) { chiudiVelo(); return; }
+  if (veloAperto()) { chiudiVelo(); if (G.modo === "mosso" && G.sel) apriMenu(G.sel); return; }
   const u = G.sel;
   if (G.modo === "bersaglio" || G.modo === "cura") {
     if (G.armaPrima) { u.arma = G.armaPrima; G.armaPrima = null; }
     G.modo = "mosso"; disegnaUnita(); disegnaPortate(); mostraInfo(u); apriMenu(u); return;
   }
   if (G.modo === "mosso") {
+    if (G.haScambiato) { apriMenu(u); return; }   // dopo uno scambio la mossa non si ritira più
     u.x = G.origine.x; u.y = G.origine.y; chiudiMenu();
     G.modo = "scelta"; G.raggio = G.b.raggiungibili(u);
     disegnaUnita(); disegnaPortate(); mostraInfo(u); return;
@@ -331,9 +419,10 @@ export function annulla() {
   G.sel = null; G.modo = "riposo"; G.raggio = null; chiudiMenu(); disegnaPortate();
 }
 async function suCasella(x, y) {
+  if (G.modo === "schiera") { G.toccaSchiera(x, y); return; }
   if (!libero()) return;
   const b = G.b, u = b.unitaIn(x, y);
-  const seleziona = (v) => { G.sel = v; G.origine = { x: v.x, y: v.y }; G.modo = "scelta"; G.raggio = b.raggiungibili(v); };
+  const seleziona = (v) => { G.sel = v; G.origine = { x: v.x, y: v.y }; G.modo = "scelta"; G.raggio = b.raggiungibili(v); G.haScambiato = false; };
   if (G.modo === "riposo" || G.modo === "nemico") {
     if (u && alleato(u) && !u.agito) seleziona(u);
     else if (u) { G.sel = u; G.modo = "nemico"; G.raggio = null; }
@@ -352,6 +441,7 @@ async function suCasella(x, y) {
     }
     annulla(); return;
   }
+  if (G.modo === "mosso") { annulla(); return; }   // tocco fuori dal menu = torna indietro
   if (G.modo === "bersaglio") { const t = b.bersagli(G.sel).find((o) => o.x === x && o.y === y); if (t) mostraPrevisione(G.sel, t); return; }
   if (G.modo === "cura") { const t = b.bersagli(G.sel).find((o) => o.x === x && o.y === y); if (t) agisci(G.sel, b.cura(G.sel, t)); return; }
 }

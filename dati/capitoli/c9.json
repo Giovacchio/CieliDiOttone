@@ -77,6 +77,7 @@
     ["ferrante","Domani all'alba torno a Corvara e chiedo spiegazioni al direttore Strand. Se non torno entro sera, saprete che la Corona ha risposto."]
   ],
   "ricompensa": {
+    "oro": 600,
     "testo": "Nell'ufficio di Kessel: tre tonici e un Sigillo di ottone.",
     "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"lethy","id":"sigillo","q":1}]
   },

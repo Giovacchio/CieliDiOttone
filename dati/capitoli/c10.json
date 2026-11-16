@@ -94,6 +94,6 @@
     ["ferrante","Strand ha la flotta. Se il Concilio si muove, lui brucerà le Radici dal cielo. E il Concilio lo sa."],
     ["ferrante","Tieni, stratega. La mia sciabola d'ottone. Io me ne procurerò un'altra, tu ne avrai bisogno più di me."]
   ],
-  "ricompensa": {"testo":"Ferrante regala a Giova la sua Sciabola d'ottone.","armi":{"giova":"sciabola"}},
+  "ricompensa": {"oro": 650, "testo":"Ferrante regala a Giova la sua Sciabola d'ottone.","armi":{"giova":"sciabola"}},
   "diario": "Abbiamo portato Ferrante fuori da Corvara. Strand ha chiesto a Giova di fare il conto."
 }

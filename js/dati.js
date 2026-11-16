@@ -68,6 +68,8 @@ export function controllaDati(dati) {
     if (!p) { err(dove, "è in \"ordine\" ma la scheda non c'è"); continue; }
     stat(dove, p.stat); stat(dove + " (crescita)", p.crescita);
     if (!dati.armi[p.arma]) err(dove, `l'arma "${p.arma}" non esiste`);
+    else if (p.usa && !p.usa.includes(dati.armi[p.arma].tipo)) err(dove, `"usa" non comprende il tipo della sua arma (${dati.armi[p.arma].tipo})`);
+    if (p.entra && !dati.campagna.capitoli.includes(p.entra)) err(dove, `"entra": il capitolo "${p.entra}" non è in campagna.json`);
     if (!movimenti.includes(p.movimento)) err(dove, `movimento "${p.movimento}" sconosciuto`);
     abilita(dove, p.abilita); oggetti(dove, p.oggetti);
     for (const [k, P] of (dati.promozioni[id] || []).entries()) {
@@ -79,6 +81,11 @@ export function controllaDati(dati) {
     }
   }
   if (!ordine.some((id) => dati.personaggi[id]?.capo)) err("personaggi.json", "nessun personaggio ha \"capo\": true");
+  for (const tipo of ["armi", "oggetti"]) for (const v of dati.mercato[tipo] || []) {
+    if (!dati[tipo][v.id]) err("mercato.json", `"${v.id}" non esiste in ${tipo}.json`);
+    if (typeof v.prezzo !== "number") err("mercato.json", `"${v.id}" non ha un prezzo`);
+    if (v.da && !dati.campagna.capitoli.includes(v.da)) err("mercato.json", `"${v.id}": il capitolo "${v.da}" non è in campagna.json`);
+  }
   for (const [id, n] of Object.entries(dati.png)) aspetto(`png.json "${id}"`, n.aspetto);
   for (const [k, m] of Object.entries(dati.pasti)) if (m.richiede && !dati.supporti[chiaveCoppia(...m.richiede.coppia)]) err(`pasti.json "${k}"`, "la coppia richiesta non ha supporti");
 
