@@ -33,8 +33,9 @@ girano senza browser, in un paio di secondi.
 
 ## A che punto è la storia
 
-Scritti e giocabili: prologo, capitoli 1-12 e, per ognuna delle tre rotte (`c`orona, `r`adici, `l`ibere), i capitoli 13-17 (`c13c` … `c17l`).
-Manca l'Atto V (capitoli 18-20, finali ed epiloghi): la trama, i ganci lasciati dai capitoli 17 e le voci dei personaggi sono in `GDD.md`.
+La storia è completa: prologo, capitoli 1-12 e, per ognuna delle tre rotte (`c`orona, `r`adici, `l`ibere), i capitoli 13-20 (`c13c` … `c20l`).
+Il capitolo con `"finale": true` chiude la rotta: dopo la vittoria parte l'epilogo (`dati/epilogo.json`: `rotte` = il finale di ogni rotta, `personaggi` = la pagina di ognuno,
+`coppie` = la pagina condivisa da due personaggi con il supporto A). Un personaggio nuovo vuole la sua voce in `personaggi` e, se ha supporti, in `coppie`.
 In `dati/campagna.json` i capitoli delle rotte sono in ordine di numero (13 di tutte, poi 14 di tutte…): tienilo così, perché mercato e arrivi dei personaggi guardano la posizione nella lista.
 
 ## Aggiungere un capitolo

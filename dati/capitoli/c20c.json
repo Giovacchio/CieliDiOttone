@@ -1,0 +1,110 @@
+{
+  "id": "c20c",
+  "titolo": "Capitolo 20 · L'ultima brace",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "foresta-notte",
+  "rotta": "corona",
+  "finale": true,
+  "mappa": [
+    "TTTTT.cccc.TTTTT",
+    "TTT...c..c...TTT",
+    "T..f........f..T",
+    "...c........c...",
+    ".....f....f.....",
+    "..T..........T..",
+    "......~..~......",
+    ".f....~..~....f.",
+    "T.....~..~.....T",
+    "TT............TT"
+  ],
+  "schieramento": [[7,9],[8,9],[6,9],[9,9],[7,8],[8,8],[7,7]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Gran Custode Arven prima che finisca il Canto del Silenzio. Sta al centro delle vene d'etere, che lo curano a ogni turno."
+  },
+  "nemici": [
+    {"classe":"Corazzato","lv":25,"x":7,"y":1,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Corazzato","lv":25,"x":8,"y":1,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Custode","lv":24,"x":6,"y":1,"ia":"portata","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":24,"x":9,"y":1,"ia":"portata","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":24,"x":4,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":24,"x":11,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":24,"x":5,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Lanciere","lv":24,"x":10,"y":5,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":24,"x":2,"y":3,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":24,"x":13,"y":3,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":24,"x":7,"y":4,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":24,"x":8,"y":4,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Medico","lv":23,"x":8,"y":0,"ia":"portata","nome":"Guaritore di Arven","aspetto":"radici"},
+    {
+      "id": "arven",
+      "classe": "Custode",
+      "titolo": "Gran Custode",
+      "nome": "Gran Custode Arven",
+      "lv": 27,
+      "x": 7,
+      "y": 0,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":26,"def":8,"res":8,"vel":4,"mag":2},
+      "frase": "Avete spezzato il mio cerchio una volta. Ho avuto il tempo di rifarlo più grande. Ascoltate: è quasi finita. Tra poco nessuno urlerà più.",
+      "aspetto": {"skin":"#cfae92","hair":"#f0eee6","style":"hood","coat":"#e6e0cc","beard":"full","eye":"#8ad0a0"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["arven","Cantori. L'ultima strofa. Piano. Con dolcezza."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":24,"x":0,"y":4,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Custode","lv":24,"x":15,"y":4,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["wata","Sono quasi tutte zitte... Prospy, non dormire. Prospy! Resta sveglio, ti prego."]],
+      "rinforzi": [
+        {"classe":"Lama","lv":24,"x":0,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+        {"classe":"Lama","lv":24,"x":15,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 7,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Custode","lv":24,"x":5,"y":0,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Custode","lv":24,"x":10,"y":0,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Il Cuore delle Radici. Il cerchio dei cantori è più grande di prima. Tutti i cristalli sono spenti, tranne quelli intorno ad Arven."],
+    ["ferrante","Ho fatto cadere Strand con dei fogli firmati. Qui non c'è niente da firmare. Non so cosa portare a quest'uomo."],
+    ["tullo","Io so cosa porto. Un quaderno. Quarantadue che non hanno ancora finito di parlare."],
+    ["mars","E io una fiala muta. La rivoglio che canticchia. È una questione di principio."],
+    ["lethy","A casa, quando il nonno voleva silenzio, usciva lui dalla stanza. Non faceva uscire gli altri. Mi sembra il sistema giusto."],
+    ["nives","Un corvo. Uno solo, lassù, che gira in tondo. Né a destra né a sinistra. ...Sta aspettando di vedere cosa facciamo. Come tutti."],
+    ["wata","Giova. Qualunque cosa succeda là in mezzo: non decidere tu per loro. E non lasciare che decida lui."],
+    ["giova","Per tutta la vita ho cercato la mossa ottimale. Stanotte non c'è. Allora facciamo l'unica cosa che nessuno ha mai fatto, qui dentro: arriviamo fino a lui, e poi chiediamo."]
+  ],
+  "vittoria": [
+    ["arven","La strofa... l'avete spezzata sull'ultima parola. Perché. Perché volete che continuino a soffrire?"],
+    ["giova","Non lo voglio. Non lo so, se soffrono. E non lo sa nemmeno lei. Wata. Chiedi."],
+    ["narr","Wata posa la mano sulla radice più grande. Prospy le sale in spalla. Nel Cuore, per un momento, non canta nessuno."],
+    ["wata","Ho chiesto. Una per una. ...Rispondono in tante. Alcune dicono: \"sì, sono stanca, lasciami andare\". Altre dicono: \"no, ho ancora mia figlia da guardare crescere\". Una chiede se il suo cane sta bene."],
+    ["arven","Rispondono... cose diverse."],
+    ["wata","Sono persone, Gran Custode. Le persone rispondono cose diverse."],
+    ["ferrante","Allora non serve un Canto per tutte, e non serve una fornace per tutte. Serve chiedere. A ognuna. Articolo dodici: nessun nome al posto di un numero. Vale anche qui."],
+    ["arven","Sessant'anni. Ho coperto sessant'anni di risposte con una nota sola."],
+    ["tullo","Berto dice che resta. Dice che ha ancora barzellette."],
+    ["mars","LA FIALA! Canticchia! È stonata e non l'ho mai amata tanto!"],
+    ["giova","Scelta ottimale, rischio calcolato. L'ho detto per anni. Mancava un pezzo: il conto non lo faccio io. Lo fa chi lo paga."],
+    ["narr","Nel Cuore delle Radici i cristalli si riaccendono, uno a uno. Non tutti. Quelli che hanno chiesto di riposare, riposano. È la prima volta che qualcuno glielo lascia scegliere."]
+  ],
+  "ricompensa": {"oro":0},
+  "diario": "Nel Cuore abbiamo fermato l'ultimo Canto. Poi Wata ha chiesto, e le voci hanno risposto ognuna per sé."
+}

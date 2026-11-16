@@ -1,0 +1,96 @@
+{
+  "id": "c18r",
+  "titolo": "Capitolo 18 · Quaranta navi",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "cielo",
+  "rotta": "radici",
+  "mappa": [
+    "oooooooooooooooo",
+    "oDDDDDDoooDDDDoo",
+    "oDDkDDD===DDDDDo",
+    "oDDDDDDoooDXXDDo",
+    "oDDDDDD===DDDDDo",
+    "oDDDDDDoooDXXDDo",
+    "oDDkDDD===DDDDDo",
+    "oDDDDDDoooDDDDoo",
+    "ooDDDDooooDDDooo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[1,3],[1,4],[1,5],[2,3],[2,4],[2,5],[1,6]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi la Capitana Voss sulla Sovrana, la nave che apre la strada alla flotta di Strand. Tre passerelle uniscono i due ponti."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":21,"x":10,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":10,"y":4,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":10,"y":6,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":21,"x":13,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":21,"x":13,"y":6,"ia":"portata"},
+    {"classe":"Corazzato","lv":22,"x":11,"y":4,"ia":"portata"},
+    {"classe":"Arciere","lv":21,"x":13,"y":3,"ia":"portata"},
+    {"classe":"Arciere","lv":21,"x":13,"y":5,"ia":"portata"},
+    {"classe":"Lama","lv":21,"x":12,"y":1,"ia":"attacca"},
+    {"classe":"Lama","lv":21,"x":12,"y":7,"ia":"attacca"},
+    {"classe":"Medico","lv":20,"x":14,"y":4,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Lama",
+      "nome": "Capitana Voss",
+      "lv": 23,
+      "x": 14,
+      "y": 5,
+      "arma": "sciabola",
+      "ia": "portata",
+      "sveglia": 4,
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":20,"def":6,"for":2,"res":2},
+      "frase": "Una nave della Corona con una foglia dipinta sulla prua. In vent'anni di servizio non avevo mai visto un ammutinamento così ben verniciato.",
+      "aspetto": {"skin":"#c99674","hair":"#3a2a22","style":"tricorn","coat":"#5a1e1c","acc":"epaulette","eye":"#3a3a3a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["boss","Aeronauti, sul loro ponte! Voglio quella caldaia sveglia e di nuovo nostra."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":8,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":8,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":8,"y":1,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":8,"y":8,"ia":"attacca"}]
+    },
+    {
+      "turno": 6,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":22,"x":15,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":22,"x":15,"y":9,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto V · L'ultima brace"],
+    ["narr","Rotta del Concilio. Sopra le Radici, all'alba. Da ovest arrivano quaranta navi. Da est, a incontrarle, una sola: la Tempra, con una foglia dipinta sulla prua."],
+    ["maelis","Strand ha saputo che il Concilio ha aperto le cure a tutti. Per lui vuol dire una cosa sola: che non abbiamo più niente da vendergli, e quindi niente che ci protegga."],
+    ["nives","Quaranta. Ho contato due volte, capo conti. La seconda speravo di aver sbagliato."],
+    ["giova","Non si combattono quaranta navi. Si combatte quella davanti: se la Sovrana si ferma, le altre aspettano ordini. Strand non ha mai delegato niente."],
+    ["mars","La Tempra è sveglia e di buon umore. Le ho dato un decotto di menta. Fa \"vrrr\" invece di \"mmmh\"."],
+    ["tullo","Voss. Me la ricordo dalle ispezioni a Cenerossa. Una che guarda in faccia. Se le parli chiaro, ascolta."],
+    ["lethy","Allora prima la batto e poi le parlo chiaro. È l'ordine in cui si fa nei tornei."]
+  ],
+  "vittoria": [
+    ["boss","...Abbasso la sciabola. Voi avete una nave. Io ne ho trentanove alle spalle. Spiegatemi perché dovrei farvi passare."],
+    ["tullo","Galleria nove. Quarantadue uomini. Li conosceva, capitana: ci ispezionava ogni mese e ci guardava in faccia. Sono in una lampada di questa nave. Vuole i nomi?"],
+    ["boss","...Li ho timbrati io, i rapporti. \"Perdite d'esercizio\". Credevo fosse la roccia."],
+    ["maelis","Era la Corona. E il Concilio lo sapeva e taceva. Non siamo venuti a darvi lezioni, capitana. Siamo venuti a chiedervi di non bruciare l'unico posto dove quei quarantadue sono ancora qualcuno."],
+    ["boss","Non posso fermare la flotta. Strand è sull'Aurora, in coda alla formazione, e gli ordini partono solo da lì."],
+    ["boss","Ma posso non vedervi passare. Ho la vista stanca, ultimamente. Andate."],
+    ["narr","La Sovrana vira di bordo. Le navi dietro di lei esitano. Dalle stive delle prime, però, cominciano a cadere le bombe incendiarie."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Voss fa passare una cassa da un ponte all'altro: tre tonici.",
+    "oggetti": [{"a":"maelis","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Voss ci ha lasciati passare. Ma la flotta di Strand ha cominciato a bombardare le Radici."
+}

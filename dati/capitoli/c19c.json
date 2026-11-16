@@ -1,0 +1,98 @@
+{
+  "id": "c19c",
+  "titolo": "Capitolo 19 · Il confine che tace",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "foresta-notte",
+  "rotta": "corona",
+  "mappa": [
+    "TT....T..T....TT",
+    "T..f........f..T",
+    "....T..cc..T....",
+    ".f............f.",
+    "....f..TT..f....",
+    "..c....TT....c..",
+    "......f..f......",
+    ".f..T......T..f.",
+    "T..............T",
+    "TT...f....f...TT"
+  ],
+  "schieramento": [[6,9],[7,9],[8,9],[9,9],[7,8],[8,8],[6,8]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [7,0],
+    "limite": 10,
+    "testo": "Porta Giova al sentiero del Cuore (la casella d'ottone a nord) entro il turno 10, prima dell'ultima strofa. La Custode Ysolde lo sbarra di persona."
+  },
+  "nemici": [
+    {"classe":"Custode","lv":22,"x":5,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":22,"x":10,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Custode","lv":22,"x":7,"y":1,"ia":"portata","nome":"Cantore del Silenzio","aspetto":"radici"},
+    {"classe":"Lanciere","lv":22,"x":6,"y":6,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Lanciere","lv":22,"x":9,"y":6,"ia":"attacca","nome":"Guardia di Arven","aspetto":"radici"},
+    {"classe":"Corazzato","lv":22,"x":6,"y":2,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Corazzato","lv":22,"x":9,"y":2,"ia":"fermo","nome":"Guardia di radice","aspetto":"radici"},
+    {"classe":"Arciere","lv":22,"x":2,"y":2,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Arciere","lv":22,"x":13,"y":2,"ia":"portata","nome":"Arciere di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":22,"x":3,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Lama","lv":22,"x":12,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+    {"classe":"Medico","lv":21,"x":8,"y":1,"ia":"portata","nome":"Guaritore di Arven","aspetto":"radici"},
+    {
+      "id": "ysolde",
+      "classe": "Custode",
+      "nome": "Custode Ysolde",
+      "lv": 24,
+      "x": 7,
+      "y": 0,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "siRitira": true,
+      "bonus": {"hp":12,"def":4,"res":4,"vel":3},
+      "frase": "In galleria nove vi ho chiesto di lasciarle riposare. Non avete ascoltato. Stanotte non chiedo più.",
+      "aspetto": {"skin":"#e6cdb4","hair":"#c9c2a8","style":"longv","coat":"#d8d2bc","acc":"leaf","eye":"#8ad0a0"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["narr","Le lampade della Compagnia tremolano. Quella di Tullo si abbassa fino a un filo."],["tullo","Berto. Resisti, testone. Stona più forte."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":22,"x":0,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"},
+        {"classe":"Custode","lv":22,"x":15,"y":3,"ia":"attacca","nome":"Cantore del Silenzio","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Lama","lv":22,"x":0,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"},
+        {"classe":"Lama","lv":22,"x":15,"y":6,"ia":"attacca","nome":"Lama di Arven","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Il confine delle Radici, di notte. Nessun cristallo brilla. Per la prima volta, nella foresta più antica di Valdaria c'è buio."],
+    ["wata","Non le sento. Giova, non le sento quasi più. È come... come una stanza piena di gente che trattiene il fiato."],
+    ["mars","La mia fiala non canticchia. Le ho parlato tutto il viaggio e niente. Non mi piace. Non mi piace per niente."],
+    ["ferrante","Ero venuta a parlamentare. Non c'è nessuno con cui farlo: i Custodi che non stanno con Arven sono chiusi a Lucegrande, e gli altri cantano."],
+    ["nives","Niente vento. Niente corvi. Niente di niente. In vent'anni di cielo, una notte così ferma non l'ho mai misurata."],
+    ["lethy","Allora facciamo rumore noi. È una cosa che a casa mia è sempre riuscita benissimo."],
+    ["giova","Il sentiero del Cuore è a nord, oltre il cerchio di Ysolde. Dieci turni prima dell'ultima strofa. Passo io: voi tenetemi aperta la strada."]
+  ],
+  "vittoria": [
+    ["ysolde","...Passate. Tanto non farete in tempo. Manca una strofa sola."],
+    ["wata","Custode Ysolde. Lei le sentiva urlare. Era vero?"],
+    ["ysolde","Ogni notte, per quarant'anni."],
+    ["wata","Ha mai chiesto a una di loro perché urlava?"],
+    ["ysolde","..."],
+    ["ysolde","No. Si canta, per coprirle. Non si chiede. Così ci hanno insegnato."],
+    ["ferrante","Conosco il metodo. Venga con noi, Custode. Stanotte lo cambiamo in due regolamenti alla volta."],
+    ["narr","Ysolde non risponde. Ma quando la Compagnia imbocca il sentiero del Cuore, li segue."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Tra le radici, un deposito dei Custodi: due tonici a testa per chi apre la strada.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"tullo","id":"tonico","q":1}]
+  },
+  "diario": "Abbiamo attraversato il confine nel buio. Ysolde ci segue: non aveva mai chiesto alle voci perché urlavano."
+}

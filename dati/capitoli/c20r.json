@@ -1,0 +1,100 @@
+{
+  "id": "c20r",
+  "titolo": "Capitolo 20 · L'ultima brace",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "cielo",
+  "rotta": "radici",
+  "finale": true,
+  "mappa": [
+    "oooooooooooooooo",
+    "ooDDDDDDDDDDDDoo",
+    "oDDDkDDDDDDkDDDo",
+    "oDDDDDXXXXDDDDDo",
+    "=DDDDDXFFXDDDDDo",
+    "=DDDDDDDDDDDDDDo",
+    "oDDDkDDDDDDkDDDo",
+    "oDDDDDDDDDDDDDDo",
+    "ooDDDDDDDDDDDDoo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[0,4],[0,5],[1,4],[1,5],[1,3],[1,6],[2,5]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Direttore Strand sul ponte di comando dell'Aurora di Ottone. Sta accanto alla fornace della nave, che lo cura a ogni turno."
+  },
+  "nemici": [
+    {"classe":"Corazzato","lv":25,"x":7,"y":5,"ia":"fermo"},
+    {"classe":"Corazzato","lv":25,"x":8,"y":5,"ia":"fermo"},
+    {"classe":"Fuciliere","lv":24,"x":5,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":24,"x":10,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":24,"x":5,"y":7,"ia":"portata"},
+    {"classe":"Fuciliere","lv":24,"x":10,"y":7,"ia":"portata"},
+    {"classe":"Lanciere","lv":24,"x":4,"y":4,"ia":"attacca"},
+    {"classe":"Lanciere","lv":24,"x":4,"y":5,"ia":"attacca"},
+    {"classe":"Lama","lv":24,"x":6,"y":5,"ia":"attacca"},
+    {"classe":"Lama","lv":24,"x":9,"y":5,"ia":"attacca"},
+    {"classe":"Arciere","lv":24,"x":12,"y":3,"ia":"portata"},
+    {"classe":"Arciere","lv":24,"x":12,"y":6,"ia":"portata"},
+    {"classe":"Medico","lv":23,"x":8,"y":4,"ia":"portata"},
+    {
+      "id": "strand",
+      "classe": "Fuciliere",
+      "titolo": "Direttore dell'Ufficio dell'Etere",
+      "nome": "Direttore Strand",
+      "lv": 27,
+      "x": 7,
+      "y": 4,
+      "arma": "moschetto",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":26,"def":8,"res":7,"abi":4,"vel":2},
+      "frase": "Sei arrivato fin quassù, stratega. Allora siediti e fai il conto con me. Dieci lampade d'ospedale per ogni cristallo. Dimmi dov'è l'errore, e ordino io stesso la ritirata.",
+      "aspetto": {"skin":"#d8b89a","hair":"#9a9a9a","style":"short","coat":"#2c2f3a","acc":"jabot","eye":"#4a5560"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["strand","Guardia dell'Aurora, alle murate. Senza fretta. Il signore è venuto a discutere."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":24,"x":3,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":24,"x":3,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":24,"x":12,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":24,"x":12,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 6,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":25,"x":15,"y":4,"ia":"attacca"},{"classe":"Aeronauta","lv":25,"x":15,"y":5,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","L'Aurora di Ottone, l'ammiraglia della flotta, sopra le nuvole. Sotto, la Volta di radici tiene. Nives ha fatto sette viaggi e non ha detto la parola nemmeno una volta."],
+    ["nives","Sette su sette. Ho le ali che fumano. Se qualcuno mi chiede l'ottavo viaggio lo butto di sotto. ...No. Non l'ho detta. Ho detto \"di sotto\"."],
+    ["maelis","Strand è sul ponte di comando. Da lì partono tutti gli ordini della flotta. Se tace lui, tacciono quaranta navi."],
+    ["tullo","L'uomo che ha firmato. Finalmente lo guardo in faccia. Avevo pensato a cosa dirgli per tutto il viaggio. Non me lo ricordo più."],
+    ["mars","Diglielo col quaderno, Tullo. Io intanto gli porto una cosa: la mia fiala. Quella che canticchia. Voglio che la senta."],
+    ["lethy","È la finale. Lui ha quaranta navi e noi una forchetta storta. Mi piacciono le nostre probabilità."],
+    ["wata","Giova. A Corvara ti ha chiesto di fare il conto, e tu sei stato zitto un capitolo intero."],
+    ["giova","Perché tornava. Adesso so cosa rispondere. Arriviamo fino a lui."]
+  ],
+  "vittoria": [
+    ["strand","Dieci lampade per ogni cristallo. Un ospedale acceso a Corvara salva più vite in un inverno di quante ne contenga tutta quella foresta. Dov'è l'errore, stratega?"],
+    ["giova","Non c'è. Il conto torna. È la cosa che mi ha tolto il sonno. Poi ho capito che non era un errore di calcolo: lei non ha mai chiesto il prezzo a chi lo pagava."],
+    ["mars","Senta qua. No, non la annusi: la ascolti. Canticchia. È una persona. Stonata, ma una persona."],
+    ["strand","..."],
+    ["tullo","Quarantadue nomi, direttore. Lei ne ha firmati quarantadue. Io glieli leggo. Lei stia seduto."],
+    ["narr","Tullo legge. Strand ascolta fino in fondo. A metà della lista ha smesso di guardare le sue carte."],
+    ["wata","Nel Cuore abbiamo chiesto alle voci, una per una. Alcune vogliono riposare. Altre vogliono restare e accendere una lampada in una corsia, se serve a un bambino. Ma lo scelgono loro."],
+    ["maelis","Il Concilio aprirà le Radici a chi verrà a chiedere. Non a chi viene a prendere. È un altro conto, direttore, e stavolta chi paga lo sa."],
+    ["strand","...Un conto con il consenso. Rende meno. Molto meno."],
+    ["giova","Rende meno. E torna lo stesso."],
+    ["narr","Strand prende il megafono della flotta. Ci mette un momento. Poi dà l'ordine: quaranta navi virano verso ovest, una dopo l'altra."],
+    ["narr","Sotto le nuvole, la Volta si riapre piano. Nel Cuore delle Radici i cristalli brillano tutti insieme, e per una volta nessuno canta sopra di loro."]
+  ],
+  "ricompensa": {"oro":0},
+  "diario": "Sull'Aurora di Ottone Giova ha risposto al conto di Strand. La flotta ha virato."
+}

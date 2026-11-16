@@ -1,0 +1,73 @@
+{
+  "rotte": {
+    "corona": ["La Corona di Ottone non cadde. Cambiò, che è più difficile.","L'articolo dodici fu approvato con sette voti su nove: nessun registro può contenere un numero al posto di un nome. Su ogni cassa di etere, da allora, c'è scritto chi è e che ha detto sì.","Le lampade degli ospedali restarono accese. Meno di prima, e nessuna più di nascosto.","Il Direttore Strand rifece tutti i suoi conti in una cella con una finestra. Chi lo andò a trovare racconta che alla fine tornavano lo stesso, e che la cosa lo faceva sorridere.","Nel Cuore delle Radici, un vecchio con il cappuccio abbassato imparò ad ascoltare. Disse che era molto più faticoso di cantare."],
+    "radici": ["Il Concilio delle Radici aprì le sue porte. Non a chi veniva a prendere: a chi veniva a chiedere.","Sorella Maelis, Gran Custode, abolì il giuramento del silenzio e accorciò il noviziato a un giorno. Il primo giorno si ascolta e basta.","Le quaranta navi di Strand tornarono a ovest. Trentuno, l'anno dopo, tornarono a est: portavano guaritori nei villaggi senza strade.","Arven tenne la Volta sopra il Cuore finché ebbe voce. Poi la tennero le voci, da sole. Pare che cantino meglio.","A Fondoscuro, sul pozzo, qualcuno ha inciso i nomi. Tutti. Il Concilio ha mandato lo scalpello."],
+    "libere": ["Né la Corona né il Concilio persero la guerra. Persero il segreto, che era l'unica cosa che avevano in comune.","A Porto Ambra nacque un mercato nuovo, e il Signor Grigio fu costretto a presiederlo. Lo chiamano il Mercato del Sì: l'etere si compra solo da chi ha risposto, e al prezzo che dice lui.","Corona e Concilio vi mandano i loro delegati. Siedono a due capi opposti del tavolo e si lamentano dello stesso identico prezzo.","Fagiolo Secondo è l'ammiraglia delle Leghe Libere. Pende ancora. Nessuno ha avuto il coraggio di raddrizzarla.","In ogni piazza delle sei città, una volta l'anno, si leggono i nomi. I bambini li sanno a memoria, come le tabelline."]
+  },
+  "personaggi": {
+    "giova": "Giova tiene ancora i conti di tutto: le provviste, i turni di guardia, le probabilità. In fondo a ogni pagina, però, ha aggiunto una riga che prima non c'era: \"chiesto a chi paga: sì / no\". Dice che è la colonna più importante del quaderno.",
+    "lethy": "Lethy tornò alla villa una sola volta, per prendere lo stocco del nonno e lasciare sul tavolo sei forchette su sette. Ha aperto una scuola di scherma a Porto Ambra dove non si paga, e dove la sala è lunga molto più di dodici passi.",
+    "wata": "Wata ha piantato un rovo davanti a ogni villaggio che glielo ha chiesto. Dice che serve a ricordare che lì qualcuno ascolta. Prospy sceglie di persona il punto esatto, e non ha mai sbagliato.",
+    "mars": "Mars ha scritto un libro: \"Tutto quello che ho provato, e le tre cose che non proverò\". Le tre cose stanno in mezza pagina. Il resto sono ottocento pagine di ricette, alcune delle quali funzionano quasi sicuramente.",
+    "nives": "Nives ha ripreso a portare la posta. Dice che dal giorno della battaglia non ha più consegnato una sola lettera col bordo nero partita da un ufficio. Le superstizioni le ha tenute tutte: ne ha anzi aggiunta una nuova, che riguarda un certo corvo.",
+    "tullo": "Tullo portò il quaderno alle Radici e lo lasciò lì, come aveva detto. Poi tornò a Cenerossa, dove la galleria nove è diventata un posto in cui si scende senza piccone, solo per salutare. Fa il custode. Parla poco. I visitatori dicono che la lampada all'ingresso canta, stonata.",
+    "ferrante": "Ferrante presiede la commissione che riscrive il regolamento della Corona. È passata da undici articoli a uno, e sta valutando se sia ancora troppo lungo. Ringrazia regolarmente. Le riesce sempre meglio.",
+    "maelis": "Maelis guida un Concilio che fa molto più rumore di prima. Ogni sera, prima di dormire, ascolta per un'ora senza chiudersi. Ha scoperto che le voci, a quell'ora, raccontano soprattutto barzellette.",
+    "brann": "Brann ha fondato una compagnia di ventura con una regola sola: si viene pagati in anticipo e non si cambia parte. Gli affari vanno malissimo. Non è mai stato così contento, e non lo ammetterà mai."
+  },
+  "coppie": [
+    {
+      "coppia": ["giova","wata"],
+      "testo": "Giova e Wata dividono ancora il rischio per due. Lui fa i conti, lei chiede alle voci se i conti le riguardano; quando non sono d'accordo decide Prospy, che finora ha avuto ragione undici volte su undici. Hanno una casa ai margini delle Radici con un rovo davanti e una cucina sempre accesa."
+    },
+    {
+      "coppia": ["giova","lethy"],
+      "testo": "Lethy rispose alla lettera di suo padre con un bilancio, scritto con l'aiuto di Giova: quanto costa una figlia che resta in villa, quanto rende una che sa cosa vale. Il banchiere Valdoro lo ha fatto incorniciare. Giova e Lethy tengono insieme la scuola di Porto Ambra: lei insegna la scherma, lui il calcolo del rischio, e nessuno dei due ammette che è la stessa materia."
+    },
+    {
+      "coppia": ["giova","mars"],
+      "testo": "La ricetta \"Brace\" esiste davvero, adesso: le arepas della nonna di Giova con dentro un'erba che Mars giura di aver provato su di sé per prima. Hanno aperto una locanda sulla strada di Fossa Grigia. Lui cucina, lei sperimenta sul menù. Sulla porta c'è scritto: \"Si mangia a proprio rischio. Calcolato.\""
+    },
+    {
+      "coppia": ["lethy","wata"],
+      "testo": "Lethy porta ancora il mantello ricamato da Wata, sopra la giacca da scherma, anche d'estate. Wata ha finalmente una gatta in più: gliel'ha regalata Lethy, è bianca, di razza, e Prospy la tratta come una principessa un po' tonta. Vivono a due strade di distanza e cenano insieme ogni sera, con una forchetta sola a testa."
+    },
+    {
+      "coppia": ["mars","wata"],
+      "testo": "La fiala che canticchiava ha un nome, adesso, e un posto fisso sulla mensola del laboratorio che Mars e Wata hanno aperto insieme ai margini delle Radici. Mars propone gli esperimenti, Wata chiede il permesso a chi di dovere, e una volta su tre la risposta è no. Mars dice che è il laboratorio più lento di Valdaria, e il solo dove non ha mai dovuto chiedere scusa a nessuno."
+    },
+    {
+      "coppia": ["lethy","mars"],
+      "testo": "Lethy e Mars hanno fatto il giro di Valdaria a piedi, dormendo sotto le stelle. Con le formiche. Lethy ha tenuto un diario intitolato \"Cose che a casa non c'erano\"; Mars lo ha illustrato. La settima forchetta la usano per rimestare le pozioni."
+    },
+    {
+      "coppia": ["nives","lethy"],
+      "testo": "Le ali azzurre esistono: Nives le ha costruite, Lethy ha portato l'ombrello. Volano insieme la domenica, sopra la villa che da lassù è grande come un bottone. Nessuna delle due dice mai la parola con la C. Lethy l'ha insegnato anche ai suoi allievi, che non sanno perché."
+    },
+    {
+      "coppia": ["nives","giova"],
+      "testo": "Nel quaderno di Giova c'è una sezione nuova, scritta con due calligrafie: i presagi di Nives, con le tacche, e accanto la misura che c'è sotto. In fondo a ogni pagina resta un punto interrogativo, quello del corvo. Lui si prende la colpa prima che lei decolli. Lei, da allora, atterra sempre sullo stesso tetto."
+    },
+    {
+      "coppia": ["tullo","wata"],
+      "testo": "Il quaderno di Tullo è alle Radici, sotto il rovo che Wata ha piantato apposta. Prospy ci dorme sopra a giorni alterni. Tullo sale da Cenerossa una volta al mese: non dice perché, si siede, e Wata gli riferisce le barzellette di Berto. Ride a tutte. Sono pessime."
+    },
+    {
+      "coppia": ["tullo","mars"],
+      "testo": "La \"Polvere Tre Dita\" si vende in tutte le Leghe: fa meno fumo, tira dritto e sa di menta. La ricetta è appesa fuori dalla bottega di Mars e Tullo, perché chiunque possa copiarla. Sul sacco c'è scritto \"non assaggiare\". Mars l'ha assaggiata lo stesso. Tullo non ha detto niente: ha solo aggiunto un'altra riga."
+    },
+    {
+      "coppia": ["ferrante","giova"],
+      "testo": "Sull'elsa della sciabola 0417 ci sono due nomi, adesso, uno sotto l'altro. Ferrante e Giova si scrivono ogni settimana: lei gli manda gli articoli nuovi da controllare, lui le manda le ricette. L'articolo undici è rimasto abolito. Quando lei passa da Porto Ambra, cucina lui: è un ordine."
+    },
+    {
+      "coppia": ["maelis","wata"],
+      "testo": "Il noviziato di un giorno lo insegnano in due: Maelis porta dodici anni di cose da disimparare, Wata porta il rovo, Prospy porta il giudizio. Il primo esercizio è sempre lo stesso: sedersi, stare zitti, e aspettare che un cristallo rida. Di solito ci vuole meno di quanto si pensi."
+    },
+    {
+      "coppia": ["brann","lethy"],
+      "testo": "Brann siede ogni sera allo stesso tavolo, con una forchetta d'argento che ha le iniziali di un banchiere. Lethy ha finalmente imparato a contrattare: il primo affare l'ha fatto con suo padre, e ha vinto. Brann sostiene di averle insegnato tutto lui. Niente di personale."
+    }
+  ],
+  "congedo": "La Compagnia della Brace non si è mai sciolta. Ha solo smesso di farsi pagare."
+}

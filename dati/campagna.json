@@ -1,6 +1,6 @@
 {
   "titolo": "Cieli di Ottone",
-  "capitoli": ["prologo","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13c","c13r","c13l","c14c","c14r","c14l","c15c","c15r","c15l","c16c","c16r","c16l","c17c","c17r","c17l"],
+  "capitoli": ["prologo","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13c","c13r","c13l","c14c","c14r","c14l","c15c","c15r","c15l","c16c","c16r","c16l","c17c","c17r","c17l","c18c","c18r","c18l","c19c","c19r","c19l","c20c","c20r","c20l"],
   "rotte": {"corona":{"nome":"con Ferrante"},"radici":{"nome":"con Maelis"},"libere":{"nome":"con le Leghe Libere"}},
   "supporti": ["giova-wata","giova-lethy","giova-mars","lethy-wata","mars-wata","lethy-mars","nives-lethy","nives-giova","tullo-wata","tullo-mars","ferrante-giova","maelis-wata","brann-lethy"]
 }

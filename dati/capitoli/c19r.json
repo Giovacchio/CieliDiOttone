@@ -1,0 +1,123 @@
+{
+  "id": "c19r",
+  "titolo": "Capitolo 19 · Pioggia di fuoco",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "foresta",
+  "rotta": "radici",
+  "mappa": [
+    "TT..f......f..TT",
+    "T....T....T....T",
+    "...f........f...",
+    ".......cc.......",
+    "..T...c..c...T..",
+    "..T...c..c...T..",
+    ".......cc.......",
+    "...f........f...",
+    "T....T....T....T",
+    "TT..f......f..TT"
+  ],
+  "schieramento": [[8,4],[7,5],[8,5],[6,4],[9,5],[7,3],[8,6]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 7,
+    "anche": "comandante",
+    "proteggi": "arven",
+    "testo": "Proteggi Arven per 7 turni mentre canta la Volta di radici sopra il Cuore. Oppure sconfiggi il Capitano Dreyl, quando sbarcherà. Se Arven cade, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "arven",
+      "titolo": "Custode in ascolto",
+      "nome": "Arven",
+      "lv": 14,
+      "x": 7,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "kit",
+      "stat": {"hp":48,"for":1,"mag":14,"abi":9,"vel":6,"fort":10,"def":10,"res":16},
+      "aspetto": {"skin":"#cfae92","hair":"#f0eee6","style":"hood","coat":"#e6e0cc","beard":"full","eye":"#8ad0a0"},
+      "abilita": {
+        "nome": "La Volta",
+        "descrizione": "Canta per chiudere i rami sopra il Cuore, e stavolta canta insieme alle voci. Non si muove. Se cade, la missione fallisce."
+      }
+    }
+  ],
+  "nemici": [
+    {"classe":"Lanciere","lv":21,"x":1,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":14,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":1,"y":7,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":14,"y":7,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":21,"x":3,"y":0,"ia":"portata"},
+    {"classe":"Fuciliere","lv":21,"x":12,"y":9,"ia":"portata"},
+    {"classe":"Aeronauta","lv":21,"x":8,"y":0,"ia":"attacca"},
+    {"classe":"Aeronauta","lv":21,"x":7,"y":9,"ia":"attacca"},
+    {"classe":"Segatrice","lv":21,"x":0,"y":4,"ia":"attacca"},
+    {"classe":"Segatrice","lv":21,"x":15,"y":5,"ia":"attacca"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["arven","Sessant'anni che canto contro di loro. È la prima volta che canto insieme. Sono molto più intonate di me."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":3,"y":1,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":12,"y":8,"ia":"attacca"}]
+    },
+    {"turno":3,"fase":"nemico","rinforzi":[{"classe":"Lama","lv":21,"x":15,"y":3,"ia":"attacca"},{"classe":"Lama","lv":21,"x":0,"y":6,"ia":"attacca"}]},
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["dreyl","Ancora voi. E ancora tra gli alberi. Stavolta ho portato le seghe grandi."]],
+      "rinforzi": [
+        {
+          "id": "dreyl",
+          "classe": "Aeronauta",
+          "nome": "Capitano Dreyl",
+          "lv": 23,
+          "x": 15,
+          "y": 4,
+          "arma": "lanciaA",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":20,"def":6,"for":2,"res":2},
+          "frase": "Una foresta non è una fortezza. Ve l'avevo detto.",
+          "aspetto": {"skin":"#d9b08c","hair":"#8a6a3a","style":"tricorn","coat":"#6e1f1c","acc":"epaulette","eye":"#3a4a5a"}
+        },
+        {"classe":"Corazzato","lv":22,"x":14,"y":5,"ia":"attacca"},
+        {"classe":"Fuciliere","lv":21,"x":15,"y":6,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":0,"y":1,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":15,"y":8,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Il Cuore delle Radici, sotto le bombe. Le cime bruciano. Al centro del cerchio, un vecchio con il cappuccio abbassato canta."],
+    ["maelis","Arven. Non ti ho chiesto io di tornare."],
+    ["arven","No. Me l'hanno chiesto loro. C'è un canto antico, la Volta: chiude i rami sopra il Cuore come un tetto. Non l'ho mai usato. Serve che le voci cantino con te, e io le ho sempre fatte tacere."],
+    ["wata","E adesso cantano?"],
+    ["arven","Adesso ho chiesto per favore. Pare che funzioni. Mi servono sette turni e qualcuno che non mi faccia tagliare a pezzi."],
+    ["mars","Sette turni di canto in mezzo a un bombardamento. Voglio assolutamente vedere com'è. Poi lo scrivo."],
+    ["lethy","Il nemico di ieri al centro del cerchio, e noi intorno a difenderlo. Papà lo chiamerebbe \"ristrutturazione del debito\"."],
+    ["giova","Sbarcano da tutti i lati, con le segatrici. Cerchio stretto sulle vene d'etere, Arven in mezzo. Sette turni."]
+  ],
+  "vittoria": [
+    ["narr","L'ultima nota della Volta. Sopra il Cuore i rami si chiudono come due mani. Le bombe ci rimbalzano sopra e rotolano via, spente."],
+    ["dreyl","...Un tetto. Hanno fatto un tetto alla foresta. Non è nel manuale. Ritirata!"],
+    ["arven","Maelis. Tengo io la Volta. Finché ho voce, e ne ho risparmiata tanta."],
+    ["maelis","E noi?"],
+    ["arven","Voi andate dove non posso andare io: lassù. La Volta ferma le bombe, non la flotta. Finché quell'uomo ha navi, tornerà con seghe più grandi."],
+    ["nives","L'Aurora di Ottone. In coda alla formazione, la più alta di tutte. La Tempra non ci arriva. ...Io sì. E se mi tenete il vento, vi ci porto uno alla volta."],
+    ["giova","Sette viaggi. Rischio: tutto. Lo facciamo."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "I cantori di Arven vi mettono in mano quello che hanno: due tonici a testa per chi sale.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"tullo","id":"tonico","q":1}]
+  },
+  "diario": "Arven ha cantato la Volta insieme alle voci, e noi l'abbiamo difeso. Resta l'Aurora di Ottone."
+}

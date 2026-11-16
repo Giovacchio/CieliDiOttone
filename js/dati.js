@@ -4,7 +4,7 @@
 import { NON_SI_PASSA } from "./motore/movimento.js";
 import { chiaveCoppia } from "./motore/supporti.js";
 
-const FILE = ["campagna", "regole", "terreni", "armi", "oggetti", "classi", "aspetti", "icone", "personaggi", "png", "promozioni", "pasti", "mercato"];
+const FILE = ["campagna", "regole", "terreni", "armi", "oggetti", "classi", "aspetti", "icone", "personaggi", "png", "promozioni", "pasti", "mercato", "epilogo"];
 
 export async function caricaDati(leggi) {
   const dati = {};
@@ -86,6 +86,9 @@ export function controllaDati(dati) {
     if (typeof v.prezzo !== "number") err("mercato.json", `"${v.id}" non ha un prezzo`);
     if (v.da && !dati.campagna.capitoli.includes(v.da)) err("mercato.json", `"${v.id}": il capitolo "${v.da}" non è in campagna.json`);
   }
+  for (const r of Object.keys(dati.epilogo.rotte || {})) if (!dati.campagna.rotte[r]) err("epilogo.json", `la rotta "${r}" non esiste in campagna.json`);
+  for (const id of Object.keys(dati.epilogo.personaggi || {})) if (!dati.personaggi[id]) err("epilogo.json", `"${id}" non è un personaggio`);
+  for (const c of dati.epilogo.coppie || []) if (!dati.supporti[chiaveCoppia(...c.coppia)]) err("epilogo.json", `la coppia ${c.coppia.join(" e ")} non ha supporti`);
   for (const [id, n] of Object.entries(dati.png)) aspetto(`png.json "${id}"`, n.aspetto);
   for (const [k, m] of Object.entries(dati.pasti)) if (m.richiede && !dati.supporti[chiaveCoppia(...m.richiede.coppia)]) err(`pasti.json "${k}"`, "la coppia richiesta non ha supporti");
 

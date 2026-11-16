@@ -70,7 +70,19 @@ Nuovi comandanti: il Maggiore Dalca (esegue gli ordini, e lo sa), il Comandante 
 
 Antagonisti con una ragione credibile: **Strand** (Corona, "ogni lampada salva dieci vite"), **Arven** (Concilio, "il Silenzio è pietà"), **Thalen** (Concilio, "le Radici non sono una farmacia"). Personaggi della storia: Ferrante, Maelis, il Signor Grigio, Nonna Tessa, Brann, Erba.
 
-Da scrivere: Atto V (18-20) con finali ed epiloghi per ogni rotta.
+### Atto V, capitoli 18-20 (scritti e giocabili, uno per rotta)
+
+| Cap. | Rotta della Corona | Rotta delle Radici | Rotta delle Leghe Libere |
+|---|---|---|---|
+| 18 | **I lealisti** · Dalca sbarra la ferrovia dell'est; alla fine si toglie l'elmo | **Quaranta navi** · Voss, che decide di "non vederli passare" | **Sei città, una flotta** · Porto Ambra tiene, con i fornai in prima fila |
+| 19 | **Il confine che tace** · le Radici al buio, Ysolde che non ha mai chiesto | **Pioggia di fuoco** · si protegge Arven mentre canta la Volta insieme alle voci | **L'Aurora di Ottone** · Strand e il suo conto |
+| 20 | **L'ultima brace** · Arven e l'ultimo Canto | **L'ultima brace** · Strand sull'Aurora di Ottone | **L'ultima brace** · Arven e l'ultimo Canto |
+
+**La risposta del finale (uguale su tutte le rotte, è il punto del gioco):** il conto di Strand torna e il dolore che sente Arven è vero; l'errore di entrambi è non aver mai chiesto a chi pagava. Wata chiede alle voci, una per una, e rispondono cose diverse: chi vuole riposare riposa, chi vuole restare resta. Giova chiude il suo arco: "il conto non lo faccio io, lo fa chi lo paga".
+
+**Epilogo** (`dati/epilogo.json`): il finale della rotta, poi una pagina per personaggio. Due personaggi con il supporto A condividono la pagina (ognuno una volta sola). Dalla schermata "Fine" si può provare un'altra rotta: una copia della partita torna al capitolo 12 con i livelli raggiunti.
+
+La storia è completa. Restano da aggiungere gli amici di Giova come personaggi (con i loro supporti ed epiloghi).
 
 ## 4. Cast
 

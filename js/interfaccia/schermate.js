@@ -8,7 +8,7 @@ import { suona, musica } from "./suono.js";
 import { giocaCapitolo, preparaBattaglia, riprendiBattaglia, schedaStat } from "./battaglia.js";
 import { ETICHETTE, unitaCompagnia } from "../motore/unita.js";
 import { statoCoppia, prossimoLivello, livelloNumero, prontoDaLeggere } from "../motore/supporti.js";
-import { nuovaPartita, concludiCapitolo, capitoliAperti, sulPercorso, contaOggetto, puoPromuovere, promuovi, leggiSupporto, conversazione } from "../motore/campagna.js";
+import { componiEpilogo, storiaCompiuta, tornaAllaScelta, nuovaPartita, concludiCapitolo, capitoliAperti, sulPercorso, contaOggetto, puoPromuovere, promuovi, leggiSupporto, conversazione } from "../motore/campagna.js";
 import { tipiUsabili, puoUsare, passaArma, passaOggetto, impugna, merce, compra, vendi, prezzoVendita, MAX_ARMI } from "../motore/inventario.js";
 import { elencaSlot, salvaSlot, cancellaSlot, usaSlot, testoEsportazione, leggiEsportazione, scaricaFile, scegliFile, scriviPreferenza } from "../salvataggi.js";
 
@@ -36,7 +36,7 @@ export function titolo(avviso = "", vista = "menu") {
   const comuni = D.campagna.capitoli.filter((id) => !D.capitoli[id].rotta).length;
   const partitaDi = (n) => slot.find((s) => s.n === +n).partita;
   const attiva = (n) => { G.slot = +n; usaSlot(G.slot); G.partita = partitaDi(n); };
-  const dove = (p) => p.sospesa && D.capitoli[p.sospesa.cap] ? `In battaglia: ${titoloCapitolo(p.sospesa.cap)}, turno ${p.sospesa.turno}` : p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
+  const dove = (p) => p.sospesa && D.capitoli[p.sospesa.cap] ? `In battaglia: ${titoloCapitolo(p.sospesa.cap)}, turno ${p.sospesa.turno}` : p.prossimo ? titoloCapitolo(p.prossimo) : storiaCompiuta(D, p) ? "Storia compiuta" : "Storia completata fin qui";
   const continua = (n) => {
     attiva(n);
     const p = G.partita;
@@ -139,9 +139,9 @@ export function vittoria() {
     ${ricompensa.testo ? `<p class="reward">${h(ricompensa.testo)}</p>` : ""}${ricompensa.oro ? `<p>Paga della missione: <span class="oro">+${ricompensa.oro} oro</span></p>` : ""}${pasto ? `<p class="muted small">Il piatto di Giova (${h(pasto.nome)}) è finito: domani se ne cucina un altro.</p>` : ""}
     <table class="party">${righe}</table>
     <div class="btns" style="justify-content:center;margin-top:14px">
-      <button class="btn primary" id="goCamp">All'accampamento</button>
+      <button class="btn primary" id="goCamp">${cap.finale ? "Epilogo" : "All'accampamento"}</button>
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
-  $("#goCamp").onclick = () => accampamento();
+  $("#goCamp").onclick = () => cap.finale ? epilogo() : accampamento();
   $("#goTitle").onclick = () => titolo();
 }
 function sceltaRotta() {
@@ -149,6 +149,42 @@ function sceltaRotta() {
   velo(`<div class="end choice" role="dialog" aria-label="Scelta"><h2>Una scelta</h2><p>${h(S.domanda)}</p>
     <div class="tbtns">${S.opzioni.map((o) => `<button class="btn opt" data-id="${h(o.id)}"><b>${h(o.titolo)}</b><br><small>${h(o.descrizione)}</small></button>`).join("")}</div></div>`, true);
   $$(".opt").forEach((b) => b.onclick = () => { G.partita.bandiere.rotta = b.dataset.id; vittoria(); });
+}
+
+// ------------------------------------------------------------------ epilogo
+// Dopo l'ultimo capitolo: il finale della rotta, poi una pagina per personaggio (o per coppia con supporto A), poi i titoli di coda.
+export async function epilogo() {
+  const D = G.dati, p = G.partita, E = componiEpilogo(D, p);
+  G.inBattaglia = false;
+  musica("titolo");
+  await storia(E.rotta.map((t) => ["narr", t]));
+  for (const pagina of E.pagine) {
+    await new Promise((avanti) => {
+      const chi = pagina.chi.map((id) => unitaCompagnia(D, p.compagnia, id));
+      velo(`<div class="epi" role="dialog" aria-label="Epilogo" tabindex="0"><div class="eritratti">${chi.map((u) => `<div class="portrait">${ritratto(D, u, false, "sorriso")}</div>`).join("")}</div>
+        <h2>${h(chi.map((u) => u.nome).join(" e "))}</h2><p>${h(pagina.testo)}</p><div class="hint">Tocca o premi Invio per continuare</div></div>`, true);
+      const e = $(".epi");
+      const vai = () => { suona("pagina"); avanti(); };
+      e.onclick = vai;
+      e.onkeydown = (ev) => { if (ev.key === "Enter" || ev.key === " " || ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); vai(); } };
+      e.focus();
+    });
+  }
+  suona("vittoria");
+  velo(`<div class="epi fine" role="dialog" aria-label="Fine"><div class="tsopra">La Compagnia della Brace</div><h1 class="tlogo">Fine</h1>
+    <p>${h(E.congedo)}</p>
+    <p class="muted small">Cieli di Ottone. Un'idea di Giova, per i suoi amici. Icone delle armi: game-icons.net (Lorc, Delapouite, Skoll), CC BY 3.0.<br>Le altre due rotte raccontano un'altra guerra e un altro finale.</p>
+    <p class="muted small" id="eAvviso"></p>
+    <div class="btns" style="justify-content:center;margin-top:14px"><button class="btn primary" id="eCamp">All'accampamento</button><button class="btn" id="eRotta">Prova un'altra rotta</button><button class="btn" id="eTitolo">Titolo</button></div></div>`, true);
+  $("#eRotta").onclick = () => {
+    const libero = elencaSlot(D).find((s) => !s.partita), copia = tornaAllaScelta(D, p);
+    if (!libero || !copia) { $("#eAvviso").textContent = "Serve uno slot vuoto: cancellane uno dai Salvataggi, poi torna qui dal Diario dell'accampamento."; return; }
+    salvaSlot(libero.n, copia);
+    titolo(`Nello slot ${libero.n} c'è una copia della partita ferma al capitolo 12, con i livelli di adesso: scegli un'altra strada.`, "slot");
+  };
+  $("#eCamp").onclick = () => accampamento();
+  $("#eTitolo").onclick = () => titolo();
+  $("#eCamp").focus();
 }
 
 // ------------------------------------------------------------------ accampamento
@@ -162,10 +198,11 @@ export function accampamento() {
   velo(`<div class="camp" role="dialog" aria-label="Accampamento">
     <div class="camphead"><h2>Accampamento</h2><div class="tabs" role="tablist">${schede.map(([k, l]) => `<button class="tab${scheda === k ? " on" : ""}" data-t="${k}" role="tab">${l}${k === "sup" && pronti ? ` <span class="dot">${pronti}</span>` : ""}</button>`).join("")}</div></div>
     <div class="campbody" id="campBody"></div>
-    <div class="campfoot">${prossimo ? `<button class="btn primary" id="goNext">${h(titoloCapitolo(prossimo))}</button>` : `<span class="muted">La storia continua${h(rotta)} nei prossimi capitoli.</span>`}
+    <div class="campfoot">${prossimo ? `<button class="btn primary" id="goNext">${h(titoloCapitolo(prossimo))}</button>` : (storiaCompiuta(D, p) ? `<button class="btn primary" id="goEpi">Rivedi l'epilogo</button>` : `<span class="muted">La storia continua${h(rotta)} nei prossimi capitoli.</span>`)}
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
   $$(".tab").forEach((b) => b.onclick = () => { scheda = b.dataset.t; suona("clic"); accampamento(); });
   if (prossimo) $("#goNext").onclick = () => inizia(prossimo);
+  if ($("#goEpi")) $("#goEpi").onclick = () => epilogo();
   $("#goTitle").onclick = () => titolo();
   const corpo = $("#campBody"), membri = D.personaggi.ordine.filter((id) => p.compagnia[id]);
 

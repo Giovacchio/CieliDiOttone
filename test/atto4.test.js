@@ -48,13 +48,13 @@ test("ogni nuovo personaggio ha due promozioni e almeno un filo di supporti comp
   }
 });
 
-test("il bot, promuovendo, arriva alla fine dell'Atto IV su tutte e tre le rotte", () => {
+test("il bot, promuovendo, arriva all'ultimo capitolo su tutte e tre le rotte", () => {
   for (const rotta of ["corona", "radici", "libere"]) {
     let finite = 0;
     for (let s = 0; s < 8; s++) {
       const esito = simulaCampagna(dati, { dado: creaDado(900 + s), rotta, promuove: true }).esito;
-      if (esito.at(-1).vinto && esito.at(-1).id === "c17" + rotta[0]) finite++;
+      if (esito.at(-1).vinto && esito.at(-1).id === "c20" + rotta[0]) finite++;
     }
-    assert.ok(finite >= 3, `${rotta}: solo ${finite} campagne su 8 arrivano al capitolo 17`);
+    assert.ok(finite >= 3, `${rotta}: solo ${finite} campagne su 8 arrivano al capitolo 20`);
   }
 });

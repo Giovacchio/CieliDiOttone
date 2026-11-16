@@ -1,0 +1,116 @@
+{
+  "id": "c18l",
+  "titolo": "Capitolo 18 · Sei città, una flotta",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "citta",
+  "rotta": "libere",
+  "selciato": true,
+  "mappa": [
+    "wwwwwwwwwwwwwwww",
+    "ww==ww==ww==wwww",
+    "gggggggggggggggg",
+    "ggkgggLggLgggkgg",
+    "sssggggggggggsss",
+    "HHH.gggkkggg.HHH",
+    "HHH.gggggggg.HHH",
+    "..L.ggLggLgg.L..",
+    "HHH.ssssssss.HHH",
+    "HHH.ssssssss.HHH"
+  ],
+  "schieramento": [[6,6],[7,6],[8,6],[9,6],[5,6],[10,6],[7,7]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 7,
+    "anche": "comandante",
+    "testo": "Tieni il lungomare di Porto Ambra per 7 turni, finché la milizia non ha chiuso le strade. Oppure sconfiggi il Comandante Rauk, quando sbarcherà dai moli."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":21,"x":2,"y":1,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":6,"y":1,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":10,"y":1,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":21,"x":3,"y":1,"ia":"portata"},
+    {"classe":"Fuciliere","lv":21,"x":11,"y":1,"ia":"portata"},
+    {"classe":"Guerriero","lv":21,"x":7,"y":1,"ia":"attacca"},
+    {"classe":"Lama","lv":21,"x":2,"y":2,"ia":"attacca"},
+    {"classe":"Lama","lv":21,"x":10,"y":2,"ia":"attacca"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["nives","Dal mare, bassi sull'acqua! Sempre quel trucco. Li vedo da qui, capo conti: quattro tacche, vento contro."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":0,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":15,"y":0,"ia":"attacca"}]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Lanciere","lv":21,"x":2,"y":1,"ia":"attacca"},
+        {"classe":"Lanciere","lv":21,"x":10,"y":1,"ia":"attacca"},
+        {"classe":"Arciere","lv":21,"x":6,"y":1,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [
+        ["rauk","Porto Ambra! Strand mi ha promesso il governo di questa città, se gliela consegno prima di sera. Scendete dai moli, cani!"],
+        ["brann","Rauk! Il governo di Porto Ambra l'ho già venduto io. Due volte. Chiedi il rimborso."]
+      ],
+      "rinforzi": [
+        {
+          "id": "rauk",
+          "classe": "Guerriero",
+          "nome": "Comandante Rauk",
+          "lv": 23,
+          "x": 6,
+          "y": 2,
+          "arma": "martello",
+          "ia": "attacca",
+          "comandante": true,
+          "siRitira": true,
+          "bonus": {"hp":20,"def":6,"vel":2,"res":2},
+          "frase": "Strand mi ha tirato fuori da una fonderia e mi ha dato una nave. Voi cosa offrite, pesce salato?",
+          "aspetto": {"skin":"#c08a62","hair":"#6a3a22","style":"messy","coat":"#4a2620","beard":"full","scar":true,"eye":"#2a1c14"}
+        },
+        {"classe":"Corazzato","lv":22,"x":7,"y":1,"ia":"attacca"},
+        {"classe":"Corazzato","lv":22,"x":6,"y":1,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":0,"y":1,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":15,"y":1,"ia":"attacca"}]
+    },
+    {
+      "turno": 6,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Cavaliere","lv":21,"x":0,"y":4,"ia":"attacca"},{"classe":"Cavaliere","lv":21,"x":15,"y":4,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto V · L'ultima brace"],
+    ["narr","Rotta delle Leghe Libere. Porto Ambra, all'alba. Davanti al porto la flotta di Strand copre il mare. Sul lungomare, la Compagnia e una fila di bottegai con le picche."],
+    ["grigio","Stratega. Sei città hanno letto il Registro. Sei città hanno mandato qui chi avevano. Sono fornai. Hanno paura. Ma sono venuti."],
+    ["tullo","Anche i miei. Trenta di Cenerossa, con i picconi. Gli ho detto di stare dietro. Non mi hanno dato retta."],
+    ["mars","Fagiolo Secondo è in riparazione. Seconda caldaia. Voss aveva ragione, ma non diteglielo."],
+    ["lethy","E il Concilio?"],
+    ["wata","Arven è tornato al Cuore. Lo sento da qui: ha ricominciato il Canto. Strand dal mare, lui dalla foresta. Hanno perso insieme, adesso provano separati."],
+    ["brann","Lezione di oggi, signorina: uno alla volta. Prima quello che ti sta bruciando la casa. Poi l'altro."],
+    ["giova","D'accordo con Brann, ed è una frase che non pensavo di dire. Sbarcano dai tre moli. Sette turni, e la milizia chiude le strade dietro di noi."]
+  ],
+  "vittoria": [
+    ["narr","Le campane di Porto Ambra suonano tutte insieme. Dai moli, i soldati della Corona risalgono sulle lance. Sul lungomare i fornai guardano le proprie picche come se le vedessero per la prima volta."],
+    ["rauk","Bah! Una città di bottegai! ...Che tiene. Lo scrivo, nel rapporto. Se mai ne farò un altro."],
+    ["grigio","Trent'anni che faccio il mediatore e non ho mai visto una trattativa finire così in fretta."],
+    ["nives","Capo conti. La flotta non se ne va: si raccoglie intorno alla nave grande, quella con due fornaci. È da lì che partono i segnali."],
+    ["mars","Fagiolo Secondo è pronta! Quasi. Pende ancora, ma dall'altra parte. Si compensa."],
+    ["giova","L'Aurora di Ottone. Strand è là sopra. Uno alla volta, ha detto Brann: cominciamo da lui."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Le sei città fanno una colletta per la Compagnia: tre tonici.",
+    "oggetti": [{"a":"brann","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Porto Ambra ha tenuto, con i fornai in prima fila. Ora tocca all'Aurora di Ottone."
+}

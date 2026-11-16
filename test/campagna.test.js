@@ -121,7 +121,8 @@ test("rotte: dopo il capitolo 12 si prosegue solo sulla rotta scelta", () => {
   p.bandiere.rotta = "radici";
   assert.equal(capitoloDopo(dati, p, "c12"), "c13r");
   assert.equal(capitoloDopo(dati, p, "c13r"), "c14r");
-  assert.equal(capitoloDopo(dati, p, "c17r"), null);
+  assert.equal(capitoloDopo(dati, p, "c17r"), "c18r");
+  assert.equal(capitoloDopo(dati, p, "c20r"), null);
   p.completati = ["prologo", "c1"]; p.prossimo = "c2";
   assert.deepEqual(capitoliAperti(dati, p), ["prologo", "c1", "c2"]);
 });
@@ -145,9 +146,9 @@ test("bilanciamento: il bot arriva in fondo alla campagna, sempre allo stesso mo
   const una = (seme) => simulaCampagna(dati, { dado: creaDado(seme), rotta: "corona", ia: "classica" }).esito.map((r) => `${r.id}:${r.tentativi}:${r.turni}`).join(" ");
   assert.equal(una(7), una(7));
   let finite = 0;
-  for (let s = 0; s < 12; s++) for (const rotta of ["corona", "radici", "libere"]) if (simulaCampagna(dati, { dado: creaDado(500 + s), rotta, ia: "classica" }).esito.at(-1).vinto) finite++;
+  for (let s = 0; s < 12; s++) for (const rotta of ["corona", "radici", "libere"]) if (simulaCampagna(dati, { dado: creaDado(500 + s), rotta, ia: "classica", promuove: true }).esito.at(-1).vinto) finite++;
   assert.ok(finite >= 18, `solo ${finite} campagne su 36 arrivano in fondo: qualcosa è diventato troppo difficile`);
   let tattiche = 0;
-  for (let s = 0; s < 12; s++) for (const rotta of ["corona", "radici", "libere"]) if (simulaCampagna(dati, { dado: creaDado(500 + s), rotta, ia: "tattica" }).esito.at(-1).vinto) tattiche++;
+  for (let s = 0; s < 12; s++) for (const rotta of ["corona", "radici", "libere"]) if (simulaCampagna(dati, { dado: creaDado(500 + s), rotta, ia: "tattica", promuove: true }).esito.at(-1).vinto) tattiche++;
   assert.ok(tattiche >= 18, `con l'IA tattica solo ${tattiche} campagne su 36 arrivano in fondo`);
 });

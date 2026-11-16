@@ -61,6 +61,12 @@ const esito = await p.evaluate(async () => {
         continue;
       }
       document.querySelector("#goCamp").click(); await attesa(20);
+      if (b.cap.finale) { // epilogo: si sfogliano tutte le pagine fino ai titoli di coda
+        let pagine = 0;
+        for (let k = 0; k < 400 && !document.querySelector("#eCamp"); k++) { const e = document.querySelector(".epi"); if (e) { e.click(); pagine++; } await attesa(15); }
+        righe.push(`${rotta} epilogo: ${document.querySelector("#eCamp") ? "vinto" : "NON FINITO"} (${pagine} pagine)`);
+        document.querySelector("#eCamp")?.click(); await attesa(20);
+      }
       for (const t of ["arm", "mer", "sup", "cuc", "dia", "comp"]) { document.querySelector(`.tab[data-t="${t}"]`).click(); await attesa(5); }
       id = G.partita.prossimo;
     }
@@ -72,6 +78,6 @@ await browser.close(); server.kill();
 console.log(esito.join("\n"));
 console.log(errori.length ? "ERRORI:\n" + errori.join("\n") : "nessun errore JavaScript");
 const fine = (rotta, ultimo) => esito.some((r) => r.startsWith(`${rotta} ${ultimo}: vinto`));
-const complete = fine("corona", "c17c") && fine("radici", "c17r") && fine("libere", "c17l");
+const complete = fine("corona", "c20c") && fine("radici", "c20r") && fine("libere", "c20l") && ["corona", "radici", "libere"].every((r) => esito.some((x) => x.startsWith(`${r} epilogo: vinto`)));
 console.log(complete ? "tutte e tre le rotte giocate fino in fondo" : "ATTENZIONE: qualche rotta non è arrivata in fondo");
 process.exit(errori.length || !complete ? 1 : 0);

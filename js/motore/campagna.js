@@ -124,6 +124,38 @@ export function leggiSupporto(dati, partita, a, b) {
 }
 export const conversazione = (dati, a, b, livello) => dati.supporti[chiaveCoppia(a, b)][livello];
 
+// --- epilogo: il finale della rotta, poi una pagina per personaggio.
+// Due personaggi con il supporto al livello più alto condividono la pagina (ognuno una volta sola, nell'ordine di campagna.json).
+export const storiaCompiuta = (dati, partita) => partita.completati.some((id) => dati.capitoli[id]?.finale && sulPercorso(partita, dati.capitoli[id]));
+export function componiEpilogo(dati, partita) {
+  const E = dati.epilogo, massimo = dati.regole.supporti.livelli.at(-1), usati = new Set(), pagine = [];
+  const ordine = dati.personaggi.ordine.filter((id) => partita.compagnia[id]);
+  for (const c of E.coppie || []) {
+    const [a, b] = c.coppia, s = partita.supporti[chiaveCoppia(a, b)];
+    if (!partita.compagnia[a] || !partita.compagnia[b] || usati.has(a) || usati.has(b) || !s || s.livello !== massimo) continue;
+    usati.add(a); usati.add(b);
+    pagine.push({ chi: [a, b].sort((x, y) => ordine.indexOf(x) - ordine.indexOf(y)), testo: c.testo });
+  }
+  for (const id of ordine) if (!usati.has(id) && E.personaggi[id]) pagine.push({ chi: [id], testo: E.personaggi[id] });
+  pagine.sort((x, y) => Math.min(...x.chi.map((i) => ordine.indexOf(i))) - Math.min(...y.chi.map((i) => ordine.indexOf(i))));
+  return { rotta: E.rotte[partita.bandiere.rotta] || [], pagine, congedo: E.congedo || "" };
+}
+
+// Una copia della partita riportata al capitolo della scelta, per provare un'altra rotta con i livelli raggiunti.
+// Chi era entrato lungo la rotta esce dalla Compagnia (rientrerà, se la nuova rotta lo prevede) e la sua roba va al deposito.
+export function tornaAllaScelta(dati, partita) {
+  const p = clona(partita), bivio = dati.campagna.capitoli.find((id) => dati.capitoli[id].scelta);
+  if (!bivio) return null;
+  p.bandiere.rotta = undefined; p.bandiere.pasto = null; p.sospesa = null;
+  p.completati = p.completati.filter((id) => !dati.capitoli[id]?.rotta && id !== bivio);
+  p.prossimo = bivio;
+  for (const id of Object.keys(p.compagnia)) if (dati.personaggi[id]?.entra) {
+    for (const o of p.compagnia[id].oggetti) if (o.q > 0) aggiungiOggetto(p.deposito.oggetti, o.id, o.q);
+    delete p.compagnia[id];
+  }
+  return p;
+}
+
 // --- salvataggio del prototipo (versione 1) → formato nuovo
 export function migraV1(dati, s) {
   const OGG = { "Tonico": "tonico", "Sigillo di ottone": "sigillo" };

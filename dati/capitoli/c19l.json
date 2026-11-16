@@ -1,0 +1,102 @@
+{
+  "id": "c19l",
+  "titolo": "Capitolo 19 · L'Aurora di Ottone",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "cielo",
+  "rotta": "libere",
+  "mappa": [
+    "oooooooooooooooo",
+    "oooDDDDDDDDDDooo",
+    "ooDDDkDDDDkDDDoo",
+    "oDDDDDDXXDDDDDDo",
+    "oDDDDDDFFDDDDDDo",
+    "oDDDDDDXXDDDDDDo",
+    "ooDDDkDDDDkDDDoo",
+    "oooDDDDDDDDDDooo",
+    "ooooo==oo==ooooo",
+    "oooooDDooDDooooo"
+  ],
+  "schieramento": [[5,9],[6,9],[9,9],[10,9],[5,8],[6,8],[9,8]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Direttore Strand al centro dell'Aurora di Ottone. Sta tra le due fornaci della nave, che lo curano a ogni turno."
+  },
+  "nemici": [
+    {"classe":"Corazzato","lv":23,"x":6,"y":4,"ia":"fermo"},
+    {"classe":"Corazzato","lv":23,"x":9,"y":4,"ia":"fermo"},
+    {"classe":"Fuciliere","lv":22,"x":4,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":22,"x":11,"y":2,"ia":"portata"},
+    {"classe":"Lanciere","lv":22,"x":4,"y":6,"ia":"attacca"},
+    {"classe":"Lanciere","lv":22,"x":11,"y":6,"ia":"attacca"},
+    {"classe":"Lama","lv":22,"x":7,"y":7,"ia":"attacca"},
+    {"classe":"Lama","lv":22,"x":8,"y":7,"ia":"attacca"},
+    {"classe":"Arciere","lv":22,"x":3,"y":4,"ia":"portata"},
+    {"classe":"Arciere","lv":22,"x":12,"y":4,"ia":"portata"},
+    {"classe":"Guerriero","lv":22,"x":7,"y":2,"ia":"portata"},
+    {"classe":"Guerriero","lv":22,"x":8,"y":2,"ia":"portata"},
+    {"classe":"Medico","lv":21,"x":8,"y":4,"ia":"portata"},
+    {
+      "id": "strand",
+      "classe": "Fuciliere",
+      "titolo": "Direttore dell'Ufficio dell'Etere",
+      "nome": "Direttore Strand",
+      "lv": 24,
+      "x": 7,
+      "y": 4,
+      "arma": "moschetto",
+      "ia": "fermo",
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":26,"def":8,"res":7,"abi":4,"vel":2},
+      "frase": "Una compagnia di ventura su una nave verde. Siediti, stratega, e fai il conto con me: dieci lampade d'ospedale per ogni cristallo. Dimmi dov'è l'errore.",
+      "aspetto": {"skin":"#d8b89a","hair":"#9a9a9a","style":"short","coat":"#2c2f3a","acc":"jabot","eye":"#4a5560"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["strand","Guardia dell'Aurora, alle murate. Con ordine. Non c'è ragione di gridare."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":22,"x":1,"y":8,"ia":"attacca"},{"classe":"Aeronauta","lv":22,"x":14,"y":8,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":22,"x":0,"y":3,"ia":"attacca"},{"classe":"Aeronauta","lv":22,"x":15,"y":3,"ia":"attacca"}]
+    },
+    {
+      "turno": 6,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Aeronauta","lv":23,"x":0,"y":6,"ia":"attacca"},{"classe":"Aeronauta","lv":23,"x":15,"y":6,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Sopra il golfo. Fagiolo Secondo, pendendo dalla parte nuova, si infila sotto la pancia dell'Aurora di Ottone e aggancia due passerelle."],
+    ["mars","Agganciata! Dal basso non se l'aspettavano. Nessuno attacca dal basso. Perché è stupido. Ma ha funzionato!"],
+    ["brann","Per la cronaca, è il mio settimo abbordaggio e il primo dalla parte di chi abborda. Ha tutto un altro sapore."],
+    ["tullo","L'uomo che ha firmato. Lo guardo in faccia e gli leggo il quaderno. Poi vediamo."],
+    ["lethy","Papà gli ha prestato dei soldi, a Strand. Lo so perché a cena non se ne parlava. Chissà se glieli ridà."],
+    ["wata","Le fornaci di questa nave... sono piene. Sento centinaia di voci, strette. Non urlano. Aspettano."],
+    ["nives","Vento da sud, alle nostre spalle. Lo chiamo misura. E se va male, capo conti?"],
+    ["giova","Se va male, è colpa mia. Strand è al centro, tra le due fornaci. A Corvara mi ha chiesto di fare il conto. Saliamo a consegnargli la risposta."]
+  ],
+  "vittoria": [
+    ["strand","Dieci lampade per ogni cristallo. Un inverno di ospedali contro una foresta di morti. Dov'è l'errore, stratega?"],
+    ["giova","Non c'è. Il conto torna, e mi ha tolto il sonno. Poi ho capito: lei non ha mai chiesto il prezzo a chi lo pagava. Quello non è un errore di calcolo. È un furto fatto con la calligrafia giusta."],
+    ["tullo","Quarantadue nomi, direttore. Li ha firmati lei. Io glieli leggo. Lei ascolti."],
+    ["narr","Tullo legge. Strand ascolta. A metà della lista posa la penna."],
+    ["mars","E senta questa. È una fiala. Canticchia. Io provo tutto, direttore, ma bruciare una cosa che canticchia no. Quello non lo provo."],
+    ["strand","...E le lampade? Domani, negli ospedali, chi le accende?"],
+    ["lethy","Le Leghe. Con l'etere di chi dice sì. Lo compreremo al prezzo giusto, e per una volta papà dovrà chiedere il permesso a qualcuno prima di investire."],
+    ["strand","Un mercato dove la merce può rifiutarsi. Non reggerà."],
+    ["brann","Regge, regge. Glielo dico da esperto: sono stato merce tutta la vita. Quando ho potuto dire di no, ho reso il triplo."],
+    ["narr","Strand dà l'ordine. La flotta ammaina le bandiere di guerra. Ma a est, sopra le Radici, il cielo si è fatto scuro: nessun cristallo brilla più."],
+    ["wata","Giova. Arven è quasi alla fine. Dobbiamo andare. Adesso."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "Nella stiva dell'Aurora: due tonici a testa per chi corre alle Radici.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2},{"a":"tullo","id":"tonico","q":1}]
+  },
+  "diario": "Strand ha ammainato le bandiere. Resta il Canto di Arven."
+}

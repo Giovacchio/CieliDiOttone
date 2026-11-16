@@ -1,0 +1,87 @@
+{
+  "id": "c18c",
+  "titolo": "Capitolo 18 · I lealisti",
+  "atto": "Atto V · L'ultima brace",
+  "tema": "campagna",
+  "rotta": "corona",
+  "mappa": [
+    "ff...f......m.ff",
+    "f........r...m.f",
+    "....f.......f...",
+    "................",
+    "bbbbbbbbbbbbbbbb",
+    "................",
+    "..r....f....r...",
+    ".....f......f...",
+    "f..m.........m.f",
+    "ff....f....f..ff"
+  ],
+  "schieramento": [[0,4],[1,4],[0,3],[1,3],[0,5],[1,5],[2,4]],
+  "obiettivo": {"tipo":"comandante","testo":"Sconfiggi il Maggiore Dalca, che sbarra la ferrovia dell'est con gli ultimi reparti fedeli a Strand."},
+  "nemici": [
+    {"classe":"Lanciere","lv":21,"x":8,"y":4,"ia":"attacca"},
+    {"classe":"Lanciere","lv":21,"x":9,"y":2,"ia":"attacca"},
+    {"classe":"Cavaliere","lv":21,"x":10,"y":3,"ia":"attacca"},
+    {"classe":"Cavaliere","lv":21,"x":10,"y":5,"ia":"attacca"},
+    {"classe":"Cavaliere","lv":21,"x":12,"y":4,"ia":"portata"},
+    {"classe":"Fuciliere","lv":21,"x":11,"y":2,"ia":"portata"},
+    {"classe":"Fuciliere","lv":21,"x":11,"y":6,"ia":"portata"},
+    {"classe":"Corazzato","lv":22,"x":13,"y":4,"ia":"portata"},
+    {"classe":"Arciere","lv":21,"x":14,"y":2,"ia":"portata"},
+    {"classe":"Medico","lv":20,"x":14,"y":5,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Cavaliere",
+      "nome": "Maggiore Dalca",
+      "lv": 23,
+      "x": 15,
+      "y": 4,
+      "arma": "lanciaA",
+      "ia": "portata",
+      "sveglia": 4,
+      "comandante": true,
+      "siRitira": true,
+      "bonus": {"hp":20,"def":5,"for":2,"vel":1,"res":2},
+      "frase": "Il Consiglio mi ha destituito. Strand è in cella. Mi resta un ordine solo, l'ultimo che ho ricevuto: nessuno passa. E io gli ordini li eseguo.",
+      "aspetto": {"skin":"#d2a582","hair":"#2c2c30","style":"greathelm","coat":"#5a1e1c","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["boss","Ali, dalla collina! E state lontani dai lampioni della ferrovia: si stanno spegnendo da soli."]],
+      "rinforzi": [{"classe":"Aeronauta","lv":21,"x":15,"y":0,"ia":"attacca"},{"classe":"Aeronauta","lv":21,"x":15,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Cavaliere","lv":21,"x":15,"y":3,"ia":"attacca"},{"classe":"Cavaliere","lv":21,"x":15,"y":5,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto V · L'ultima brace"],
+    ["narr","Rotta della Corona. La ferrovia dell'est, tre giorni dopo l'arresto di Strand. Verso le Radici, i lampioni lungo i binari si spengono uno a uno."],
+    ["wata","È il Canto. Arriva fin qui. Ogni lampione che si spegne è una voce che smette."],
+    ["ferrante","Il Consiglio manda me a parlamentare con il Concilio. Con una scorta: voi. E con un problema: i reparti che non hanno accettato la caduta di Strand."],
+    ["tullo","Quel Maggiore del portone. Quello con l'elmo che non si toglie mai."],
+    ["ferrante","Dalca. L'ho addestrato io. Gli ho insegnato che un ordine si esegue e non si discute. Ho fatto un ottimo lavoro, purtroppo."],
+    ["lethy","Da noi si dice: \"non insegnare al cane a mordere, se poi cambi padrone\". Lo dice il giardiniere. È un uomo saggio."],
+    ["giova","Tiene i binari, e a noi servono i binari. Passiamo in mezzo. Ferrante: se si arrende, lo lasciamo parlare."]
+  ],
+  "vittoria": [
+    ["boss","...Ordine eseguito fino in fondo. Non è bastato."],
+    ["ferrante","Dalca. Togli l'elmo."],
+    ["boss","È contro il regolamento, ispettrice. Articolo sei."],
+    ["ferrante","L'articolo sei l'ho scritto io. Lo abolisco adesso. Guardami in faccia e dimmi: lo sapevi, di Cenerossa?"],
+    ["boss","...Non ho chiesto. Mi avete insegnato a non chiedere."],
+    ["ferrante","Lo so. Per questo vieni con noi. Da oggi il tuo ordine è chiedere. Sempre. Anche a me."],
+    ["narr","Dalca si toglie l'elmo. Ha la faccia di uno che non dorme da mesi. Davanti, sulla linea dell'orizzonte, le Radici sono buie."]
+  ],
+  "ricompensa": {
+    "oro": 1000,
+    "testo": "I reparti di Dalca consegnano le armi e le provviste: tre tonici.",
+    "oggetti": [{"a":"ferrante","id":"tonico","q":2},{"a":"nives","id":"tonico","q":1}]
+  },
+  "diario": "Abbiamo riaperto la ferrovia dell'est. Dalca si è tolto l'elmo."
+}
