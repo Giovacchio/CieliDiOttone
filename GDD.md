@@ -177,6 +177,19 @@ Due personaggi che combattono vicini (a 1-2 caselle) guadagnano punti di support
 - Bonus in battaglia quando sono vicini: precisione, schivata e critico in base al livello.
 - Le conversazioni sono scritte pensando agli amici veri: battute, rivalità e momenti seri.
 
+### Supporti già scritti (prototipo)
+
+Sei coppie con un filo ciascuna: Giova e Wata (Prospy, le voci, "rischio diviso per due"), Giova e Lethy (lezioni di calcolo del rischio, la lettera del padre), Giova e Mars (le arepas della nonna e la ricetta "Brace"), Lethy e Wata (accarezzare un gatto, il mantello ricamato), Mars e Wata (la fiala che canticchia), Lethy e Mars (sette forchette e le formiche). Soglie: C 12, B 32, A 60 punti; +1 per ogni scontro con un compagno entro 2 caselle, +2 per ogni cura.
+
+### Promozioni definite (prototipo)
+
+| Personaggio | Strada A | Strada B |
+|---|---|---|
+| Giova | Condottiero: aura a 3 caselle, +5 schivata | Tattico d'ottone: aura con +10 critico |
+| Lethy | Duellante: +15 critico con lo stocco | Cavaliere d'ottone: a cavallo, Mov +2 |
+| Wata | Arcanista: +2 danni magici | Saggia delle Radici: cura 5 PV a chi le sta accanto a inizio turno |
+| Mars | Chirurga: le cure curano anche chi sta accanto al bersaglio | Alchimista: lancia fiale esplosive oltre a curare |
+
 ## 10. Accampamento tra i capitoli
 
 - **Supporti:** si leggono le conversazioni sbloccate.

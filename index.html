@@ -121,6 +121,28 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
 .tbtns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
 #tList{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:40vh;overflow:auto}
 .chbtn{text-align:left}
+.camp{background:var(--panel);border:1px solid var(--brass);border-radius:14px;width:min(960px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;box-shadow:0 20px 50px #000c}
+.camphead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.camphead h2{font-family:var(--display);font-weight:400;color:var(--brass);margin:0;font-size:26px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600}
+.tab.on{color:var(--ink);border-color:var(--brass);background:var(--panel2)}
+.tab .dot{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--brass);color:#1b1408;font-size:12px}
+.campbody{padding:12px 16px;overflow:auto;flex:1;min-height:0}
+.campfoot{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--line)}
+.muted{color:var(--muted)} .small{font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.pcard{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px}
+.promo{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.pbtn{text-align:left;line-height:1.3} .pbtn small{color:var(--muted);font-weight:400}
+.suprow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line)}
+.supnames{min-width:150px;font-weight:600}
+.suplv span{display:inline-block;width:22px;text-align:center;color:var(--muted);border:1px solid var(--line);border-radius:4px;margin-right:3px;font-size:12px}
+.suplv span.got{color:#1b1408;background:var(--brass);border-color:var(--brass)}
+.meals{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.meal{text-align:left;line-height:1.35} .meal small{color:var(--muted);font-weight:400}
+.meal.on{border-color:var(--brass);background:#2a2416} .meal:disabled{opacity:.5}
+.diary{line-height:1.5;padding-left:20px} .diary li{margin-bottom:8px}
 .end.choice .opt{text-align:left;padding:12px 14px;line-height:1.35}
 .end.choice .opt small{color:var(--muted);font-weight:400}
 .end.choice .opt:hover b{color:var(--brass)}
@@ -156,6 +178,7 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
         <button class="btn primary" id="bEnd">Fine turno</button>
         <button class="btn" id="bDanger">Zone nemiche</button>
         <button class="btn" id="bCancel">Annulla</button>
+        <button class="btn" id="bFast" aria-pressed="false">Veloce</button>
         <button class="btn" id="bMenu">Titolo</button>
       </div>
     </div>
@@ -223,6 +246,7 @@ const WEAP = {
   rovo:    {n:"Rovo", t:"etere", mt:5, hit:90, cr:0, r:[1,2], mag:true, ic:"leaf"},
   spine:   {n:"Spine del rovo antico", t:"etere", mt:8, hit:85, cr:5, r:[1,2], mag:true, ic:"leaf"},
   elisir:  {n:"Elisir verde", t:"cura", heal:10, r:[1,1], staff:true, ic:"flask"},
+  fiala:   {n:"Fiala esplosiva", t:"congegni", mt:7, hit:80, cr:5, r:[1,2], mag:true, ic:"flask"},
   elisirF: {n:"Elisir di Nonna Tessa", t:"cura", heal:16, r:[1,2], staff:true, ic:"flask"},
 };
 // Icone: game-icons.net (Lorc, Delapouite, Skoll), licenza CC BY 3.0
@@ -855,7 +879,7 @@ const CHAPTERS = [
     ["giova","Allora aiutaci a fermarlo. Dall'interno."],
     ["ferrante","Domani all'alba torno a Corvara e chiedo spiegazioni al direttore Strand. Se non torno entro sera, saprete che la Corona ha risposto."],
   ],
-  reward:{text:"Nell'ufficio di Kessel: tre tonici per la Compagnia.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1]]},
+  reward:{text:"Nell'ufficio di Kessel: tre tonici e un Sigillo di ottone.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1],["lethy","Sigillo di ottone",1]]},
 },
 /* ---------------------------------------------------------------- CAPITOLO 10 */
 { id:"c10", title:"Capitolo 10 · La notte di Corvara", theme:"night", act:"Atto III · Il cristallo che respira",
@@ -967,7 +991,7 @@ const CHAPTERS = [
     ["giova","Allora ci resta poco tempo per decidere da che parte stare."],
     ["mars","Io intanto ho una notizia: la fiala che canticchiava ha smesso. Credo che abbia sentito il Cuore e si sia calmata. Credo. Spero."],
   ],
-  reward:{text:"Maelis lascia due tonici a Mars e uno a Wata.", items:[["mars","Tonico",2],["wata","Tonico",1]]},
+  reward:{text:"Maelis lascia due tonici a Mars, uno a Wata e un Sigillo di ottone trovato al Cuore.", items:[["mars","Tonico",2],["wata","Tonico",1],["wata","Sigillo di ottone",1]]},
 },
 /* ---------------------------------------------------------------- CAPITOLO 12 */
 { id:"c12", title:"Capitolo 12 · Ritorno a Fossa Grigia", theme:"country", act:"Atto III · Il cristallo che respira",
@@ -1024,7 +1048,7 @@ const CHAPTERS = [
     {id:"radici", label:"Con Maelis: cambiare il Concilio", desc:"Rovesciare Arven, proteggere le Radici e aprire le cure a tutti."},
     {id:"libere", label:"Con nessuno: la verità alle Leghe", desc:"Leggere il Registro in ogni piazza e affrontare Corona e Concilio insieme."},
   ]},
-  reward:{text:"Dopo la battaglia, la milizia delle Leghe rifornisce la Compagnia: un tonico a testa.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1],["mars","Tonico",1]]},
+  reward:{text:"Dopo la battaglia, la milizia delle Leghe rifornisce la Compagnia: un tonico a testa e un Sigillo di ottone.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1],["mars","Tonico",1],["mars","Sigillo di ottone",1]]},
 },
 /* ---------------------------------------------------------------- ATTO IV · ROTTA DELLA CORONA */
 { id:"c13c", route:"corona", title:"Capitolo 13 · La Sovrana", theme:"sky", act:"Atto IV · Cieli di ottone",
@@ -1139,7 +1163,7 @@ const CHAPTERS = [
   "HHH.ssssssssss.H"],
   deploy:[[8,5],[6,5],[7,6],[8,6]],
   guests:()=>[mkUnit({id:"grigio", name:"Il Signor Grigio", cls:"Mediatore", team:"ally", guest:true, lv:5, x:7, y:5, move:"inf", mov:0, w:"kit",
-    st:{hp:24,for:2,mag:3,abi:5,vel:4,fort:9,def:5,res:5}, gr:{}, look:NPC.grigio.look, skill:{n:"Il lettore", d:"Legge il Registro davanti alla statua e non si muove. Se cade, la missione fallisce."}})],
+    st:{hp:36,for:2,mag:3,abi:5,vel:4,fort:9,def:10,res:9}, gr:{}, look:NPC.grigio.look, skill:{n:"Il lettore", d:"Legge il Registro davanti alla statua e non si muove. Se cade, la missione fallisce."}})],
   goal:{type:"survive", turns:6, alt:"boss", protect:"grigio", text:"Proteggi il Signor Grigio mentre legge il Registro in piazza (6 turni), oppure sconfiggi Brann. Corvi da sud, sicari del Concilio da nord."},
   enemies:()=>[
     foe("Lama",12,5,9,{name:"Corvo di Sale", look:CORVO}), foe("Guerriero",12,10,9,{name:"Corvo di Sale", look:CORVO}),
@@ -1628,14 +1652,16 @@ function tri(a, b){ // vantaggio del triangolo: +1, 0, -1
 function calc(a, b, ax=a.x, ay=a.y){
   const wa=W(a), tA=ter(ax,ay), tB=ter(b.x,b.y), t=tri(a,b);
   const mt = ((wa.eff==="arm" && b.move==="arm") || (wa.eff==="fly" && b.move==="fly")) ? wa.mt*3 : wa.mt;
-  const atk = (wa.mag? a.st.mag : a.st.for) + mt + t;
+  const atk = (wa.mag? a.st.mag : a.st.for) + mt + t + ((wa.mag && a.id==="wata" && promoOf(a)===0) ? 2 : 0);
   const def = (wa.mag? b.st.res : b.st.def) + tB.d;
   const dmg = Math.max(0, atk-def);
   const giova = units.find(u=>u.id==="giova" && u.hp>0);
-  const aura = (a.team==="ally" && giova && Math.abs(giova.x-ax)+Math.abs(giova.y-ay)<=2) ? 10 : 0;
-  const hit = wa.hit + a.st.abi*2 + Math.floor(a.st.fort/2) + t*15 + aura;
-  const avo = b.st.vel*2 + b.st.fort + tB.a + (b.skill?.cat ? 10 : 0);
-  const cr = Math.max(0, (wa.cr||0) + Math.floor(a.st.abi/2) - b.st.fort);
+  const gp = promoOf(giova), rad = gp===0 ? 3 : 2, near = (x,y) => giova && Math.abs(giova.x-x)+Math.abs(giova.y-y)<=rad;
+  const aura = (a.team==="ally" && near(ax,ay)) ? 10 : 0;
+  const sa = supBonus(a,ax,ay), sb = supBonus(b,b.x,b.y);
+  const hit = wa.hit + a.st.abi*2 + Math.floor(a.st.fort/2) + t*15 + aura + sa.hit;
+  const avo = b.st.vel*2 + b.st.fort + tB.a + (b.skill?.cat ? 10 : 0) + sb.avo + ((b.team==="ally" && gp===0 && near(b.x,b.y)) ? 5 : 0);
+  const cr = Math.max(0, (wa.cr||0) + Math.floor(a.st.abi/2) - b.st.fort + sa.cr + ((a.team==="ally" && gp===1 && near(ax,ay)) ? 10 : 0) + ((a.id==="lethy" && promoOf(a)===0 && wa.eff==="arm") ? 15 : 0));
   return {dmg, hit:Math.max(0,Math.min(100,hit-avo)), cr:Math.min(100,cr), dbl: a.st.vel - b.st.vel >= 4};
 }
 function canCounter(def, atk, ax, ay){ const w=W(def); if(w.staff) return false; return inRange(def, def.x, def.y, ax, ay); }
@@ -1673,7 +1699,7 @@ async function fight(a, b){
   // esperienza al personaggio alleato coinvolto
   const ally = a.team==="ally" ? a : (b.team==="ally" ? b : null), foe = ally===a ? b : a;
   if(ally && ally.hp>0){ let g = foe.hp<=0 ? 30 + Math.max(0,(foe.lv-ally.lv)*4) + (foe.boss?30:0) : (aHit||ally===b ? 10 + Math.max(0,foe.lv-ally.lv)*2 : 1);
-    await gainExp(ally, g); }
+    await gainExp(ally, g); supNear(ally, 1); }
   busy = false; renderUnits(); showInfo(sel || a);
 }
 async function defeat(u){
@@ -1683,9 +1709,9 @@ async function defeat(u){
 }
 async function gainExp(u, g){
   if(u.id==="mars") g = Math.ceil(g*1.5);
-  if(u.lv>=20){ u.exp=0; return; } // livello massimo delle classi base
+  const cap = u.promo!=null ? 30 : 20; if(u.lv>=cap){ u.exp=0; return; } // 20 per le classi base, 30 dopo la promozione
   u.exp += g; log(`${u.name} ottiene ${g} PE.`);
-  while(u.exp >= 100 && u.lv<20){ u.exp -= 100; await levelUp(u); } if(u.lv>=20) u.exp=0;
+  while(u.exp >= 100 && u.lv<cap){ u.exp -= 100; await levelUp(u); } if(u.lv>=cap) u.exp=0;
 }
 function levelUp(u){
   return new Promise(res=>{
@@ -1711,6 +1737,7 @@ function showInfo(u){
     <div class="weap">${w.n} <small>${w.staff?`cura ${w.heal}+Mag`:`Pot ${w.mt} · Prec ${w.hit} · Crit ${w.cr||0} · Gittata ${w.r[0]===w.r[1]?w.r[0]:w.r.join("-")}`}</small></div>
     ${u.skill?`<div class="skill"><b>${u.skill.n}</b> · ${u.skill.d}</div>`:""}
     ${u.items?.length?`<div class="weap">${u.items.filter(i=>i.q>0).map(i=>`${i.n} ×${i.q} <small>${i.n==="Tonico"?"(cura 10 PV)":i.n==="Sigillo di ottone"?"(promozione, in arrivo)":""}</small>`).join(" · ")}</div>`:""}
+    ${u.team==="ally" && PARTY_BASE[u.id] ? (()=>{ const l=PARTY_ORDER.filter(o=>o!==u.id && supLv(u.id,o)).map(o=>`${PARTY_BASE[o].name} ${supGet(u.id,o).lvl}`); return l.length?`<div class="weap"><small>Supporti: ${l.join(" · ")}</small></div>`:""; })() : ""}
     <div class="weap"><small>Terreno: ${t.n}${t.d||t.a?` · Dif +${t.d} · Schivata +${t.a}`:""}${t.heal?" · cura il 10% a inizio fase":""}</small></div>`;
 }
 function closeMenu(){ document.querySelectorAll(".menu").forEach(m=>m.remove()); }
@@ -1719,6 +1746,8 @@ function openMenu(u){
   const opts=[];
   if(!W(u).staff && targets(u,"target").length) opts.push(["Attacca", ()=>{ mode="target"; closeMenu(); renderRanges(); }]);
   if(W(u).staff && targets(u,"heal").length) opts.push(["Cura", ()=>{ mode="heal"; closeMenu(); renderRanges(); }]);
+  if(u.w2){ const keep=u.w; u.w=u.w2; const can=targets(u,"target").length; u.w=keep;
+    if(can) opts.push(["Lancia fiala", ()=>{ u.wSwap=keep; u.w=u.w2; mode="target"; closeMenu(); renderRanges(); }]); }
   const tonic = u.items.find(i=>i.n==="Tonico" && i.q>0);
   if(tonic && u.hp<u.st.hp) opts.push(["Tonico", ()=>{ tonic.q--; const h=Math.min(10,u.st.hp-u.hp); u.hp+=h; floatText(u,"+"+h,"#8de08f"); log(`${u.name} beve un tonico: +${h} PV.`); closeMenu(); finishAct(u); }]);
   opts.push(["Attendi", ()=>{ closeMenu(); finishAct(u); }]);
@@ -1747,11 +1776,13 @@ function showForecast(a, b){
   $("#fcNo").onclick=()=>{ closeOverlay(); };
   $("#fcOk").onclick=async()=>{ closeOverlay(); const u=sel; mode="busy"; renderRanges();
     if(b.quote && !b.quoted){ b.quoted=true; await storyP([[b.id, b.quote]]); }
-    await fight(u,b); if(!ended) finishAct(u); };
+    await fight(u,b); if(u.wSwap){ u.w=u.wSwap; delete u.wSwap; } if(!ended) finishAct(u); };
 }
 async function doHeal(u, t){
   const h = Math.min(W(u).heal + u.st.mag, t.st.hp - t.hp); t.hp += h; floatText(t, "+"+h, "#8de08f");
-  log(`${u.name} cura ${t.name}: +${h} PV.`); renderUnits(); await sleep(300); await gainExp(u, 20); finishAct(u);
+  log(`${u.name} cura ${t.name}: +${h} PV.`);
+  if(u.id==="mars" && promoOf(u)===0) for(const o of alive("ally")) if(o!==t && o!==u && dist(o,t)===1 && o.hp<o.st.hp){ const k=Math.min(5,o.st.hp-o.hp); o.hp+=k; floatText(o,"+"+k,"#8de08f"); }
+  supAdd(u.id, t.id, 2); renderUnits(); await sleep(300); await gainExp(u, 20); finishAct(u);
 }
 
 /* ============================== FLUSSO DEL TURNO ============================== */
@@ -1762,7 +1793,7 @@ function finishAct(u){
 function cancel(){
   if(busy || phase!=="player") return;
   if($("#ovl").innerHTML){ closeOverlay(); return; }
-  if(mode==="target" || mode==="heal"){ mode="moved"; renderRanges(); openMenu(sel); return; }
+  if(mode==="target" || mode==="heal"){ if(sel.wSwap){ sel.w=sel.wSwap; delete sel.wSwap; } mode="moved"; renderRanges(); openMenu(sel); return; }
   if(mode==="moved"){ sel.x=origin.x; sel.y=origin.y; closeMenu(); mode="select"; reach=reachable(sel); renderUnits(); renderRanges(); showInfo(sel); return; }
   sel=null; mode="idle"; reach=null; closeMenu(); renderRanges();
 }
@@ -1792,6 +1823,11 @@ function fornaceHeal(team){
   for(const u of alive(team)){ const t=ter(u.x,u.y); if(t.heal && u.hp<u.st.hp){ const h=Math.min(Math.ceil(u.st.hp*t.heal),u.st.hp-u.hp); u.hp+=h; floatText(u,"+"+h,"#8de08f"); } }
   renderUnits();
 }
+function rootHeal(){
+  const w=units.find(u=>u.id==="wata" && u.hp>0 && promoOf(u)===1); if(!w) return;
+  for(const o of alive("ally")) if(o!==w && dist(o,w)===1 && o.hp<o.st.hp){ const k=Math.min(5,o.st.hp-o.hp); o.hp+=k; floatText(o,"+"+k,"#8de08f"); }
+  renderUnits();
+}
 async function endPlayerPhase(){
   if(busy || ended || phase!=="player") return;
   sel=null; mode="idle"; closeMenu(); renderRanges(); phase="enemy"; setPhase(); busy=true;
@@ -1802,7 +1838,7 @@ async function endPlayerPhase(){
   if(g.type==="survive" && turn>=g.turns){ victory(); return; }
   if(g.type==="reach" && g.limit && turn>=g.limit){ ended=true; endScreen(false, "Troppo tardi: non siete arrivati in tempo."); return; }
   turn++; phase="player"; for(const u of units) u.acted=false; setPhase(); renderUnits(); renderDanger();
-  await banner("Fase del giocatore","p"); await runEvents("player"); fornaceHeal("ally");
+  await banner("Fase del giocatore","p"); await runEvents("player"); fornaceHeal("ally"); rootHeal();
 }
 async function enemyAct(e){
   if(e.hp<=0) return;
@@ -1848,17 +1884,19 @@ function distField(u, targets){
 
 /* ============================== CAPITOLI ============================== */
 const SAVE_KEY = "cieli-di-ottone-v1";
-let firedEvents = new Set(), chapterStartParty = null, flags = {};
+let firedEvents = new Set(), chapterStartParty = null, chapterStartSup = {}, flags = {};
 const ROUTE_NAME = {corona:"con Ferrante", radici:"con Maelis", libere:"con le Leghe Libere"};
 function nextIndex(i){ for(let j=i+1;j<CHAPTERS.length;j++){ const c=CHAPTERS[j]; if(!c.route || c.route===flags.route) return j; } return CHAPTERS.length; }
 function onPath(c){ return !c.route || c.route===flags.route; }
 function loadSave(){ try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY)||"null"); return s && s.v===1 ? s : null; }catch(e){ return null; } }
-function writeSave(next){ try{ const old=loadSave(); localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, next, party, flags, best:Math.max(next, (old && old.flags?.route===flags.route ? old.best : next)||0)})); }catch(e){} }
+function writeSave(next){ try{ const old=loadSave(); localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, next, party, flags, supports, best:Math.max(next, (old && old.flags?.route===flags.route ? old.best : next)||0)})); }catch(e){} }
 function setupChapter(i){
   CHI=i; CH=CHAPTERS[i]; MAP=CH.map; ROWS=MAP.length; COLS=MAP[0].length; UID=0;
-  chapterStartParty = clone(party); units=[];
+  chapterStartParty = clone(party); chapterStartSup = clone(supports); units=[];
   PARTY_ORDER.forEach((id,k)=>{ const b=PARTY_BASE[id], p=party[id], d=CH.deploy[k]; if(!d) return;
-    units.push(mkUnit(Object.assign(clone(b), {team:"ally", lv:p.lv, exp:p.exp, st:clone(p.st), items:clone(p.items), w:p.w, x:d[0], y:d[1]}))); });
+    const u = mkUnit(Object.assign(partyUnit(id), {st:clone(p.st), items:clone(p.items), x:d[0], y:d[1]}));
+    const M = flags.meal && MEALS[flags.meal]; if(M){ u.meal=clone(M.st); for(const [k,v] of Object.entries(M.st)) u.st[k]+=v; }
+    units.push(u); });
   if(CH.guests) units.push(...CH.guests());
   units.push(...CH.enemies());
   units.forEach(u=>u.hp=u.st.hp);
@@ -1902,7 +1940,10 @@ function chapterComplete(){
   if(CH.choice && !flags.route){ chooseRoute(); return; }
   // la Compagnia porta con sé livelli, statistiche e oggetti
   for(const u of units){ if(u.team!=="ally" || u.guest || !party[u.id]) continue;
-    party[u.id] = {lv:u.lv, exp:u.exp, st:clone(u.st), items:clone(u.items), w:u.w}; }
+    if(u.wSwap){ u.w=u.wSwap; delete u.wSwap; }
+    const st=clone(u.st); if(u.meal) for(const [k,v] of Object.entries(u.meal)) st[k]-=v;
+    party[u.id] = Object.assign({}, party[u.id], {lv:u.lv, exp:u.exp, st, items:clone(u.items), w:u.w}); }
+  const ate = flags.meal ? MEALS[flags.meal].n : null; flags.meal = null;
   const R = CH.reward || {};
   for(const [id,w] of Object.entries(R.w||{})) if(party[id]) party[id].w = w;
   for(const [id,n,q] of (R.items||[])){ const it=party[id]?.items; if(!it) continue; const f=it.find(i=>i.n===n); f ? f.q+=q : it.push({n, q}); }
@@ -1912,12 +1953,12 @@ function chapterComplete(){
     return `<tr><td>${b.name}</td><td>Lv ${p.lv}</td><td>PV ${p.st.hp}</td><td>${WEAP[p.w].n}</td></tr>`; }).join("");
   overlay(`<div class="end" role="dialog" aria-label="Capitolo completato"><h2>Capitolo completato</h2>
     <p>${CH.title}<br>Turni impiegati: ${turn}</p>
-    ${R.text?`<p class="reward">${R.text}</p>`:""}
+    ${R.text?`<p class="reward">${R.text}</p>`:""}${ate?`<p class="muted small">Il piatto di Giova (${ate}) è finito: domani se ne cucina un altro.</p>`:""}
     <table class="party">${rows}</table>
     <div class="btns" style="justify-content:center;margin-top:14px">
-      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua${flags.route?" "+ROUTE_NAME[flags.route]:""} nei prossimi capitoli: in arrivo.</p>`}
+      <button class="btn primary" id="goCamp">All'accampamento</button>
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
-  if(next) $("#goNext").onclick=()=>playChapter(ni);
+  $("#goCamp").onclick=()=>camp(ni);
   $("#goTitle").onclick=()=>titleScreen();
 }
 function chooseRoute(){
@@ -1929,31 +1970,333 @@ function chooseRoute(){
 function endScreen(win, why){
   overlay(`<div class="end" role="dialog"><h2>Sconfitta</h2><p>${why||""}<br>Nessun problema: si riprova il capitolo con i livelli di prima.</p>
     <div class="btns" style="justify-content:center"><button class="btn primary" id="again">Riprova il capitolo</button><button class="btn" id="goTitle">Titolo</button></div></div>`, true);
-  $("#again").onclick=()=>{ party=clone(chapterStartParty); playChapter(CHI); };
-  $("#goTitle").onclick=()=>{ party=clone(chapterStartParty); titleScreen(); };
+  $("#again").onclick=()=>{ party=clone(chapterStartParty); supports=clone(chapterStartSup); playChapter(CHI); };
+  $("#goTitle").onclick=()=>{ party=clone(chapterStartParty); supports=clone(chapterStartSup); titleScreen(); };
 }
 function titleScreen(){
-  const s=loadSave(); if(s && s.party) party=s.party; else party=freshParty(); flags = (s && s.flags) || {};
+  const s=loadSave(); if(s && s.party) party=s.party; else party=freshParty(); flags = (s && s.flags) || {}; supports = (s && s.supports) || {};
   const last=CHAPTERS.length-1, done = s && s.next>last, next = s && !done ? s.next : 0;
   setupChapter(done ? 0 : next);
   overlay(`<div class="end title" role="dialog" aria-label="Titolo"><div class="kicker">La Compagnia della Brace</div><h2>Cieli di Ottone</h2>
     <p>Un gioco tattico a turni. ${CHAPTERS.filter(c=>!c.route).length} capitoli scritti finora${CHAPTERS.some(c=>c.route)?", più quelli delle tre rotte":""}.</p>
     <div class="tbtns">
-      ${s && !done ? `<button class="btn primary" id="tCont">Continua · ${CHAPTERS[next].title}</button>` : ""}
+      ${s && !done ? `<button class="btn primary" id="tCont">Continua${next>0?" dall'accampamento":""} · ${CHAPTERS[next].title}</button>` : ""}
       ${done ? `<p class="reward">Hai completato tutti i capitoli scritti finora. L'Atto III è in arrivo.</p>` : ""}
       <button class="btn ${s && !done?"":"primary"}" id="tNew">Nuova partita</button>
       ${s ? `<button class="btn" id="tSel">Scegli capitolo</button>` : ""}
     </div><div id="tList"></div></div>`, true);
-  if($("#tCont")) $("#tCont").onclick=()=>playChapter(next);
-  $("#tNew").onclick=()=>{ party=freshParty(); flags={}; try{ localStorage.removeItem(SAVE_KEY); }catch(e){} writeSave(0); playChapter(0); };
+  if($("#tCont")) $("#tCont").onclick=()=> next>0 ? camp(next) : playChapter(next);
+  $("#tNew").onclick=()=>{ party=freshParty(); flags={}; supports={}; try{ localStorage.removeItem(SAVE_KEY); }catch(e){} writeSave(0); playChapter(0); };
   if($("#tSel")) $("#tSel").onclick=()=>{
     const best=Math.min(Math.max(s.best||0, s.next), last);
     $("#tList").innerHTML = CHAPTERS.map((c,i)=>i<=best && onPath(c) ? `<button class="btn chbtn" data-i="${i}">${c.title}</button>` : "").join("");
     document.querySelectorAll(".chbtn").forEach(b=>b.onclick=()=>playChapter(+b.dataset.i)); };
 }
 
+/* ============================== CONVERSAZIONI DI SUPPORTO ============================== */
+const SUPPORTS = {
+"giova|wata": {
+ C:[["wata","Giova... stai dando il formaggio a Prospy?"],
+    ["giova","Io? No. Le sto... calcolando la razione."],
+    ["wata","Le hai dato la razione di tre giorni. Guarda che pancia."],
+    ["giova","Prima della Compagnia facevo il custode di bestie per i mercanti. Cavalli, cani da guardia, una volta perfino un'aquila di montagna. Gli animali li capisco meglio delle persone."],
+    ["wata","E Prospy l'ha capito subito. Ti dorme sullo zaino ogni notte."],
+    ["giova","Pensavo fosse perché lo zaino è caldo."],
+    ["wata","Lo zaino è caldo perché ci sei tu vicino. Anche i gatti contano, sai? Contano chi le fa sentire al sicuro."],
+    ["giova","Allora siamo in due a contare. Ma basta formaggio."],
+    ["wata","...Domani gliene dai un pezzetto, vero?"],
+    ["giova","Piccolissimo."]],
+ B:[["giova","Wata. Stanotte non hai dormito."],
+    ["wata","Si vede così tanto? ...Le voci. Da quando le ho sentite la prima volta, le sento sempre un po'. Come gente che parla nella stanza accanto."],
+    ["giova","Fanno male?"],
+    ["wata","No. Fanno paura. Una di loro chiama sua figlia ogni notte, e io non so dirle dove sia."],
+    ["giova","Ogni città delle Leghe tiene un registro delle famiglie. Se mi dici il nome, lo cerco."],
+    ["wata","Lo faresti? Per una voce?"],
+    ["giova","Per una voce e per te. Sono due buone ragioni: il calcolo torna."],
+    ["wata","Si chiama Bettina. È di Merlaia, credo: parla sempre di capre."],
+    ["giova","Allora Nonna Tessa saprà chi è. Vedi? Abbiamo già un piano."],
+    ["wata","Grazie, Giova. Prospy dice grazie anche lei. ...E dice che vorrebbe il formaggio."]],
+ A:[["wata","Giova, ho una cosa per te. L'ha scelta Prospy."],
+    ["giova","Un... sasso?"],
+    ["wata","Un sasso di fiume con dentro un granello d'etere. Piccolissimo, non c'è nessuna voce, ho controllato. Però è caldo. Quando devi fare un calcolo difficile, tienilo in mano."],
+    ["giova","Per scaldarmi le mani mentre conto?"],
+    ["wata","Per ricordarti che non sei solo a contare. Tu ascolti sempre tutti, ma nessuno ascolta te."],
+    ["giova","...Hai ragione. Allora te lo dico: ho paura di sbagliare la scelta grande. Quella che arriverà."],
+    ["wata","Lo so. Anch'io. Ma se sbagliamo, sbagliamo insieme. È una scelta ottimale anche quella, no?"],
+    ["giova","Rischio diviso per due. Sì. È ottimale."],
+    ["wata","Prospy è d'accordo. Guarda: ti si è seduta in braccio."],
+    ["giova","È la prima volta che non va sullo zaino."]]},
+"giova|lethy": {
+ C:[["lethy","Giova! Insegnami a calcolare il rischio."],
+    ["giova","Così, all'improvviso?"],
+    ["lethy","Ho visto come fai: guardi la mappa, conti, e sai già tutto. Io invece entro in battaglia come a un ballo: un passo, un inchino, un affondo."],
+    ["giova","E funziona."],
+    ["lethy","Funziona perché sono velocissima. Ma prima o poi incontrerò qualcuno più veloce. Papà dice che un patrimonio si difende con i numeri, non con la fortuna."],
+    ["giova","Va bene. Prima lezione: quanti nemici vedi da qui?"],
+    ["lethy","Sette. No, otto. Quello dietro la cassa conta?"],
+    ["giova","Quello dietro la cassa conta sempre. Sono nove."],
+    ["lethy","Nove! Questo calcolo del rischio è terribile. Mi piace moltissimo."]],
+ B:[["giova","Lethy, è arrivata una lettera per te. Ha il sigillo della banca."],
+    ["lethy","...Papà. Vuole che torni a Porto Ambra. Dice che una figlia della famiglia non può fare la mercenaria, che la gente parla."],
+    ["giova","E tu cosa vuoi?"],
+    ["lethy","Nessuno me l'ha mai chiesto. A casa sapevano già tutti cosa volevo: il marito giusto, la villa giusta, la scherma come passatempo elegante."],
+    ["giova","Io te lo chiedo. Facciamo il conto: cosa perdi se resti, cosa perdi se torni."],
+    ["lethy","Se torno perdo voi. Se resto perdo... le lenzuola di seta. E i camerieri. E la torta della domenica."],
+    ["giova","La torta la so fare io."],
+    ["lethy","Davvero?"],
+    ["giova","Ricetta di mia nonna. Non è la torta della domenica: è meglio."],
+    ["lethy","Allora il conto è facile. Scrivo a papà che resto. E che prima di giudicare deve assaggiare la tua torta."]],
+ A:[["lethy","Giova, ho fatto un calcolo del rischio da sola. Vuoi sentirlo?"],
+    ["giova","Sentiamo."],
+    ["lethy","Ieri, quando ti sei messo davanti a Wata per prendere quel colpo, il rischio era alto. Ottanta per cento di essere colpito."],
+    ["giova","Settantotto."],
+    ["lethy","Settantotto. E l'hai fatto lo stesso. Allora ho capito: il calcolo serve a sapere quanto costa una cosa. Non a decidere se farla."],
+    ["giova","...È la cosa più giusta che abbia mai sentito sul mio motto. E l'hai detta tu."],
+    ["lethy","Ovvio. Sono la tua allieva migliore."],
+    ["giova","Sei la mia unica allieva."],
+    ["lethy","Quindi la migliore. Il conto torna. E adesso tocca a te imparare una cosa da me."],
+    ["giova","Cosa?"],
+    ["lethy","L'inchino prima dell'affondo. Lo stile conta, Giova. Conta sempre."]]},
+"giova|mars": {
+ C:[["mars","Giova, cosa cucini? Ha un profumo che mi fa venire voglia di fare esperimenti."],
+    ["giova","Arepas. Ricetta di famiglia: farina di mais, acqua, sale e la pazienza di mia nonna."],
+    ["mars","Farina di mais... posso aggiungere un pizzico di polvere di lucciola? Diventerebbero luminose!"],
+    ["giova","No."],
+    ["mars","Un pizzico piccolo piccolo?"],
+    ["giova","Mars, la cucina è l'unico posto in cui non calcolo niente. Vado a occhio, come faceva lei. Lasciami questo."],
+    ["mars","Oh. ...Allora niente lucciole. Però posso guardare? Voglio imparare la pazienza della nonna. È un ingrediente che non ho mai provato."],
+    ["giova","È il più difficile. Siediti. E non toccare il sale."]],
+ B:[["mars","Giova, devo confessarti una cosa. Ieri ho messo un pizzico di polvere di lucciola nelle arepas."],
+    ["giova","Lo so. Lethy ha detto che le brillava la pancia."],
+    ["mars","Era un esperimento! Volevo vedere se la luce aiuta la digestione. Non aiuta. Però è bellissima."],
+    ["giova","Perché sperimenti su tutto, Mars? Anche su quello che funziona già?"],
+    ["mars","Perché al mio circolo di druidi mi dicevano sempre: \"Le cose sono così da mille anni, non toccarle\". E io pensavo: e se fossero meglio in un altro modo? Nessuno lo saprà mai, se nessuno prova."],
+    ["giova","Allora facciamo un patto. In battaglia, solo gli elisir che funzionano. In cucina, una volta a settimana puoi provare una cosa nuova."],
+    ["mars","Una volta a settimana! È un patto da stratega. Accetto. Venerdì: arepas al miele di Nonna Tessa."],
+    ["giova","...Questa potrebbe perfino essere buona."]],
+ A:[["mars","Giova! Ho inventato una ricetta. Anzi, l'abbiamo inventata insieme, solo che tu non lo sapevi."],
+    ["giova","Spaventoso. Continua."],
+    ["mars","Le tue arepas, il miele di Tessa e un'erba del Pozzo delle Voci che dà forza. Niente lucciole, giuro. L'ho chiamata \"Brace\"."],
+    ["giova","Come la Compagnia."],
+    ["mars","Come la Compagnia: cose diverse che da sole sono buone e insieme diventano qualcosa di nuovo. Tu sei la farina di mais, comunque. Quella solida."],
+    ["giova","E tu?"],
+    ["mars","Io sono l'erba strana che nessuno voleva metterci. Ma senza di me sarebbe solo pane."],
+    ["giova","...Mia nonna diceva che una ricetta è finita solo quando qualcuno la cambia. Credo che le saresti piaciuta, Mars."],
+    ["mars","Allora la cucino ogni anno, il giorno in cui ci siamo conosciuti. Esperimento annuale. Il più importante di tutti."]]},
+"lethy|wata": {
+ C:[["lethy","Wata, posso accarezzare Prospy? Non ho mai avuto un animale. A casa c'erano solo i cavalli di papà, e ognuno aveva un servitore."],
+    ["wata","Certo! Però piano, dalla testa verso la coda. E se muove la coda veloce, ti fermi."],
+    ["lethy","Piano... dalla testa... oh. Fa le fusa! Wata, fa le fusa! Che onore."],
+    ["wata","Le piaci. Prospy sente chi ha il cuore buono."],
+    ["lethy","Il mio maestro di scherma diceva che ho il cuore troppo buono per la spada."],
+    ["wata","E aveva ragione?"],
+    ["lethy","No. Ma forse ho il cuore giusto per un gatto. Posso farle dei regali? A Porto Ambra ho visto un cuscino di velluto..."],
+    ["wata","Le basta una scatola di cartone, Lethy."],
+    ["lethy","Una scatola di cartone foderata di velluto, allora."]],
+ B:[["wata","Lethy... posso chiederti una cosa strana?"],
+    ["lethy","Le cose strane sono le mie preferite. A casa erano tutte normalissime."],
+    ["wata","Tu non hai mai paura? In battaglia corri sempre avanti, come se fosse un gioco."],
+    ["lethy","Ho una paura tremenda. Sempre. Ma ai balli mia madre mi ha insegnato una cosa: se tremi, sorridi più forte. Nessuno se ne accorge."],
+    ["wata","Io invece tremo e basta. E Prospy se ne accorge sempre."],
+    ["lethy","Allora facciamo così: in battaglia stai dietro di me. Io sorrido per tutte e due, e tu tremi per tutte e due. Ci dividiamo il lavoro."],
+    ["wata","...Non è un brutto piano."],
+    ["lethy","È un piano da torneo a coppie. Ne ho vinti tre, uno con un compagno che non sapeva nemmeno tenere la spada."],
+    ["wata","Grazie per la fiducia."],
+    ["lethy","Tu almeno hai un gatto. È un vantaggio enorme."]],
+ A:[["lethy","Wata, ho fatto fare una cosa per te. Spero ti piaccia."],
+    ["wata","Un mantello nuovo? Con... le foglie ricamate in filo d'oro?"],
+    ["lethy","Il tuo era tutto strappato dai rovi. E ho pensato: la nostra etermante merita un mantello da etermante. Qui sull'orlo ho fatto ricamare anche un gattino."],
+    ["wata","È Prospy! Lethy... è bellissimo. Ma sarà costato una fortuna."],
+    ["lethy","Tre mesi di paghetta. Papà la chiama paghetta. Gli altri la chiamano lo stipendio di un generale."],
+    ["wata","Io non ho niente di così prezioso da darti."],
+    ["lethy","Wata, tu mi hai insegnato ad accarezzare un gatto, a non correre sempre avanti e che si può tremare senza vergognarsi. A casa nessuno mi aveva mai insegnato niente di vero."],
+    ["wata","...Allora lo metto subito. E tu prendi questa: una foglia del rovo antico di Merlaia. Non punge: gliel'ho chiesto io."],
+    ["lethy","La terrò nel diario. Accanto alla pagina in cui ho scritto che ho una migliore amica."]]},
+"mars|wata": {
+ C:[["mars","Wata, mi presti un pelo di Prospy? Uno solo. Per un esperimento."],
+    ["wata","Che esperimento?"],
+    ["mars","Voglio capire perché sente l'etere. Forse c'è qualcosa nel pelo. O nei baffi. O nel carattere, ma quello non sta in una fiala."],
+    ["wata","Lo sente perché è un famiglio. È legata a me, e io sono legata alle Radici. Non è una cosa che si misura."],
+    ["mars","Tutto si misura! Quasi sicuramente."],
+    ["wata","Allora prova a misurare quanto mi vuole bene."],
+    ["mars","...Va bene, questo no. Ma il pelo me lo dai lo stesso?"],
+    ["wata","Se te lo dà lei. Chiediglielo."],
+    ["mars","Prospy, posso... ahi! Mi ha graffiata. Lo prendo come un no. Annoto: famiglio, molto deciso."]],
+ B:[["wata","Mars. La fiala che canticchia: ce l'hai ancora?"],
+    ["mars","...Sì. È nella tasca interna. Non riesco a buttarla e non riesco a usarla."],
+    ["wata","Posso sentirla? Dentro c'è una donna. Canta una ninna nanna, sempre la stessa."],
+    ["mars","Lo sapevo che era una persona. Lo sapevo e l'ho tenuta lo stesso, perché ero curiosa. Che razza di druida sono?"],
+    ["wata","Una druida che si sente in colpa. Le altre non si sarebbero nemmeno chieste chi c'era dentro."],
+    ["mars","Cosa faccio, Wata? Ho studiato di tutto, ma nei miei libri non c'è scritto come si chiede scusa a una fiala."],
+    ["wata","Non si chiede scusa alla fiala. Si chiede scusa a lei. E poi la si riporta a casa, alle Radici."],
+    ["mars","Mi accompagni?"],
+    ["wata","Certo. E intanto impariamo la ninna nanna. Così, quando la lasceremo andare, qualcuno continuerà a cantarla."]],
+ A:[["mars","Wata, l'abbiamo fatto. La donna della fiala è tornata alle Radici. E quando l'ho lasciata andare ho sentito qualcosa. Io, che non sento mai niente!"],
+    ["wata","Cosa hai sentito?"],
+    ["mars","Una specie di grazie. Ma senza parole. Come quando apri la finestra di una stanza rimasta chiusa per anni."],
+    ["wata","È così che parlano le Radici. Benvenuta, Mars."],
+    ["mars","Voglio studiarlo, Wata. Non per chiuderlo in una fiala: per capirlo. Insieme a te. Tu senti, io misuro, e magari un giorno qualcuno ascolterà le voci senza bruciarle e senza chiuderle in cassaforte."],
+    ["wata","Una druida alchimista e un'etermante gentile. Il Concilio impazzirebbe."],
+    ["mars","Anche la Corona. Ed è per questo che è un'idea bellissima."],
+    ["wata","Allora sì. Si comincia domani. Prospy fa da assistente."],
+    ["mars","Prospy, niente graffi in laboratorio. È la regola numero uno."]]},
+"lethy|mars": {
+ C:[["mars","Lethy, com'è vivere in una villa? Voglio provarlo. Raccontami tutto, anche le cose noiose."],
+    ["lethy","Le cose noiose sono quasi tutte. Ci si sveglia, ci si veste in tre, si fa colazione in silenzio, si studia il galateo..."],
+    ["mars","Il galateo! È tipo un rituale druidico? Con le forchette?"],
+    ["lethy","Le forchette sono sette, Mars. Sette. Una per ogni cosa."],
+    ["mars","Fantastico. Insegnamelo. In cambio io ti insegno a dormire sotto le stelle senza tenda, con le formiche e tutto."],
+    ["lethy","Le formiche?"],
+    ["mars","Fanno parte dell'esperienza."],
+    ["lethy","...Affare fatto. Ma prima le forchette. Ho bisogno di prepararmi psicologicamente alle formiche."]],
+ B:[["lethy","Mars! Stanotte ho dormito sotto le stelle. Senza tenda. Con le formiche."],
+    ["mars","E com'è stato?"],
+    ["lethy","Orribile per un'ora. Poi ho visto una stella cadente e mi sono dimenticata delle formiche. Non ne avevo mai vista una: in villa le tende erano sempre chiuse."],
+    ["mars","Visto? Le esperienze nuove sono tutte orribili all'inizio. È il prezzo del biglietto."],
+    ["lethy","E il galateo, per te, è stato orribile?"],
+    ["mars","Terribile. Ho usato la forchetta del pesce per la torta e mi sono sentita una criminale. Però adesso so che esiste una forchetta del pesce. Il mondo è più grande di ieri."],
+    ["lethy","Tu non hai paura di niente, vero?"],
+    ["mars","Di una cosa sola: arrivare alla fine senza aver provato tutto. E tu?"],
+    ["lethy","Io avevo paura di arrivare alla fine avendo provato una cosa sola. Credo che ci stiamo guarendo a vicenda."]],
+ A:[["lethy","Mars, ho deciso: quando tutto questo sarà finito, compro una casa."],
+    ["mars","Una villa con sette forchette?"],
+    ["lethy","No. Una casa piccola, al margine delle Radici: un laboratorio per te, una cucina per Giova, un giardino per Wata e Prospy, una sala di scherma per me. E nessuna tenda alle finestre."],
+    ["mars","Lethy... ci stai invitando a vivere tutti insieme?"],
+    ["lethy","Vi sto proponendo un investimento. Papà dice di investire in ciò che cresce. Voi siete la cosa che è cresciuta di più nella mia vita."],
+    ["mars","Accetto. A una condizione: una volta al mese si dorme in giardino. Con le formiche."],
+    ["lethy","E una volta al mese si cena con il galateo. Sette forchette."],
+    ["mars","È il compromesso più bello che abbia mai sentito. Lo scrivo nel quaderno, alla pagina \"esperienze da fare per sempre\"."],
+    ["lethy","C'è una pagina così?"],
+    ["mars","Da oggi sì. Ed è la prima."]]},
+};
+
+/* ============================== SUPPORTI ============================== */
+const SUP_PAIRS = [["giova","wata"],["giova","lethy"],["giova","mars"],["lethy","wata"],["mars","wata"],["lethy","mars"]];
+const SUP_ORDER = ["C","B","A"], SUP_NEED = {C:12, B:32, A:60};
+const supKey = (a,b) => [a,b].sort().join("|");
+let supports = {};
+const supGet = (a,b) => supports[supKey(a,b)] ||= {pts:0, lvl:""};
+const supNext = s => SUP_ORDER[s.lvl ? SUP_ORDER.indexOf(s.lvl)+1 : 0] || null;
+const supLv = (a,b) => { const s=supports[supKey(a,b)]; return s && s.lvl ? SUP_ORDER.indexOf(s.lvl)+1 : 0; };
+function supAdd(a,b,n){
+  if(a===b || !PARTY_BASE[a] || !PARTY_BASE[b]) return;
+  const s=supGet(a,b), nx=supNext(s); if(!nx) return;
+  const before=s.pts; s.pts=Math.min(SUP_NEED[nx], s.pts+n);
+  if(before<SUP_NEED[nx] && s.pts>=SUP_NEED[nx]) log(`<b>Supporto ${nx} pronto:</b> ${PARTY_BASE[a].name} e ${PARTY_BASE[b].name}. Leggetelo all'accampamento.`);
+}
+function supNear(u, n){ for(const o of alive("ally")) if(o!==u && Math.abs(o.x-u.x)+Math.abs(o.y-u.y)<=2) supAdd(u.id,o.id,n); }
+function supBonus(u, x, y){
+  let n=0; if(u.team!=="ally" || !PARTY_BASE[u.id]) return {hit:0,avo:0,cr:0};
+  for(const o of alive("ally")) if(o!==u && PARTY_BASE[o.id] && Math.abs(o.x-x)+Math.abs(o.y-y)<=2) n+=supLv(u.id,o.id);
+  return {hit:n*5, avo:n*5, cr:n*2};
+}
+
+/* ============================== PROMOZIONI ============================== */
+const PROMO = {
+  giova:[{cls:"Condottiero", st:{hp:4,for:2,def:2,res:1}, mov:1, skill:{n:"Comando", d:"Alleati entro 3 caselle: +10 precisione e +5 schivata."}},
+         {cls:"Tattico d'ottone", st:{abi:3,vel:2,fort:2,hp:2}, mov:1, skill:{n:"Calcolo perfetto", d:"Alleati entro 2 caselle: +10 precisione e +10 critico."}}],
+  lethy:[{cls:"Duellante", st:{vel:3,abi:2,for:1,hp:2}, mov:1, skill:{n:"Stoccata e affondo", d:"Lo stocco fa danno triplo ai corazzati e ha +15 critico."}},
+         {cls:"Cavaliere d'ottone", st:{hp:5,def:3,for:1}, mov:2, move:"cav", skill:{n:"Stoccata in sella", d:"Danno triplo ai corazzati. Cavallo meccanico: si muove come la cavalleria."}}],
+  wata: [{cls:"Arcanista", st:{mag:3,res:2,abi:1,hp:2}, mov:1, skill:{n:"Prospy arcana", d:"+10 schivata grazie a Prospy e +2 danni magici.", cat:true}},
+         {cls:"Saggia delle Radici", st:{mag:1,res:3,hp:4}, mov:1, skill:{n:"Radici che curano", d:"+10 schivata grazie a Prospy; a inizio turno cura 5 PV agli alleati accanto a lei.", cat:true}}],
+  mars: [{cls:"Chirurga", st:{mag:3,res:2,hp:3}, mov:1, skill:{n:"Cure larghe", d:"50% di PE in più; quando cura, cura 5 PV anche agli alleati accanto al bersaglio."}},
+         {cls:"Alchimista", st:{mag:2,vel:2,for:1,hp:2}, mov:1, w2:"fiala", skill:{n:"Fiale esplosive", d:"50% di PE in più; oltre a curare, può lanciare fiale esplosive (gittata 1-2)."}}],
+};
+const promoOf = u => (u && u.promo!=null && PROMO[u.id]) ? u.promo : null;
+const sigilli = () => PARTY_ORDER.reduce((n,id)=>n+(party[id].items.find(i=>i.n==="Sigillo di ottone")?.q||0),0);
+function useSigillo(){ for(const id of PARTY_ORDER){ const it=party[id].items.find(i=>i.n==="Sigillo di ottone" && i.q>0); if(it){ it.q--; return true; } } return false; }
+function promote(id, k){
+  const p=party[id], P=PROMO[id][k]; if(p.promo!=null || p.lv<10 || !useSigillo()) return;
+  for(const [s,v] of Object.entries(P.st)) p.st[s]+=v;
+  p.promo=k;
+}
+
+/* ============================== CUCINA DI GIOVA ============================== */
+const MEALS = {
+  arepas: {n:"Arepas della nonna", d:"Croccanti fuori, morbide dentro. +2 Difesa a tutti nel prossimo capitolo.", st:{def:2}},
+  zuppa:  {n:"Zuppa di Merlaia", d:"Con il formaggio di capra di Nonna Tessa. +4 PV massimi a tutti.", st:{hp:4}},
+  stufato:{n:"Stufato del porto", d:"Pesce di Porto Ambra e spezie delle Leghe. +2 Forza e +2 Magia a tutti.", st:{for:2,mag:2}},
+  brace:  {n:"Ricetta \"Brace\"", d:"L'invenzione di Giova e Mars. +1 a tutte le statistiche e +2 PV massimi.", st:{hp:2,for:1,mag:1,abi:1,vel:1,fort:1,def:1,res:1}, need:["giova","mars","A"]},
+};
+
+/* ============================== DIARIO ============================== */
+const DIARY = {
+  prologo:"Abbiamo rubato un carico di etere dalla fonderia di Corvara. Il capitano Vorn ha detto che i cristalli non sono pietre.",
+  c1:"Inseguiti dalla cavalleria dell'Ispettrice Ferrante, abbiamo passato il ponte di Fossa Grigia.",
+  c2:"Abbiamo difeso Merlaia e le sue capre fino all'alba. Nonna Tessa ci ha regalato le Spine e la sua ricetta.",
+  c3:"A Porto Ambra i Corvi di Sale ci hanno traditi per conto di un mantello verde.",
+  c4:"Il committente è Sorella Maelis del Concilio. Ferrante ci ha attaccati con un dirigibile.",
+  c5:"Nelle Radici, Wata ha sentito un nome dentro un cristallo: Ilvo.",
+  c6:"A Fondoscuro abbiamo combattuto il Concilio per salvare la casa della guaritrice.",
+  c7:"Al Pozzo delle Voci abbiamo capito che nei cristalli ci sono persone.",
+  c8:"A Lucegrande, Thalen si è arreso. Il Registro delle Radici dice la verità: i cristalli nascono dove muore chi amava le Radici.",
+  c9:"A Cenerossa la Corona fa morire i minatori sopra radici trapiantate. Ferrante ha visto tutto.",
+  c10:"Abbiamo portato Ferrante fuori da Corvara. Strand ha chiesto a Giova di fare il conto.",
+  c11:"Abbiamo spezzato il Canto del Silenzio del Gran Custode Arven.",
+  c12:"A Fossa Grigia abbiamo scelto la nostra strada.",
+  c13c:"Abbiamo preso la Sovrana e gli ordini firmati di Strand.",
+  c13r:"Abbiamo difeso gli archivi di Lucegrande. All'alba sono comparse le navi della Corona.",
+  c13l:"Il Signor Grigio ha letto i nomi in piazza. Le voci hanno smesso di piangere.",
+};
+
+/* ============================== ACCAMPAMENTO ============================== */
+let campTab = "comp";
+function partyUnit(id){ const b=PARTY_BASE[id], p=party[id], P=p.promo!=null?PROMO[id][p.promo]:null;
+  return Object.assign(clone(b), {team:"ally", lv:p.lv, exp:p.exp, st:p.st, items:p.items, w:p.w, hp:p.st.hp, promo:p.promo,
+    cls:P?P.cls:b.cls, mov:b.mov+(P?.mov||0), move:P?.move||b.move, skill:P?P.skill:b.skill, w2:P?.w2}); }
+function camp(ni){
+  const next = CHAPTERS[ni];
+  const tabs=[["comp","Compagnia"],["sup","Supporti"],["cuc","Cucina"],["dia","Diario"]];
+  const ready = SUP_PAIRS.filter(([a,b])=>{ const s=supGet(a,b), nx=supNext(s); return nx && s.pts>=SUP_NEED[nx]; }).length;
+  overlay(`<div class="camp" role="dialog" aria-label="Accampamento">
+    <div class="camphead"><h2>Accampamento</h2><div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button class="tab${campTab===k?" on":""}" data-t="${k}" role="tab">${l}${k==="sup"&&ready?` <span class="dot">${ready}</span>`:""}</button>`).join("")}</div></div>
+    <div class="campbody" id="campBody"></div>
+    <div class="campfoot">${next ? `<button class="btn primary" id="goNext">${next.title}</button>` : `<span class="muted">La storia continua${flags.route?" "+ROUTE_NAME[flags.route]:""} nei prossimi capitoli.</span>`}
+      <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{ campTab=b.dataset.t; camp(ni); });
+  if(next) $("#goNext").onclick=()=>playChapter(ni);
+  $("#goTitle").onclick=()=>titleScreen();
+  const body=$("#campBody"), save=()=>writeSave(ni);
+  if(campTab==="comp"){
+    body.innerHTML = `<p class="muted">Sigilli di ottone della Compagnia: <b>${sigilli()}</b>. Dal livello 10 un personaggio può essere promosso.</p><div class="cards">` + PARTY_ORDER.map(id=>{
+      const u=partyUnit(id), w=WEAP[u.w];
+      const stats = STAT_KEYS.map(k=>`<div><span>${STAT_LAB[k]}</span>${u.st[k]}</div>`).join("")+`<div><span>Mov</span>${u.mov}</div>`;
+      let promo="";
+      if(u.promo==null){ promo = u.lv>=10 && sigilli()>0
+        ? `<div class="promo"><b>Promozione</b>${PROMO[id].map((P,k)=>`<button class="btn pbtn" data-id="${id}" data-k="${k}"><b>${P.cls}</b><br><small>${P.skill.d} ${Object.entries(P.st).map(([s,v])=>`${STAT_LAB[s]} +${v}`).join(", ")}${P.mov?`, Mov +${P.mov}`:""}</small></button>`).join("")}</div>`
+        : `<div class="muted small">Promozione: ${u.lv<10?"dal livello 10":"serve un Sigillo di ottone"} (${PROMO[id].map(P=>P.cls).join(" o ")}).</div>`; }
+      return `<div class="pcard"><div class="uhead"><div class="portrait">${portrait(u)}</div><div><div class="uname">${u.name}</div><div class="uclass">${u.cls} · Lv ${u.lv} · PE ${u.exp}</div></div></div>
+        <div class="stats">${stats}</div><div class="weap">${w.n}${u.w2?` · ${WEAP[u.w2].n}`:""}</div>
+        <div class="skill"><b>${u.skill.n}</b> · ${u.skill.d}</div>
+        <div class="weap"><small>${u.items.filter(i=>i.q>0).map(i=>`${i.n} ×${i.q}`).join(" · ")||"Nessun oggetto"}</small></div>${promo}</div>`; }).join("") + `</div>`;
+    document.querySelectorAll(".pbtn").forEach(b=>b.onclick=()=>{ promote(b.dataset.id, +b.dataset.k); save(); camp(ni); });
+  }
+  if(campTab==="sup"){
+    body.innerHTML = `<p class="muted">Combattere vicini (entro 2 caselle) fa crescere il legame. Ogni livello letto dà, a chi sta vicino, +5 precisione, +5 schivata e +2 critico.</p>` + SUP_PAIRS.map(([a,b])=>{
+      const s=supGet(a,b), nx=supNext(s), need=nx?SUP_NEED[nx]:SUP_NEED.A, prev=s.lvl?SUP_NEED[s.lvl]:0;
+      const pct = nx ? Math.round(100*(s.pts-prev)/(need-prev)) : 100;
+      return `<div class="suprow"><div class="supnames">${PARTY_BASE[a].name} e ${PARTY_BASE[b].name}</div>
+        <div class="suplv">${SUP_ORDER.map(L=>`<span class="${s.lvl && SUP_ORDER.indexOf(L)<=SUP_ORDER.indexOf(s.lvl)?"got":""}">${L}</span>`).join("")}</div>
+        <div class="bar exp" style="flex:1;min-width:80px"><i style="width:${Math.max(0,pct)}%"></i></div>
+        ${nx && s.pts>=need ? `<button class="btn primary sread" data-a="${a}" data-b="${b}" data-l="${nx}">Leggi ${nx}</button>` : `<span class="muted small">${nx?"in crescita":"completo"}</span>`}
+        ${s.lvl?`<button class="btn sreplay" data-a="${a}" data-b="${b}">Rileggi</button>`:""}</div>`; }).join("");
+    document.querySelectorAll(".sread").forEach(b=>b.onclick=()=>{ const {a,b:bb,l}=b.dataset; story(SUPPORTS[supKey(a,bb)][l], ()=>{ supGet(a,bb).lvl=l; save(); camp(ni); }); });
+    document.querySelectorAll(".sreplay").forEach(b=>b.onclick=()=>{ const {a,b:bb}=b.dataset, s=supGet(a,bb); const lines=[]; for(const L of SUP_ORDER){ lines.push(["narr",`Supporto ${L}`], ...SUPPORTS[supKey(a,bb)][L]); if(L===s.lvl) break; } story(lines, ()=>camp(ni)); });
+  }
+  if(campTab==="cuc"){
+    body.innerHTML = `<p class="muted">Giova cucina per tutti la sera prima della battaglia. Il piatto scelto vale solo per il prossimo capitolo.</p><div class="meals">` + Object.entries(MEALS).map(([k,m])=>{
+      const locked = m.need && supLv(m.need[0],m.need[1]) < 3;
+      return `<button class="btn meal${flags.meal===k?" on":""}" data-k="${k}" ${locked?"disabled":""}><b>${m.n}</b><br><small>${locked?"Si sblocca con il supporto A tra Giova e Mars.":m.d}</small></button>`; }).join("") + `</div>`;
+    document.querySelectorAll(".meal").forEach(b=>b.onclick=()=>{ flags.meal = flags.meal===b.dataset.k ? null : b.dataset.k; save(); camp(ni); });
+  }
+  if(campTab==="dia"){
+    const done = CHAPTERS.slice(0, ni).filter(onPath);
+    body.innerHTML = done.length ? `<ol class="diary">${done.map(c=>`<li><b>${c.title}</b><br>${DIARY[c.id]||""}</li>`).join("")}</ol>` : `<p class="muted">Il diario è ancora vuoto.</p>`;
+  }
+}
+
 /* ============================== DIALOGHI ============================== */
-function speaker(id){ const u=units.find(x=>x.id===id); if(u) return u; const n=NPC[id]; return n ? Object.assign({id, team:"ally"}, n) : units[0]; }
+function speaker(id){ const u=units.find(x=>x.id===id); if(u) return u; if(PARTY_BASE[id]) return partyUnit(id); const n=NPC[id]; return n ? Object.assign({id, team:"ally"}, n) : units[0]; }
 function story(lines, done){
   let i=0;
   const show=()=>{
@@ -1981,7 +2324,9 @@ window.addEventListener("keydown", e=>{ if(e.key==="Escape" && !document.querySe
 $("#bEnd").onclick=()=>{ if(phase==="player" && !busy && !ended){ cancel(); endPlayerPhase(); } };
 $("#bCancel").onclick=()=>cancel();
 $("#bDanger").onclick=()=>{ dangerOn=!dangerOn; $("#bDanger").classList.toggle("on",dangerOn); renderDanger(); };
-$("#bMenu").onclick=()=>{ if(!busy){ party=clone(chapterStartParty); titleScreen(); } };
+try{ if(localStorage.getItem("cdo-fast")==="1"){ SPEED=0.4; $("#bFast").classList.add("on"); $("#bFast").setAttribute("aria-pressed","true"); } }catch(e){}
+$("#bFast").onclick=()=>{ const on = SPEED===1; SPEED = on ? 0.4 : 1; $("#bFast").classList.toggle("on",on); $("#bFast").setAttribute("aria-pressed", String(on)); try{ localStorage.setItem("cdo-fast", on?"1":"0"); }catch(e){} };
+$("#bMenu").onclick=()=>{ if(!busy){ party=clone(chapterStartParty); supports=clone(chapterStartSup); titleScreen(); } };
 window.addEventListener("resize", ()=>{ clearTimeout(window.__rz); window.__rz=setTimeout(fit,120); });
 
 titleScreen();
