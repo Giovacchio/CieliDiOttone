@@ -293,6 +293,7 @@ const NPC = {
   gorran:   {name:"Gorran il Fuso", team:"enemy", cls:"Capo predone", look:{skin:"#b98a68", hair:"#3a2a1e", style:"bald", coat:"#5a3a22", beard:"full", scar:true, eye:"#2a1c14"}},
   thalen:   {name:"Custode Thalen", team:"enemy", cls:"Custode anziano", look:{skin:"#d8b49a", hair:"#c8c8c0", style:"hood", coat:"#1f4a36", beard:"full", eye:"#7ac08a"}},
   erba:     {name:"Erba, guaritrice", team:"ally", cls:"Guaritrice", look:{skin:"#c99a74", hair:"#6a4a2a", style:"longv", coat:"#6a7a4a", eye:"#4a3020"}},
+  custode:  {name:"Custode", team:"enemy", cls:"Custode delle Radici", look:{skin:"#d8b49a", hair:"#2a3a2a", style:"hood", coat:"#1f4a36", eye:"#7ac08a"}},
   odo:      {name:"Caposquadra Odo", team:"enemy", cls:"Caposquadra", look:{skin:"#d0a882", hair:"#4a3a2a", style:"helm", coat:"#6a5a3a", beard:true, eye:"#2a1c14"}},
 };
 
@@ -680,6 +681,116 @@ const CHAPTERS = [
   ],
   reward:{text:"Erba regala a Mars le sue erbe contro la febbre grigia: due tonici. Il villaggio dà a Giova un tonico.", items:[["mars","Tonico",2],["giova","Tonico",1]]},
 },
+/* ---------------------------------------------------------------- CAPITOLO 7 */
+{ id:"c7", title:"Capitolo 7 · Il Pozzo delle Voci", theme:"forestnight", act:"Atto II · Le Radici",
+  map:[
+  "TTTff...f...ffTT",
+  "Tff....T.....ffT",
+  "ff..f..m.m..f..f",
+  "....f.m.c.m.....",
+  "ssss...ccc...sss",
+  "...s..m.c.m..s..",
+  "f..s...m.m...s.f",
+  "ff.s....T....sff",
+  "Tf.s.f.....f.sfT",
+  "TTTs..ff..ff.sTT"],
+  deploy:[[7,5],[9,5],[7,3],[9,3]],
+  guests:()=>[mkUnit({id:"maelis", name:"Sorella Maelis", cls:"Saggia delle Radici", team:"ally", guest:true, lv:8, x:8, y:4, move:"inf", mov:0, w:"luce",
+    st:{hp:22,for:1,mag:10,abi:8,vel:7,fort:6,def:3,res:10}, gr:{}, look:NPC.maelis.look,
+    skill:{n:"Il canto del pozzo", d:"Non può muoversi finché il canto non è finito, ma può colpire chi si avvicina."}})],
+  goal:{type:"survive", turns:5, protect:"maelis", text:"Proteggi Sorella Maelis per 5 turni mentre apre il canto del pozzo. Se Maelis cade, la missione fallisce. Le vene d'etere attorno al pozzo curano."},
+  enemies:()=>[
+    foe("Arciere",7,14,1,{ai:"range", name:"Esploratore della Corona", look:CROWN("#5a5a3a")}),
+    foe("Lanciere",7,15,5,{name:"Esploratore della Corona", look:CROWN("#5a5a3a")}),
+    foe("Custode",7,0,6,{look:ROOT}),
+    foe("Lama",7,3,9,{name:"Sicario del Concilio", look:ROOT}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["odo","Ecco dove si nascondevano. Il Concilio e i mercenari tutti insieme: due piccioni con una sega."]],
+      spawn:()=>[foe("Lanciere",8,13,9,{id:"odo", name:"Caposquadra Odo", w:"lanciaA", look:NPC.odo.look, quote:"Mi avete rovinato un campo di taglio. Adesso vi rovino la serata."}), foe("Segatrice",7,13,8)]},
+    {turn:3, phase:"enemy", lines:[["custode","Per ordine del Custode Thalen: la traditrice Maelis deve tornare a Lucegrande. Viva, se possibile."]],
+      spawn:()=>[foe("Custode",7,0,4,{look:ROOT}), foe("Lanciere",7,3,9,{name:"Guardia del Concilio", look:GUARD})]},
+    {turn:4, phase:"enemy", lines:[["maelis","Ancora un poco... la luna è quasi sopra il pozzo!"]],
+      spawn:()=>[foe("Aeronauta",7,15,0,{look:CROWN("#9a6a2a")}), foe("Custode",8,0,0,{look:ROOT})]},
+  ],
+  intro:[
+    ["narr","Il Pozzo delle Voci. Un cerchio di pietre antiche attorno a un buco nella terra, da cui sale una luce azzurra."],
+    ["maelis","Il pozzo scende fino alle radici dell'albero più vecchio di Valdaria. Qui l'etere è così fitto che si sente parlare. Mi serve tempo per aprire il canto."],
+    ["giova","Quanto tempo?"],
+    ["maelis","Finché la luna non arriva sopra il pozzo. Cinque turni dei tuoi, stratega. E nessuno deve interrompermi."],
+    ["wata","Prospy è tranquilla. Il bosco no: ci sono passi. Da due parti."],
+    ["lethy","Ospiti non invitati. Come al mio sedicesimo compleanno."],
+    ["mars","Questo posto è meraviglioso. Se sopravviviamo voglio un campione d'acqua del pozzo. Se non sopravviviamo... lo voglio lo stesso."],
+    ["giova","Cerchio intorno a Maelis. Lethy e io sui due sentieri, Wata dietro le pietre, Mars al centro. Cinque turni."],
+  ],
+  victory:[
+    ["narr","La luna arriva sopra il pozzo. La luce azzurra sale, e con lei le voci."],
+    ["narr","Sono centinaia. Bisbigli, risate, una ninna nanna, qualcuno che chiama un cane. Nessuna è una voce di pietra."],
+    ["wata","Sono persone. Maelis... sono persone."],
+    ["maelis","Il Concilio insegna che i cristalli conservano la memoria della foresta. È vero. Ma la foresta ricorda chi ci ha vissuto."],
+    ["giova","Non ci hai detto tutto."],
+    ["maelis","No. Il resto è scritto negli archivi di Lucegrande, e solo il Gran Concilio può aprirli. Domani porto lì il rapporto su Thalen, e chiederò che li apra."],
+    ["lethy","E se dicono di no?"],
+    ["maelis","Allora saprò da che parte sta il mio Concilio."],
+    ["mars","Ho riempito tre fiale con l'acqua del pozzo. Una canticchia. Lo giuro."],
+    ["giova","Andiamo a Lucegrande. Ma stavolta il piano di fuga lo preparo prima di entrare."],
+  ],
+  reward:{text:"Maelis insegna a Wata il Giudizio verde, la magia dei Custodi.", w:{wata:"giudizio"}},
+},
+/* ---------------------------------------------------------------- CAPITOLO 8 */
+{ id:"c8", title:"Capitolo 8 · Il tribunale di Lucegrande", theme:"forest", pave:true, act:"Atto II · Le Radici",
+  map:[
+  "TTHHXXXXXXXXHHTT",
+  "T.HH.gggggggHH.T",
+  "..g..gLgggLg..g.",
+  "T.g.c.gggggg.c.T",
+  "gggggggggggggggg",
+  "HH.gg.T.gg.T.gHH",
+  "HH.g..T.gg.T..HH",
+  "..Lg....gg....L.",
+  "TT.g.HH.gg.HH.TT",
+  "TT...HH.gg.HH.TT"],
+  deploy:[[8,9],[9,8],[9,9],[8,8]],
+  goal:{type:"boss", text:"Sconfiggi il Custode Thalen sulla scalinata del tribunale per liberare Maelis."},
+  enemies:()=>[
+    foe("Custode",7,5,3,{ai:"range", look:ROOT}),
+    foe("Custode",7,12,3,{ai:"range", look:ROOT}),
+    foe("Corazzato",7,8,4,{ai:"range", name:"Guardia di radice", look:GUARD}),
+    foe("Lanciere",8,9,2,{ai:"range", name:"Guardia del Concilio", look:GUARD}),
+    foe("Arciere",7,2,2,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Arciere",7,14,2,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Medico",7,10,1,{ai:"range", name:"Guaritore del Concilio", look:{skin:"#e2c0a2", hair:"#ddd", style:"hood", coat:"#d8d2c0", eye:"#5aa070"}}),
+    foe("Lanciere",8,3,5,{name:"Guardia del Concilio", look:GUARD}),
+    foe("Custode",9,8,1,{id:"boss", boss:true, retreat:true, name:"Custode Thalen", w:"giudizio", ai:"stay", look:NPC.thalen.look,
+      quote:"Tu credi di difendere qualcuno, stratega. Io difendo una foresta che esisteva prima di tutti voi e che esisterà dopo. Questo è il mio calcolo."}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["thalen","Chiudete le strade laterali!"]], spawn:()=>[foe("Custode",7,0,4,{look:ROOT}), foe("Custode",7,15,4,{look:ROOT})]},
+    {turn:4, phase:"enemy", lines:[["narr","Le campane di Lucegrande suonano: arrivano altre guardie."]], spawn:()=>[foe("Lanciere",8,1,7,{name:"Guardia del Concilio", look:GUARD}), foe("Corazzato",7,15,7,{name:"Guardia di radice", look:GUARD})]},
+  ],
+  intro:[
+    ["narr","Lucegrande, città del Concilio. Case di pietra bianca costruite tra le radici di alberi alti come torri."],
+    ["thalen","Sorella Maelis. Hai assoldato mercenari delle Leghe, hai portato estranei al Pozzo delle Voci, hai protetto dei ladri a Fondoscuro."],
+    ["maelis","Non ho protetto nessuno. Ho guardato mentre tu bruciavi una casa con dei bambini dentro. È questo che mi pesa."],
+    ["thalen","Il Gran Concilio ha deciso: sarai rinchiusa nelle radici finché il tuo etere non tornerà alla foresta. E i tuoi mercenari verranno consegnati alla Corona, in cambio della tregua."],
+    ["lethy","Consegnati alla Corona? Come un pacco? Con tanto di fiocco?"],
+    ["giova","Il piano di fuga che avevo preparato è appena diventato inutile. Cambio di programma: Thalen comanda le guardie. Lo battiamo, liberiamo Maelis e usciamo dalla porta est."],
+    ["wata","Prospy soffia contro Thalen. E contro tutto il Concilio, credo."],
+    ["mars","Ho una fiala che canticchia e una che fa fumo. Quale vuoi, Giova? ...Tutte e due? Ottima scelta."],
+  ],
+  victory:[
+    ["thalen","Basta... mi arrendo. Prendetela. Ma ascoltatemi: quello che c'è negli archivi vi farà odiare il Concilio. Poi vi farà odiare la Corona. Alla fine odierete anche voi stessi."],
+    ["maelis","Giova. Grazie. E... ho preso questo dagli archivi, mentre voi combattevate."],
+    ["maelis","Il Registro delle Radici. Ogni cristallo, ogni nome. Ilvo il guardaboschi è a pagina trecentododici."],
+    ["wata","I cristalli nascono dove muore qualcuno che amava le Radici. E dentro resta... lui. Un pezzetto di lui."],
+    ["giova","E la Corona li brucia nelle fornaci per accendere le lampade. E il Concilio li chiude in cassaforte e decide chi merita di essere curato."],
+    ["lethy","...Credo sia la prima volta che non mi viene in mente nessun paragone con casa mia."],
+    ["mars","Io invece continuo a pensare che la mia fiala canticchia perché dentro c'è qualcuno. Le ho chiesto scusa. Davvero."],
+    ["giova","Fino a ieri ogni problema aveva una mossa giusta. Questo no. Ma una cosa la so: nessuno deciderà al posto nostro. Né la Corona, né il Concilio."],
+    ["narr","Fine dell'Atto II · Le Radici. Atto III, Il cristallo che respira: in arrivo."],
+  ],
+  reward:{text:"Dagli archivi del tribunale Giova recupera un Sigillo di ottone, che servirà per la promozione di classe.", items:[["giova","Sigillo di ottone",1]]},
+},
 ];
 
 /* ============================== STATO ============================== */
@@ -711,6 +822,7 @@ const THEMES = {
   city:   {base:"#5c6c3a", blobs:["#73844a","#4e5f33","#808c4f","#46572f","#6a7a40"], blade:"rgba(170,190,110,.28)"},
   country:{base:"#6a7b3e", blobs:["#84964f","#5a6b36","#93a05a","#506232","#7a8a46"], blade:"rgba(200,215,130,.32)"},
   forest: {base:"#33482f", blobs:["#3f5a37","#2a3d27","#4b6a3e","#24352a","#3a5240"], blade:"rgba(140,190,120,.25)", mist:true},
+  forestnight:{base:"#33482f", blobs:["#3f5a37","#2a3d27","#4b6a3e","#24352a","#3a5240"], blade:"rgba(140,190,120,.2)", mist:true, night:true},
   night:  {base:"#56663a", blobs:["#6a7a44","#4a5a32","#77844a","#425230","#62723e"], blade:"rgba(170,190,110,.22)", night:true},
 };
 const isPaved = (x,y) => { const k=K(x,y); return k==="g" || k==="F" || (CH && CH.pave && [".","k","L","r"].includes(k)); };
@@ -1187,7 +1299,7 @@ function showInfo(u){
     <div class="stats">${stats}</div>
     <div class="weap">${w.n} <small>${w.staff?`cura ${w.heal}+Mag`:`Pot ${w.mt} · Prec ${w.hit} · Crit ${w.cr||0} · Gittata ${w.r[0]===w.r[1]?w.r[0]:w.r.join("-")}`}</small></div>
     ${u.skill?`<div class="skill"><b>${u.skill.n}</b> · ${u.skill.d}</div>`:""}
-    ${u.items?.length?`<div class="weap">${u.items.map(i=>`${i.n} ×${i.q}`).join(" · ")} <small>(cura 10 PV)</small></div>`:""}
+    ${u.items?.length?`<div class="weap">${u.items.filter(i=>i.q>0).map(i=>`${i.n} ×${i.q} <small>${i.n==="Tonico"?"(cura 10 PV)":i.n==="Sigillo di ottone"?"(promozione, in arrivo)":""}</small>`).join(" · ")}</div>`:""}
     <div class="weap"><small>Terreno: ${t.n}${t.d||t.a?` · Dif +${t.d} · Schivata +${t.a}`:""}${t.heal?" · cura il 10% a inizio fase":""}</small></div>`;
 }
 function closeMenu(){ document.querySelectorAll(".menu").forEach(m=>m.remove()); }
@@ -1363,6 +1475,7 @@ function checkEnd(){
   if(ended) return;
   const leader=units.find(u=>u.leader), g=CH.goal, boss=units.find(u=>u.boss);
   if(!leader || leader.hp<=0){ ended=true; setTimeout(()=>endScreen(false, "Giova è caduto: la Compagnia si ritira."), 500*SPEED); return; }
+  if(g.protect){ const pu=units.find(u=>u.id===g.protect); if(pu && pu.hp<=0){ ended=true; setTimeout(()=>endScreen(false, pu.name+" è caduta: la missione è fallita."), 500*SPEED); return; } }
   let win=false;
   if((g.type==="boss" || g.alt==="boss") && boss && boss.hp<=0) win=true;
   if((g.type==="rout" || g.type==="survive") && !alive("enemy").length && !pendingSpawns()) win=true;
@@ -1387,7 +1500,7 @@ function chapterComplete(){
     ${R.text?`<p class="reward">${R.text}</p>`:""}
     <table class="party">${rows}</table>
     <div class="btns" style="justify-content:center;margin-top:14px">
-      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua nei prossimi capitoli: il Pozzo delle Voci aspetta la Compagnia.</p>`}
+      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua nell'Atto III, Il cristallo che respira: in arrivo.</p>`}
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
   if(next) $("#goNext").onclick=()=>playChapter(CHI+1);
   $("#goTitle").onclick=()=>titleScreen();
@@ -1406,7 +1519,7 @@ function titleScreen(){
     <p>Un gioco tattico a turni. ${CHAPTERS.length} capitoli scritti finora.</p>
     <div class="tbtns">
       ${s && !done ? `<button class="btn primary" id="tCont">Continua · ${CHAPTERS[next].title}</button>` : ""}
-      ${done ? `<p class="reward">Hai completato tutti i capitoli scritti finora. Il seguito è in arrivo.</p>` : ""}
+      ${done ? `<p class="reward">Hai completato tutti i capitoli scritti finora. L'Atto III è in arrivo.</p>` : ""}
       <button class="btn ${s && !done?"":"primary"}" id="tNew">Nuova partita</button>
       ${s ? `<button class="btn" id="tSel">Scegli capitolo</button>` : ""}
     </div><div id="tList"></div></div>`, true);
