@@ -8,7 +8,8 @@ Gioco tattico a turni su griglia, nel browser, da PC e da telefono. Mondo fantas
 
 - **16 capitoli giocabili**: prologo, capitoli 1-12, scelta della rotta e primo capitolo di ognuna delle tre rotte.
 - Motore a moduli con tutti i contenuti in file JSON (`dati/`): aggiungere un capitolo vuol dire scrivere un JSON.
-- Supporti, promozioni, accampamento, salvataggio automatico.
+- Supporti, promozioni, accampamento con armeria, mercato e cucina, schieramento prima di ogni capitolo.
+- Nemici con IA tattica (o semplice, a scelta), tre slot di salvataggio con esportazione in un file, comandi pensati anche per il telefono.
 
 ## File
 

@@ -2,6 +2,7 @@
 export const G = {
   dati: null,        // tutto il contenuto di dati/
   partita: null,     // ciò che viene salvato
+  slot: 1,           // lo slot in cui la partita si salva da sola
   b: null,           // la battaglia in corso (motore)
   lato: 48,          // lato di una casella in pixel
   sel: null, origine: null, raggio: null, armaPrima: null,

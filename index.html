@@ -17,6 +17,7 @@
     <div class="chap" id="chap"></div>
     <div class="phase p" id="phase">Turno 1 · Giocatore</div>
   </header>
+  <div class="striscia" id="mini" aria-live="polite"></div>
   <div class="board-wrap" id="wrap">
     <div id="board">
       <canvas id="bg"></canvas>
@@ -30,7 +31,7 @@
   </div>
   <aside>
     <div class="card" id="info"><div class="empty">Tocca un'unità per vedere le sue statistiche. Le tue sono blu, i nemici rossi.</div></div>
-    <div class="card">
+    <div class="card azioni">
       <div class="btns">
         <button class="btn primary" id="bEnd">Fine turno</button>
         <button class="btn" id="bDanger">Zone nemiche</button>
@@ -43,7 +44,7 @@
       <b>Obiettivo:</b> <span id="goalTxt"></span> Se <span id="capoTxt">Giova</span> cade, la missione fallisce; gli altri si ritirano e tornano al prossimo capitolo.<br>
       <b>Triangolo del ferro:</b> spada › ascia › lancia › spada.<br>
       <b>Triangolo dell'ingegno:</b> etere › congegni › polvere › etere.<br>
-      <b>Comandi:</b> tocca un'unità, poi una casella blu. Tasto destro o Esc per tornare indietro.<br>
+      <b>Comandi:</b> tocca un'unità, poi una casella blu. Tasto destro o Esc per tornare indietro; sul telefono tocca fuori dal menu, usa Annulla o tieni premuto sulla mappa.<br>
       <small>Icone delle armi: <a href="https://game-icons.net" target="_blank" rel="noopener" style="color:var(--muted)">game-icons.net</a> (Lorc, Delapouite, Skoll), CC BY 3.0.</small>
     </div>
     <div class="card"><div class="combatlog" id="log" aria-live="polite"></div></div>

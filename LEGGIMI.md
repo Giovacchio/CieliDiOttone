@@ -22,7 +22,7 @@ Per provare il gioco sul proprio computer: `node strumenti/servi.js` e poi http:
 | Cartella | Cosa contiene |
 |---|---|
 | `dati/` | Tutto il contenuto: capitoli, supporti, personaggi, classi, armi, terreni, regole |
-| `js/motore/` | Le regole, senza grafica: `battaglia.js` (turni, scontri, obiettivi), `combattimento.js` (formule), `movimento.js`, `ia.js`, `supporti.js`, `campagna.js` (tra un capitolo e l'altro) |
+| `js/motore/` | Le regole, senza grafica: `battaglia.js` (turni, scontri, obiettivi), `combattimento.js` (formule), `movimento.js`, `ia.js` e `ia-tattica.js`, `supporti.js`, `inventario.js` (armi, deposito, mercato), `campagna.js` (tra un capitolo e l'altro) |
 | `js/interfaccia/` | Lo schermo: battaglia, dialoghi, accampamento, titolo, mappa dipinta, ritratti |
 | `test/` | Test automatici |
 | `strumenti/` | Controllo dei dati, simulatore, collaudo nel browser, confronto con il prototipo |
@@ -79,6 +79,8 @@ girano senza browser, in un paio di secondi.
   `"sveglia": 4` lo fa avanzare dal turno 4. Gli **ospiti** sono alleati comandati dal giocatore: `"squadra": "alleato", "ospite": true`.
 - **dialoghi**: `["chi", "testo"]`, con un terzo elemento facoltativo per l'espressione del ritratto (`["wata", "…", "sorriso"]`).
   "chi" è un personaggio, un nome di `png.json` (`narr` = narratore) o l'`id` di un'unità del capitolo.
+- **ricompensa**: `"oro"` (paga della missione, si spende al mercato), `"armi"` (l'arma viene data e impugnata; quella vecchia resta nell'inventario),
+  `"oggetti"`, `"testo"` (la frase mostrata a fine capitolo).
 - **scelta della rotta**: vedi `c12.json` (`"scelta"`).
 
 ## Aggiungere un personaggio alla Compagnia
@@ -97,6 +99,7 @@ girano senza browser, in un paio di secondi.
 }
 ```
 
+- `"usa"`: i tipi di arma che sa portare (`spada`, `lancia`, `ascia`, `arco`, `etere`, `congegni`, `polvere`, `cura`). Una promozione può aggiungerne con `"usa"`.
 - `"entra"`: il capitolo in cui si unisce (senza, c'è dall'inizio). `"lv"` e `"stat"` sono quelli con cui arriva; `crescita` è la probabilità (%) di +1 a ogni livello.
 - Ricorda di dare al capitolo abbastanza caselle di `schieramento`.
 - **Effetti delle abilità** (si possono combinare):
@@ -142,10 +145,30 @@ In `dati/promozioni.json`, sotto l'id del personaggio, due strade:
 L'abilità della promozione **sostituisce** quella di base: ripeti gli effetti che devono restare.
 Livello richiesto e oggetto (`sigillo`) sono in `dati/regole.json`.
 
+## Armi, oggetti e mercato
+
+- `dati/armi.json`: `tipo` (decide il triangolo e chi può usarla), `potenza`, `precisione`, `critico`, `gittata` `[min, max]`,
+  `"magica": true` (usa Mag contro Res), `"efficace": "corazza"` o `"volo"` (potenza ×3), `"cura": 10` per gli strumenti di cura, `icona` (da `icone.json`).
+- `dati/oggetti.json`: per ora `tipo` `cura` (con `pv`) e `promozione`.
+- `dati/mercato.json`: cosa si vende e a quanto; `"da": "c4"` mette la merce in vendita solo da quel capitolo in poi.
+  Si rivende a metà prezzo, e solo ciò che il mercato tratta (le armi uniche della storia non si vendono).
+- Ogni personaggio porta fino a 4 armi; il resto sta nel deposito della Compagnia (scheda Armeria).
+
+## IA dei nemici
+
+`"ia"` in `dati/regole.json`: `tattica` (predefinita) o `classica` (quella del prototipo). Il giocatore può cambiarla dal titolo.
+I pesi della tattica si ritoccano aggiungendo `"iaTattica": { "sogliaRitirata": 0.25, ... }` a `regole.json` (i nomi sono in cima a `js/motore/ia-tattica.js`).
+Per un'IA nuova: scrivi una funzione come `agisciTattica` e registrala con `registraIA("nome", funzione)`.
+
+## Salvataggi
+
+Tre slot nel browser (`js/salvataggi.js`), salvataggio automatico nello slot in uso tra un capitolo e l'altro, esportazione e importazione in un file `.json`.
+Se cambi la forma della partita salvata, alza `VERSIONE` in `js/motore/campagna.js` e scrivi la conversione come è stato fatto per `migraV1`.
+
 ## Bilanciamento
 
 - `node strumenti/simula_campagna.js 30 corona` (o `radici`, `libere`): il bot gioca peggio di una persona, quindi i numeri servono a
   confrontare i capitoli tra loro. Un capitolo che il bot vince al primo tentativo meno di una volta su tre è probabilmente troppo duro.
 - `node strumenti/confronta_prototipo.js` (richiede Playwright) dimostra che il motore applica le stesse regole del prototipo:
-  stesse battaglie, stessi tiri, stessi risultati. Vale finché `"ia"` in `regole.json` è `classica`.
+  stesse battaglie, stessi tiri, stessi risultati (il confronto usa sempre l'IA `classica`, qualunque sia quella scelta in `regole.json`).
 - `node strumenti/collauda.js` (richiede Playwright) prova il gioco nel browser, su PC e telefono, e salva gli screenshot.

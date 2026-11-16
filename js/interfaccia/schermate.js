@@ -7,42 +7,72 @@ import { ETICHETTE, unitaCompagnia } from "../motore/unita.js";
 import { statoCoppia, prossimoLivello, livelloNumero, prontoDaLeggere } from "../motore/supporti.js";
 import { nuovaPartita, concludiCapitolo, capitoliAperti, sulPercorso, contaOggetto, puoPromuovere, promuovi, leggiSupporto, conversazione } from "../motore/campagna.js";
 import { tipiUsabili, puoUsare, passaArma, passaOggetto, impugna, merce, compra, vendi, prezzoVendita, MAX_ARMI } from "../motore/inventario.js";
-import { caricaPartita, salvaPartita, cancellaPartita } from "../salvataggi.js";
+import { elencaSlot, salvaSlot, cancellaSlot, usaSlot, testoEsportazione, leggiEsportazione, scaricaFile, scegliFile, scriviPreferenza } from "../salvataggi.js";
 
-const salva = () => salvaPartita(G.partita);
+const salva = () => salvaSlot(G.slot, G.partita);
 const titoloCapitolo = (id) => G.dati.capitoli[id].titolo;
 let scheda = "comp";
 
 function inizia(id) { G.inBattaglia = true; return giocaCapitolo(id); }
 
 // ------------------------------------------------------------------ titolo
-export function titolo() {
+const mediaLivelli = (p) => { const l = Object.values(p.compagnia).map((c) => c.lv); return Math.round(l.reduce((a, b) => a + b, 0) / l.length); };
+const quando = (ms) => ms ? new Date(ms).toLocaleString("it-IT", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
+
+export function titolo(avviso = "") {
   const D = G.dati;
+  $("#prep")?.remove();
   G.inBattaglia = false;
-  const salvata = caricaPartita(D);
-  G.partita = salvata || nuovaPartita(D);
-  const p = G.partita, finita = salvata && !p.prossimo, primo = D.campagna.capitoli[0];
-  preparaBattaglia(p.prossimo || primo);
+  const slot = elencaSlot(D), inUso = slot.find((s) => s.n === G.slot && s.partita) || slot.filter((s) => s.partita).sort((a, b) => b.quando - a.quando)[0];
+  if (inUso) { G.slot = inUso.n; usaSlot(G.slot); }
+  G.partita = inUso ? inUso.partita : nuovaPartita(D);
+  const primo = D.campagna.capitoli[0];
+  preparaBattaglia(G.partita.prossimo || primo);
   G.chiusa = true; // la mappa dietro al titolo è solo uno sfondo
   const comuni = D.campagna.capitoli.filter((id) => !D.capitoli[id].rotta).length, conRotte = D.campagna.capitoli.length > comuni;
+  const tattica = (G.ia || D.regole.ia || "classica") === "tattica";
+  const riga = (s) => {
+    const p = s.partita;
+    if (!p) return `<div class="slot vuoto"><div class="sn">Slot ${s.n}</div><div class="si muted">Vuoto</div>
+      <div class="sb"><button class="btn mini sNuova" data-n="${s.n}">Nuova partita</button><button class="btn mini sImporta" data-n="${s.n}">Importa file</button></div></div>`;
+    const dove = p.prossimo ? titoloCapitolo(p.prossimo) : "Storia completata fin qui";
+    return `<div class="slot${s.n === G.slot ? " on" : ""}"><div class="sn">Slot ${s.n}</div>
+      <div class="si"><b>${h(dove)}</b><br><small>Livello medio ${mediaLivelli(p)} · ${p.oro || 0} oro${p.bandiere.rotta ? " · rotta " + h(D.campagna.rotte[p.bandiere.rotta].nome) : ""} · ${quando(s.quando)}</small></div>
+      <div class="sb"><button class="btn mini primary sContinua" data-n="${s.n}">Continua</button><button class="btn mini sCapitoli" data-n="${s.n}">Capitoli</button>
+        <button class="btn mini sEsporta" data-n="${s.n}">Esporta</button><button class="btn mini sCopia" data-n="${s.n}">Copia</button><button class="btn mini sCancella" data-n="${s.n}">Cancella</button></div></div>`;
+  };
   velo(`<div class="end title" role="dialog" aria-label="Titolo"><div class="kicker">La Compagnia della Brace</div><h2>${h(D.campagna.titolo)}</h2>
     <p>Un gioco tattico a turni. ${comuni} capitoli scritti finora${conRotte ? ", più quelli delle tre rotte" : ""}.</p>
-    <div class="tbtns">
-      ${salvata && !finita ? `<button class="btn primary" id="tCont">Continua${p.completati.length ? " dall'accampamento" : ""} · ${h(titoloCapitolo(p.prossimo))}</button>` : ""}
-      ${finita ? `<p class="reward">Hai completato tutti i capitoli scritti finora. Il seguito è in arrivo.</p><button class="btn primary" id="tCamp">Torna all'accampamento</button>` : ""}
-      <button class="btn ${salvata ? "" : "primary"}" id="tNew">Nuova partita</button>
-      ${salvata ? `<button class="btn" id="tSel">Scegli capitolo</button>` : ""}
-    </div><div id="tList"></div></div>`, true);
-  if ($("#tCont")) $("#tCont").onclick = () => p.completati.length ? accampamento() : inizia(p.prossimo);
-  if ($("#tCamp")) $("#tCamp").onclick = () => accampamento();
-  $("#tNew").onclick = () => {
-    if (salvata && p.completati.length && !confirm("Cominciare una nuova partita? Quella salvata verrà sostituita.")) return;
-    cancellaPartita(); G.partita = nuovaPartita(D); salva(); inizia(primo);
-  };
-  if ($("#tSel")) $("#tSel").onclick = () => {
-    $("#tList").innerHTML = capitoliAperti(D, p).map((id) => `<button class="btn chbtn" data-id="${id}">${h(titoloCapitolo(id))}</button>`).join("");
-    $$(".chbtn").forEach((b) => b.onclick = () => inizia(b.dataset.id));
-  };
+    <div class="slots">${slot.map(riga).join("")}</div>
+    <div id="tList"></div>
+    <p class="muted small" id="tAvviso">${h(avviso || "La partita si salva da sola nello slot in uso, tra un capitolo e l'altro.")}</p>
+    <div class="btns" style="justify-content:center"><button class="btn mini" id="tIA" aria-pressed="${tattica}">Nemici: ${tattica ? "tattici" : "semplici"}</button></div></div>`, true);
+  const partitaDi = (n) => slot.find((s) => s.n === +n).partita;
+  const attiva = (n) => { G.slot = +n; usaSlot(G.slot); G.partita = partitaDi(n); };
+  $$(".sContinua").forEach((b) => b.onclick = () => { attiva(b.dataset.n); const p = G.partita; if (!p.prossimo || p.completati.length) accampamento(); else inizia(p.prossimo); });
+  $$(".sCapitoli").forEach((b) => b.onclick = () => {
+    attiva(b.dataset.n);
+    $("#tList").innerHTML = `<p class="muted small">Slot ${G.slot}: rigioca un capitolo (i livelli restano quelli di adesso).</p>` + capitoliAperti(D, G.partita).map((id) => `<button class="btn chbtn" data-id="${id}">${h(titoloCapitolo(id))}</button>`).join("");
+    $$(".chbtn").forEach((c) => c.onclick = () => inizia(c.dataset.id));
+  });
+  $$(".sNuova").forEach((b) => b.onclick = () => { G.slot = +b.dataset.n; usaSlot(G.slot); G.partita = nuovaPartita(D); salva(); inizia(primo); });
+  $$(".sCancella").forEach((b) => b.onclick = () => { if (confirm(`Cancellare la partita dello slot ${b.dataset.n}? Non si può tornare indietro.`)) { cancellaSlot(+b.dataset.n); titolo(`Slot ${b.dataset.n} cancellato.`); } });
+  $$(".sEsporta").forEach((b) => b.onclick = () => {
+    scaricaFile(`cieli-di-ottone-slot${b.dataset.n}-${new Date().toISOString().slice(0, 10)}.json`, testoEsportazione(partitaDi(b.dataset.n)));
+    $("#tAvviso").textContent = "File scaricato: lo trovi tra i download. Per riprenderlo, usa \"Importa file\" su uno slot vuoto.";
+  });
+  $$(".sCopia").forEach((b) => b.onclick = () => {
+    const libero = slot.find((s) => !s.partita);
+    if (!libero) { $("#tAvviso").textContent = "Non ci sono slot vuoti: cancellane uno per fare una copia."; return; }
+    salvaSlot(libero.n, partitaDi(b.dataset.n)); titolo(`Slot ${b.dataset.n} copiato nello slot ${libero.n}.`);
+  });
+  $$(".sImporta").forEach((b) => b.onclick = async () => {
+    const testo = await scegliFile();
+    if (testo == null) return;
+    try { salvaSlot(+b.dataset.n, leggiEsportazione(D, testo)); G.slot = +b.dataset.n; usaSlot(G.slot); titolo(`Partita importata nello slot ${b.dataset.n}.`); }
+    catch (e) { $("#tAvviso").textContent = e.message; }
+  });
+  $("#tIA").onclick = () => { G.ia = tattica ? "classica" : "tattica"; scriviPreferenza("ia", G.ia); titolo(tattica ? "Nemici semplici: avanzano e colpiscono, come nel primo prototipo." : "Nemici tattici: si ritirano, proteggono i guaritori, aspettano i compagni."); };
 }
 
 // ------------------------------------------------------------------ fine della battaglia

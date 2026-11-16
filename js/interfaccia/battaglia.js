@@ -99,7 +99,8 @@ export function adatta() {
   if (!G.b) return;
   const involucro = $("#wrap"), stretto = window.innerWidth <= 860;
   const larghezza = involucro.clientWidth - 4, altezza = stretto ? 9999 : involucro.clientHeight - 4;
-  G.lato = Math.max(stretto ? 34 : 22, Math.floor(Math.min(larghezza / G.b.larghe, altezza / G.b.alte, 64)));
+  G.stretto = stretto;
+  G.lato = Math.max(stretto ? 44 : 22, Math.floor(Math.min(larghezza / G.b.larghe, altezza / G.b.alte, 64)));
   tavola().style.width = G.b.larghe * G.lato + "px";
   tavola().style.height = G.b.alte * G.lato + "px";
   disegnaMappa($("#bg"), G.b.cap, G.lato);
@@ -206,8 +207,23 @@ export function schedaStat(u, conPV) {
 export function rigaOggetti(u) {
   return u.oggetti.filter((i) => i.q > 0).map((i) => { const O = G.dati.oggetti[i.id]; return `${h(O.nome)} ×${i.q} <small>(${h(O.descrizione || "")})</small>`; }).join(" · ");
 }
+// Porta un'unità (o una casella) al centro della parte visibile della mappa: serve sul telefono, dove la mappa scorre.
+export function inquadra(c) {
+  const w = $("#wrap"), T = G.lato;
+  if (!c || (w.scrollWidth <= w.clientWidth + 2 && w.scrollHeight <= w.clientHeight + 2)) return;
+  const x = c.x * T + T / 2, y = c.y * T + T / 2, margine = T * 1.5;
+  if (x < w.scrollLeft + margine || x > w.scrollLeft + w.clientWidth - margine || y < w.scrollTop + margine || y > w.scrollTop + w.clientHeight - margine)
+    w.scrollTo({ left: x - w.clientWidth / 2, top: y - w.clientHeight / 2, behavior: "smooth" });
+}
+function mostraMini(u) {
+  const m = $("#mini");
+  if (!u) { m.innerHTML = `<b>Obiettivo</b> ${h(G.b.cap.obiettivo.testo)}`; return; }
+  const a = armaDi(u), t = G.b.terreno(u.x, u.y);
+  m.innerHTML = `<b class="${alleato(u) ? "al" : "ne"}">${h(u.nome)}</b> Lv ${u.lv} · PV ${u.pv}/${u.stat.hp} · ${h(a.nome)}${t.difesa || t.schivata ? ` · ${h(t.nome)} +${t.difesa}/+${t.schivata}` : ""}`;
+}
 export function mostraInfo(u) {
   const box = $("#info");
+  mostraMini(u);
   if (!u) { box.innerHTML = '<div class="empty">Tocca un\'unità per vedere le sue statistiche. Le tue sono blu, i nemici rossi.</div>'; return; }
   const b = G.b, D = G.dati, t = b.terreno(u.x, u.y);
   let legami = "";
@@ -240,13 +256,17 @@ async function racconta(f) {
     case "dialogo": await storia(f.righe); break;
     case "fase":
       aggiornaFase(); ridisegna();
+      if (f.fase === "giocatore") inquadra(b.capo());
       await striscione(f.fase === "giocatore" ? "Fase del giocatore" : "Fase nemica", f.fase === "giocatore" ? "p" : "e");
       break;
     case "rinforzi":
       registro(`<b>Rinforzi${f.unita.every((u) => !alleato(u)) ? " nemici" : ""}:</b> ${f.unita.length}.`);
-      ridisegna(); await pausa(400); break;
-    case "scelta": mostraInfo(f.u); break;
-    case "muovi": disegnaUnita(); await pausa(320); break;
+      ridisegna(); inquadra(f.unita[0]);
+      for (const u of f.unita) effetto(u, "arrivo");
+      await pausa(500); break;
+    case "scelta": mostraInfo(f.u); inquadra(f.u); break;
+    case "ritirata": registro(`${h(f.u.nome)} si ritira.`); break;
+    case "muovi": inquadra(f.u); disegnaUnita(); await pausa(360); break;
     case "assalto": {
       const el = elementi.get(f.a), T = G.lato;
       if (!el) break;
@@ -257,10 +277,12 @@ async function racconta(f) {
     }
     case "colpo":
       numeroVolante(f.d, f.critico ? `CRITICO ${f.danno}` : String(f.danno), f.critico ? "#ffcf5a" : "#fff");
+      effetto(f.d, f.critico ? "critico" : "colpito");
+      if (f.critico) { tavola().classList.remove("scossa"); void tavola().offsetWidth; tavola().classList.add("scossa"); }
       registro(`${h(f.a.nome)} colpisce ${h(f.d.nome)}${f.critico ? " con un critico" : ""}: ${f.danno} danni.`);
       disegnaUnita(); await pausa(260); break;
     case "mancato":
-      numeroVolante(f.d, "Mancato", "#9aa");
+      numeroVolante(f.d, "Mancato", "#9aa"); effetto(f.d, "schiva");
       registro(`${h(f.a.nome)} manca ${h(f.d.nome)}.`);
       await pausa(260); break;
     case "sconfitta": {
@@ -274,7 +296,7 @@ async function racconta(f) {
     case "pe": registro(`${h(f.u.nome)} ottiene ${f.quanti} PE.`); break;
     case "livello": await mostraLivello(f.u, f.aumenti); break;
     case "cura":
-      numeroVolante(f.t, "+" + f.pv, "#8de08f");
+      numeroVolante(f.t, "+" + f.pv, "#8de08f"); effetto(f.t, "curato");
       if (f.oggetto) registro(`${h(f.t.nome)} usa ${h(f.oggetto.nome)}: +${f.pv} PV.`);
       else if (f.u) registro(`${h(f.u.nome)} cura ${h(f.t.nome)}: +${f.pv} PV.`);
       disegnaUnita();
@@ -284,6 +306,15 @@ async function racconta(f) {
       registro(`<b>Supporto ${f.livello} pronto:</b> ${h(f.a.nome)} e ${h(f.b.nome)}. Leggetelo all'accampamento.`); break;
     case "fine": break; // se ne occupa esegui(), a racconto finito
   }
+}
+// Piccola animazione su una pedina (colpo, critico, schivata, cura, arrivo): è solo una classe CSS a tempo.
+function effetto(u, classe) {
+  const el = elementi.get(u);
+  if (!el) return;
+  el.classList.remove("colpito", "critico", "schiva", "curato", "arrivo");
+  void el.offsetWidth;
+  el.classList.add(classe);
+  setTimeout(() => el.classList.remove(classe), 600);
 }
 function mostraLivello(u, aumenti) {
   return new Promise((fine) => {
@@ -302,7 +333,7 @@ async function chiudiBattaglia() {
 }
 
 // ------------------------------------------------------------------ comandi del giocatore
-const libero = () => !G.occupato && !G.chiusa && G.b && G.b.fase === "giocatore";
+const libero = () => !G.occupato && !G.chiusa && G.modo !== "schiera" && G.b && G.b.fase === "giocatore";
 
 function chiudiMenu() { $$(".menu").forEach((m) => m.remove()); }
 function menu(u, voci) {
@@ -320,7 +351,8 @@ function menu(u, voci) {
   tavola().appendChild(m);
   const sinistra = Math.min((u.x + 1) * T + 4, G.b.larghe * T - 150), alto = Math.min(u.y * T, G.b.alte * T - (voci.length * 38 + 10));
   m.style.left = Math.max(0, sinistra) + "px"; m.style.top = Math.max(0, alto) + "px";
-  m.querySelector("button")?.focus();
+  m.querySelector("button")?.focus({ preventScroll: true });
+  if (G.stretto) m.scrollIntoView({ block: "nearest", inline: "nearest" });
 }
 function apriMenu(u) {
   const b = G.b, D = G.dati, utili = b.armiUtili(u), voci = [];
@@ -455,7 +487,17 @@ export function collegaComandi({ alTitolo, velocita, cambiaVelocita }) {
     const { x, y } = daEvento(e);
     if (G.b.dentro(x, y)) suCasella(x, y);
   });
-  tavola().addEventListener("contextmenu", (e) => { e.preventDefault(); annulla(); });
+  // tasto destro = annulla; sul telefono lo stesso gesto è tenere premuto (alcuni telefoni lo traducono già in "tasto destro")
+  let timer = null, ultimoAnnulla = 0, saltaClic = false;
+  const annullaUnaVolta = () => { const ora = Date.now(); if (ora - ultimoAnnulla > 400) { ultimoAnnulla = ora; annulla(); } };
+  tavola().addEventListener("contextmenu", (e) => { e.preventDefault(); annullaUnaVolta(); });
+  tavola().addEventListener("touchstart", (e) => {
+    clearTimeout(timer);
+    if (e.touches.length !== 1 || e.target.closest(".menu")) return;
+    timer = setTimeout(() => { saltaClic = true; if (navigator.vibrate) navigator.vibrate(15); annullaUnaVolta(); setTimeout(() => { saltaClic = false; }, 700); }, 550);
+  }, { passive: true });
+  for (const ev of ["touchend", "touchmove", "touchcancel"]) tavola().addEventListener(ev, () => clearTimeout(timer), { passive: true });
+  tavola().addEventListener("click", (e) => { if (saltaClic) { e.stopImmediatePropagation(); saltaClic = false; } }, true);
   tavola().addEventListener("mousemove", (e) => {
     const c = $("#cursor");
     if (!G.b) return;
