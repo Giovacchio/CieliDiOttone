@@ -121,6 +121,9 @@ aside{min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;overf
 .tbtns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
 #tList{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:40vh;overflow:auto}
 .chbtn{text-align:left}
+.end.choice .opt{text-align:left;padding:12px 14px;line-height:1.35}
+.end.choice .opt small{color:var(--muted);font-weight:400}
+.end.choice .opt:hover b{color:var(--brass)}
 @media (max-width:860px){
   body{overflow:auto}
   .app{height:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto}
@@ -187,6 +190,7 @@ const TER = {
   "~": {n:"Fiume", c:{inf:99,arm:99,cav:99,fly:1}, d:0, a:10},
   "X": {n:"Muro", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
   "H": {n:"Casa", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
+  "#": {n:"Parete di roccia", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
   "T": {n:"Radice gigante", c:{inf:99,arm:99,cav:99,fly:99}, d:0, a:0},
   "c": {n:"Vena d'etere", c:{inf:2,arm:2,cav:3,fly:1}, d:1, a:10, heal:.1},
   "F": {n:"Fornace", c:{inf:2,arm:2,cav:2,fly:2}, d:1, a:15, heal:.1},
@@ -254,7 +258,7 @@ const CLASSES = {
 let UID = 0;
 function foe(cls, lv, x, y, o={}){
   const C = CLASSES[cls], st = {};
-  for(const k of STAT_KEYS) st[k] = C.st[k] + Math.floor((C.gr[k]||0)*(lv-1) + .5);
+  for(const k of STAT_KEYS) st[k] = C.st[k] + Math.floor((C.gr[k]||0)*(lv-1) + .5) + ((o.bonus&&o.bonus[k])||0);
   return mkUnit(Object.assign({id:"e"+(UID++), name:C.name, cls, team:"enemy", lv, x, y, move:C.move, mov:C.mov, w:C.w, ai:"attack", st}, o));
 }
 
@@ -294,6 +298,9 @@ const NPC = {
   thalen:   {name:"Custode Thalen", team:"enemy", cls:"Custode anziano", look:{skin:"#d8b49a", hair:"#c8c8c0", style:"hood", coat:"#1f4a36", beard:"full", eye:"#7ac08a"}},
   erba:     {name:"Erba, guaritrice", team:"ally", cls:"Guaritrice", look:{skin:"#c99a74", hair:"#6a4a2a", style:"longv", coat:"#6a7a4a", eye:"#4a3020"}},
   custode:  {name:"Custode", team:"enemy", cls:"Custode delle Radici", look:{skin:"#d8b49a", hair:"#2a3a2a", style:"hood", coat:"#1f4a36", eye:"#7ac08a"}},
+  kessel:   {name:"Sovrintendente Kessel", team:"enemy", cls:"Sovrintendente", look:{skin:"#d8b090", hair:"#6a5a4a", style:"tricorn", coat:"#4a4a52", beard:true, eye:"#3a3a3a"}},
+  strand:   {name:"Direttore Strand", team:"enemy", cls:"Direttore dell'Ufficio dell'Etere", look:{skin:"#e6c4a4", hair:"#2a2a2e", style:"short", coat:"#1e1e26", acc:"epaulette", eye:"#7a8aa0"}},
+  arven:    {name:"Gran Custode Arven", team:"enemy", cls:"Gran Custode", look:{skin:"#cfae92", hair:"#f0eee6", style:"hood", coat:"#e6e0cc", beard:"full", eye:"#8ad0a0"}},
   odo:      {name:"Caposquadra Odo", team:"enemy", cls:"Caposquadra", look:{skin:"#d0a882", hair:"#4a3a2a", style:"helm", coat:"#6a5a3a", beard:true, eye:"#2a1c14"}},
 };
 
@@ -533,7 +540,7 @@ const CHAPTERS = [
     foe("Medico",4,14,0,{ai:"range", look:CROWN("#e8e0d0")}),
     foe("Lama",5,2,8,{name:"Duellante della Corona", look:CROWN("#8a3a2a")}),
     foe("Lanciere",6,11,8),
-    foe("Lama",8,13,1,{id:"boss", boss:true, retreat:true, name:"Ispettrice Ferrante", w:"sciabola", ai:"stay", look:NPC.ferrante.look,
+    foe("Lama",8,13,1,{id:"boss", boss:true, retreat:true, bonus:{hp:5,def:2}, name:"Ispettrice Ferrante", w:"sciabola", ai:"stay", look:NPC.ferrante.look,
       quote:"Sai perché la Corona ha bisogno dell'etere, stratega? Negli ospedali di Corvara le lampade non si spengono mai. Mia sorella è viva grazie a quelle lampade."}),
   ],
   events:[
@@ -761,7 +768,7 @@ const CHAPTERS = [
     foe("Arciere",7,14,2,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
     foe("Medico",7,10,1,{ai:"range", name:"Guaritore del Concilio", look:{skin:"#e2c0a2", hair:"#ddd", style:"hood", coat:"#d8d2c0", eye:"#5aa070"}}),
     foe("Lanciere",8,3,5,{name:"Guardia del Concilio", look:GUARD}),
-    foe("Custode",9,8,1,{id:"boss", boss:true, retreat:true, name:"Custode Thalen", w:"giudizio", ai:"stay", look:NPC.thalen.look,
+    foe("Custode",9,8,1,{id:"boss", boss:true, retreat:true, bonus:{hp:6,def:2}, name:"Custode Thalen", w:"giudizio", ai:"stay", look:NPC.thalen.look,
       quote:"Tu credi di difendere qualcuno, stratega. Io difendo una foresta che esisteva prima di tutti voi e che esisterà dopo. Questo è il mio calcolo."}),
   ],
   events:[
@@ -790,6 +797,232 @@ const CHAPTERS = [
     ["narr","Fine dell'Atto II · Le Radici. Atto III, Il cristallo che respira: in arrivo."],
   ],
   reward:{text:"Dagli archivi del tribunale Giova recupera un Sigillo di ottone, che servirà per la promozione di classe.", items:[["giova","Sigillo di ottone",1]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 9 */
+{ id:"c9", title:"Capitolo 9 · Le miniere di Cenerossa", theme:"mine", act:"Atto III · Il cristallo che respira",
+  map:[
+  "################",
+  "#..c..#....L.c.#",
+  "#.....b....#...#",
+  "##.m..b..m.#.F.#",
+  "#.L...b....#...#",
+  "#bbbbbbbbbbbbb.#",
+  "#..m......c.m..#",
+  "#.c...##L...#..#",
+  "#.....##....#.c#",
+  "################"],
+  deploy:[[2,6],[1,6],[1,8],[2,8]],
+  goal:{type:"boss", text:"Sconfiggi il Sovrintendente Kessel nel suo ufficio, accanto alla fornace. Le pareti di roccia non si attraversano."},
+  enemies:()=>[
+    foe("Guerriero",9,5,1,{name:"Guardia della miniera", look:CROWN("#5a4a3a")}),
+    foe("Fuciliere",9,9,2,{ai:"range"}),
+    foe("Lanciere",9,8,4,{ai:"range"}),
+    foe("Corazzato",9,12,5,{ai:"range"}),
+    foe("Medico",8,14,4,{ai:"range", look:CROWN("#e8e0d0")}),
+    foe("Arciere",9,13,1,{ai:"range", name:"Arciere della Corona", look:CROWN()}),
+    foe("Segatrice",9,9,7,{name:"Trivella a vapore"}),
+    foe("Lama",9,13,7,{ai:"range", name:"Duellante della Corona", look:CROWN("#8a3a2a")}),
+    foe("Guerriero",9,10,6,{ai:"range", name:"Guardia della miniera", look:CROWN("#5a4a3a")}),
+    foe("Lanciere",11,13,3,{id:"boss", boss:true, bonus:{hp:8,def:3,abi:2}, name:"Sovrintendente Kessel", w:"lanciaA", ai:"stay", look:NPC.kessel.look,
+      quote:"Voi delle Leghe non capite. Qui nessuno muore per colpa nostra: muoiono comunque, di polvere e di vecchiaia. Noi diamo un senso alla loro fine."}),
+  ],
+  events:[
+    {turn:3, phase:"enemy", lines:[["narr","Dalle gallerie laterali escono altre guardie della miniera."]], spawn:()=>[foe("Guerriero",9,14,8,{name:"Guardia della miniera", look:CROWN("#5a4a3a")}), foe("Fuciliere",9,12,1,{ai:"attack"})]},
+  ],
+  intro:[
+    ["narr","Atto III · Il cristallo che respira"],
+    ["narr","Una settimana dopo Lucegrande. Il Registro delle Radici parla di un posto che nessuna mappa della Corona riporta: le miniere di Cenerossa."],
+    ["maelis","Secondo il Registro, a Cenerossa nascono più cristalli che in tutte le Radici messe insieme. Ma lì non ci sono Radici antiche. Non dovrebbe nascere niente."],
+    ["giova","A meno che qualcuno non ce li faccia nascere."],
+    ["wata","Non dirlo. Ti prego, non dirlo ad alta voce."],
+    ["lethy","Lo dico io: è un sistema di produzione. Papà li studia. Di solito sono ingegnosi, e di solito qualcuno ci rimette."],
+    ["mars","Ho preparato una pozione per vedere al buio. L'ho provata su Prospy. Ora mi fissa da due giorni senza sbattere le palpebre. Direi che funziona."],
+    ["maelis","Io resto fuori a fare la guardia. Se un'etermante del Concilio viene vista qui dentro, è guerra."],
+    ["giova","Entriamo, guardiamo, usciamo. Il sovrintendente avrà i registri: è lui il bersaglio."],
+  ],
+  victory:[
+    ["narr","Nell'ufficio del sovrintendente: un registro e una pila di lettere. In fondo alla galleria, una corsia d'ospedale illuminata a etere, con i letti allineati sopra radici trapiantate."],
+    ["wata","Li portano qui quando stanno per morire. Li mettono sopra le radici. E aspettano."],
+    ["mars","Sono minatori. Alle famiglie arrivano una pensione e una lettera: \"Il vostro caro ora illumina Corvara\"."],
+    ["giova","Le lettere sono firmate dall'Ufficio dell'Etere."],
+    ["ferrante","...Fatemi vedere."],
+    ["lethy","Lei! Ispettrice! È entrata da sola? Senza nemmeno un cavaliere meccanico?"],
+    ["ferrante","Vi seguivo da Lucegrande. Volevo il Registro. Adesso... questa è la firma del mio direttore. Io vi ho dato la caccia per difendere questo."],
+    ["ferrante","Mia sorella fa il medico a Corvara, sotto quelle lampade. Se lo scopre..."],
+    ["giova","Allora aiutaci a fermarlo. Dall'interno."],
+    ["ferrante","Domani all'alba torno a Corvara e chiedo spiegazioni al direttore Strand. Se non torno entro sera, saprete che la Corona ha risposto."],
+  ],
+  reward:{text:"Nell'ufficio di Kessel: tre tonici per la Compagnia.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 10 */
+{ id:"c10", title:"Capitolo 10 · La notte di Corvara", theme:"night", act:"Atto III · Il cristallo che respira",
+  map:[
+  "ggLgggwwwgggXXXX",
+  "gggXXgwwwgLgXXXX",
+  "gkgXXgwwwgggggFg",
+  "ggggggwwwgkgLggg",
+  "bbbbbbbbbbbbbbbb",
+  "gggLggwwwggggkgg",
+  "XXXgggwwwggXXXgg",
+  "XXXgkgwwwgLXXXgL",
+  "gggggg===ggggggg",
+  "gLgggkwwwgggkggg"],
+  deploy:[[14,4],[15,3],[15,5],[14,5]],
+  guests:()=>[mkUnit({id:"ferrante", name:"Ispettrice Ferrante", cls:"Ispettrice", team:"ally", guest:true, lv:10, x:13, y:4, move:"inf", mov:6, w:"sciabola",
+    st:{hp:28,for:11,mag:1,abi:12,vel:12,fort:6,def:7,res:4}, gr:{}, look:NPC.ferrante.look,
+    skill:{n:"Ospite", d:"Va portata fuori da Corvara. Se cade, la missione fallisce."}})],
+  goal:{type:"reach", who:"ferrante", tile:[0,4], protect:"ferrante", text:"Porta l'Ispettrice Ferrante all'uscita a ovest, in fondo ai binari (casella d'ottone). Se Ferrante o Giova cadono, la missione fallisce."},
+  enemies:()=>[
+    foe("Corazzato",10,7,4,{ai:"stay"}),
+    foe("Lanciere",10,4,3,{ai:"range"}),
+    foe("Lanciere",10,3,5,{ai:"range"}),
+    foe("Fuciliere",10,5,1,{ai:"range"}),
+    foe("Arciere",10,10,7,{ai:"range", name:"Arciere della Corona", look:CROWN()}),
+    foe("Lama",10,9,2,{name:"Duellante della Corona", look:CROWN("#8a3a2a")}),
+    foe("Lanciere",10,10,0),
+    foe("Medico",9,1,1,{ai:"range", look:CROWN("#e8e0d0")}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["narr","Zoccoli di ottone sul selciato: la cavalleria arriva alle vostre spalle."]], spawn:()=>[foe("Cavaliere",10,15,8), foe("Cavaliere",10,15,9)]},
+    {turn:3, phase:"player", lines:[
+      ["strand","Ispettrice Ferrante. Ti ho dato una carriera, una casa, le lampade per tua sorella. E tu mi ripaghi così."],
+      ["strand","E tu, stratega. Ogni cristallo è una lampada in un ospedale; ogni lampada salva dieci vite. Tu sei uno che conta, giusto? Allora fai il conto."]]},
+    {turn:3, phase:"enemy", lines:[], spawn:()=>[foe("Aeronauta",10,0,0,{look:CROWN("#9a6a2a")}), foe("Aeronauta",10,0,9,{look:CROWN("#9a6a2a")})]},
+    {turn:5, phase:"enemy", lines:[], spawn:()=>[foe("Cavaliere",11,15,4)]},
+  ],
+  intro:[
+    ["narr","Corvara, di notte. La città delle fonderie non dorme mai: le lampade a etere non si spengono."],
+    ["narr","Ferrante non è tornata."],
+    ["giova","Mars, quanto ci mette la tua pozione del fumo a riempire una strada?"],
+    ["mars","Dipende. Se non esplode, un minuto. Se esplode, molto meno."],
+    ["ferrante","Stratega! Sapevo che sareste venuti, anche se non ve l'ho chiesto. Strand mi ha accusata di tradimento. Sono scappata da sola, ma il quartiere è chiuso."],
+    ["lethy","Un'evasione notturna! Come nei romanzi che la governante mi nascondeva sotto il materasso."],
+    ["wata","Prospy le si è strusciata contro le gambe. Prospy non sbaglia mai sulle persone."],
+    ["giova","Ferrante, con noi. Uscita a ovest, in fondo ai binari, oltre il canale. Nessuno resta indietro."],
+  ],
+  victory:[
+    ["ferrante","Fuori. Siamo fuori. ...Grazie. Non sono abituata a dirlo."],
+    ["wata","Giova? Sei rimasto zitto da quando ha parlato Strand."],
+    ["giova","Perché il suo conto torna. Un minatore che muore comunque contro dieci bambini salvati. Ed è proprio questo il problema: torna."],
+    ["lethy","Anche i conti di papà tornano sempre. Non vuol dire che siano giusti. Lo dice la mamma, di solito a cena."],
+    ["mars","Un conto in cui qualcuno non sa di essere un numero non è un conto: è un furto. L'ho letto da qualche parte. O forse l'ho appena inventato."],
+    ["ferrante","Strand ha la flotta. Se il Concilio si muove, lui brucerà le Radici dal cielo. E il Concilio lo sa."],
+    ["ferrante","Tieni, stratega. La mia sciabola d'ottone. Io me ne procurerò un'altra, tu ne avrai bisogno più di me."],
+  ],
+  reward:{text:"Ferrante regala a Giova la sua Sciabola d'ottone.", w:{giova:"sciabola"}},
+},
+/* ---------------------------------------------------------------- CAPITOLO 11 */
+{ id:"c11", title:"Capitolo 11 · Il Cuore delle Radici", theme:"forest", act:"Atto III · Il cristallo che respira",
+  map:[
+  "TTff.TTTTTT.ffTT",
+  "Tf..cTTTTTTc..fT",
+  "f...cTTTTTTc...f",
+  "..c...c..c...c..",
+  "...f...cc...f...",
+  "~~~~=~~~~~~=~~~~",
+  "..f....ff....f..",
+  "f..c..f..f..c..f",
+  "ff....ssss....ff",
+  "TTff..ssss..ffTT"],
+  deploy:[[7,8],[8,8],[6,9],[9,9]],
+  guests:()=>[mkUnit({id:"maelis", name:"Sorella Maelis", cls:"Saggia delle Radici", team:"ally", guest:true, lv:11, x:8, y:9, move:"inf", mov:5, w:"giudizio",
+    st:{hp:26,for:2,mag:13,abi:10,vel:9,fort:7,def:4,res:13}, gr:{}, look:NPC.maelis.look,
+    skill:{n:"Ospite", d:"Combatte con voi in questo capitolo. Se cade, si ritira."}})],
+  goal:{type:"boss", text:"Sconfiggi il Gran Custode Arven per spezzare il cerchio del Canto del Silenzio. Chi sta sulle vene d'etere si cura: toglietele ai Custodi."},
+  enemies:()=>[
+    foe("Custode",9,4,1,{ai:"range", look:ROOT}),
+    foe("Custode",9,11,1,{ai:"range", look:ROOT}),
+    foe("Custode",9,2,3,{look:ROOT}),
+    foe("Custode",9,13,3,{look:ROOT}),
+    foe("Lanciere",10,4,5,{ai:"stay", name:"Guardia del Concilio", look:GUARD}),
+    foe("Corazzato",10,11,5,{ai:"stay", name:"Guardia di radice", look:GUARD}),
+    foe("Arciere",9,3,4,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Arciere",9,12,4,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+    foe("Custode",14,7,4,{id:"boss", boss:true, retreat:true, bonus:{hp:14,def:5,res:4,vel:3}, name:"Gran Custode Arven", w:"giudizio", ai:"stay", look:NPC.arven.look,
+      quote:"Ogni volta che un cristallo brucia, una voce urla. Il Silenzio è pietà, stratega. Tu che conti tutto, conta le urla."}),
+  ],
+  events:[
+    {turn:3, phase:"enemy", lines:[["arven","Custodi! Al Cuore! Il Canto non deve interrompersi!"]], spawn:()=>[foe("Custode",9,1,0,{look:ROOT}), foe("Custode",9,14,0,{look:ROOT})]},
+    {turn:5, phase:"enemy", lines:[], spawn:()=>[foe("Lanciere",10,0,6,{name:"Guardia del Concilio", look:GUARD})]},
+  ],
+  intro:[
+    ["narr","Il Cuore delle Radici: l'albero più antico di Valdaria. Si dice che le sue radici attraversino tutto il continente."],
+    ["maelis","Il Gran Custode Arven vuole intonare il Canto del Silenzio. Ogni cristallo di Valdaria si spegnerà. Le voci dormiranno, e la Corona resterà senza flotta..."],
+    ["mars","...e gli ospedali senza luce. E i villaggi come Fondoscuro senza cure."],
+    ["arven","Sorella Maelis. Hai portato i mercenari fino al Cuore. Sai cosa c'è in gioco: le voci soffrono ogni volta che un cristallo brucia. Il Silenzio è pietà."],
+    ["wata","Le voci non soffrono e basta, Gran Custode. Io le sento. Hanno paura, ma non vogliono dormire. Vogliono essere ascoltate."],
+    ["arven","Allora sei tu che non le capisci, bambina."],
+    ["lethy","Le ha dato della bambina. Giova, posso sfidarlo a duello? Formalmente, con il guanto e tutto?"],
+    ["giova","Puoi batterlo, che è meglio. Maelis, come si ferma il Canto?"],
+    ["maelis","Arven tiene il cerchio da solo, al centro. Batti lui e il cerchio si spezza. Ma i Custodi stanno sulle vene d'etere: lì si curano."],
+    ["giova","Allora prima le vene, poi Arven. Ponte a sinistra o a destra: scegliamo quello con meno guardie."],
+  ],
+  victory:[
+    ["arven","Il cerchio... è spezzato. Avete scelto di lasciarle soffrire."],
+    ["wata","Abbiamo scelto di non decidere da soli al posto loro."],
+    ["narr","Arven si ritira nella foresta con i Custodi che gli sono rimasti fedeli."],
+    ["maelis","Il Concilio si spaccherà: metà seguirà Arven, metà no. E Strand lo saprà prima di sera."],
+    ["giova","Allora ci resta poco tempo per decidere da che parte stare."],
+    ["mars","Io intanto ho una notizia: la fiala che canticchiava ha smesso. Credo che abbia sentito il Cuore e si sia calmata. Credo. Spero."],
+  ],
+  reward:{text:"Maelis lascia due tonici a Mars e uno a Wata.", items:[["mars","Tonico",2],["wata","Tonico",1]]},
+},
+/* ---------------------------------------------------------------- CAPITOLO 12 */
+{ id:"c12", title:"Capitolo 12 · Ritorno a Fossa Grigia", theme:"country", act:"Atto III · Il cristallo che respira",
+  map:[
+  "fff.....ff..mm~~ff",
+  "ff..HH...f...m==.f",
+  "f...ss......f.~~..",
+  "....s...ff..r.~~..",
+  "....s...f.....~~.r",
+  "bbbbbbbbbbbbbbbbbb",
+  "..f.....r.....~~..",
+  ".ff....m...ff.~~f.",
+  "ff....mm....f.~~ff",
+  "fff.......fff.~~ff"],
+  deploy:[[14,5],[15,5],[16,5],[13,5]],
+  guests:()=>[
+    mkUnit({id:"ferrante", name:"Ispettrice Ferrante", cls:"Ispettrice", team:"ally", guest:true, lv:11, x:13, y:4, move:"inf", mov:6, w:"spadaA",
+      st:{hp:29,for:11,mag:1,abi:12,vel:12,fort:6,def:8,res:4}, gr:{}, look:NPC.ferrante.look, skill:{n:"Ospite", d:"Combatte con voi. Se cade, si ritira."}}),
+    mkUnit({id:"maelis", name:"Sorella Maelis", cls:"Saggia delle Radici", team:"ally", guest:true, lv:11, x:16, y:4, move:"inf", mov:5, w:"giudizio",
+      st:{hp:26,for:2,mag:13,abi:10,vel:9,fort:7,def:4,res:13}, gr:{}, look:NPC.maelis.look, skill:{n:"Ospite", d:"Combatte con voi. Se cade, si ritira."}})],
+  goal:{type:"survive", turns:6, text:"Resisti 6 turni finché la milizia delle Leghe non chiude il ponte. La Corona arriva da ovest, i Custodi di Arven da est."},
+  enemies:()=>[
+    foe("Cavaliere",10,2,4), foe("Cavaliere",10,2,6),
+    foe("Lanciere",10,5,5), foe("Fuciliere",10,4,3,{ai:"range"}),
+    foe("Custode",10,17,7,{look:ROOT}), foe("Custode",10,17,3,{look:ROOT}),
+    foe("Arciere",10,17,0,{ai:"range", name:"Arciere del Concilio", look:GUARD}),
+  ],
+  events:[
+    {turn:2, phase:"enemy", lines:[["strand","Il Registro, stratega. Consegnalo e la Corona dimenticherà Corvara."]], spawn:()=>[foe("Aeronauta",10,0,0,{look:CROWN("#9a6a2a")}), foe("Aeronauta",10,0,9,{look:CROWN("#9a6a2a")})]},
+    {turn:3, phase:"enemy", lines:[["arven","Il Registro appartiene alle Radici. Bruciatelo, insieme a chi lo porta."]], spawn:()=>[foe("Custode",10,17,9,{look:ROOT}), foe("Lanciere",10,17,1,{name:"Guardia del Concilio", look:GUARD})]},
+    {turn:4, phase:"enemy", lines:[], spawn:()=>[foe("Cavaliere",11,0,5), foe("Cavaliere",10,0,3)]},
+    {turn:5, phase:"enemy", lines:[["lethy","Vedo le bandiere delle Leghe sulla collina! Ancora un turno!"]], spawn:()=>[foe("Custode",11,17,6,{look:ROOT}), foe("Corazzato",10,0,6)]},
+  ],
+  intro:[
+    ["narr","Il ponte di Fossa Grigia, dove tutto era cominciato. Da est arrivano i Custodi di Arven. Da ovest, sotto la flotta di Strand, la Corona."],
+    ["ferrante","Strand vuole il Registro: con quello può dire a tutti che il Concilio nasconde la cura per ogni malattia, e prendersi le Radici con la benedizione del popolo."],
+    ["maelis","Arven vuole il Registro per bruciarlo. Senza, nessuno saprà mai i nomi."],
+    ["lethy","E il Registro ce l'abbiamo noi. Siamo la palla in mezzo al campo."],
+    ["mars","Potremmo strapparlo in due e darne metà a testa? ...Era una battuta. Più o meno."],
+    ["wata","Prospy ha il pelo dritto da tutte e due le parti. Non le ho mai viste così... le voci, voglio dire. Hanno paura."],
+    ["giova","Teniamo il ponte finché la milizia delle Leghe non arriva a chiuderlo. Sei turni. Poi... poi decidiamo."],
+  ],
+  victory:[
+    ["narr","Le campane delle Leghe suonano dall'altra sponda: la milizia di Porto Ambra chiude il ponte. Corona e Concilio si ritirano, per ora."],
+    ["ferrante","Stratega. Vieni con me a Corvara. Con il Registro posso far cadere Strand e cambiare la Corona dall'interno. Le lampade degli ospedali resteranno accese, ma nessuno morirà più per alimentarle."],
+    ["maelis","Giova. Vieni con me a Lucegrande. Con il Registro posso rovesciare Arven e aprire le cure del Concilio a tutti. Le Radici saranno protette, e ogni villaggio avrà un guaritore."],
+    ["lethy","Oppure non andiamo con nessuno. Leggiamo il Registro in tutte le piazze delle Leghe e lasciamo decidere la gente. Papà dice che la verità è l'unica merce che vale di più quando la regali."],
+    ["wata","Io penso alle voci. Chiunque scegliamo, voglio che qualcuno le ascolti."],
+    ["mars","Io le vorrei provare tutte e tre. Non si può, vero? Allora scegli tu, Giova. Noi ti seguiamo."],
+    ["giova","Scelta ottimale, rischio calcolato. Per la prima volta non so fare il conto. Allora scelgo e basta."],
+  ],
+  choice:{prompt:"La Compagnia della Brace sceglie la sua strada. È una scelta definitiva per questa partita.", options:[
+    {id:"corona", label:"Con Ferrante: cambiare la Corona", desc:"Far cadere Strand, tenere accese le lampade degli ospedali senza più morti nascoste."},
+    {id:"radici", label:"Con Maelis: cambiare il Concilio", desc:"Rovesciare Arven, proteggere le Radici e aprire le cure a tutti."},
+    {id:"libere", label:"Con nessuno: la verità alle Leghe", desc:"Leggere il Registro in ogni piazza e affrontare Corona e Concilio insieme."},
+  ]},
+  reward:{text:"Dopo la battaglia, la milizia delle Leghe rifornisce la Compagnia: un tonico a testa.", items:[["giova","Tonico",1],["lethy","Tonico",1],["wata","Tonico",1],["mars","Tonico",1]]},
 },
 ];
 
@@ -823,6 +1056,7 @@ const THEMES = {
   country:{base:"#6a7b3e", blobs:["#84964f","#5a6b36","#93a05a","#506232","#7a8a46"], blade:"rgba(200,215,130,.32)"},
   forest: {base:"#33482f", blobs:["#3f5a37","#2a3d27","#4b6a3e","#24352a","#3a5240"], blade:"rgba(140,190,120,.25)", mist:true},
   forestnight:{base:"#33482f", blobs:["#3f5a37","#2a3d27","#4b6a3e","#24352a","#3a5240"], blade:"rgba(140,190,120,.2)", mist:true, night:true},
+  mine:   {base:"#4a3e30", blobs:["#56483a","#3e342a","#5e5040","#362e26","#4e4234"], blade:"rgba(0,0,0,0)", night:true, nightColor:"rgba(24,14,6,.5)"},
   night:  {base:"#56663a", blobs:["#6a7a44","#4a5a32","#77844a","#425230","#62723e"], blade:"rgba(170,190,110,.22)", night:true},
 };
 const isPaved = (x,y) => { const k=K(x,y); return k==="g" || k==="F" || (CH && CH.pave && [".","k","L","r"].includes(k)); };
@@ -1015,6 +1249,15 @@ function drawMap(){
     ctx.fillStyle="rgba(110,160,80,.7)"; for(let i=0;i<5;i++){ ctx.beginPath(); ctx.arc(cx+(r()-.5)*T*.6, cy-T*.2+(r()-.5)*T*.3, T*(.04+r()*.04),0,7); ctx.fill(); }
     if(r()<.4){ ctx.fillStyle="#8ff5ea"; ctx.beginPath(); ctx.arc(cx+T*.25,cy+T*.2,2,0,7); ctx.fill(); lights.push([cx+T*.25,cy+T*.2,T*.5,"#60f0e0",.25]); } });
 
+
+  // 6d. pareti di roccia
+  tiles((x,y,k,X,Y,r)=>{ if(k!=="#") return;
+    const g=ctx.createLinearGradient(X,Y,X+T,Y+T); g.addColorStop(0,"#5a4c3e"); g.addColorStop(1,"#2e2620"); ctx.fillStyle=g; ctx.fillRect(X,Y,T,T);
+    for(let i=0;i<3;i++){ ctx.fillStyle=`rgba(255,230,190,${.04+r()*.05})`; ctx.beginPath(); const cx=X+r()*T, cy=Y+r()*T; ctx.moveTo(cx,cy); ctx.lineTo(cx+T*.3,cy+T*.05); ctx.lineTo(cx+T*.15,cy+T*.25); ctx.closePath(); ctx.fill(); }
+    ctx.strokeStyle="rgba(0,0,0,.4)"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(X+r()*T,Y); ctx.lineTo(X+r()*T,Y+T*.6); ctx.stroke();
+    ctx.fillStyle="#9a8466"; if(K(x,y+1) && K(x,y+1)!=="#") ctx.fillRect(X,Y+T-3,T,3); if(K(x+1,y) && K(x+1,y)!=="#") ctx.fillRect(X+T-2,Y,2,T); if(K(x-1,y) && K(x-1,y)!=="#") ctx.fillRect(X,Y,2,T);
+    if(K(x,y+1) && K(x,y+1)!=="#"){ const sg=ctx.createLinearGradient(0,Y+T,0,Y+T*1.3); sg.addColorStop(0,"rgba(0,0,0,.45)"); sg.addColorStop(1,"rgba(0,0,0,0)"); ctx.fillStyle=sg; ctx.fillRect(X,Y+T,T,T*.3); } });
+
   // 7. ombre portate (luce da in alto a sinistra)
   tiles((x,y,k,X,Y)=>{ if(k!=="X") return;
     if(K(x+1,y)!=="X" && inMap(x+1,y)){ const g=ctx.createLinearGradient(X+T,0,X+T*1.3,0); g.addColorStop(0,"rgba(0,0,0,.38)"); g.addColorStop(1,"rgba(0,0,0,0)"); ctx.fillStyle=g; ctx.fillRect(X+T,Y+T*.15,T*.3,T); }
@@ -1049,7 +1292,7 @@ function drawMap(){
   if(TH.mist){ const rr=rnd(99); for(let i=0;i<COLS*ROWS/6;i++) blob(rr()*MW, rr()*MH, T*(1+rr()*1.5), "#cfe8d0", .07);
     ctx.globalCompositeOperation="lighter"; for(let i=0;i<4;i++){ const bx=rr()*MW; const g=ctx.createLinearGradient(bx,0,bx+MH*.5,MH); g.addColorStop(0,"rgba(255,240,180,.10)"); g.addColorStop(1,"rgba(255,240,180,0)");
       ctx.fillStyle=g; ctx.beginPath(); ctx.moveTo(bx,0); ctx.lineTo(bx+T*1.2,0); ctx.lineTo(bx+T*1.2+MH*.5,MH); ctx.lineTo(bx+MH*.5,MH); ctx.closePath(); ctx.fill(); } ctx.globalCompositeOperation="source-over"; }
-  if(TH.night){ ctx.fillStyle="rgba(10,16,44,.55)"; ctx.fillRect(0,0,MW,MH); }
+  if(TH.night){ ctx.fillStyle=TH.nightColor||"rgba(10,16,44,.55)"; ctx.fillRect(0,0,MW,MH); }
   ctx.globalCompositeOperation="lighter"; lights.forEach(([lx,ly,lr,lc,la])=>blob(lx,ly,lr,lc,TH.night?la*1.6:la)); ctx.globalCompositeOperation="source-over";
   // 10. luce calda da sinistra, ombra fredda a destra, vignettatura
   const lg=ctx.createLinearGradient(0,0,MW,MH); lg.addColorStop(0,"rgba(255,214,150,.12)"); lg.addColorStop(.55,"rgba(0,0,0,0)"); lg.addColorStop(1,"rgba(15,25,55,.25)");
@@ -1273,8 +1516,9 @@ async function defeat(u){
 }
 async function gainExp(u, g){
   if(u.id==="mars") g = Math.ceil(g*1.5);
+  if(u.lv>=20){ u.exp=0; return; } // livello massimo delle classi base
   u.exp += g; log(`${u.name} ottiene ${g} PE.`);
-  while(u.exp >= 100){ u.exp -= 100; await levelUp(u); }
+  while(u.exp >= 100 && u.lv<20){ u.exp -= 100; await levelUp(u); } if(u.lv>=20) u.exp=0;
 }
 function levelUp(u){
   return new Promise(res=>{
@@ -1437,9 +1681,12 @@ function distField(u, targets){
 
 /* ============================== CAPITOLI ============================== */
 const SAVE_KEY = "cieli-di-ottone-v1";
-let firedEvents = new Set(), chapterStartParty = null;
+let firedEvents = new Set(), chapterStartParty = null, flags = {};
+const ROUTE_NAME = {corona:"con Ferrante", radici:"con Maelis", libere:"con le Leghe Libere"};
+function nextIndex(i){ for(let j=i+1;j<CHAPTERS.length;j++){ const c=CHAPTERS[j]; if(!c.route || c.route===flags.route) return j; } return CHAPTERS.length; }
+function onPath(c){ return !c.route || c.route===flags.route; }
 function loadSave(){ try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY)||"null"); return s && s.v===1 ? s : null; }catch(e){ return null; } }
-function writeSave(next){ try{ const old=loadSave(); localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, next, party, best:Math.max(next, old?.best||0)})); }catch(e){} }
+function writeSave(next){ try{ const old=loadSave(); localStorage.setItem(SAVE_KEY, JSON.stringify({v:1, next, party, flags, best:Math.max(next, (old && old.flags?.route===flags.route ? old.best : next)||0)})); }catch(e){} }
 function setupChapter(i){
   CHI=i; CH=CHAPTERS[i]; MAP=CH.map; ROWS=MAP.length; COLS=MAP[0].length; UID=0;
   chapterStartParty = clone(party); units=[];
@@ -1479,20 +1726,21 @@ function checkEnd(){
   let win=false;
   if((g.type==="boss" || g.alt==="boss") && boss && boss.hp<=0) win=true;
   if((g.type==="rout" || g.type==="survive") && !alive("enemy").length && !pendingSpawns()) win=true;
-  if(g.type==="reach" && leader.x===g.tile[0] && leader.y===g.tile[1]) win=true;
+  if(g.type==="reach"){ const w=units.find(u=>u.id===(g.who||leader.id)); if(w && w.hp>0 && w.x===g.tile[0] && w.y===g.tile[1]) win=true; }
   if(win) victory();
 }
 let won=false;
 function victory(){ if(won) return; won=true; ended=true; setTimeout(()=>storyP(CH.victory).then(chapterComplete), 500*SPEED); }
 function chapterComplete(){
+  if(CH.choice && !flags.route){ chooseRoute(); return; }
   // la Compagnia porta con sé livelli, statistiche e oggetti
   for(const u of units){ if(u.team!=="ally" || u.guest || !party[u.id]) continue;
     party[u.id] = {lv:u.lv, exp:u.exp, st:clone(u.st), items:clone(u.items), w:u.w}; }
   const R = CH.reward || {};
   for(const [id,w] of Object.entries(R.w||{})) if(party[id]) party[id].w = w;
   for(const [id,n,q] of (R.items||[])){ const it=party[id]?.items; if(!it) continue; const f=it.find(i=>i.n===n); f ? f.q+=q : it.push({n, q}); }
-  writeSave(CHI+1);
-  const next = CHAPTERS[CHI+1];
+  const ni = nextIndex(CHI); writeSave(ni);
+  const next = CHAPTERS[ni];
   const rows = PARTY_ORDER.map(id=>{ const p=party[id], b=PARTY_BASE[id];
     return `<tr><td>${b.name}</td><td>Lv ${p.lv}</td><td>PV ${p.st.hp}</td><td>${WEAP[p.w].n}</td></tr>`; }).join("");
   overlay(`<div class="end" role="dialog" aria-label="Capitolo completato"><h2>Capitolo completato</h2>
@@ -1500,10 +1748,16 @@ function chapterComplete(){
     ${R.text?`<p class="reward">${R.text}</p>`:""}
     <table class="party">${rows}</table>
     <div class="btns" style="justify-content:center;margin-top:14px">
-      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua nell'Atto III, Il cristallo che respira: in arrivo.</p>`}
+      ${next ? `<button class="btn primary" id="goNext">${next.act!==CH.act?next.act+" · ":""}${next.title}</button>` : `<p>La storia continua${flags.route?" "+ROUTE_NAME[flags.route]:""} nei prossimi capitoli: in arrivo.</p>`}
       <button class="btn" id="goTitle">Titolo</button></div></div>`, true);
-  if(next) $("#goNext").onclick=()=>playChapter(CHI+1);
+  if(next) $("#goNext").onclick=()=>playChapter(ni);
   $("#goTitle").onclick=()=>titleScreen();
+}
+function chooseRoute(){
+  const C=CH.choice;
+  overlay(`<div class="end choice" role="dialog" aria-label="Scelta"><h2>Una scelta</h2><p>${C.prompt}</p>
+    <div class="tbtns">${C.options.map(o=>`<button class="btn opt" data-id="${o.id}"><b>${o.label}</b><br><small>${o.desc}</small></button>`).join("")}</div></div>`, true);
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ flags.route=b.dataset.id; chapterComplete(); });
 }
 function endScreen(win, why){
   overlay(`<div class="end" role="dialog"><h2>Sconfitta</h2><p>${why||""}<br>Nessun problema: si riprova il capitolo con i livelli di prima.</p>
@@ -1512,11 +1766,11 @@ function endScreen(win, why){
   $("#goTitle").onclick=()=>{ party=clone(chapterStartParty); titleScreen(); };
 }
 function titleScreen(){
-  const s=loadSave(); if(s && s.party) party=s.party; else party=freshParty();
-  const last=CHAPTERS.length-1, next = s ? Math.min(s.next, last) : 0, done = s && s.next>last;
-  setupChapter(next);
+  const s=loadSave(); if(s && s.party) party=s.party; else party=freshParty(); flags = (s && s.flags) || {};
+  const last=CHAPTERS.length-1, done = s && s.next>last, next = s && !done ? s.next : 0;
+  setupChapter(done ? 0 : next);
   overlay(`<div class="end title" role="dialog" aria-label="Titolo"><div class="kicker">La Compagnia della Brace</div><h2>Cieli di Ottone</h2>
-    <p>Un gioco tattico a turni. ${CHAPTERS.length} capitoli scritti finora.</p>
+    <p>Un gioco tattico a turni. ${CHAPTERS.filter(c=>!c.route).length} capitoli scritti finora${CHAPTERS.some(c=>c.route)?", più quelli delle tre rotte":""}.</p>
     <div class="tbtns">
       ${s && !done ? `<button class="btn primary" id="tCont">Continua · ${CHAPTERS[next].title}</button>` : ""}
       ${done ? `<p class="reward">Hai completato tutti i capitoli scritti finora. L'Atto III è in arrivo.</p>` : ""}
@@ -1524,10 +1778,10 @@ function titleScreen(){
       ${s ? `<button class="btn" id="tSel">Scegli capitolo</button>` : ""}
     </div><div id="tList"></div></div>`, true);
   if($("#tCont")) $("#tCont").onclick=()=>playChapter(next);
-  $("#tNew").onclick=()=>{ party=freshParty(); writeSave(0); playChapter(0); };
+  $("#tNew").onclick=()=>{ party=freshParty(); flags={}; try{ localStorage.removeItem(SAVE_KEY); }catch(e){} writeSave(0); playChapter(0); };
   if($("#tSel")) $("#tSel").onclick=()=>{
     const best=Math.min(Math.max(s.best||0, s.next), last);
-    $("#tList").innerHTML = CHAPTERS.slice(0,best+1).map((c,i)=>`<button class="btn chbtn" data-i="${i}">${c.title}</button>`).join("");
+    $("#tList").innerHTML = CHAPTERS.map((c,i)=>i<=best && onPath(c) ? `<button class="btn chbtn" data-i="${i}">${c.title}</button>` : "").join("");
     document.querySelectorAll(".chbtn").forEach(b=>b.onclick=()=>playChapter(+b.dataset.i)); };
 }
 
