@@ -1,4 +1,5 @@
 {
+  "ia": "tattica",
   "triangoli": {"spada":"ascia","ascia":"lancia","lancia":"spada","etere":"congegni","congegni":"polvere","polvere":"etere"},
   "triangolo": {"precisione":15,"danno":1},
   "doppioAttacco": 4,

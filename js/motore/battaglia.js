@@ -8,6 +8,7 @@ import { casellaLiberaVicino, inGittata, raggiungibili } from "./movimento.js";
 import { previsione, potenzaCura } from "./combattimento.js";
 import { aggiungiPunti } from "./supporti.js";
 import { agisciNemico } from "./ia.js";
+import "./ia-tattica.js";
 
 export class Battaglia {
   // opzioni: dati, capitolo, compagnia, supporti, bandiere, dado, posizioni ({id:[x,y]}), ia ("classica" | "tattica")
