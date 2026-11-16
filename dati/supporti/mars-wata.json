@@ -1,0 +1,36 @@
+{
+  "coppia": ["mars","wata"],
+  "C": [
+    ["mars","Wata, mi presti un pelo di Prospy? Uno solo. Per un esperimento."],
+    ["wata","Che esperimento?"],
+    ["mars","Voglio capire perché sente l'etere. Forse c'è qualcosa nel pelo. O nei baffi. O nel carattere, ma quello non sta in una fiala."],
+    ["wata","Lo sente perché è un famiglio. È legata a me, e io sono legata alle Radici. Non è una cosa che si misura."],
+    ["mars","Tutto si misura! Quasi sicuramente."],
+    ["wata","Allora prova a misurare quanto mi vuole bene."],
+    ["mars","...Va bene, questo no. Ma il pelo me lo dai lo stesso?"],
+    ["wata","Se te lo dà lei. Chiediglielo."],
+    ["mars","Prospy, posso... ahi! Mi ha graffiata. Lo prendo come un no. Annoto: famiglio, molto deciso."]
+  ],
+  "B": [
+    ["wata","Mars. La fiala che canticchia: ce l'hai ancora?"],
+    ["mars","...Sì. È nella tasca interna. Non riesco a buttarla e non riesco a usarla."],
+    ["wata","Posso sentirla? Dentro c'è una donna. Canta una ninna nanna, sempre la stessa."],
+    ["mars","Lo sapevo che era una persona. Lo sapevo e l'ho tenuta lo stesso, perché ero curiosa. Che razza di druida sono?"],
+    ["wata","Una druida che si sente in colpa. Le altre non si sarebbero nemmeno chieste chi c'era dentro."],
+    ["mars","Cosa faccio, Wata? Ho studiato di tutto, ma nei miei libri non c'è scritto come si chiede scusa a una fiala."],
+    ["wata","Non si chiede scusa alla fiala. Si chiede scusa a lei. E poi la si riporta a casa, alle Radici."],
+    ["mars","Mi accompagni?"],
+    ["wata","Certo. E intanto impariamo la ninna nanna. Così, quando la lasceremo andare, qualcuno continuerà a cantarla."]
+  ],
+  "A": [
+    ["mars","Wata, l'abbiamo fatto. La donna della fiala è tornata alle Radici. E quando l'ho lasciata andare ho sentito qualcosa. Io, che non sento mai niente!"],
+    ["wata","Cosa hai sentito?"],
+    ["mars","Una specie di grazie. Ma senza parole. Come quando apri la finestra di una stanza rimasta chiusa per anni."],
+    ["wata","È così che parlano le Radici. Benvenuta, Mars."],
+    ["mars","Voglio studiarlo, Wata. Non per chiuderlo in una fiala: per capirlo. Insieme a te. Tu senti, io misuro, e magari un giorno qualcuno ascolterà le voci senza bruciarle e senza chiuderle in cassaforte."],
+    ["wata","Una druida alchimista e un'etermante gentile. Il Concilio impazzirebbe."],
+    ["mars","Anche la Corona. Ed è per questo che è un'idea bellissima."],
+    ["wata","Allora sì. Si comincia domani. Prospy fa da assistente."],
+    ["mars","Prospy, niente graffi in laboratorio. È la regola numero uno."]
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  ".": {"nome":"Pianura","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "s": {"nome":"Strada","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "L": {"nome":"Lampione","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "f": {"nome":"Bosco","costo":{"fanteria":2,"corazza":3,"cavallo":3,"volo":1},"difesa":1,"schivata":20},
+  "r": {"nome":"Macerie","costo":{"fanteria":2,"corazza":2,"cavallo":3,"volo":1},"difesa":1,"schivata":10},
+  "m": {"nome":"Rocce","costo":{"fanteria":3,"corazza":99,"cavallo":99,"volo":1},"difesa":2,"schivata":20},
+  "k": {"nome":"Casse","costo":{"fanteria":2,"corazza":2,"cavallo":3,"volo":1},"difesa":1,"schivata":10},
+  "g": {"nome":"Selciato","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "b": {"nome":"Binari","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "=": {"nome":"Pontile","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "w": {"nome":"Canale","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":1},"difesa":0,"schivata":10},
+  "~": {"nome":"Fiume","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":1},"difesa":0,"schivata":10},
+  "X": {"nome":"Muro","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":99},"difesa":0,"schivata":0},
+  "H": {"nome":"Casa","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":99},"difesa":0,"schivata":0},
+  "o": {"nome":"Cielo","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":1},"difesa":0,"schivata":0},
+  "D": {"nome":"Ponte della nave","costo":{"fanteria":1,"corazza":1,"cavallo":1,"volo":1},"difesa":0,"schivata":0},
+  "#": {"nome":"Parete di roccia","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":99},"difesa":0,"schivata":0},
+  "T": {"nome":"Radice gigante","costo":{"fanteria":99,"corazza":99,"cavallo":99,"volo":99},"difesa":0,"schivata":0},
+  "c": {"nome":"Vena d'etere","costo":{"fanteria":2,"corazza":2,"cavallo":3,"volo":1},"difesa":1,"schivata":10,"cura":0.1},
+  "F": {"nome":"Fornace","costo":{"fanteria":2,"corazza":2,"cavallo":2,"volo":2},"difesa":1,"schivata":15,"cura":0.1}
+}

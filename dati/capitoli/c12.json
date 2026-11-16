@@ -1,0 +1,143 @@
+{
+  "id": "c12",
+  "titolo": "Capitolo 12 · Ritorno a Fossa Grigia",
+  "atto": "Atto III · Il cristallo che respira",
+  "tema": "campagna",
+  "mappa": [
+    "fff.....ff..mm~~ff",
+    "ff..HH...f...m==.f",
+    "f...ss......f.~~..",
+    "....s...ff..r.~~..",
+    "....s...f.....~~.r",
+    "bbbbbbbbbbbbbbbbbb",
+    "..f.....r.....~~..",
+    ".ff....m...ff.~~f.",
+    "ff....mm....f.~~ff",
+    "fff.......fff.~~ff"
+  ],
+  "schieramento": [[14,5],[15,5],[16,5],[13,5]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "testo": "Resisti 6 turni finché la milizia delle Leghe non chiude il ponte. La Corona arriva da ovest, i Custodi di Arven da est."
+  },
+  "ospiti": [
+    {
+      "id": "ferrante",
+      "titolo": "Ispettrice",
+      "nome": "Ispettrice Ferrante",
+      "lv": 11,
+      "x": 13,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 6,
+      "arma": "spadaA",
+      "stat": {"hp":29,"for":11,"mag":1,"abi":12,"vel":12,"fort":6,"def":8,"res":4},
+      "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi. Se cade, si ritira."}
+    },
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 11,
+      "x": 16,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 5,
+      "arma": "giudizio",
+      "stat": {"hp":26,"for":2,"mag":13,"abi":10,"vel":9,"fort":7,"def":4,"res":13},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi. Se cade, si ritira."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Cavaliere","lv":10,"x":2,"y":4,"ia":"attacca"},
+    {"classe":"Cavaliere","lv":10,"x":2,"y":6,"ia":"attacca"},
+    {"classe":"Lanciere","lv":10,"x":5,"y":5,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":10,"x":4,"y":3,"ia":"portata"},
+    {"classe":"Custode","lv":10,"x":17,"y":7,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Custode","lv":10,"x":17,"y":3,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":10,"x":17,"y":0,"ia":"portata","aspetto":"guardia"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["strand","Il Registro, stratega. Consegnalo e la Corona dimenticherà Corvara."]],
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":10,"x":0,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":10,"x":0,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["arven","Il Registro appartiene alle Radici. Bruciatelo, insieme a chi lo porta."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":10,"x":17,"y":9,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Lanciere","nome":"Guardia del Concilio","lv":10,"x":17,"y":1,"ia":"attacca","aspetto":"guardia"}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [{"classe":"Cavaliere","lv":11,"x":0,"y":5,"ia":"attacca"},{"classe":"Cavaliere","lv":10,"x":0,"y":3,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["lethy","Vedo le bandiere delle Leghe sulla collina! Ancora un turno!"]],
+      "rinforzi": [{"classe":"Custode","lv":11,"x":17,"y":6,"ia":"attacca","aspetto":"radici"},{"classe":"Corazzato","lv":10,"x":0,"y":6,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Il ponte di Fossa Grigia, dove tutto era cominciato. Da est arrivano i Custodi di Arven. Da ovest, sotto la flotta di Strand, la Corona."],
+    ["ferrante","Strand vuole il Registro: con quello può dire a tutti che il Concilio nasconde la cura per ogni malattia, e prendersi le Radici con la benedizione del popolo."],
+    ["maelis","Arven vuole il Registro per bruciarlo. Senza, nessuno saprà mai i nomi."],
+    ["lethy","E il Registro ce l'abbiamo noi. Siamo la palla in mezzo al campo."],
+    ["mars","Potremmo strapparlo in due e darne metà a testa? ...Era una battuta. Più o meno."],
+    ["wata","Prospy ha il pelo dritto da tutte e due le parti. Non le ho mai viste così... le voci, voglio dire. Hanno paura."],
+    ["giova","Teniamo il ponte finché la milizia delle Leghe non arriva a chiuderlo. Sei turni. Poi... poi decidiamo."]
+  ],
+  "vittoria": [
+    ["narr","Le campane delle Leghe suonano dall'altra sponda: la milizia di Porto Ambra chiude il ponte. Corona e Concilio si ritirano, per ora."],
+    ["ferrante","Stratega. Vieni con me a Corvara. Con il Registro posso far cadere Strand e cambiare la Corona dall'interno. Le lampade degli ospedali resteranno accese, ma nessuno morirà più per alimentarle."],
+    ["maelis","Giova. Vieni con me a Lucegrande. Con il Registro posso rovesciare Arven e aprire le cure del Concilio a tutti. Le Radici saranno protette, e ogni villaggio avrà un guaritore."],
+    ["lethy","Oppure non andiamo con nessuno. Leggiamo il Registro in tutte le piazze delle Leghe e lasciamo decidere la gente. Papà dice che la verità è l'unica merce che vale di più quando la regali."],
+    ["wata","Io penso alle voci. Chiunque scegliamo, voglio che qualcuno le ascolti."],
+    ["mars","Io le vorrei provare tutte e tre. Non si può, vero? Allora scegli tu, Giova. Noi ti seguiamo."],
+    ["giova","Scelta ottimale, rischio calcolato. Per la prima volta non so fare il conto. Allora scelgo e basta."]
+  ],
+  "scelta": {
+    "domanda": "La Compagnia della Brace sceglie la sua strada. È una scelta definitiva per questa partita.",
+    "opzioni": [
+      {
+        "id": "corona",
+        "titolo": "Con Ferrante: cambiare la Corona",
+        "descrizione": "Far cadere Strand, tenere accese le lampade degli ospedali senza più morti nascoste."
+      },
+      {"id":"radici","titolo":"Con Maelis: cambiare il Concilio","descrizione":"Rovesciare Arven, proteggere le Radici e aprire le cure a tutti."},
+      {
+        "id": "libere",
+        "titolo": "Con nessuno: la verità alle Leghe",
+        "descrizione": "Leggere il Registro in ogni piazza e affrontare Corona e Concilio insieme."
+      }
+    ]
+  },
+  "ricompensa": {
+    "testo": "Dopo la battaglia, la milizia delle Leghe rifornisce la Compagnia: un tonico a testa e un Sigillo di ottone.",
+    "oggetti": [
+      {"a":"giova","id":"tonico","q":1},
+      {"a":"lethy","id":"tonico","q":1},
+      {"a":"wata","id":"tonico","q":1},
+      {"a":"mars","id":"tonico","q":1},
+      {"a":"mars","id":"sigillo","q":1}
+    ]
+  },
+  "diario": "A Fossa Grigia abbiamo scelto la nostra strada."
+}

@@ -1,0 +1,37 @@
+{
+  "coppia": ["lethy","wata"],
+  "C": [
+    ["lethy","Wata, posso accarezzare Prospy? Non ho mai avuto un animale. A casa c'erano solo i cavalli di papà, e ognuno aveva un servitore."],
+    ["wata","Certo! Però piano, dalla testa verso la coda. E se muove la coda veloce, ti fermi."],
+    ["lethy","Piano... dalla testa... oh. Fa le fusa! Wata, fa le fusa! Che onore."],
+    ["wata","Le piaci. Prospy sente chi ha il cuore buono."],
+    ["lethy","Il mio maestro di scherma diceva che ho il cuore troppo buono per la spada."],
+    ["wata","E aveva ragione?"],
+    ["lethy","No. Ma forse ho il cuore giusto per un gatto. Posso farle dei regali? A Porto Ambra ho visto un cuscino di velluto..."],
+    ["wata","Le basta una scatola di cartone, Lethy."],
+    ["lethy","Una scatola di cartone foderata di velluto, allora."]
+  ],
+  "B": [
+    ["wata","Lethy... posso chiederti una cosa strana?"],
+    ["lethy","Le cose strane sono le mie preferite. A casa erano tutte normalissime."],
+    ["wata","Tu non hai mai paura? In battaglia corri sempre avanti, come se fosse un gioco."],
+    ["lethy","Ho una paura tremenda. Sempre. Ma ai balli mia madre mi ha insegnato una cosa: se tremi, sorridi più forte. Nessuno se ne accorge."],
+    ["wata","Io invece tremo e basta. E Prospy se ne accorge sempre."],
+    ["lethy","Allora facciamo così: in battaglia stai dietro di me. Io sorrido per tutte e due, e tu tremi per tutte e due. Ci dividiamo il lavoro."],
+    ["wata","...Non è un brutto piano."],
+    ["lethy","È un piano da torneo a coppie. Ne ho vinti tre, uno con un compagno che non sapeva nemmeno tenere la spada."],
+    ["wata","Grazie per la fiducia."],
+    ["lethy","Tu almeno hai un gatto. È un vantaggio enorme."]
+  ],
+  "A": [
+    ["lethy","Wata, ho fatto fare una cosa per te. Spero ti piaccia."],
+    ["wata","Un mantello nuovo? Con... le foglie ricamate in filo d'oro?"],
+    ["lethy","Il tuo era tutto strappato dai rovi. E ho pensato: la nostra etermante merita un mantello da etermante. Qui sull'orlo ho fatto ricamare anche un gattino."],
+    ["wata","È Prospy! Lethy... è bellissimo. Ma sarà costato una fortuna."],
+    ["lethy","Tre mesi di paghetta. Papà la chiama paghetta. Gli altri la chiamano lo stipendio di un generale."],
+    ["wata","Io non ho niente di così prezioso da darti."],
+    ["lethy","Wata, tu mi hai insegnato ad accarezzare un gatto, a non correre sempre avanti e che si può tremare senza vergognarsi. A casa nessuno mi aveva mai insegnato niente di vero."],
+    ["wata","...Allora lo metto subito. E tu prendi questa: una foglia del rovo antico di Merlaia. Non punge: gliel'ho chiesto io."],
+    ["lethy","La terrò nel diario. Accanto alla pagina in cui ho scritto che ho una migliore amica."]
+  ]
+}

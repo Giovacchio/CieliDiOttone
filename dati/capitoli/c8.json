@@ -1,0 +1,97 @@
+{
+  "id": "c8",
+  "titolo": "Capitolo 8 · Il tribunale di Lucegrande",
+  "atto": "Atto II · Le Radici",
+  "tema": "foresta",
+  "selciato": true,
+  "mappa": [
+    "TTHHXXXXXXXXHHTT",
+    "T.HH.gggggggHH.T",
+    "..g..gLgggLg..g.",
+    "T.g.c.gggggg.c.T",
+    "gggggggggggggggg",
+    "HH.gg.T.gg.T.gHH",
+    "HH.g..T.gg.T..HH",
+    "..Lg....gg....L.",
+    "TT.g.HH.gg.HH.TT",
+    "TT...HH.gg.HH.TT"
+  ],
+  "schieramento": [[8,9],[9,8],[9,9],[8,8]],
+  "obiettivo": {"tipo":"comandante","testo":"Sconfiggi il Custode Thalen sulla scalinata del tribunale per liberare Maelis."},
+  "nemici": [
+    {"classe":"Custode","lv":7,"x":5,"y":3,"ia":"portata","aspetto":"radici"},
+    {"classe":"Custode","lv":7,"x":12,"y":3,"ia":"portata","aspetto":"radici"},
+    {"classe":"Corazzato","nome":"Guardia di radice","lv":7,"x":8,"y":4,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Lanciere","nome":"Guardia del Concilio","lv":8,"x":9,"y":2,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":7,"x":2,"y":2,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":7,"x":14,"y":2,"ia":"portata","aspetto":"guardia"},
+    {
+      "classe": "Medico",
+      "nome": "Guaritore del Concilio",
+      "lv": 7,
+      "x": 10,
+      "y": 1,
+      "ia": "portata",
+      "aspetto": {"skin":"#e2c0a2","hair":"#ddd","style":"hood","coat":"#d8d2c0","eye":"#5aa070"}
+    },
+    {"classe":"Lanciere","nome":"Guardia del Concilio","lv":8,"x":3,"y":5,"ia":"attacca","aspetto":"guardia"},
+    {
+      "id": "boss",
+      "classe": "Custode",
+      "nome": "Custode Thalen",
+      "lv": 9,
+      "x": 8,
+      "y": 1,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Tu credi di difendere qualcuno, stratega. Io difendo una foresta che esisteva prima di tutti voi e che esisterà dopo. Questo è il mio calcolo.",
+      "siRitira": true,
+      "bonus": {"hp":6,"def":2},
+      "aspetto": {"skin":"#d8b49a","hair":"#c8c8c0","style":"hood","coat":"#1f4a36","beard":"full","eye":"#7ac08a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["thalen","Chiudete le strade laterali!"]],
+      "rinforzi": [{"classe":"Custode","lv":7,"x":0,"y":4,"ia":"attacca","aspetto":"radici"},{"classe":"Custode","lv":7,"x":15,"y":4,"ia":"attacca","aspetto":"radici"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["narr","Le campane di Lucegrande suonano: arrivano altre guardie."]],
+      "rinforzi": [
+        {"classe":"Lanciere","nome":"Guardia del Concilio","lv":8,"x":1,"y":7,"ia":"attacca","aspetto":"guardia"},
+        {"classe":"Corazzato","nome":"Guardia di radice","lv":7,"x":15,"y":7,"ia":"attacca","aspetto":"guardia"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Lucegrande, città del Concilio. Case di pietra bianca costruite tra le radici di alberi alti come torri."],
+    ["thalen","Sorella Maelis. Hai assoldato mercenari delle Leghe, hai portato estranei al Pozzo delle Voci, hai protetto dei ladri a Fondoscuro."],
+    ["maelis","Non ho protetto nessuno. Ho guardato mentre tu bruciavi una casa con dei bambini dentro. È questo che mi pesa."],
+    ["thalen","Il Gran Concilio ha deciso: sarai rinchiusa nelle radici finché il tuo etere non tornerà alla foresta. E i tuoi mercenari verranno consegnati alla Corona, in cambio della tregua."],
+    ["lethy","Consegnati alla Corona? Come un pacco? Con tanto di fiocco?"],
+    ["giova","Il piano di fuga che avevo preparato è appena diventato inutile. Cambio di programma: Thalen comanda le guardie. Lo battiamo, liberiamo Maelis e usciamo dalla porta est."],
+    ["wata","Prospy soffia contro Thalen. E contro tutto il Concilio, credo."],
+    ["mars","Ho una fiala che canticchia e una che fa fumo. Quale vuoi, Giova? ...Tutte e due? Ottima scelta."]
+  ],
+  "vittoria": [
+    ["thalen","Basta... mi arrendo. Prendetela. Ma ascoltatemi: quello che c'è negli archivi vi farà odiare il Concilio. Poi vi farà odiare la Corona. Alla fine odierete anche voi stessi."],
+    ["maelis","Giova. Grazie. E... ho preso questo dagli archivi, mentre voi combattevate."],
+    ["maelis","Il Registro delle Radici. Ogni cristallo, ogni nome. Ilvo il guardaboschi è a pagina trecentododici."],
+    ["wata","I cristalli nascono dove muore qualcuno che amava le Radici. E dentro resta... lui. Un pezzetto di lui."],
+    ["giova","E la Corona li brucia nelle fornaci per accendere le lampade. E il Concilio li chiude in cassaforte e decide chi merita di essere curato."],
+    ["lethy","...Credo sia la prima volta che non mi viene in mente nessun paragone con casa mia."],
+    ["mars","Io invece continuo a pensare che la mia fiala canticchia perché dentro c'è qualcuno. Le ho chiesto scusa. Davvero."],
+    ["giova","Fino a ieri ogni problema aveva una mossa giusta. Questo no. Ma una cosa la so: nessuno deciderà al posto nostro. Né la Corona, né il Concilio."],
+    ["narr","Fine dell'Atto II · Le Radici. Atto III, Il cristallo che respira: in arrivo."]
+  ],
+  "ricompensa": {
+    "testo": "Dagli archivi del tribunale Giova recupera un Sigillo di ottone, che servirà per la promozione di classe.",
+    "oggetti": [{"a":"giova","id":"sigillo","q":1}]
+  },
+  "diario": "A Lucegrande, Thalen si è arreso. Il Registro delle Radici dice la verità: i cristalli nascono dove muore chi amava le Radici."
+}

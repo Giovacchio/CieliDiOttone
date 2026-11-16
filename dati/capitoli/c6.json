@@ -1,0 +1,91 @@
+{
+  "id": "c6",
+  "titolo": "Capitolo 6 · Fondoscuro",
+  "atto": "Atto II · Le Radici",
+  "tema": "foresta",
+  "mappa": [
+    "fffTT..f...HH.ff",
+    "ff..c...ss.ss..f",
+    "f..HH..s..HH...f",
+    "...HH..s..HH.c..",
+    "ssssssss...ff...",
+    "..f..HH.s..f..rr",
+    "~~~~=~~~=~~~~~~~",
+    "f.....f.s...f..f",
+    "ff.c....s....fff",
+    "fff.....s...ffff"
+  ],
+  "schieramento": [[8,8],[7,9],[9,9],[8,9]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [12,1],
+    "limite": 7,
+    "testo": "Porta Giova davanti alla casa della guaritrice (casella d'ottone) entro il turno 7, prima che il fuoco arrivi al tetto. I Custodi usano l'etere: conta la Resistenza, non la Difesa."
+  },
+  "nemici": [
+    {"classe":"Custode","lv":5,"x":8,"y":4,"ia":"portata","aspetto":"radici"},
+    {"classe":"Custode","lv":5,"x":12,"y":3,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":6,"x":13,"y":3,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Corazzato","nome":"Guardia di radice","lv":6,"x":8,"y":6,"ia":"fermo","aspetto":"guardia"},
+    {"classe":"Custode","lv":5,"x":3,"y":4,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":6,"x":11,"y":5,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Lanciere","nome":"Guardia del Concilio","lv":7,"x":9,"y":1,"ia":"portata","aspetto":"guardia"},
+    {
+      "id": "boss",
+      "classe": "Custode",
+      "nome": "Custode Thalen",
+      "lv": 9,
+      "x": 13,
+      "y": 1,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Mercenari. Combattete per chi paga, e oggi chi vi paga è un villaggio di ladri. Le Radici non sono una farmacia.",
+      "siRitira": true,
+      "aspetto": {"skin":"#d8b49a","hair":"#c8c8c0","style":"hood","coat":"#1f4a36","beard":"full","eye":"#7ac08a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "giocatore",
+      "dialogo": [["narr","Il fumo si alza dalla casa della guaritrice. Le fiamme salgono lungo la parete."],["erba","Fate presto! I bambini sono ancora dentro!"]]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["thalen","Altri Custodi, al ponte! Che nessuno li lasci passare!"]],
+      "rinforzi": [{"classe":"Custode","lv":5,"x":15,"y":4,"ia":"attacca","aspetto":"radici"}]
+    },
+    {"turno":5,"fase":"nemico","rinforzi":[{"classe":"Lanciere","nome":"Guardia del Concilio","lv":7,"x":15,"y":9,"ia":"attacca","aspetto":"guardia"}]}
+  ],
+  "inizio": [
+    ["narr","Fondoscuro, villaggio ai margini delle Radici."],
+    ["maelis","No... quelli sono Custodi. Il Concilio è già qui."],
+    ["thalen","Abitanti di Fondoscuro. Avete raccolto cristalli dalle Radici senza il permesso del Concilio. Il raccolto sarà distrutto, e i guaritori verranno con noi a Lucegrande per il giudizio."],
+    ["erba","Avevamo la febbre grigia in ogni casa! Il Concilio non ha mandato nessuno! I cristalli sono stati l'unica cura!"],
+    ["thalen","Le Radici non sono una farmacia. Bruciate la casa della guaritrice."],
+    ["giova","Maelis?"],
+    ["maelis","Thalen è un Custode anziano. Se alzo una mano contro di lui, il Concilio mi caccia. E senza di me non saprete mai la verità."],
+    ["wata","Ci sono dei bambini in quella casa, Giova."],
+    ["giova","...Lo so. Facciamo così: Maelis resta indietro e non ci ha mai visti. Noi siamo solo mercenari delle Leghe."],
+    ["lethy","Finalmente un torneo in cui so subito da che parte stare."],
+    ["mars","Io porto gli elisir per la febbre. Non ho mai curato la febbre grigia. Sarà un'esperienza nuova!"],
+    ["giova","Alla casa della guaritrice prima che il fuoco arrivi al tetto. Sette turni, non uno di più."]
+  ],
+  "vittoria": [
+    ["erba","Siete arrivati! I bambini sono usciti dal retro. Grazie... chiunque siate."],
+    ["thalen","Mercenari delle Leghe. Ricorderò le vostre facce. E il Concilio ricorderà chi vi ha portati fin qui."],
+    ["narr","Thalen e i Custodi si ritirano nel bosco. Il tetto della guaritrice regge, appena."],
+    ["maelis","Mi ha vista. Lo sapeva già."],
+    ["giova","Allora non hai più niente da perdere. Parla."],
+    ["maelis","Non qui. Stanotte, al Pozzo delle Voci. Lì il segreto si può sentire, oltre che raccontare."],
+    ["wata","Prospy ha smesso di soffiare. Per la prima volta da Corvara. Credo che voglia andare al pozzo."],
+    ["giova","Fino a ieri sapevo per chi combattevamo. Oggi abbiamo combattuto contro chi ci paga. Non è nei miei calcoli, e va bene così."]
+  ],
+  "ricompensa": {
+    "testo": "Erba regala a Mars le sue erbe contro la febbre grigia: due tonici. Il villaggio dà a Giova un tonico.",
+    "oggetti": [{"a":"mars","id":"tonico","q":2},{"a":"giova","id":"tonico","q":1}]
+  },
+  "diario": "A Fondoscuro abbiamo combattuto il Concilio per salvare la casa della guaritrice."
+}

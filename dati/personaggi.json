@@ -1,0 +1,61 @@
+{
+  "ordine": ["giova","lethy","wata","mars"],
+  "giova": {
+    "nome": "Giova",
+    "classe": "Stratega",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "spada",
+    "capo": true,
+    "stat": {"hp":22,"for":6,"mag":2,"abi":8,"vel":7,"fort":6,"def":6,"res":3},
+    "crescita": {"hp":75,"for":45,"mag":15,"abi":60,"vel":50,"fort":55,"def":35,"res":25},
+    "abilita": {
+      "nome": "Calcolo del rischio",
+      "descrizione": "Giova e gli alleati entro 2 caselle: +10 precisione.",
+      "effetti": [{"tipo":"aura","raggio":2,"precisione":10}]
+    },
+    "oggetti": [{"id":"tonico","q":3}],
+    "aspetto": {"skin":"#e8bf9c","hair":"#b5401f","style":"tuft","beard":true,"coat":"#3b5f8a","acc":"epaulette"}
+  },
+  "lethy": {
+    "nome": "Lethy",
+    "classe": "Spadaccina",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "stocco",
+    "stat": {"hp":17,"for":5,"mag":1,"abi":9,"vel":11,"fort":5,"def":3,"res":3},
+    "crescita": {"hp":60,"for":40,"mag":10,"abi":60,"vel":70,"fort":50,"def":20,"res":25},
+    "abilita": {"nome":"Stoccata","descrizione":"Lo stocco infligge danno triplo ai corazzati.","effetti":[]},
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#f2d2b8","hair":"#5a3a26","under":"#f1eee8","style":"bob","coat":"#2f4a6e","acc":"jabot"}
+  },
+  "wata": {
+    "nome": "Wata",
+    "classe": "Etermante delle Radici",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "rovo",
+    "stat": {"hp":17,"for":1,"mag":7,"abi":6,"vel":6,"fort":6,"def":2,"res":7},
+    "crescita": {"hp":55,"for":10,"mag":60,"abi":45,"vel":45,"fort":55,"def":15,"res":50},
+    "abilita": {
+      "nome": "Famiglio felino",
+      "descrizione": "Prospy, il suo gatto arancione, la avvisa dei colpi: +10 schivata.",
+      "effetti": [{"tipo":"bonus","schivata":10}],
+      "gatto": true
+    },
+    "oggetti": [{"id":"tonico","q":1}],
+    "aspetto": {"skin":"#eecaa8","hair":"#7b4fb0","style":"longv","coat":"#5f8a55","acc":"leaf","eye":"#3f7a3a"}
+  },
+  "mars": {
+    "nome": "Mars",
+    "classe": "Druida alchimista",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "elisir",
+    "stat": {"hp":17,"for":2,"mag":6,"abi":5,"vel":6,"fort":5,"def":3,"res":6},
+    "crescita": {"hp":60,"for":15,"mag":50,"abi":45,"vel":45,"fort":45,"def":20,"res":45},
+    "abilita": {"nome":"Spirito libero","descrizione":"Ama le esperienze nuove: ottiene il 50% di PE in più.","effetti":[{"tipo":"esperienza","moltiplica":1.5}]},
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#c99a74","hair":"#141214","style":"curly","coat":"#8a6a3f","acc":"vial"}
+  }
+}

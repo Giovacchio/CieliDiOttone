@@ -1,0 +1,39 @@
+{
+  "coppia": ["giova","lethy"],
+  "C": [
+    ["lethy","Giova! Insegnami a calcolare il rischio."],
+    ["giova","Così, all'improvviso?"],
+    ["lethy","Ho visto come fai: guardi la mappa, conti, e sai già tutto. Io invece entro in battaglia come a un ballo: un passo, un inchino, un affondo."],
+    ["giova","E funziona."],
+    ["lethy","Funziona perché sono velocissima. Ma prima o poi incontrerò qualcuno più veloce. Papà dice che un patrimonio si difende con i numeri, non con la fortuna."],
+    ["giova","Va bene. Prima lezione: quanti nemici vedi da qui?"],
+    ["lethy","Sette. No, otto. Quello dietro la cassa conta?"],
+    ["giova","Quello dietro la cassa conta sempre. Sono nove."],
+    ["lethy","Nove! Questo calcolo del rischio è terribile. Mi piace moltissimo."]
+  ],
+  "B": [
+    ["giova","Lethy, è arrivata una lettera per te. Ha il sigillo della banca."],
+    ["lethy","...Papà. Vuole che torni a Porto Ambra. Dice che una figlia della famiglia non può fare la mercenaria, che la gente parla."],
+    ["giova","E tu cosa vuoi?"],
+    ["lethy","Nessuno me l'ha mai chiesto. A casa sapevano già tutti cosa volevo: il marito giusto, la villa giusta, la scherma come passatempo elegante."],
+    ["giova","Io te lo chiedo. Facciamo il conto: cosa perdi se resti, cosa perdi se torni."],
+    ["lethy","Se torno perdo voi. Se resto perdo... le lenzuola di seta. E i camerieri. E la torta della domenica."],
+    ["giova","La torta la so fare io."],
+    ["lethy","Davvero?"],
+    ["giova","Ricetta di mia nonna. Non è la torta della domenica: è meglio."],
+    ["lethy","Allora il conto è facile. Scrivo a papà che resto. E che prima di giudicare deve assaggiare la tua torta."]
+  ],
+  "A": [
+    ["lethy","Giova, ho fatto un calcolo del rischio da sola. Vuoi sentirlo?"],
+    ["giova","Sentiamo."],
+    ["lethy","Ieri, quando ti sei messo davanti a Wata per prendere quel colpo, il rischio era alto. Ottanta per cento di essere colpito."],
+    ["giova","Settantotto."],
+    ["lethy","Settantotto. E l'hai fatto lo stesso. Allora ho capito: il calcolo serve a sapere quanto costa una cosa. Non a decidere se farla."],
+    ["giova","...È la cosa più giusta che abbia mai sentito sul mio motto. E l'hai detta tu."],
+    ["lethy","Ovvio. Sono la tua allieva migliore."],
+    ["giova","Sei la mia unica allieva."],
+    ["lethy","Quindi la migliore. Il conto torna. E adesso tocca a te imparare una cosa da me."],
+    ["giova","Cosa?"],
+    ["lethy","L'inchino prima dell'affondo. Lo stile conta, Giova. Conta sempre."]
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "id": "c2",
+  "titolo": "Capitolo 2 · Le capre di Merlaia",
+  "atto": "Atto I · La Brace",
+  "tema": "notte",
+  "mappa": [
+    "ff..mm.....mm.ff",
+    "f..f.........f.f",
+    "...HH..L...HH...",
+    "...HH.ssss..HH..",
+    "ssssssssssssssss",
+    "..L...ss.H.L....",
+    "f..HH.ss.HH...f.",
+    "ff....ss.....fff",
+    "~~~~~~==~~~~=~~~",
+    "f..f..ss...ff..f"
+  ],
+  "schieramento": [[7,4],[8,5],[6,5],[7,3]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "testo": "Resisti fino all'alba (6 turni) oppure sconfiggi Gorran il Fuso. Le capre sono nel recinto in piazza: i predoni devono passare da voi."
+  },
+  "nemici": [
+    {"classe":"Guerriero","nome":"Predone di Gorran","lv":3,"x":5,"y":0,"ia":"attacca"},
+    {"classe":"Guerriero","nome":"Predone di Gorran","lv":2,"x":2,"y":1,"ia":"attacca"},
+    {"classe":"Arciere","nome":"Bracconiere","lv":3,"x":11,"y":0,"ia":"portata"},
+    {"classe":"Lama","nome":"Tagliagole","lv":3,"x":13,"y":1,"ia":"attacca"},
+    {"classe":"Guerriero","nome":"Predone di Gorran","lv":3,"x":7,"y":9,"ia":"attacca"},
+    {"classe":"Arciere","nome":"Bracconiere","lv":2,"x":11,"y":9,"ia":"portata"},
+    {
+      "id": "boss",
+      "classe": "Guerriero",
+      "nome": "Gorran il Fuso",
+      "lv": 5,
+      "x": 15,
+      "y": 9,
+      "arma": "fuso",
+      "ia": "portata",
+      "comandante": true,
+      "frase": "Il fuso gira, ragazzino. Stanotte gira per me: capre, grano e quella bella cassa che brilla.",
+      "aspetto": {"skin":"#b98a68","hair":"#3a2a1e","style":"bald","coat":"#5a3a22","beard":"full","scar":true,"eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["narr","Dalle colline a nord scendono altre torce."]],
+      "rinforzi": [
+        {"classe":"Guerriero","nome":"Predone di Gorran","lv":3,"x":0,"y":1,"ia":"attacca"},
+        {"classe":"Lama","nome":"Tagliagole","lv":2,"x":15,"y":1,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "giocatore",
+      "dialogo": [
+        ["gorran","Cos'è, avete paura del buio? Ve lo accendo io il villaggio!"],
+        ["mars","Ha appena minacciato di bruciare un villaggio pieno di capre. Giova, adesso sono offesa anch'io."]
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["narr","Due predoni arrivano dalla strada dell'est e da quella dell'ovest."]],
+      "rinforzi": [
+        {"classe":"Lama","nome":"Tagliagole","lv":3,"x":15,"y":4,"ia":"attacca"},
+        {"classe":"Guerriero","nome":"Predone di Gorran","lv":3,"x":0,"y":4,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["narr","L'ultimo assalto prima dell'alba."]],
+      "rinforzi": [
+        {"classe":"Arciere","nome":"Bracconiere","lv":3,"x":4,"y":0,"ia":"attacca"},
+        {"classe":"Guerriero","nome":"Predone di Gorran","lv":4,"x":12,"y":9,"ia":"attacca"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Merlaia, primo villaggio delle Leghe Libere. Un mulino, un pozzo, trecento capre."],
+    ["tessa","Mercenari? Allora siete arrivati al momento giusto. O a quello sbagliato. I predoni di Gorran scendono dalle colline stanotte."],
+    ["giova","Quanti sono?"],
+    ["tessa","Abbastanza da prendersi le capre, il grano e, dicono in giro, una cassa che brilla. Ne sapete niente?"],
+    ["mars","Noi? Una cassa che brilla? Assolutamente... sì. È nostra."],
+    ["lethy","Signora, la Compagnia della Brace non lascia mai un ospite in difficoltà. Lo dice sempre mio padre. Di solito prima di proporre un interesse del dodici per cento."],
+    ["giova","Niente interessi. Ci hanno seguiti per colpa nostra, quindi tocca a noi. Le capre nel recinto in piazza, noi teniamo le strade e il ponte fino all'alba."],
+    ["wata","Prospy ha già trovato un'amica. Una capra nera. Prospy dice che si chiama... Fagiolo."],
+    ["giova","Allora difendiamo anche Fagiolo. Sei turni fino all'alba: con la luce i predoni non si arrischiano in pianura."]
+  ],
+  "vittoria": [
+    ["tessa","L'alba! E le capre ci sono tutte. Anzi, ce n'è una in più: credo che Fagiolo si sia portata un'amica."],
+    ["giova","Un predone mi ha detto che a Porto Ambra pagano tre volte il prezzo per la nostra cassa. Qualcuno ha messo in giro la voce."],
+    ["wata","Qualcuno vuole che tutti ci diano la caccia?"],
+    ["giova","Oppure vuole vedere chi arriva vivo a destinazione. In tutti e due i casi, il nostro committente sa più di quanto ci ha detto."],
+    ["tessa","Ragazza, tu. Quella con il gatto. Prendi questo ramo: viene dal rovo antico dietro il mulino. Nelle mani giuste punge più di una lancia."],
+    ["tessa","E tu, quella con le fiale. Ecco la ricetta del mio elisir. Niente etere, mi raccomando: solo erbe, miele e pazienza."],
+    ["mars","Niente etere. Certo. Ovviamente. ...Magari un pizzico."]
+  ],
+  "ricompensa": {
+    "testo": "Wata riceve le Spine del rovo antico (magia più forte). Mars impara l'Elisir di Nonna Tessa (cura di più e a distanza 1-2).",
+    "armi": {"wata":"spine","mars":"elisirF"}
+  },
+  "diario": "Abbiamo difeso Merlaia e le sue capre fino all'alba. Nonna Tessa ci ha regalato le Spine e la sua ricetta."
+}

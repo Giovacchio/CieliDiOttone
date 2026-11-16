@@ -1,0 +1,110 @@
+{
+  "id": "c4",
+  "titolo": "Capitolo 4 · Il magazzino delle Lanterne",
+  "atto": "Atto I · La Brace",
+  "tema": "notte",
+  "selciato": true,
+  "mappa": [
+    "gggLggggXXXXgggg",
+    "gkggggggXXXXgLgg",
+    "ggggkgggggggggkg",
+    "XXXgggLgggkgggXX",
+    "XXXgggggggggLggg",
+    "gggkggXXXggggkgg",
+    "gLggggXXXgggggLg",
+    "gggggggggkggXXXX",
+    "kgggLgggggggXXXX",
+    "gggggggkgggggggg"
+  ],
+  "schieramento": [[5,4],[6,4],[4,5],[5,5]],
+  "obiettivo": {"tipo":"comandante","testo":"Sconfiggi l'Ispettrice Ferrante. Sorella Maelis combatte con voi. Attenti agli aeronauti dal cielo."},
+  "ospiti": [
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 6,
+      "x": 4,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 5,
+      "arma": "luce",
+      "stat": {"hp":20,"for":1,"mag":9,"abi":7,"vel":7,"fort":5,"def":3,"res":9},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi in questo capitolo. Se cade, si ritira."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Lanciere","lv":6,"x":9,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":6,"x":10,"y":4,"ia":"portata"},
+    {"classe":"Fuciliere","lv":6,"x":2,"y":0,"ia":"portata"},
+    {"classe":"Fuciliere","lv":5,"x":14,"y":2,"ia":"portata"},
+    {"classe":"Corazzato","lv":5,"x":11,"y":5,"ia":"portata"},
+    {"classe":"Medico","lv":4,"x":14,"y":0,"ia":"portata","aspetto":{"modello":"corona","coat":"#e8e0d0"}},
+    {"classe":"Lama","nome":"Duellante della Corona","lv":5,"x":2,"y":8,"ia":"attacca","aspetto":{"modello":"corona","coat":"#8a3a2a"}},
+    {"classe":"Lanciere","lv":6,"x":11,"y":8,"ia":"attacca"},
+    {
+      "id": "boss",
+      "classe": "Lama",
+      "nome": "Ispettrice Ferrante",
+      "lv": 8,
+      "x": 13,
+      "y": 1,
+      "arma": "sciabola",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Sai perché la Corona ha bisogno dell'etere, stratega? Negli ospedali di Corvara le lampade non si spengono mai. Mia sorella è viva grazie a quelle lampade.",
+      "siRitira": true,
+      "bonus": {"hp":5,"def":2},
+      "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["ferrante","Aeronauti! Giù dal dirigibile!"],["mars","Volano! Con le ali di ottone! Giova, possiamo tenerne uno?"],["giova","No."]],
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":6,"x":15,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":6,"x":0,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["narr","Il dirigibile scende ancora: altri due aeronauti."]],
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":5,"x":7,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":6,"x":0,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Magazzino delle Lanterne, mezzanotte."],
+    ["maelis","Compagnia della Brace. Sono Sorella Maelis, del Concilio delle Radici. Sono io il vostro committente."],
+    ["giova","E sei anche quella che ha pagato i Corvi per rubarci la cassa?"],
+    ["maelis","No. È stato qualcun altro del Concilio. Non tutti i miei fratelli approvano che si usino mercenari: preferirebbero che il carico sparisse e basta."],
+    ["wata","Sorella, cosa c'è nei cristalli? Prospy li odia, e io sento come... qualcuno che piange."],
+    ["maelis","...Tu li senti? Allora sei più vicina alle Radici di molti nostri anziani. Te lo dirò quando saremo al sicuro, nelle foreste. Non qui."],
+    ["ferrante","Nessuno andrà nelle foreste stanotte. Ufficio dell'Etere! Circondate il magazzino!"],
+    ["lethy","Di nuovo lei! Ci segue come un pretendente respinto."],
+    ["giova","Fanteria dalle strade, e lassù c'è un dirigibile. Maelis, combatti con noi?"],
+    ["maelis","Il Concilio non combatte la Corona apertamente. Ma questo carico a lei non lo lascio. Sì."],
+    ["giova","Allora puntiamo all'Ispettrice: lei comanda, gli altri obbediscono. Maelis, tu resta vicina a Wata."]
+  ],
+  "vittoria": [
+    ["ferrante","Ritirata! ...Non finisce qui. Sorella Maelis, digli cosa fate nelle foreste a chi tocca le vostre Radici. Diglielo, se hai il coraggio."],
+    ["maelis","..."],
+    ["giova","Almeno una cosa vera l'ha detta: tutti sanno cosa c'è nei cristalli, tranne noi."],
+    ["maelis","Venite con me nelle Radici. Vi pago il doppio e vi mostro tutto. Avete la mia parola."],
+    ["lethy","Il doppio! Papà sarebbe fiero. Più o meno."],
+    ["wata","Io voglio sapere. Per i cristalli. Per chi piange lì dentro."],
+    ["mars","Foreste antiche, piante mai viste, etere allo stato puro... io ci sto prima ancora che tu finisca la frase."],
+    ["giova","Allora è deciso. Scelta ottimale... anche se stavolta non ho tutti i numeri."],
+    ["narr","Fine dell'Atto I · La Brace"]
+  ],
+  "ricompensa": {"testo":"Maelis paga in anticipo: due tonici a Giova e a Mars.","oggetti":[{"a":"giova","id":"tonico","q":2},{"a":"mars","id":"tonico","q":2}]},
+  "diario": "Il committente è Sorella Maelis del Concilio. Ferrante ci ha attaccati con un dirigibile."
+}

@@ -1,0 +1,90 @@
+{
+  "giova": [
+    {
+      "classe": "Condottiero",
+      "stat": {"hp":4,"for":2,"def":2,"res":1},
+      "mov": 1,
+      "abilita": {
+        "nome": "Comando",
+        "descrizione": "Alleati entro 3 caselle: +10 precisione e +5 schivata.",
+        "effetti": [{"tipo":"aura","raggio":3,"precisione":10,"schivata":5}]
+      }
+    },
+    {
+      "classe": "Tattico d'ottone",
+      "stat": {"abi":3,"vel":2,"fort":2,"hp":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Calcolo perfetto",
+        "descrizione": "Alleati entro 2 caselle: +10 precisione e +10 critico.",
+        "effetti": [{"tipo":"aura","raggio":2,"precisione":10,"critico":10}]
+      }
+    }
+  ],
+  "lethy": [
+    {
+      "classe": "Duellante",
+      "stat": {"vel":3,"abi":2,"for":1,"hp":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Stoccata e affondo",
+        "descrizione": "Lo stocco fa danno triplo ai corazzati e ha +15 critico.",
+        "effetti": [{"tipo":"bonus","critico":15,"seArma":{"efficace":"corazza"}}]
+      }
+    },
+    {
+      "classe": "Cavaliere d'ottone",
+      "stat": {"hp":5,"def":3,"for":1},
+      "mov": 2,
+      "movimento": "cavallo",
+      "abilita": {"nome":"Stoccata in sella","descrizione":"Danno triplo ai corazzati. Cavallo meccanico: si muove come la cavalleria.","effetti":[]}
+    }
+  ],
+  "wata": [
+    {
+      "classe": "Arcanista",
+      "stat": {"mag":3,"res":2,"abi":1,"hp":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Prospy arcana",
+        "descrizione": "+10 schivata grazie a Prospy e +2 danni magici.",
+        "effetti": [{"tipo":"bonus","schivata":10},{"tipo":"bonus","danno":2,"seArma":{"magica":true}}],
+        "gatto": true
+      }
+    },
+    {
+      "classe": "Saggia delle Radici",
+      "stat": {"mag":1,"res":3,"hp":4},
+      "mov": 1,
+      "abilita": {
+        "nome": "Radici che curano",
+        "descrizione": "+10 schivata grazie a Prospy; a inizio turno cura 5 PV agli alleati accanto a lei.",
+        "effetti": [{"tipo":"bonus","schivata":10},{"tipo":"curaVicini","pv":5}],
+        "gatto": true
+      }
+    }
+  ],
+  "mars": [
+    {
+      "classe": "Chirurga",
+      "stat": {"mag":3,"res":2,"hp":3},
+      "mov": 1,
+      "abilita": {
+        "nome": "Cure larghe",
+        "descrizione": "50% di PE in più; quando cura, cura 5 PV anche agli alleati accanto al bersaglio.",
+        "effetti": [{"tipo":"esperienza","moltiplica":1.5},{"tipo":"curaLarga","pv":5}]
+      }
+    },
+    {
+      "classe": "Alchimista",
+      "stat": {"mag":2,"vel":2,"for":1,"hp":2},
+      "mov": 1,
+      "arma": "fiala",
+      "abilita": {
+        "nome": "Fiale esplosive",
+        "descrizione": "50% di PE in più; oltre a curare, può lanciare fiale esplosive (gittata 1-2).",
+        "effetti": [{"tipo":"esperienza","moltiplica":1.5}]
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "c7",
+  "titolo": "Capitolo 7 · Il Pozzo delle Voci",
+  "atto": "Atto II · Le Radici",
+  "tema": "foresta-notte",
+  "mappa": [
+    "TTTff...f...ffTT",
+    "Tff....T.....ffT",
+    "ff..f..m.m..f..f",
+    "....f.m.c.m.....",
+    "ssss...ccc...sss",
+    "...s..m.c.m..s..",
+    "f..s...m.m...s.f",
+    "ff.s....T....sff",
+    "Tf.s.f.....f.sfT",
+    "TTTs..ff..ff.sTT"
+  ],
+  "schieramento": [[7,5],[9,5],[7,3],[9,3]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 5,
+    "proteggi": "maelis",
+    "testo": "Proteggi Sorella Maelis per 5 turni mentre apre il canto del pozzo. Se Maelis cade, la missione fallisce. Le vene d'etere attorno al pozzo curano."
+  },
+  "ospiti": [
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 8,
+      "x": 8,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "luce",
+      "stat": {"hp":22,"for":1,"mag":10,"abi":8,"vel":7,"fort":6,"def":3,"res":10},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Il canto del pozzo","descrizione":"Non può muoversi finché il canto non è finito, ma può colpire chi si avvicina."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Arciere","nome":"Esploratore della Corona","lv":7,"x":14,"y":1,"ia":"portata","aspetto":{"modello":"corona","coat":"#5a5a3a"}},
+    {"classe":"Lanciere","nome":"Esploratore della Corona","lv":7,"x":15,"y":5,"ia":"attacca","aspetto":{"modello":"corona","coat":"#5a5a3a"}},
+    {"classe":"Custode","lv":7,"x":0,"y":6,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Lama","nome":"Sicario del Concilio","lv":7,"x":3,"y":9,"ia":"attacca","aspetto":"radici"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["odo","Ecco dove si nascondevano. Il Concilio e i mercenari tutti insieme: due piccioni con una sega."]],
+      "rinforzi": [
+        {
+          "id": "odo",
+          "classe": "Lanciere",
+          "nome": "Caposquadra Odo",
+          "lv": 8,
+          "x": 13,
+          "y": 9,
+          "arma": "lanciaA",
+          "ia": "attacca",
+          "frase": "Mi avete rovinato un campo di taglio. Adesso vi rovino la serata.",
+          "aspetto": {"skin":"#d0a882","hair":"#4a3a2a","style":"helm","coat":"#6a5a3a","beard":true,"eye":"#2a1c14"}
+        },
+        {"classe":"Segatrice","lv":7,"x":13,"y":8,"ia":"attacca"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["custode","Per ordine del Custode Thalen: la traditrice Maelis deve tornare a Lucegrande. Viva, se possibile."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":7,"x":0,"y":4,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Lanciere","nome":"Guardia del Concilio","lv":7,"x":3,"y":9,"ia":"attacca","aspetto":"guardia"}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["maelis","Ancora un poco... la luna è quasi sopra il pozzo!"]],
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":7,"x":15,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Custode","lv":8,"x":0,"y":0,"ia":"attacca","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Il Pozzo delle Voci. Un cerchio di pietre antiche attorno a un buco nella terra, da cui sale una luce azzurra."],
+    ["maelis","Il pozzo scende fino alle radici dell'albero più vecchio di Valdaria. Qui l'etere è così fitto che si sente parlare. Mi serve tempo per aprire il canto."],
+    ["giova","Quanto tempo?"],
+    ["maelis","Finché la luna non arriva sopra il pozzo. Cinque turni dei tuoi, stratega. E nessuno deve interrompermi."],
+    ["wata","Prospy è tranquilla. Il bosco no: ci sono passi. Da due parti."],
+    ["lethy","Ospiti non invitati. Come al mio sedicesimo compleanno."],
+    ["mars","Questo posto è meraviglioso. Se sopravviviamo voglio un campione d'acqua del pozzo. Se non sopravviviamo... lo voglio lo stesso."],
+    ["giova","Cerchio intorno a Maelis. Lethy e io sui due sentieri, Wata dietro le pietre, Mars al centro. Cinque turni."]
+  ],
+  "vittoria": [
+    ["narr","La luna arriva sopra il pozzo. La luce azzurra sale, e con lei le voci."],
+    ["narr","Sono centinaia. Bisbigli, risate, una ninna nanna, qualcuno che chiama un cane. Nessuna è una voce di pietra."],
+    ["wata","Sono persone. Maelis... sono persone."],
+    ["maelis","Il Concilio insegna che i cristalli conservano la memoria della foresta. È vero. Ma la foresta ricorda chi ci ha vissuto."],
+    ["giova","Non ci hai detto tutto."],
+    ["maelis","No. Il resto è scritto negli archivi di Lucegrande, e solo il Gran Concilio può aprirli. Domani porto lì il rapporto su Thalen, e chiederò che li apra."],
+    ["lethy","E se dicono di no?"],
+    ["maelis","Allora saprò da che parte sta il mio Concilio."],
+    ["mars","Ho riempito tre fiale con l'acqua del pozzo. Una canticchia. Lo giuro."],
+    ["giova","Andiamo a Lucegrande. Ma stavolta il piano di fuga lo preparo prima di entrare."]
+  ],
+  "ricompensa": {"testo":"Maelis insegna a Wata il Giudizio verde, la magia dei Custodi.","armi":{"wata":"giudizio"}},
+  "diario": "Al Pozzo delle Voci abbiamo capito che nei cristalli ci sono persone."
+}

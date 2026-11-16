@@ -1,0 +1,87 @@
+{
+  "id": "c3",
+  "titolo": "Capitolo 3 · I Corvi di Sale",
+  "atto": "Atto I · La Brace",
+  "tema": "citta",
+  "selciato": true,
+  "mappa": [
+    "HHH.gggggg.HHHHH",
+    "HHH.gLggkg.HHHHH",
+    "....gggggg....k.",
+    "k.gggggkkggggg..",
+    "gggLgggggggLgggg",
+    "gggggkggggggg=ww",
+    "ggkggggggkggg=ww",
+    "wwwww=wwwwww==ww",
+    "wwwww=wwwwwwwwww",
+    "wwwww==wwwwwwwww"
+  ],
+  "schieramento": [[4,2],[5,1],[3,2],[4,0]],
+  "obiettivo": {"tipo":"comandante","testo":"Sconfiggi Brann Mezzosale, capo dei Corvi di Sale, sul pontile."},
+  "nemici": [
+    {"classe":"Lama","nome":"Corvo di Sale","lv":4,"x":8,"y":3,"ia":"attacca","aspetto":"corvo"},
+    {"classe":"Lama","nome":"Corvo di Sale","lv":4,"x":10,"y":4,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Arciere","nome":"Corvo balestriere","lv":4,"x":14,"y":2,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Guerriero","nome":"Corvo di Sale","lv":4,"x":6,"y":5,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Fuciliere","nome":"Corvo archibugiere","lv":4,"x":10,"y":6,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Arciere","nome":"Corvo balestriere","lv":4,"x":5,"y":8,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Guerriero","nome":"Corvo di Sale","lv":5,"x":11,"y":5,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Lama","nome":"Corvo di Sale","lv":4,"x":15,"y":3,"ia":"attacca","aspetto":"corvo"},
+    {
+      "id": "boss",
+      "classe": "Guerriero",
+      "nome": "Brann Mezzosale",
+      "lv": 7,
+      "x": 12,
+      "y": 7,
+      "arma": "arrembaggio",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Giova lo stratega! Vediamo se i tuoi calcoli reggono l'acqua salata.",
+      "aspetto": {"skin":"#c48e6a","hair":"#2a2622","style":"messy","coat":"#28414a","beard":"full","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["brann","Ragazzi, giù dalla barca! C'è da lavorare!"]],
+      "rinforzi": [
+        {"classe":"Guerriero","nome":"Corvo di Sale","lv":4,"x":5,"y":9,"ia":"attacca","aspetto":"corvo"},
+        {"classe":"Lama","nome":"Corvo di Sale","lv":4,"x":6,"y":9,"ia":"attacca","aspetto":"corvo"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["narr","Un altro Corvo sbuca dai vicoli dietro di voi."]],
+      "rinforzi": [{"classe":"Lama","nome":"Corvo di Sale","lv":5,"x":0,"y":4,"ia":"attacca","aspetto":"corvo"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Porto Ambra, cuore delle Leghe Libere. Qui tutto ha un prezzo, anche il silenzio."],
+    ["grigio","Puntuali, malgrado tutto. Il mio cliente apprezzerà. Lasciate la cassa sul molo tre e il resto del compenso è vostro."],
+    ["giova","Il tuo cliente ha un nome?"],
+    ["grigio","Il mio cliente ha dei soldi, che è meglio di un nome."],
+    ["lethy","Questo posto lo conosco! Da bambina venivo qui con papà a veder arrivare le navi. Laggiù c'è la banca di famiglia... speriamo che nessuno mi riconosca vestita così."],
+    ["brann","Che commovente. La figlia dei banchieri che fa la mercenaria. Io sono Brann, dei Corvi di Sale, e quella cassa mi serve."],
+    ["grigio","Brann! Ti ho pagato per sorvegliare il molo, non per..."],
+    ["brann","E qualcun altro mi paga il doppio per portargliela. Le Leghe funzionano così, Grigio. Lo sai meglio di me."],
+    ["wata","Prospy gli soffia contro. E non soffia mai alle persone, solo alle cose cattive."],
+    ["giova","Doppio gioco e un molo stretto. Niente inseguimenti tra le casse: dritti a Brann. Senza di lui i Corvi scappano."]
+  ],
+  "vittoria": [
+    ["brann","Va bene, va bene! Me ne vado. Ma ascolta, stratega: chi mi ha pagato il doppio portava un mantello verde. Pensaci."],
+    ["grigio","Bene... molto bene. Ora che il molo è tranquillo posso dirvelo: il mio cliente vuole incontrarvi di persona. Stanotte, al magazzino delle Lanterne."],
+    ["wata","Un mantello verde... come quelli del Concilio delle Radici."],
+    ["lethy","Il Concilio paga i Corvi per rubare la cassa che il Concilio stesso ci ha fatto rubare? È come comprare due volte lo stesso cavallo."],
+    ["giova","A meno che nel Concilio non vadano tutti d'accordo. Stanotte lo scopriamo."],
+    ["lethy","Intanto faccio un salto in banca. Se papà mi vede con questa spada di ferro gli viene un colpo."],
+    ["narr","Lethy torna un'ora dopo con lo stocco d'argento del nonno e una lettera di papà che dice soltanto: \"Mangia\"."]
+  ],
+  "ricompensa": {
+    "testo": "Lethy riceve lo Stocco d'argento del nonno. Con il compenso di Grigio, Giova compra una Spada d'acciaio.",
+    "armi": {"lethy":"stoccoA","giova":"spadaA"}
+  },
+  "diario": "A Porto Ambra i Corvi di Sale ci hanno traditi per conto di un mantello verde."
+}

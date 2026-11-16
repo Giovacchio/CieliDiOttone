@@ -1,0 +1,104 @@
+{
+  "id": "c13c",
+  "titolo": "Capitolo 13 · La Sovrana",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "cielo",
+  "rotta": "corona",
+  "mappa": [
+    "oooooooooooooooo",
+    "ooooDDDDDDDDDDoo",
+    "oDDoDDkDDDDkDDDo",
+    "oDD=DDDDXXDDDDDo",
+    "oDD=DDDDXXDDDDDo",
+    "oDDoDDDDDDDDDDDo",
+    "ooooDDkDDDDkDDoo",
+    "ooooDDDDDDDDDDoo",
+    "oooooDDDDDDDDooo",
+    "oooooooooooooooo"
+  ],
+  "schieramento": [[2,3],[2,4],[1,3],[1,4]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi la Capitana Voss davanti al ponte di comando della Sovrana. Dal cielo arrivano aeronauti: gli archi della Corona li colpiscono forte, la vostra magia no."
+  },
+  "ospiti": [
+    {
+      "id": "ferrante",
+      "titolo": "Ispettrice",
+      "nome": "Ispettrice Ferrante",
+      "lv": 12,
+      "x": 2,
+      "y": 2,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 6,
+      "arma": "spadaA",
+      "stat": {"hp":30,"for":12,"mag":1,"abi":13,"vel":13,"fort":7,"def":8,"res":5},
+      "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi. Se cade, si ritira."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Lanciere","lv":12,"x":5,"y":2,"ia":"attacca"},
+    {"classe":"Lanciere","lv":12,"x":6,"y":5,"ia":"portata"},
+    {"classe":"Fuciliere","lv":12,"x":11,"y":2,"ia":"portata"},
+    {"classe":"Corazzato","lv":12,"x":7,"y":3,"ia":"portata"},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":12,"x":13,"y":6,"ia":"portata","aspetto":"corona"},
+    {"classe":"Lama","nome":"Duellante della Corona","lv":12,"x":10,"y":7,"ia":"attacca","aspetto":{"modello":"corona","coat":"#8a3a2a"}},
+    {"classe":"Medico","lv":11,"x":14,"y":3,"ia":"portata","aspetto":{"modello":"corona","coat":"#e8e0d0"}},
+    {
+      "id": "boss",
+      "classe": "Lama",
+      "nome": "Capitana Voss",
+      "lv": 14,
+      "x": 12,
+      "y": 4,
+      "arma": "sciabola",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Ferrante! Ti ho insegnato io a tirare di sciabola. Vediamo se ricordi la lezione.",
+      "siRitira": true,
+      "bonus": {"hp":8,"def":3},
+      "aspetto": {"skin":"#c99674","hair":"#3a2a22","style":"tricorn","coat":"#5a1e1c","acc":"epaulette","eye":"#3a3a3a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["voss","Aeronauti, staccatevi! Spingeteli giù dal ponte!"]],
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":12,"x":0,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":12,"x":15,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":12,"x":8,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":13,"x":15,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto IV · Cieli di ottone"],
+    ["narr","Rotta della Corona. Tre giorni dopo Fossa Grigia, sopra le nuvole di Corvara."],
+    ["ferrante","La Sovrana, l'ammiraglia di Strand. Nella cassaforte del ponte di comando ci sono gli ordini firmati per Cenerossa. Se li porto al Consiglio della Corona, Strand cade."],
+    ["lethy","L'abbordaggio di un dirigibile! Papà ha un quadro così in sala da pranzo. Il pirata però finiva male."],
+    ["mars","Siamo a duemila metri. Ho preparato una pozione contro le vertigini. Effetto collaterale: forse si vede tutto verde."],
+    ["wata","Prospy non vuole guardare giù. Io nemmeno."],
+    ["giova","Ponte stretto, niente ripari, rinforzi dal cielo. Puntiamo alla capitana Voss: il ponte di comando è dietro di lei."]
+  ],
+  "vittoria": [
+    ["voss","Basta... la nave è vostra. Ma Strand non è a bordo, Ferrante. È a Corvara, e ti sta aspettando."],
+    ["ferrante","Gli ordini di Cenerossa. Firmati, timbrati, datati. ...Ci siamo."],
+    ["giova","Con questi Strand non può più dire di non sapere. Il Consiglio della Corona dovrà ascoltare."],
+    ["wata","Le voci dei minatori... le sento anche da quassù. Sono più calme."],
+    ["mars","Possiamo tenere la nave? Solo un po'? La chiamerei Fagiolo Secondo."],
+    ["narr","La Sovrana vira verso Corvara. Il resto della rotta della Corona arriverà presto."]
+  ],
+  "ricompensa": {"testo":"Nella cabina di Voss: due tonici per Lethy.","oggetti":[{"a":"lethy","id":"tonico","q":2}]},
+  "diario": "Abbiamo preso la Sovrana e gli ordini firmati di Strand."
+}

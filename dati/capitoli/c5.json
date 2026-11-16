@@ -1,0 +1,105 @@
+{
+  "id": "c5",
+  "titolo": "Capitolo 5 · Sentieri di radice",
+  "atto": "Atto II · Le Radici",
+  "tema": "foresta",
+  "mappa": [
+    "TTff..f~~T..ff.T",
+    "Tf...ff~~...c..T",
+    "f..c...~~.f..rkf",
+    "..ff...~~..rr...",
+    "T.....f~~..r.k.T",
+    "sssssss==sssssss",
+    "T..c...~~..k.r.T",
+    "..f...f~~...rr..",
+    "Tf..c..~~.c..ffT",
+    "TTff...~~..fTTTT"
+  ],
+  "schieramento": [[2,5],[3,4],[2,6],[1,5]],
+  "obiettivo": {
+    "tipo": "tutti",
+    "testo": "Sconfiggi tutti i nemici. L'etere batte i congegni: Wata e Maelis sono forti contro le segatrici a vapore. Le vene d'etere curano il 10% a inizio turno."
+  },
+  "ospiti": [
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 7,
+      "x": 1,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 5,
+      "arma": "luce",
+      "stat": {"hp":21,"for":1,"mag":10,"abi":7,"vel":7,"fort":5,"def":3,"res":10},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi in questo capitolo. Se cade, si ritira."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Segatrice","lv":6,"x":11,"y":3,"ia":"attacca"},
+    {"classe":"Segatrice","lv":6,"x":13,"y":6,"ia":"portata"},
+    {"classe":"Segatrice","lv":7,"x":12,"y":7,"ia":"portata"},
+    {"classe":"Corazzato","lv":5,"x":9,"y":5,"ia":"portata"},
+    {"classe":"Lanciere","nome":"Scorta della Corona","lv":6,"x":10,"y":2,"ia":"attacca"},
+    {"classe":"Fuciliere","lv":5,"x":14,"y":4,"ia":"portata"},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":5,"x":12,"y":1,"ia":"portata","aspetto":"corona"},
+    {
+      "id": "odo",
+      "classe": "Lanciere",
+      "nome": "Caposquadra Odo",
+      "lv": 7,
+      "x": 14,
+      "y": 2,
+      "arma": "lanciaA",
+      "ia": "portata",
+      "frase": "Ogni albero che abbatto illumina una strada di Corvara per un anno. Voi cosa illuminate, mercenari?",
+      "aspetto": {"skin":"#d0a882","hair":"#4a3a2a","style":"helm","coat":"#6a5a3a","beard":true,"eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["odo","Squadra del sud, accendete le seghe! Prendeteli alle spalle!"]],
+      "rinforzi": [{"classe":"Segatrice","lv":6,"x":3,"y":9,"ia":"attacca"},{"classe":"Lanciere","nome":"Scorta della Corona","lv":6,"x":5,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["narr","Altri uomini della Corona arrivano dal fondo del sentiero."]],
+      "rinforzi": [
+        {"classe":"Arciere","nome":"Arciere della Corona","lv":6,"x":10,"y":9,"ia":"attacca","aspetto":"corona"},
+        {"classe":"Lanciere","nome":"Scorta della Corona","lv":7,"x":14,"y":0,"ia":"attacca"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto II · Le Radici"],
+    ["narr","Tre giorni di cammino a est di Porto Ambra, gli alberi diventano così grandi che il sole arriva a terra solo a mezzogiorno."],
+    ["wata","Ci siamo. Le Radici. Sentite? ...No, certo che non sentite. È come stare dentro un respiro enorme."],
+    ["mars","Io sento odore di muschio, resina e... olio bruciato?"],
+    ["maelis","Segatrici. La Corona manda squadre di taglio anche qui, anche se il trattato lo vieta. Abbattono un albero antico e raccolgono i cristalli tra le radici."],
+    ["lethy","Segare un albero di mille anni? È come usare l'arazzo di famiglia per pulirsi gli stivali!"],
+    ["giova","Quante segatrici?"],
+    ["maelis","Tre, forse quattro, con la scorta. Sono corazzate, ma l'etere le manda in tilt."],
+    ["giova","Wata e Maelis contro le macchine, Lethy sulle guardie corazzate, io e Mars a coprire. Possibilmente senza feriti."],
+    ["wata","Prospy ha già il pelo dritto. Andiamo."]
+  ],
+  "vittoria": [
+    ["wata","L'albero tagliato... sotto la corteccia ci sono i cristalli. Tantissimi. Sono caldi. Come mani."],
+    ["maelis","Wata. Allontanati da lì."],
+    ["wata","C'è una voce dentro. Ripete un nome. \"Ilvo\". Chi è Ilvo?"],
+    ["maelis","...Era un guardaboschi. È morto qui, cent'anni fa."],
+    ["giova","Maelis. Cosa sono i cristalli?"],
+    ["maelis","Al villaggio di Fondoscuro vi dirò tutto, lo giuro sulle Radici. Ma prima dobbiamo arrivarci."],
+    ["mars","Io intanto ho preso appunti. Tanti appunti. Alcuni sono disegni di funghi, ma sono appunti seri."]
+  ],
+  "ricompensa": {
+    "testo": "Tra le macerie del campo di taglio: un tonico per Lethy e uno per Wata.",
+    "oggetti": [{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1}]
+  },
+  "diario": "Nelle Radici, Wata ha sentito un nome dentro un cristallo: Ilvo."
+}

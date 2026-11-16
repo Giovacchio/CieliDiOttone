@@ -1,0 +1,70 @@
+{
+  "id": "c1",
+  "titolo": "Capitolo 1 · Binari nella nebbia",
+  "atto": "Atto I · La Brace",
+  "tema": "campagna",
+  "mappa": [
+    "fff.....ff..mm~~ff",
+    "ff..HH...f...m==.f",
+    "f...ss......f.~~..",
+    "....s...ff..r.~~..",
+    "....s...f.....~~.r",
+    "bbbbbbbbbbbbbbbbbb",
+    "..f.....r.....~~..",
+    ".ff....m...ff.~~f.",
+    "ff....mm....f.~~ff",
+    "fff.......fff.~~ff"
+  ],
+  "schieramento": [[6,5],[7,4],[5,6],[5,4]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [17,5],
+    "testo": "Porta Giova oltre il ponte di Fossa Grigia, sulla casella d'ottone a est. Dal turno 2 arriva la cavalleria della Corona da ovest."
+  },
+  "nemici": [
+    {"classe":"Lanciere","lv":2,"x":11,"y":4,"ia":"attacca"},
+    {"classe":"Lanciere","lv":2,"x":12,"y":6,"ia":"portata"},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":2,"x":12,"y":0,"ia":"portata","aspetto":"corona"},
+    {"classe":"Corazzato","lv":2,"x":15,"y":5,"ia":"fermo"},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":2,"x":17,"y":2,"ia":"portata","aspetto":"corona"},
+    {"classe":"Lama","nome":"Duellante della Corona","lv":2,"x":16,"y":1,"ia":"portata","aspetto":{"modello":"corona","coat":"#8a3a2a"}}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [
+        ["ferrante","Compagnia della Brace! Sono l'Ispettrice Ferrante, Ufficio dell'Etere. Quel carico appartiene alla Corona."],
+        ["ferrante","Arrendetevi e vi garantisco un processo giusto. Scappate, e vi riporto a Corvara in catene."],
+        ["giova","Cavalleria meccanica: due caselle di movimento più di noi. In velocità non la battiamo. Avanti al ponte, e chi resta indietro non resta solo."]
+      ],
+      "rinforzi": [{"classe":"Cavaliere","lv":2,"x":0,"y":4,"ia":"attacca"},{"classe":"Cavaliere","lv":2,"x":0,"y":6,"ia":"attacca"}]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["ferrante","Non devono passare il fiume! Secondo squadrone, avanti!"]],
+      "rinforzi": [{"classe":"Cavaliere","lv":3,"x":0,"y":5,"ia":"attacca"},{"classe":"Cavaliere","lv":2,"x":0,"y":3,"ia":"attacca"}]
+    }
+  ],
+  "inizio": [
+    ["narr","Due giorni dopo Corvara. La Compagnia viaggia verso le Leghe Libere con la cassa di etere nascosta sotto le patate."],
+    ["giova","Il confine è oltre il ponte di Fossa Grigia. Se lo passiamo, la Corona non può seguirci senza dichiarare guerra alle Leghe."],
+    ["lethy","Quindi è come la linea di fondo nella pallacorda: chi la supera vince il punto. Adoro la pallacorda."],
+    ["mars","Io stanotte ho dormito sopra la cassa. Ho sognato una voce che cantava. Credo fosse l'etere. Oppure le patate."],
+    ["wata","Non erano le patate, Mars. Prospy non vuole più starle vicino... e io nemmeno, a dire il vero."],
+    ["giova","Ne parliamo quando saremo al sicuro. Nebbia fitta, binari dritti fino al ponte. Ci muoviamo insieme e non ci fermiamo."]
+  ],
+  "vittoria": [
+    ["giova","Siamo oltre. Terra delle Leghe Libere."],
+    ["ferrante","Questa non è finita, stratega. Sai almeno cosa trasporti? Io sì. Ed è per questo che lo rivoglio."],
+    ["lethy","Che maniere. Neanche un saluto."],
+    ["wata","Giova... ha detto \"cosa\", non \"quanto vale\"."],
+    ["giova","L'ho sentito anch'io. Prima consegniamo il carico, poi le domande al committente. Tutte quante."]
+  ],
+  "ricompensa": {
+    "testo": "Sul carro abbandonato dalla Corona: un tonico in più per ognuno.",
+    "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"mars","id":"tonico","q":1}]
+  },
+  "diario": "Inseguiti dalla cavalleria dell'Ispettrice Ferrante, abbiamo passato il ponte di Fossa Grigia."
+}

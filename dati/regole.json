@@ -1,0 +1,18 @@
+{
+  "triangoli": {"spada":"ascia","ascia":"lancia","lancia":"spada","etere":"congegni","congegni":"polvere","polvere":"etere"},
+  "triangolo": {"precisione":15,"danno":1},
+  "doppioAttacco": 4,
+  "moltiplicatoreCritico": 3,
+  "moltiplicatoreEfficace": 3,
+  "livelloMassimo": {"base":20,"promosso":30},
+  "promozione": {"livello":10,"oggetto":"sigillo"},
+  "esperienza": {"perLivello":100,"scontro":10,"scontroPerLivello":2,"mancato":1,"sconfitta":30,"sconfittaPerLivello":4,"comandante":30,"cura":20},
+  "supporti": {
+    "livelli": ["C","B","A"],
+    "soglie": {"C":12,"B":32,"A":60},
+    "raggio": 2,
+    "puntiScontro": 1,
+    "puntiCura": 2,
+    "bonusPerLivello": {"precisione":5,"schivata":5,"critico":2}
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "id": "c10",
+  "titolo": "Capitolo 10 · La notte di Corvara",
+  "atto": "Atto III · Il cristallo che respira",
+  "tema": "notte",
+  "mappa": [
+    "ggLgggwwwgggXXXX",
+    "gggXXgwwwgLgXXXX",
+    "gkgXXgwwwgggggFg",
+    "ggggggwwwgkgLggg",
+    "bbbbbbbbbbbbbbbb",
+    "gggLggwwwggggkgg",
+    "XXXgggwwwggXXXgg",
+    "XXXgkgwwwgLXXXgL",
+    "gggggg===ggggggg",
+    "gLgggkwwwgggkggg"
+  ],
+  "schieramento": [[14,4],[15,3],[15,5],[14,5]],
+  "obiettivo": {
+    "tipo": "raggiungi",
+    "casella": [0,4],
+    "chi": "ferrante",
+    "proteggi": "ferrante",
+    "testo": "Porta l'Ispettrice Ferrante all'uscita a ovest, in fondo ai binari (casella d'ottone). Se Ferrante o Giova cadono, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "ferrante",
+      "titolo": "Ispettrice",
+      "nome": "Ispettrice Ferrante",
+      "lv": 10,
+      "x": 13,
+      "y": 4,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 6,
+      "arma": "sciabola",
+      "stat": {"hp":33,"for":11,"mag":1,"abi":12,"vel":12,"fort":7,"def":9,"res":5},
+      "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"},
+      "abilita": {"nome":"Ospite","descrizione":"Va portata fuori da Corvara. Se cade, la missione fallisce."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Corazzato","lv":9,"x":7,"y":4,"ia":"fermo"},
+    {"classe":"Lanciere","lv":9,"x":4,"y":3,"ia":"portata"},
+    {"classe":"Lanciere","lv":9,"x":3,"y":5,"ia":"portata"},
+    {"classe":"Fuciliere","lv":9,"x":5,"y":1,"ia":"portata"},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":9,"x":10,"y":7,"ia":"portata","aspetto":"corona"},
+    {"classe":"Lama","nome":"Duellante della Corona","lv":9,"x":9,"y":2,"ia":"attacca","aspetto":{"modello":"corona","coat":"#8a3a2a"}},
+    {"classe":"Lanciere","lv":9,"x":10,"y":0,"ia":"attacca"},
+    {"classe":"Medico","lv":9,"x":1,"y":1,"ia":"portata","aspetto":{"modello":"corona","coat":"#e8e0d0"}}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [["narr","Zoccoli di ottone sul selciato: la cavalleria arriva alle vostre spalle."]],
+      "rinforzi": [{"classe":"Cavaliere","lv":9,"x":15,"y":8,"ia":"attacca"},{"classe":"Cavaliere","lv":9,"x":15,"y":9,"ia":"attacca"}]
+    },
+    {
+      "turno": 3,
+      "fase": "giocatore",
+      "dialogo": [
+        ["strand","Ispettrice Ferrante. Ti ho dato una carriera, una casa, le lampade per tua sorella. E tu mi ripaghi così."],
+        ["strand","E tu, stratega. Ogni cristallo è una lampada in un ospedale; ogni lampada salva dieci vite. Tu sei uno che conta, giusto? Allora fai il conto."]
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Aeronauta","lv":9,"x":0,"y":0,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}},
+        {"classe":"Aeronauta","lv":9,"x":0,"y":9,"ia":"attacca","aspetto":{"modello":"corona","coat":"#9a6a2a"}}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Corvara, di notte. La città delle fonderie non dorme mai: le lampade a etere non si spengono."],
+    ["narr","Ferrante non è tornata."],
+    ["giova","Mars, quanto ci mette la tua pozione del fumo a riempire una strada?"],
+    ["mars","Dipende. Se non esplode, un minuto. Se esplode, molto meno."],
+    ["ferrante","Stratega! Sapevo che sareste venuti, anche se non ve l'ho chiesto. Strand mi ha accusata di tradimento. Sono scappata da sola, ma il quartiere è chiuso."],
+    ["lethy","Un'evasione notturna! Come nei romanzi che la governante mi nascondeva sotto il materasso."],
+    ["wata","Prospy le si è strusciata contro le gambe. Prospy non sbaglia mai sulle persone."],
+    ["giova","Ferrante, con noi. Uscita a ovest, in fondo ai binari, oltre il canale. Nessuno resta indietro."]
+  ],
+  "vittoria": [
+    ["ferrante","Fuori. Siamo fuori. ...Grazie. Non sono abituata a dirlo."],
+    ["wata","Giova? Sei rimasto zitto da quando ha parlato Strand."],
+    ["giova","Perché il suo conto torna. Un minatore che muore comunque contro dieci bambini salvati. Ed è proprio questo il problema: torna."],
+    ["lethy","Anche i conti di papà tornano sempre. Non vuol dire che siano giusti. Lo dice la mamma, di solito a cena."],
+    ["mars","Un conto in cui qualcuno non sa di essere un numero non è un conto: è un furto. L'ho letto da qualche parte. O forse l'ho appena inventato."],
+    ["ferrante","Strand ha la flotta. Se il Concilio si muove, lui brucerà le Radici dal cielo. E il Concilio lo sa."],
+    ["ferrante","Tieni, stratega. La mia sciabola d'ottone. Io me ne procurerò un'altra, tu ne avrai bisogno più di me."]
+  ],
+  "ricompensa": {"testo":"Ferrante regala a Giova la sua Sciabola d'ottone.","armi":{"giova":"sciabola"}},
+  "diario": "Abbiamo portato Ferrante fuori da Corvara. Strand ha chiesto a Giova di fare il conto."
+}

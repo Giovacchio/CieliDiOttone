@@ -1,0 +1,100 @@
+{
+  "id": "c11",
+  "titolo": "Capitolo 11 · Il Cuore delle Radici",
+  "atto": "Atto III · Il cristallo che respira",
+  "tema": "foresta",
+  "mappa": [
+    "TTff.TTTTTT.ffTT",
+    "Tf..cTTTTTTc..fT",
+    "f...cTTTTTTc...f",
+    "..c...c..c...c..",
+    "...f...cc...f...",
+    "~~~~=~~~~~~=~~~~",
+    "..f....ff....f..",
+    "f..c..f..f..c..f",
+    "ff....ssss....ff",
+    "TTff..ssss..ffTT"
+  ],
+  "schieramento": [[7,8],[8,8],[6,9],[9,9]],
+  "obiettivo": {
+    "tipo": "comandante",
+    "testo": "Sconfiggi il Gran Custode Arven per spezzare il cerchio del Canto del Silenzio. Chi sta sulle vene d'etere si cura: toglietele ai Custodi."
+  },
+  "ospiti": [
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 11,
+      "x": 8,
+      "y": 9,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 5,
+      "arma": "giudizio",
+      "stat": {"hp":26,"for":2,"mag":13,"abi":10,"vel":9,"fort":7,"def":4,"res":13},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Ospite","descrizione":"Combatte con voi in questo capitolo. Se cade, si ritira."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Custode","lv":9,"x":4,"y":1,"ia":"portata","aspetto":"radici"},
+    {"classe":"Custode","lv":9,"x":11,"y":1,"ia":"portata","aspetto":"radici"},
+    {"classe":"Custode","lv":9,"x":2,"y":3,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Custode","lv":9,"x":13,"y":3,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Lanciere","nome":"Guardia del Concilio","lv":10,"x":4,"y":5,"ia":"fermo","aspetto":"guardia"},
+    {"classe":"Corazzato","nome":"Guardia di radice","lv":10,"x":11,"y":5,"ia":"fermo","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":9,"x":3,"y":4,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":9,"x":12,"y":4,"ia":"portata","aspetto":"guardia"},
+    {
+      "id": "boss",
+      "classe": "Custode",
+      "nome": "Gran Custode Arven",
+      "lv": 14,
+      "x": 7,
+      "y": 4,
+      "arma": "giudizio",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Ogni volta che un cristallo brucia, una voce urla. Il Silenzio è pietà, stratega. Tu che conti tutto, conta le urla.",
+      "siRitira": true,
+      "bonus": {"hp":14,"def":5,"res":4,"vel":3},
+      "aspetto": {"skin":"#cfae92","hair":"#f0eee6","style":"hood","coat":"#e6e0cc","beard":"full","eye":"#8ad0a0"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["arven","Custodi! Al Cuore! Il Canto non deve interrompersi!"]],
+      "rinforzi": [{"classe":"Custode","lv":9,"x":1,"y":0,"ia":"attacca","aspetto":"radici"},{"classe":"Custode","lv":9,"x":14,"y":0,"ia":"attacca","aspetto":"radici"}]
+    },
+    {"turno":5,"fase":"nemico","rinforzi":[{"classe":"Lanciere","nome":"Guardia del Concilio","lv":10,"x":0,"y":6,"ia":"attacca","aspetto":"guardia"}]}
+  ],
+  "inizio": [
+    ["narr","Il Cuore delle Radici: l'albero più antico di Valdaria. Si dice che le sue radici attraversino tutto il continente."],
+    ["maelis","Il Gran Custode Arven vuole intonare il Canto del Silenzio. Ogni cristallo di Valdaria si spegnerà. Le voci dormiranno, e la Corona resterà senza flotta..."],
+    ["mars","...e gli ospedali senza luce. E i villaggi come Fondoscuro senza cure."],
+    ["arven","Sorella Maelis. Hai portato i mercenari fino al Cuore. Sai cosa c'è in gioco: le voci soffrono ogni volta che un cristallo brucia. Il Silenzio è pietà."],
+    ["wata","Le voci non soffrono e basta, Gran Custode. Io le sento. Hanno paura, ma non vogliono dormire. Vogliono essere ascoltate."],
+    ["arven","Allora sei tu che non le capisci, bambina."],
+    ["lethy","Le ha dato della bambina. Giova, posso sfidarlo a duello? Formalmente, con il guanto e tutto?"],
+    ["giova","Puoi batterlo, che è meglio. Maelis, come si ferma il Canto?"],
+    ["maelis","Arven tiene il cerchio da solo, al centro. Batti lui e il cerchio si spezza. Ma i Custodi stanno sulle vene d'etere: lì si curano."],
+    ["giova","Allora prima le vene, poi Arven. Ponte a sinistra o a destra: scegliamo quello con meno guardie."]
+  ],
+  "vittoria": [
+    ["arven","Il cerchio... è spezzato. Avete scelto di lasciarle soffrire."],
+    ["wata","Abbiamo scelto di non decidere da soli al posto loro."],
+    ["narr","Arven si ritira nella foresta con i Custodi che gli sono rimasti fedeli."],
+    ["maelis","Il Concilio si spaccherà: metà seguirà Arven, metà no. E Strand lo saprà prima di sera."],
+    ["giova","Allora ci resta poco tempo per decidere da che parte stare."],
+    ["mars","Io intanto ho una notizia: la fiala che canticchiava ha smesso. Credo che abbia sentito il Cuore e si sia calmata. Credo. Spero."]
+  ],
+  "ricompensa": {
+    "testo": "Maelis lascia due tonici a Mars, uno a Wata e un Sigillo di ottone trovato al Cuore.",
+    "oggetti": [{"a":"mars","id":"tonico","q":2},{"a":"wata","id":"tonico","q":1},{"a":"wata","id":"sigillo","q":1}]
+  },
+  "diario": "Abbiamo spezzato il Canto del Silenzio del Gran Custode Arven."
+}

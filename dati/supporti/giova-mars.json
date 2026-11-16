@@ -1,0 +1,34 @@
+{
+  "coppia": ["giova","mars"],
+  "C": [
+    ["mars","Giova, cosa cucini? Ha un profumo che mi fa venire voglia di fare esperimenti."],
+    ["giova","Arepas. Ricetta di famiglia: farina di mais, acqua, sale e la pazienza di mia nonna."],
+    ["mars","Farina di mais... posso aggiungere un pizzico di polvere di lucciola? Diventerebbero luminose!"],
+    ["giova","No."],
+    ["mars","Un pizzico piccolo piccolo?"],
+    ["giova","Mars, la cucina è l'unico posto in cui non calcolo niente. Vado a occhio, come faceva lei. Lasciami questo."],
+    ["mars","Oh. ...Allora niente lucciole. Però posso guardare? Voglio imparare la pazienza della nonna. È un ingrediente che non ho mai provato."],
+    ["giova","È il più difficile. Siediti. E non toccare il sale."]
+  ],
+  "B": [
+    ["mars","Giova, devo confessarti una cosa. Ieri ho messo un pizzico di polvere di lucciola nelle arepas."],
+    ["giova","Lo so. Lethy ha detto che le brillava la pancia."],
+    ["mars","Era un esperimento! Volevo vedere se la luce aiuta la digestione. Non aiuta. Però è bellissima."],
+    ["giova","Perché sperimenti su tutto, Mars? Anche su quello che funziona già?"],
+    ["mars","Perché al mio circolo di druidi mi dicevano sempre: \"Le cose sono così da mille anni, non toccarle\". E io pensavo: e se fossero meglio in un altro modo? Nessuno lo saprà mai, se nessuno prova."],
+    ["giova","Allora facciamo un patto. In battaglia, solo gli elisir che funzionano. In cucina, una volta a settimana puoi provare una cosa nuova."],
+    ["mars","Una volta a settimana! È un patto da stratega. Accetto. Venerdì: arepas al miele di Nonna Tessa."],
+    ["giova","...Questa potrebbe perfino essere buona."]
+  ],
+  "A": [
+    ["mars","Giova! Ho inventato una ricetta. Anzi, l'abbiamo inventata insieme, solo che tu non lo sapevi."],
+    ["giova","Spaventoso. Continua."],
+    ["mars","Le tue arepas, il miele di Tessa e un'erba del Pozzo delle Voci che dà forza. Niente lucciole, giuro. L'ho chiamata \"Brace\"."],
+    ["giova","Come la Compagnia."],
+    ["mars","Come la Compagnia: cose diverse che da sole sono buone e insieme diventano qualcosa di nuovo. Tu sei la farina di mais, comunque. Quella solida."],
+    ["giova","E tu?"],
+    ["mars","Io sono l'erba strana che nessuno voleva metterci. Ma senza di me sarebbe solo pane."],
+    ["giova","...Mia nonna diceva che una ricetta è finita solo quando qualcuno la cambia. Credo che le saresti piaciuta, Mars."],
+    ["mars","Allora la cucino ogni anno, il giorno in cui ci siamo conosciuti. Esperimento annuale. Il più importante di tutti."]
+  ]
+}

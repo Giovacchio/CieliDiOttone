@@ -1,0 +1,4 @@
+{
+  "tonico": {"nome":"Tonico","tipo":"cura","pv":10,"descrizione":"cura 10 PV"},
+  "sigillo": {"nome":"Sigillo di ottone","tipo":"promozione","descrizione":"promuove un personaggio dal livello 10"}
+}

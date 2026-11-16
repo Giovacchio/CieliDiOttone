@@ -1,0 +1,11 @@
+{
+  "arepas": {"nome":"Arepas della nonna","descrizione":"Croccanti fuori, morbide dentro. +2 Difesa a tutti nel prossimo capitolo.","stat":{"def":2}},
+  "zuppa": {"nome":"Zuppa di Merlaia","descrizione":"Con il formaggio di capra di Nonna Tessa. +4 PV massimi a tutti.","stat":{"hp":4}},
+  "stufato": {"nome":"Stufato del porto","descrizione":"Pesce di Porto Ambra e spezie delle Leghe. +2 Forza e +2 Magia a tutti.","stat":{"for":2,"mag":2}},
+  "brace": {
+    "nome": "Ricetta \"Brace\"",
+    "descrizione": "L'invenzione di Giova e Mars. +1 a tutte le statistiche e +2 PV massimi.",
+    "stat": {"hp":2,"for":1,"mag":1,"abi":1,"vel":1,"fort":1,"def":1,"res":1},
+    "richiede": {"coppia":["giova","mars"],"livello":"A"}
+  }
+}

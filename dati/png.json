@@ -1,0 +1,82 @@
+{
+  "narr": {"nome":"","narratore":true},
+  "ferrante": {
+    "nome": "Ispettrice Ferrante",
+    "squadra": "nemico",
+    "titolo": "Ispettrice",
+    "aspetto": {"skin":"#ecc8a8","hair":"#d9cfae","style":"short","coat":"#6e1f1c","acc":"epaulette","eye":"#5a6a78"}
+  },
+  "grigio": {
+    "nome": "Il Signor Grigio",
+    "squadra": "alleato",
+    "titolo": "Mediatore",
+    "aspetto": {"skin":"#dcb898","hair":"#8a8a8a","style":"bald","coat":"#55565c","beard":true,"eye":"#3a3a3a"}
+  },
+  "maelis": {
+    "nome": "Sorella Maelis",
+    "squadra": "alleato",
+    "titolo": "Saggia delle Radici",
+    "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"}
+  },
+  "tessa": {
+    "nome": "Nonna Tessa",
+    "squadra": "alleato",
+    "titolo": "Capo villaggio",
+    "aspetto": {"skin":"#d9b08c","hair":"#e8e4dc","style":"short","coat":"#7a5a3a","eye":"#4a3020"}
+  },
+  "brann": {
+    "nome": "Brann Mezzosale",
+    "squadra": "nemico",
+    "titolo": "Capo dei Corvi",
+    "aspetto": {"skin":"#c48e6a","hair":"#2a2622","style":"messy","coat":"#28414a","beard":"full","eye":"#2a1c14"}
+  },
+  "gorran": {
+    "nome": "Gorran il Fuso",
+    "squadra": "nemico",
+    "titolo": "Capo predone",
+    "aspetto": {"skin":"#b98a68","hair":"#3a2a1e","style":"bald","coat":"#5a3a22","beard":"full","scar":true,"eye":"#2a1c14"}
+  },
+  "thalen": {
+    "nome": "Custode Thalen",
+    "squadra": "nemico",
+    "titolo": "Custode anziano",
+    "aspetto": {"skin":"#d8b49a","hair":"#c8c8c0","style":"hood","coat":"#1f4a36","beard":"full","eye":"#7ac08a"}
+  },
+  "erba": {
+    "nome": "Erba, guaritrice",
+    "squadra": "alleato",
+    "titolo": "Guaritrice",
+    "aspetto": {"skin":"#c99a74","hair":"#6a4a2a","style":"longv","coat":"#6a7a4a","eye":"#4a3020"}
+  },
+  "custode": {"nome":"Custode","squadra":"nemico","titolo":"Custode delle Radici","aspetto":"radici"},
+  "voss": {
+    "nome": "Capitana Voss",
+    "squadra": "nemico",
+    "titolo": "Capitana della Sovrana",
+    "aspetto": {"skin":"#c99674","hair":"#3a2a22","style":"tricorn","coat":"#5a1e1c","acc":"epaulette","eye":"#3a3a3a"}
+  },
+  "kessel": {
+    "nome": "Sovrintendente Kessel",
+    "squadra": "nemico",
+    "titolo": "Sovrintendente",
+    "aspetto": {"skin":"#d8b090","hair":"#6a5a4a","style":"tricorn","coat":"#4a4a52","beard":true,"eye":"#3a3a3a"}
+  },
+  "strand": {
+    "nome": "Direttore Strand",
+    "squadra": "nemico",
+    "titolo": "Direttore dell'Ufficio dell'Etere",
+    "aspetto": {"skin":"#e6c4a4","hair":"#2a2a2e","style":"short","coat":"#1e1e26","acc":"epaulette","eye":"#7a8aa0"}
+  },
+  "arven": {
+    "nome": "Gran Custode Arven",
+    "squadra": "nemico",
+    "titolo": "Gran Custode",
+    "aspetto": {"skin":"#cfae92","hair":"#f0eee6","style":"hood","coat":"#e6e0cc","beard":"full","eye":"#8ad0a0"}
+  },
+  "odo": {
+    "nome": "Caposquadra Odo",
+    "squadra": "nemico",
+    "titolo": "Caposquadra",
+    "aspetto": {"skin":"#d0a882","hair":"#4a3a2a","style":"helm","coat":"#6a5a3a","beard":true,"eye":"#2a1c14"}
+  }
+}

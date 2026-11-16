@@ -1,67 +1,60 @@
-const {chromium}=require('playwright');
-const CAMPAIGNS=+process.argv[2]||6, FROM=+process.argv[3]||0;
-(async()=>{const b=await chromium.launch(); const p=await b.newPage(); const errs=[];
- p.on('pageerror',e=>errs.push(e.message));
- await p.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
- await p.goto('file://'+require('path').resolve(__dirname,'..','index.html')); await p.waitForTimeout(300);
- const res = await p.evaluate(async ([CAMPAIGNS,FROM])=>{
-  SPEED=0; window.story=(l,d)=>{ d&&d(); };
-  window.levelUp=u=>{ u.lv++; let any=false; for(const k of STAT_KEYS){ if(Math.random()*100<(u.gr?.[k]||0)){ u.st[k]++; any=true; if(k==="hp") u.hp++; } } if(!any){u.st.hp++;u.hp++;} return Promise.resolve(); };
-  const wait=()=>new Promise(r=>setTimeout(r,0));
-  const goalDist=()=>{ const g=CH.goal; if(g.type!=="reach") return null; return distField({move:"inf"},[{x:g.tile[0],y:g.tile[1]}]); };
-  const isRunner=u=>CH.goal.type==="reach" && u.id===(CH.goal.who||units.find(x=>x.leader).id);
-  async function botAct(u, GD){
-    if(u.hp<=0||u.acted||ended) return;
-    const tonic=u.items.find(i=>i.n==="Tonico"&&i.q>0);
-    const R=reachable(u); const foes=alive("enemy");
-    if(W(u).staff){ let best=null;
-      for(const t of R){ for(const o of alive("ally")){ if(o===u||o.hp>=o.st.hp) continue; const d=Math.abs(t.x-o.x)+Math.abs(t.y-o.y); if(d<W(u).r[0]||d>W(u).r[1]) continue;
-        const sc=(o.st.hp-o.hp)+(o.leader?3:0); if(!best||sc>best.sc) best={t,o,sc}; } }
-      if(best && best.sc>=5){ u.x=best.t.x; u.y=best.t.y; await doHeal(u,best.o); return; }
+// Fa giocare tutta la campagna a un bot e stampa, per capitolo, vittorie, turni e livelli.
+// Uso: node strumenti/simula_campagna.js [campagne=20] [rotta=corona] [ia=classica]
+import { datiDaDisco } from "./dati_node.js";
+import { giocaBattaglia } from "./bot.js";
+import { Battaglia } from "../js/motore/battaglia.js";
+import { creaDado } from "../js/motore/dado.js";
+import { nuovaPartita, concludiCapitolo, leggiSupporto, sulPercorso } from "../js/motore/campagna.js";
+import { clona } from "../js/motore/unita.js";
+
+// Una campagna intera. "registra" riceve ogni tentativo: serve al confronto con il prototipo.
+export function simulaCampagna(dati, { dado, rotta = "corona", ia, tutteLeRotte = false, tentativi = 4, registra = null } = {}) {
+  const partita = nuovaPartita(dati);
+  partita.bandiere.rotta = rotta;
+  const esito = [];
+  for (const id of dati.campagna.capitoli) {
+    const cap = dati.capitoli[id];
+    if (!tutteLeRotte && !sulPercorso(partita, cap)) continue;
+    const r = { id, primo: false, tentativi: 0, turni: 0, caduti: [], livelli: dati.personaggi.ordine.map((p) => partita.compagnia[p].lv).join("/"), vinto: false };
+    for (let t = 0; t < tentativi && !r.vinto; t++) {
+      const b = new Battaglia({ dati, capitolo: cap, compagnia: partita.compagnia, supporti: partita.supporti, bandiere: partita.bandiere, dado, ia });
+      if (registra) b.diario = [];
+      const g = giocaBattaglia(b);
+      r.tentativi++; r.caduti.push(...g.caduti);
+      if (registra) registra({ id, vinta: g.vinta, turni: g.turni, caduti: g.caduti.sort().join(","), pv: b.unita.map((u) => u.pv).join(","), diario: b.diario });
+      if (g.vinta) {
+        const prossimo = partita.prossimo;
+        concludiCapitolo(dati, partita, b);
+        if (tutteLeRotte) partita.prossimo = prossimo;
+        for (const [x, y] of dati.coppie) leggiSupporto(dati, partita, x, y);
+        r.vinto = true; r.primo = t === 0; r.turni = g.turni;
+      }
     }
-    if(tonic && u.hp < u.st.hp*0.4){ tonic.q--; u.hp=Math.min(u.st.hp,u.hp+10); finishAct(u); return; }
-    if(isRunner(u) && GD){ const g=CH.goal; if(R.some(t=>t.x===g.tile[0]&&t.y===g.tile[1])){ u.x=g.tile[0]; u.y=g.tile[1]; finishAct(u); return; } }
-    let best=null;
-    if(!W(u).staff) for(const t of R) for(const e of foes){ if(!inRange(u,t.x,t.y,e.x,e.y)) continue;
-      const ox=u.x,oy=u.y; u.x=t.x;u.y=t.y; const fc=forecast(u,e); u.x=ox;u.y=oy;
-      const exp=fc.A.hit/100*fc.A.dmg*(fc.A.dbl?2:1), kill=fc.A.dmg*(fc.A.dbl?2:1)>=e.hp?30:0, back=fc.counter?fc.B.hit/100*fc.B.dmg*(fc.B.dbl?2:1):0;
-      let sc=exp+kill-back*0.7 + (e.boss?3:0);
-      if(u.leader||u.guest){ if(back>=u.hp) sc-=100; } if(isRunner(u) && GD) sc -= (GD.get(t.x+","+t.y)??50)*1.5;
-      if(!best||sc>best.sc) best={t,e,sc}; }
-    if(best && (best.sc>0 || !u.leader)){ u.x=best.t.x; u.y=best.t.y; await fight(u,best.e); if(!ended && !u.acted && u.hp>0) finishAct(u); return; }
-    // muoviti: verso l'obiettivo (Giova) o verso il nemico più vicino; i guaritori restano dietro a Giova
-    let D; if(isRunner(u) && GD) D=GD; else if(W(u).staff){ const g=units.find(x=>x.leader); D=distField(u,[g]); } else D=distField(u, foes.length?foes:[units.find(x=>x.leader)]);
-    let step=null, sd=1e9; for(const t of R){ let d=D.get(t.x+","+t.y)??1e6; if(W(u).staff && d<2) d=2+ (2-d); if(u.leader && !GD) d = Math.max(d, 3); if(d<sd){sd=d;step=t;} }
-    if(step){ u.x=step.x; u.y=step.y; } finishAct(u);
+    esito.push(r);
+    if (!r.vinto) break;
   }
-  async function play(i){
-    await playChapter(i); const GD=goalDist(); const fallen=new Set();
-    while(!ended && turn<=30){
-      const order = alive("ally").sort((a,b)=>(W(a).staff?1:0)-(W(b).staff?1:0) || (a.leader?1:0)-(b.leader?1:0));
-      for(const u of order){ if(ended) break; await botAct(u,GD); await wait(); }
-      if(ended) break;
-      const t0=turn; if(phase==="player" && !busy) await endPlayerPhase();
-      let guard=0; while(!ended && (phase!=="player" || busy || turn===t0) && guard++<5000) await wait();
-      for(const u of units) if(u.team==="ally" && u.hp<=0) fallen.add(u.id);
-    }
-    for(let k=0;k<50 && !won && ended;k++) await wait();
-    await new Promise(r=>setTimeout(r,30));
-    return {win:won, turns:turn, fallen:[...fallen], lv: PARTY_ORDER.map(id=>party[id].lv).join("/")};
-  }
-  const stats={};
-  for(let c=0;c<CAMPAIGNS;c++){
-    party=freshParty(); flags={route:"corona"}; supports={};
-    for(let i=0;i<CHAPTERS.length;i++){
-      const s=stats[CHAPTERS[i].id] ||= {first:0, n:0, tries:0, turns:0, fallen:{}, lv:[]};
-      s.n++; let ok=false;
-      for(let a=0;a<4 && !ok;a++){ const start=clone(party), supStart=clone(supports); const lvStart=PARTY_ORDER.map(id=>party[id].lv).join("/");
-        const r=await play(i); s.tries++; r.fallen.forEach(f=>s.fallen[f]=(s.fallen[f]||0)+1);
-        for(const [a,b] of SUP_PAIRS){ const S=supGet(a,b), nx=supNext(S); if(nx && S.pts>=SUP_NEED[nx]){ S.lvl=nx; (window.__sup ||= []).push(CHAPTERS[i].id+':'+a+'-'+b+':'+nx); } }
-        if(r.win){ ok=true; if(a===0) s.first++; s.turns+=r.turns; s.lv.push(lvStart); } else { party=start; supports=supStart; } }
-      if(!ok) break;
+  return { esito, partita };
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const N = +process.argv[2] || 20, rotta = process.argv[3] || "corona", ia = process.argv[4];
+  const dati = await datiDaDisco();
+  const S = {};
+  let finite = 0;
+  for (let c = 0; c < N; c++) {
+    const { esito } = simulaCampagna(dati, { dado: creaDado(1000 + c), rotta, ia });
+    if (esito.at(-1).vinto) finite++;
+    for (const r of esito) {
+      const s = S[r.id] ||= { n: 0, primo: 0, tentativi: 0, turni: 0, vinti: 0, caduti: {}, livelli: [] };
+      s.n++; s.tentativi += r.tentativi; if (r.primo) s.primo++;
+      if (r.vinto) { s.vinti++; s.turni += r.turni; }
+      for (const f of r.caduti) s.caduti[f] = (s.caduti[f] || 0) + 1;
+      if (s.livelli.length < 3) s.livelli.push(r.livelli);
     }
   }
-  stats.__sup = window.__sup||[]; return stats;
- },[CAMPAIGNS,FROM]);
- const sup=res.__sup; delete res.__sup; console.log('supporti letti:', sup.length, sup.slice(0,40).join(' ')); for(const [id,s] of Object.entries(res)) console.log(id.padEnd(8), `vinto al 1° tentativo ${s.first}/${s.n}`, `tentativi ${s.tries}`, `turni medi ${(s.turns/Math.max(1,s.n)).toFixed(1)}`, `livelli all'inizio ${s.lv.slice(0,3).join(" ")}`, `ritirati`, JSON.stringify(s.fallen));
- console.log(errs.slice(0,5).join("\n")||"nessun errore JS"); await b.close();})();
+  console.log(`Rotta ${rotta}, IA ${ia || dati.regole.ia || "classica"}, ${N} campagne (${finite} arrivate in fondo)`);
+  console.log("capitolo  vinto al 1°  tentativi  turni  livelli all'inizio            ritirati");
+  for (const [id, s] of Object.entries(S))
+    console.log(id.padEnd(9), `${s.primo}/${s.n}`.padEnd(12), (s.tentativi / s.n).toFixed(2).padEnd(10), (s.turni / Math.max(1, s.vinti)).toFixed(1).padEnd(6),
+      s.livelli.join(" ").padEnd(29), Object.entries(s.caduti).map(([k, v]) => `${k} ${v}`).join(", "));
+}

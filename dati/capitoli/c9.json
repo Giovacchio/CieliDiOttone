@@ -1,0 +1,84 @@
+{
+  "id": "c9",
+  "titolo": "Capitolo 9 · Le miniere di Cenerossa",
+  "atto": "Atto III · Il cristallo che respira",
+  "tema": "miniera",
+  "mappa": [
+    "################",
+    "#..c..#....L.c.#",
+    "#.....b....#...#",
+    "##.m..b..m.#.F.#",
+    "#.L...b....#...#",
+    "#bbbbbbbbbbbbb.#",
+    "#..m......c.m..#",
+    "#.c...##L...#..#",
+    "#.....##....#.c#",
+    "################"
+  ],
+  "schieramento": [[2,6],[1,6],[1,8],[2,8]],
+  "obiettivo": {"tipo":"comandante","testo":"Sconfiggi il Sovrintendente Kessel nel suo ufficio, accanto alla fornace. Le pareti di roccia non si attraversano."},
+  "nemici": [
+    {"classe":"Guerriero","nome":"Guardia della miniera","lv":9,"x":5,"y":1,"ia":"attacca","aspetto":{"modello":"corona","coat":"#5a4a3a"}},
+    {"classe":"Fuciliere","lv":9,"x":9,"y":2,"ia":"portata"},
+    {"classe":"Lanciere","lv":9,"x":8,"y":4,"ia":"portata"},
+    {"classe":"Corazzato","lv":9,"x":12,"y":5,"ia":"portata"},
+    {"classe":"Medico","lv":8,"x":14,"y":4,"ia":"portata","aspetto":{"modello":"corona","coat":"#e8e0d0"}},
+    {"classe":"Arciere","nome":"Arciere della Corona","lv":9,"x":13,"y":1,"ia":"portata","aspetto":"corona"},
+    {"classe":"Segatrice","nome":"Trivella a vapore","lv":9,"x":9,"y":7,"ia":"attacca"},
+    {"classe":"Lama","nome":"Duellante della Corona","lv":9,"x":13,"y":7,"ia":"portata","aspetto":{"modello":"corona","coat":"#8a3a2a"}},
+    {"classe":"Guerriero","nome":"Guardia della miniera","lv":9,"x":10,"y":6,"ia":"portata","aspetto":{"modello":"corona","coat":"#5a4a3a"}},
+    {
+      "id": "boss",
+      "classe": "Lanciere",
+      "nome": "Sovrintendente Kessel",
+      "lv": 11,
+      "x": 13,
+      "y": 3,
+      "arma": "lanciaA",
+      "ia": "fermo",
+      "comandante": true,
+      "frase": "Voi delle Leghe non capite. Qui nessuno muore per colpa nostra: muoiono comunque, di polvere e di vecchiaia. Noi diamo un senso alla loro fine.",
+      "bonus": {"hp":8,"def":3,"abi":2},
+      "aspetto": {"skin":"#d8b090","hair":"#6a5a4a","style":"tricorn","coat":"#4a4a52","beard":true,"eye":"#3a3a3a"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["narr","Dalle gallerie laterali escono altre guardie della miniera."]],
+      "rinforzi": [
+        {"classe":"Guerriero","nome":"Guardia della miniera","lv":9,"x":14,"y":8,"ia":"attacca","aspetto":{"modello":"corona","coat":"#5a4a3a"}},
+        {"classe":"Fuciliere","lv":9,"x":12,"y":1,"ia":"attacca"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto III · Il cristallo che respira"],
+    ["narr","Una settimana dopo Lucegrande. Il Registro delle Radici parla di un posto che nessuna mappa della Corona riporta: le miniere di Cenerossa."],
+    ["maelis","Secondo il Registro, a Cenerossa nascono più cristalli che in tutte le Radici messe insieme. Ma lì non ci sono Radici antiche. Non dovrebbe nascere niente."],
+    ["giova","A meno che qualcuno non ce li faccia nascere."],
+    ["wata","Non dirlo. Ti prego, non dirlo ad alta voce."],
+    ["lethy","Lo dico io: è un sistema di produzione. Papà li studia. Di solito sono ingegnosi, e di solito qualcuno ci rimette."],
+    ["mars","Ho preparato una pozione per vedere al buio. L'ho provata su Prospy. Ora mi fissa da due giorni senza sbattere le palpebre. Direi che funziona."],
+    ["maelis","Io resto fuori a fare la guardia. Se un'etermante del Concilio viene vista qui dentro, è guerra."],
+    ["giova","Entriamo, guardiamo, usciamo. Il sovrintendente avrà i registri: è lui il bersaglio."]
+  ],
+  "vittoria": [
+    ["narr","Nell'ufficio del sovrintendente: un registro e una pila di lettere. In fondo alla galleria, una corsia d'ospedale illuminata a etere, con i letti allineati sopra radici trapiantate."],
+    ["wata","Li portano qui quando stanno per morire. Li mettono sopra le radici. E aspettano."],
+    ["mars","Sono minatori. Alle famiglie arrivano una pensione e una lettera: \"Il vostro caro ora illumina Corvara\"."],
+    ["giova","Le lettere sono firmate dall'Ufficio dell'Etere."],
+    ["ferrante","...Fatemi vedere."],
+    ["lethy","Lei! Ispettrice! È entrata da sola? Senza nemmeno un cavaliere meccanico?"],
+    ["ferrante","Vi seguivo da Lucegrande. Volevo il Registro. Adesso... questa è la firma del mio direttore. Io vi ho dato la caccia per difendere questo."],
+    ["ferrante","Mia sorella fa il medico a Corvara, sotto quelle lampade. Se lo scopre..."],
+    ["giova","Allora aiutaci a fermarlo. Dall'interno."],
+    ["ferrante","Domani all'alba torno a Corvara e chiedo spiegazioni al direttore Strand. Se non torno entro sera, saprete che la Corona ha risposto."]
+  ],
+  "ricompensa": {
+    "testo": "Nell'ufficio di Kessel: tre tonici e un Sigillo di ottone.",
+    "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"lethy","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"lethy","id":"sigillo","q":1}]
+  },
+  "diario": "A Cenerossa la Corona fa morire i minatori sopra radici trapiantate. Ferrante ha visto tutto."
+}

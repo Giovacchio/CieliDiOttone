@@ -1,0 +1,39 @@
+{
+  "coppia": ["giova","wata"],
+  "C": [
+    ["wata","Giova... stai dando il formaggio a Prospy?"],
+    ["giova","Io? No. Le sto... calcolando la razione."],
+    ["wata","Le hai dato la razione di tre giorni. Guarda che pancia."],
+    ["giova","Prima della Compagnia facevo il custode di bestie per i mercanti. Cavalli, cani da guardia, una volta perfino un'aquila di montagna. Gli animali li capisco meglio delle persone."],
+    ["wata","E Prospy l'ha capito subito. Ti dorme sullo zaino ogni notte."],
+    ["giova","Pensavo fosse perché lo zaino è caldo."],
+    ["wata","Lo zaino è caldo perché ci sei tu vicino. Anche i gatti contano, sai? Contano chi le fa sentire al sicuro."],
+    ["giova","Allora siamo in due a contare. Ma basta formaggio."],
+    ["wata","...Domani gliene dai un pezzetto, vero?"],
+    ["giova","Piccolissimo."]
+  ],
+  "B": [
+    ["giova","Wata. Stanotte non hai dormito."],
+    ["wata","Si vede così tanto? ...Le voci. Da quando le ho sentite la prima volta, le sento sempre un po'. Come gente che parla nella stanza accanto."],
+    ["giova","Fanno male?"],
+    ["wata","No. Fanno paura. Una di loro chiama sua figlia ogni notte, e io non so dirle dove sia."],
+    ["giova","Ogni città delle Leghe tiene un registro delle famiglie. Se mi dici il nome, lo cerco."],
+    ["wata","Lo faresti? Per una voce?"],
+    ["giova","Per una voce e per te. Sono due buone ragioni: il calcolo torna."],
+    ["wata","Si chiama Bettina. È di Merlaia, credo: parla sempre di capre."],
+    ["giova","Allora Nonna Tessa saprà chi è. Vedi? Abbiamo già un piano."],
+    ["wata","Grazie, Giova. Prospy dice grazie anche lei. ...E dice che vorrebbe il formaggio."]
+  ],
+  "A": [
+    ["wata","Giova, ho una cosa per te. L'ha scelta Prospy."],
+    ["giova","Un... sasso?"],
+    ["wata","Un sasso di fiume con dentro un granello d'etere. Piccolissimo, non c'è nessuna voce, ho controllato. Però è caldo. Quando devi fare un calcolo difficile, tienilo in mano."],
+    ["giova","Per scaldarmi le mani mentre conto?"],
+    ["wata","Per ricordarti che non sei solo a contare. Tu ascolti sempre tutti, ma nessuno ascolta te."],
+    ["giova","...Hai ragione. Allora te lo dico: ho paura di sbagliare la scelta grande. Quella che arriverà."],
+    ["wata","Lo so. Anch'io. Ma se sbagliamo, sbagliamo insieme. È una scelta ottimale anche quella, no?"],
+    ["giova","Rischio diviso per due. Sì. È ottimale."],
+    ["wata","Prospy è d'accordo. Guarda: ti si è seduta in braccio."],
+    ["giova","È la prima volta che non va sullo zaino."]
+  ]
+}

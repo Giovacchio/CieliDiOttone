@@ -1,0 +1,16 @@
+{
+  "modelli": {
+    "corona": {"skin":"#d9b08c","hair":"#3a2b22","style":"helm","coat":"#7a2e29","eye":"#2a1c14"},
+    "corvo": {"skin":"#c99674","hair":"#1e1a18","style":"messy","coat":"#28414a","eye":"#2a1c14"},
+    "radici": {"skin":"#d8b49a","hair":"#2a3a2a","style":"hood","coat":"#1f4a36","eye":"#7ac08a"},
+    "guardia": {"skin":"#d0a882","hair":"#333","style":"helm","coat":"#2f5a46","eye":"#2a1c14"}
+  },
+  "classi": {
+    "Lanciere": {"skin":"#d9b08c","hair":"#3a2b22","style":"helm","coat":"#7a2e29","eye":"#2a1c14"},
+    "Guerriero": {"skin":"#c99674","hair":"#2e2018","style":"messy","coat":"#6b3a24","beard":true,"eye":"#2a1c14"},
+    "Fuciliere": {"skin":"#e0b894","hair":"#4a3020","style":"tricorn","coat":"#7a2e29","eye":"#2a1c14"},
+    "Etermante": {"skin":"#d8b49a","hair":"#2a2236","style":"hood","coat":"#3e2a52","eye":"#9b6ad8"},
+    "Corazzato": {"skin":"#d0a882","hair":"#333","style":"greathelm","coat":"#5b5f68","eye":"#000"},
+    "Capitano": {"skin":"#c48e6a","hair":"#5a4030","style":"bald","coat":"#6e1f1c","beard":"full","scar":true,"eye":"#2a1c14","acc":"epaulette"}
+  }
+}

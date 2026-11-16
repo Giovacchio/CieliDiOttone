@@ -1,0 +1,36 @@
+{
+  "coppia": ["lethy","mars"],
+  "C": [
+    ["mars","Lethy, com'è vivere in una villa? Voglio provarlo. Raccontami tutto, anche le cose noiose."],
+    ["lethy","Le cose noiose sono quasi tutte. Ci si sveglia, ci si veste in tre, si fa colazione in silenzio, si studia il galateo..."],
+    ["mars","Il galateo! È tipo un rituale druidico? Con le forchette?"],
+    ["lethy","Le forchette sono sette, Mars. Sette. Una per ogni cosa."],
+    ["mars","Fantastico. Insegnamelo. In cambio io ti insegno a dormire sotto le stelle senza tenda, con le formiche e tutto."],
+    ["lethy","Le formiche?"],
+    ["mars","Fanno parte dell'esperienza."],
+    ["lethy","...Affare fatto. Ma prima le forchette. Ho bisogno di prepararmi psicologicamente alle formiche."]
+  ],
+  "B": [
+    ["lethy","Mars! Stanotte ho dormito sotto le stelle. Senza tenda. Con le formiche."],
+    ["mars","E com'è stato?"],
+    ["lethy","Orribile per un'ora. Poi ho visto una stella cadente e mi sono dimenticata delle formiche. Non ne avevo mai vista una: in villa le tende erano sempre chiuse."],
+    ["mars","Visto? Le esperienze nuove sono tutte orribili all'inizio. È il prezzo del biglietto."],
+    ["lethy","E il galateo, per te, è stato orribile?"],
+    ["mars","Terribile. Ho usato la forchetta del pesce per la torta e mi sono sentita una criminale. Però adesso so che esiste una forchetta del pesce. Il mondo è più grande di ieri."],
+    ["lethy","Tu non hai paura di niente, vero?"],
+    ["mars","Di una cosa sola: arrivare alla fine senza aver provato tutto. E tu?"],
+    ["lethy","Io avevo paura di arrivare alla fine avendo provato una cosa sola. Credo che ci stiamo guarendo a vicenda."]
+  ],
+  "A": [
+    ["lethy","Mars, ho deciso: quando tutto questo sarà finito, compro una casa."],
+    ["mars","Una villa con sette forchette?"],
+    ["lethy","No. Una casa piccola, al margine delle Radici: un laboratorio per te, una cucina per Giova, un giardino per Wata e Prospy, una sala di scherma per me. E nessuna tenda alle finestre."],
+    ["mars","Lethy... ci stai invitando a vivere tutti insieme?"],
+    ["lethy","Vi sto proponendo un investimento. Papà dice di investire in ciò che cresce. Voi siete la cosa che è cresciuta di più nella mia vita."],
+    ["mars","Accetto. A una condizione: una volta al mese si dorme in giardino. Con le formiche."],
+    ["lethy","E una volta al mese si cena con il galateo. Sette forchette."],
+    ["mars","È il compromesso più bello che abbia mai sentito. Lo scrivo nel quaderno, alla pagina \"esperienze da fare per sempre\"."],
+    ["lethy","C'è una pagina così?"],
+    ["mars","Da oggi sì. Ed è la prima."]
+  ]
+}

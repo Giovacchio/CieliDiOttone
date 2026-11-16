@@ -1,0 +1,98 @@
+{
+  "Lanciere": {
+    "nome": "Soldato della Corona",
+    "arma": "lancia",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":18,"for":6,"mag":0,"abi":4,"vel":4,"fort":1,"def":4,"res":0},
+    "crescita": {"hp":0.8,"for":0.45,"abi":0.35,"vel":0.3,"fort":0.2,"def":0.35,"res":0.1}
+  },
+  "Guerriero": {
+    "nome": "Predone",
+    "arma": "ascia",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":20,"for":7,"mag":0,"abi":3,"vel":3,"fort":0,"def":3,"res":0},
+    "crescita": {"hp":0.9,"for":0.5,"abi":0.3,"vel":0.3,"fort":0.2,"def":0.25,"res":0.05}
+  },
+  "Fuciliere": {
+    "nome": "Fuciliere della Corona",
+    "arma": "moschetto",
+    "movimento": "fanteria",
+    "mov": 4,
+    "stat": {"hp":16,"for":6,"mag":0,"abi":6,"vel":5,"fort":1,"def":2,"res":1},
+    "crescita": {"hp":0.6,"for":0.4,"abi":0.5,"vel":0.35,"fort":0.2,"def":0.2,"res":0.15}
+  },
+  "Etermante": {
+    "nome": "Etermante rinnegato",
+    "arma": "scintilla",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":15,"for":0,"mag":5,"abi":4,"vel":5,"fort":1,"def":1,"res":4},
+    "crescita": {"hp":0.55,"for":0.05,"mag":0.5,"abi":0.35,"vel":0.4,"fort":0.2,"def":0.1,"res":0.4}
+  },
+  "Custode": {
+    "nome": "Custode delle Radici",
+    "arma": "luce",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":17,"for":1,"mag":6,"abi":5,"vel":5,"fort":2,"def":2,"res":6},
+    "crescita": {"hp":0.6,"for":0.1,"mag":0.5,"abi":0.4,"vel":0.35,"fort":0.25,"def":0.15,"res":0.45}
+  },
+  "Corazzato": {
+    "nome": "Guardia corazzata",
+    "arma": "lancia",
+    "movimento": "corazza",
+    "mov": 4,
+    "stat": {"hp":22,"for":7,"mag":0,"abi":4,"vel":1,"fort":0,"def":9,"res":0},
+    "crescita": {"hp":0.85,"for":0.45,"abi":0.3,"vel":0.1,"fort":0.1,"def":0.5,"res":0.05}
+  },
+  "Cavaliere": {
+    "nome": "Cavaliere d'ottone",
+    "arma": "picca",
+    "movimento": "cavallo",
+    "mov": 7,
+    "stat": {"hp":19,"for":6,"mag":0,"abi":5,"vel":6,"fort":1,"def":5,"res":1},
+    "crescita": {"hp":0.75,"for":0.4,"abi":0.35,"vel":0.35,"fort":0.2,"def":0.3,"res":0.1}
+  },
+  "Arciere": {
+    "nome": "Arciere",
+    "arma": "arco",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":16,"for":5,"mag":0,"abi":6,"vel":5,"fort":2,"def":2,"res":1},
+    "crescita": {"hp":0.6,"for":0.4,"abi":0.45,"vel":0.4,"fort":0.25,"def":0.15,"res":0.15}
+  },
+  "Lama": {
+    "nome": "Mercenario",
+    "arma": "spada",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":17,"for":5,"mag":0,"abi":7,"vel":8,"fort":2,"def":3,"res":1},
+    "crescita": {"hp":0.65,"for":0.4,"abi":0.45,"vel":0.5,"fort":0.3,"def":0.2,"res":0.15}
+  },
+  "Medico": {
+    "nome": "Medico da campo",
+    "arma": "kit",
+    "movimento": "fanteria",
+    "mov": 5,
+    "stat": {"hp":15,"for":0,"mag":4,"abi":3,"vel":4,"fort":2,"def":1,"res":4},
+    "crescita": {"hp":0.5,"for":0,"mag":0.4,"abi":0.3,"vel":0.3,"fort":0.3,"def":0.1,"res":0.35}
+  },
+  "Aeronauta": {
+    "nome": "Aeronauta",
+    "arma": "lancia",
+    "movimento": "volo",
+    "mov": 6,
+    "stat": {"hp":17,"for":5,"mag":0,"abi":5,"vel":7,"fort":2,"def":3,"res":3},
+    "crescita": {"hp":0.65,"for":0.4,"abi":0.4,"vel":0.45,"fort":0.25,"def":0.2,"res":0.25}
+  },
+  "Segatrice": {
+    "nome": "Segatrice a vapore",
+    "arma": "sega",
+    "movimento": "corazza",
+    "mov": 4,
+    "stat": {"hp":24,"for":8,"mag":0,"abi":3,"vel":1,"fort":0,"def":8,"res":0},
+    "crescita": {"hp":0.9,"for":0.45,"abi":0.2,"vel":0.05,"fort":0,"def":0.45,"res":0}
+  }
+}

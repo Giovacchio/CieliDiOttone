@@ -1,0 +1,116 @@
+{
+  "id": "c13r",
+  "titolo": "Capitolo 13 · Lucegrande in fiamme",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "foresta-notte",
+  "rotta": "radici",
+  "selciato": true,
+  "mappa": [
+    "TTHHXXXXXXXXHHTT",
+    "T.HH.gggggggHH.T",
+    "..g..gLgggLg..g.",
+    "T.g.c.gggggg.c.T",
+    "gggggggggggggggg",
+    "HH.gg.T.gg.T.gHH",
+    "HH.g..T.gg.T..HH",
+    "..Lg....gg....L.",
+    "TT.g.HH.gg.HH.TT",
+    "TT...HH.gg.HH.TT"
+  ],
+  "schieramento": [[8,2],[7,2],[6,1],[9,1]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "proteggi": "maelis",
+    "testo": "Difendi gli archivi del tribunale fino all'alba (6 turni). I fedeli di Arven arrivano dal basso. Se Maelis cade, la missione fallisce."
+  },
+  "ospiti": [
+    {
+      "id": "maelis",
+      "titolo": "Saggia delle Radici",
+      "nome": "Sorella Maelis",
+      "lv": 12,
+      "x": 8,
+      "y": 1,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 5,
+      "arma": "giudizio",
+      "stat": {"hp":27,"for":2,"mag":14,"abi":10,"vel":9,"fort":7,"def":4,"res":14},
+      "aspetto": {"skin":"#e2c0a2","hair":"#2f3a2a","style":"hood","coat":"#2f5a46","acc":"leaf","eye":"#5aa070"},
+      "abilita": {"nome":"Ospite","descrizione":"Difende gli archivi con voi. Se cade, la missione fallisce."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Custode","lv":12,"x":8,"y":9,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Custode","lv":12,"x":9,"y":8,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Lanciere","nome":"Guardia di Arven","lv":12,"x":3,"y":7,"ia":"attacca","aspetto":"guardia"},
+    {"classe":"Corazzato","nome":"Guardia di radice","lv":12,"x":14,"y":7,"ia":"attacca","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere di Arven","lv":12,"x":2,"y":9,"ia":"portata","aspetto":"guardia"},
+    {"classe":"Arciere","nome":"Arciere di Arven","lv":12,"x":13,"y":9,"ia":"portata","aspetto":"guardia"}
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "dialogo": [
+        ["arven","Maelis! Apri le porte degli archivi e nessuno dei tuoi mercenari verrà ferito."],
+        ["maelis","Non le apro. Le voci hanno diritto a un nome."]
+      ],
+      "rinforzi": [
+        {"classe":"Custode","lv":12,"x":0,"y":4,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Custode","lv":12,"x":15,"y":4,"ia":"attacca","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Lama","nome":"Sicario di Arven","lv":12,"x":8,"y":9,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Lanciere","nome":"Guardia di Arven","lv":12,"x":1,"y":7,"ia":"attacca","aspetto":"guardia"}
+      ]
+    },
+    {
+      "turno": 4,
+      "fase": "nemico",
+      "dialogo": [["narr","Un rombo lontano nel cielo. Arven ordina l'ultimo assalto prima che arrivi qualcun altro."]],
+      "rinforzi": [
+        {"classe":"Custode","lv":13,"x":9,"y":9,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Corazzato","nome":"Guardia di radice","lv":12,"x":0,"y":7,"ia":"attacca","aspetto":"guardia"},
+        {
+          "classe": "Medico",
+          "nome": "Guaritore di Arven",
+          "lv": 11,
+          "x": 8,
+          "y": 9,
+          "ia": "portata",
+          "aspetto": {"skin":"#e2c0a2","hair":"#ddd","style":"hood","coat":"#d8d2c0","eye":"#5aa070"}
+        }
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto IV · Cieli di ottone"],
+    ["narr","Rotta del Concilio. Lucegrande, una settimana dopo Fossa Grigia."],
+    ["maelis","Metà del Concilio ha votato con me. L'altra metà è uscita dalla città con Arven. Stanotte torneranno a prendersi gli archivi."],
+    ["giova","E dal cielo?"],
+    ["maelis","Strand ha visto la spaccatura. Le sue navi sono a un giorno da qui."],
+    ["wata","Allora stanotte difendiamo i nomi. Tutti quanti."],
+    ["lethy","Difendere una biblioteca di notte. La nonna sarebbe commossa: diceva sempre che i libri valgono più dell'oro. Poi comprava l'oro."],
+    ["mars","Ho trovato il reparto delle erbe proibite. Non tocco niente. Promesso. Quasi."],
+    ["giova","Il tribunale ha una sola scalinata. La teniamo noi, Maelis resta agli archivi. Sei turni fino all'alba."]
+  ],
+  "vittoria": [
+    ["narr","All'alba i fedeli di Arven si ritirano. Ma sopra le cime degli alberi compaiono le sagome dei dirigibili della Corona."],
+    ["maelis","Strand. Ha aspettato che ci indebolissimo a vicenda."],
+    ["giova","Allora il prossimo campo di battaglia è il cielo. E il Concilio non ha navi."],
+    ["mars","Però ha alberi alti come torri. E io ho un'idea. Pessima, probabilmente. Ma è un'idea."],
+    ["narr","Il resto della rotta del Concilio arriverà presto."]
+  ],
+  "ricompensa": {
+    "testo": "Gli archivisti ringraziano con tre tonici.",
+    "oggetti": [{"a":"giova","id":"tonico","q":1},{"a":"wata","id":"tonico","q":1},{"a":"mars","id":"tonico","q":1}]
+  },
+  "diario": "Abbiamo difeso gli archivi di Lucegrande. All'alba sono comparse le navi della Corona."
+}

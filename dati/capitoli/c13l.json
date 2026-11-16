@@ -1,0 +1,131 @@
+{
+  "id": "c13l",
+  "titolo": "Capitolo 13 · La piazza di Porto Ambra",
+  "atto": "Atto IV · Cieli di ottone",
+  "tema": "citta",
+  "rotta": "libere",
+  "selciato": true,
+  "mappa": [
+    "HHHHH.ssss.HHHHH",
+    "HHHHH.gggg.HHHHH",
+    "..L..gggggg..L..",
+    "sssgggkggkgggsss",
+    "ggggggLXXLgggggg",
+    "sssggggggggggsss",
+    "..kgggkgggkggk..",
+    "HHH.ggggggggg.HH",
+    "HHH.gLggggLgg.HH",
+    "HHH.ssssssssss.H"
+  ],
+  "schieramento": [[8,5],[6,5],[7,6],[8,6]],
+  "obiettivo": {
+    "tipo": "resisti",
+    "turni": 6,
+    "anche": "comandante",
+    "proteggi": "grigio",
+    "testo": "Proteggi il Signor Grigio mentre legge il Registro in piazza (6 turni), oppure sconfiggi Brann. Corvi da sud, sicari del Concilio da nord."
+  },
+  "ospiti": [
+    {
+      "id": "grigio",
+      "titolo": "Mediatore",
+      "nome": "Il Signor Grigio",
+      "lv": 5,
+      "x": 7,
+      "y": 5,
+      "squadra": "alleato",
+      "ospite": true,
+      "movimento": "fanteria",
+      "mov": 0,
+      "arma": "kit",
+      "stat": {"hp":36,"for":2,"mag":3,"abi":5,"vel":4,"fort":9,"def":10,"res":9},
+      "aspetto": {"skin":"#dcb898","hair":"#8a8a8a","style":"bald","coat":"#55565c","beard":true,"eye":"#3a3a3a"},
+      "abilita": {"nome":"Il lettore","descrizione":"Legge il Registro davanti alla statua e non si muove. Se cade, la missione fallisce."}
+    }
+  ],
+  "nemici": [
+    {"classe":"Lama","nome":"Corvo di Sale","lv":12,"x":5,"y":9,"ia":"attacca","aspetto":"corvo"},
+    {"classe":"Guerriero","nome":"Corvo di Sale","lv":12,"x":10,"y":9,"ia":"attacca","aspetto":"corvo"},
+    {"classe":"Arciere","nome":"Corvo balestriere","lv":12,"x":13,"y":8,"ia":"portata","aspetto":"corvo"},
+    {"classe":"Custode","nome":"Sicario del Concilio","lv":12,"x":6,"y":0,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Lama","nome":"Sicario del Concilio","lv":12,"x":9,"y":0,"ia":"attacca","aspetto":"radici"},
+    {"classe":"Arciere","nome":"Arciere del Concilio","lv":12,"x":2,"y":2,"ia":"portata","aspetto":"guardia"},
+    {
+      "id": "boss",
+      "classe": "Guerriero",
+      "nome": "Brann Mezzosale",
+      "lv": 15,
+      "x": 8,
+      "y": 9,
+      "arma": "arrembaggio",
+      "ia": "portata",
+      "comandante": true,
+      "frase": "Di nuovo tu, stratega! Strand paga bene per far stare zitto il vecchio. Niente di personale.",
+      "siRitira": true,
+      "bonus": {"hp":14,"def":4,"vel":3},
+      "aspetto": {"skin":"#c48e6a","hair":"#2a2622","style":"messy","coat":"#28414a","beard":"full","eye":"#2a1c14"}
+    }
+  ],
+  "eventi": [
+    {
+      "turno": 2,
+      "fase": "giocatore",
+      "dialogo": [
+        ["brann","Stratega! Strand paga il triplo per far tacere il vecchio. Niente di personale, eh."],
+        ["giova","Brann, a Porto Ambra hai venduto tutti. Oggi venderesti anche Strand, se ti offrissi di più?"],
+        ["brann","...Ci penso mentre ti prendo a mazzate."]
+      ]
+    },
+    {
+      "turno": 2,
+      "fase": "nemico",
+      "rinforzi": [
+        {"classe":"Lama","nome":"Corvo di Sale","lv":12,"x":0,"y":3,"ia":"attacca","aspetto":"corvo"},
+        {"classe":"Custode","nome":"Sicario del Concilio","lv":12,"x":15,"y":5,"ia":"attacca","aspetto":"radici"}
+      ]
+    },
+    {
+      "turno": 3,
+      "fase": "nemico",
+      "dialogo": [["narr","Altri mantelli verdi scendono dalla strada del nord."]],
+      "rinforzi": [
+        {"classe":"Custode","nome":"Sicario del Concilio","lv":12,"x":7,"y":0,"ia":"attacca","aspetto":"radici"},
+        {"classe":"Arciere","nome":"Corvo balestriere","lv":12,"x":15,"y":3,"ia":"attacca","aspetto":"corvo"}
+      ]
+    },
+    {
+      "turno": 5,
+      "fase": "nemico",
+      "dialogo": [["grigio","Ultime pagine! Cenerossa, galleria nove... ancora un momento!"]],
+      "rinforzi": [
+        {"classe":"Guerriero","nome":"Corvo di Sale","lv":13,"x":0,"y":5,"ia":"attacca","aspetto":"corvo"},
+        {"classe":"Lama","nome":"Sicario del Concilio","lv":13,"x":15,"y":3,"ia":"attacca","aspetto":"radici"}
+      ]
+    }
+  ],
+  "inizio": [
+    ["narr","Atto IV · Cieli di ottone"],
+    ["narr","Rotta delle Leghe Libere. Porto Ambra, piazza del Mercato, giorno di fiera."],
+    ["grigio","Mi avete chiesto di leggere il Registro davanti a tutta la città. Io. Un mediatore. Sapete quanti nemici mi faccio?"],
+    ["lethy","Tutti quelli che contano, Signor Grigio. Per questo deve leggerlo lei: tutti la conoscono e nessuno si fida di lei, quindi crederanno che non ci guadagna niente."],
+    ["grigio","...È il complimento più offensivo che abbia mai ricevuto. Accetto."],
+    ["wata","In piazza ci sono famiglie di Cenerossa. E gente di Fondoscuro. Sono venuti a sentire i nomi."],
+    ["mars","E ci sono anche dei tizi con mantelli verdi e altri con piume di corvo. Quelli non sono venuti a sentire i nomi."],
+    ["giova","Grigio legge, noi teniamo la piazza. Sei turni: tanto ci vuole per le pagine di Cenerossa."]
+  ],
+  "vittoria": [
+    ["narr","Grigio legge l'ultimo nome. Nella piazza c'è un silenzio che nessuno, a Porto Ambra, ricorda."],
+    ["narr","Poi una donna di Cenerossa dice ad alta voce il nome di suo marito. Un uomo risponde con quello di suo padre. E un altro ancora."],
+    ["wata","Le voci... Giova, le sento cantare. Non piangono più."],
+    ["grigio","Faccio il mediatore da trent'anni. È la prima volta che consegno qualcosa senza chiedere niente in cambio. Che sensazione orribile. Lo rifarei."],
+    ["lethy","Le Leghe ora sanno. Domani lo sapranno Corona e Concilio, e sapranno che lo sanno tutti."],
+    ["giova","Allora domani verranno a prenderselo insieme. E le Leghe avranno bisogno di navi."],
+    ["mars","Navi! Finalmente! Posso progettarne una io?"],
+    ["narr","Il resto della rotta delle Leghe Libere arriverà presto."]
+  ],
+  "ricompensa": {
+    "testo": "La gente della piazza lascia doni alla Compagnia: due tonici a Giova e due a Wata.",
+    "oggetti": [{"a":"giova","id":"tonico","q":2},{"a":"wata","id":"tonico","q":2}]
+  },
+  "diario": "Il Signor Grigio ha letto i nomi in piazza. Le voci hanno smesso di piangere."
+}
