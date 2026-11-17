@@ -1,0 +1,33 @@
+{
+  "coppia": ["francine","mars"],
+  "C": [
+    ["mars","Francine! Cosa costruisci? Posso guardare? Posso toccare? Posso metterci dentro una pozione?"],
+    ["francine","...Un mestolo. Che gira da solo."],
+    ["mars","UN MESTOLO CHE GIRA DA SOLO. Per me?"],
+    ["francine","Mescoli sempre con la mano sinistra mentre scrivi con la destra. Rovesci un elisir su tre."],
+    ["mars","L'hai notato? Nessuno nota mai quello che faccio, notano solo le esplosioni!"],
+    ["francine","...Io guardo. Parlo poco, quindi guardo."],
+    ["mars","Allora facciamo così: io parlo per tutte e due, tu guardi per tutte e due. È un'ottima divisione."]
+  ],
+  "B": [
+    ["mars","Francine, ti ho fatto diciassette domande e hai risposto a due. Ho contato. Ti do fastidio?"],
+    ["francine","No! No. È che... le cose, se vengono male, le smonto e le rifaccio. Le parole no. Una volta dette restano storte."],
+    ["mars","Ma io le dico tutte storte! Poi le aggiusto con altre parole. Tipo: \"scusa, volevo dire\"."],
+    ["francine","Si può?"],
+    ["mars","Lo faccio quaranta volte al giorno. È come una pozione venuta male: aggiungi roba finché non smette di fumare."],
+    ["francine","...Volevo dire che non mi dai fastidio. Mi piace quando parli. Riempie la bottega."],
+    ["mars","Visto? Non era storta per niente."],
+    ["francine","L'ho provata tre volte in testa, prima."]
+  ],
+  "A": [
+    ["francine","Mars. Ho costruito una cosa. Per le parole."],
+    ["mars","Un uccellino di latta! Che fa?"],
+    ["francine","Gli scrivo una frase su un nastrino. Lui la dice al posto mio. Così se è storta posso cambiare il nastrino."],
+    ["mars","Provalo! Provalo su di me!"],
+    ["narr","L'uccellino apre il becco. Ha una vocina di ottone: \"Grazie di avermi fatto tutte quelle domande.\""],
+    ["mars","...Non piango. È il fumo dell'alambicco."],
+    ["francine","Ne ho fatto uno anche per te. Il tuo dice \"scusa, volevo dire\". Così risparmi tempo."],
+    ["mars","Francine. Sai qual è la cosa migliore? Che quella frase l'hai appena detta tu. Senza nastrino."],
+    ["francine","...Oh. È vero."]
+  ]
+}

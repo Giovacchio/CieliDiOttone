@@ -1,5 +1,5 @@
 {
-  "ordine": ["giova","lethy","wata","mars","nives","tullo","ferrante","maelis","brann"],
+  "ordine": ["giova","lethy","wata","mars","nives","tullo","ferrante","maelis","brann","diego","francine","fasty","giorgio"],
   "giova": {
     "nome": "Giova",
     "classe": "Stratega",
@@ -157,5 +157,123 @@
     },
     "oggetti": [{"id":"tonico","q":1}],
     "aspetto": {"skin":"#c48e6a","hair":"#2a2622","style":"messy","coat":"#28414a","beard":"full","eye":"#2a1c14"}
+  },
+  "diego": {
+    "nome": "Diego",
+    "classe": "Tuttofare",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "spada",
+    "armi": ["lancia","ascia"],
+    "usa": ["spada","lancia","ascia"],
+    "entra": "c2",
+    "lv": 3,
+    "stat": {"hp":24,"for":8,"mag":1,"abi":10,"vel":9,"fort":7,"def":6,"res":3},
+    "crescita": {"hp":70,"for":50,"mag":10,"abi":60,"vel":55,"fort":50,"def":30,"res":25},
+    "abilita": {
+      "nome": "Bravo a tutto",
+      "descrizione": "Impara le regole e poi gli riesce: porta spade, lance e asce, con +10 precisione e +5 schivata.",
+      "effetti": [{"tipo":"bonus","precisione":10,"schivata":5}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#dcb48e","hair":"#2a2a30","style":"short","coat":"#2f6a5a","eye":"#3a3026"},
+    "arrivo": [
+      ["narr","Alla locanda del confine, la sera dopo Fossa Grigia. Mars ha perso ai dadi la paga della settimana. Quella di tutti."],
+      ["mars","Ha vinto undici mani di fila! È statisticamente affascinante. Giova, non arrabbiarti: l'ho fatto per la scienza."],
+      ["diego","Scusate. Non lo faccio apposta. Dadi, carte, birilli, giochi d'ottone: mi riescono e basta. Vi ridò tutto, eh."],
+      ["giova","Undici su undici non è fortuna. Sai fare lo stesso con una spada?"],
+      ["diego","Spada, lancia, ascia. Mi spiegano le regole e poi... mi riesce. È un po' imbarazzante da dire."],
+      ["lethy","Finalmente uno modesto! Piacere, Lethy."],
+      ["diego","P-piacere. Io... sì. Diego. Ecco. Scusa, con i dadi sono più bravo che con le presentazioni."],
+      ["giova","Benvenuto nella Brace, Diego. La paga, però, da oggi la tengo io."]
+    ]
+  },
+  "francine": {
+    "nome": "Francine",
+    "classe": "Ingegnera",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "torretta",
+    "usa": ["congegni"],
+    "entra": "c4",
+    "lv": 5,
+    "stat": {"hp":23,"for":9,"mag":4,"abi":11,"vel":8,"fort":8,"def":6,"res":6},
+    "crescita": {"hp":60,"for":50,"mag":25,"abi":55,"vel":40,"fort":45,"def":30,"res":35},
+    "abilita": {
+      "nome": "Riparo improvvisato",
+      "descrizione": "In un attimo tira su un riparo: lei e chi le sta accanto hanno +15 schivata. La sua torretta colpisce anche da 2 caselle.",
+      "effetti": [{"tipo":"aura","raggio":1,"schivata":15}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#f0d2b8","hair":"#8a5a3a","style":"bob","coat":"#c9a23c","eye":"#5a4a3a"},
+    "arrivo": [
+      ["narr","Porto Ambra, il mattino dopo. Il carro della Compagnia aveva una ruota rotta. Adesso ne ha una nuova. E un parafango. E un piccolo tetto apribile."],
+      ["mars","Non sono stata io! Lo giuro! ...Peccato, è bellissimo."],
+      ["wata","C'è qualcuno dietro quelle casse. Prospy fa le fusa: è una persona gentile."],
+      ["francine","...Scusate. La ruota era storta. Mi dava fastidio guardarla. Poi mi sono lasciata prendere la mano."],
+      ["giova","Hai rifatto mezzo carro in una notte. Come ti chiami?"],
+      ["francine","Francine. Costruisco cose. Parlare mi riesce peggio."],
+      ["lethy","Da noi c'è posto anche per chi parla poco. Mars parla già per tre."],
+      ["francine","...Posso costruirvi un ponte, se serve. O un riparo. Ho anche una torretta. In tasca."],
+      ["giova","Benvenuta nella Brace, Francine."]
+    ]
+  },
+  "fasty": {
+    "nome": "Fasty",
+    "classe": "Staffetta d'ottone",
+    "movimento": "cavallo",
+    "mov": 7,
+    "arma": "picca",
+    "usa": ["lancia"],
+    "entra": "c6",
+    "lv": 7,
+    "stat": {"hp":28,"for":11,"mag":0,"abi":10,"vel":13,"fort":6,"def":8,"res":3},
+    "crescita": {"hp":70,"for":50,"mag":5,"abi":45,"vel":60,"fort":35,"def":35,"res":15},
+    "abilita": {
+      "nome": "Sfida accettata",
+      "descrizione": "Vuole essere il migliore, e si allena di conseguenza: +10 critico e il 25% di PE in più. Cavalca un cavallo meccanico.",
+      "effetti": [{"tipo":"bonus","critico":10},{"tipo":"esperienza","moltiplica":1.25}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#e2b98f","hair":"#c8872e","style":"tuft","coat":"#b8402c","eye":"#3a4a3a"},
+    "arrivo": [
+      ["narr","Sul sentiero per Fondoscuro. Un cavallo meccanico supera la Compagnia al galoppo, frena, torna indietro."],
+      ["fasty","Voi siete la Compagnia della Brace? Dicono che avete la spadaccina più veloce delle Leghe. Sono Fasty. La sfido."],
+      ["lethy","A cosa?"],
+      ["fasty","A tutto! Corsa, scherma, chi mangia più arepas. Scegli tu. Io devo essere il migliore, e non lo sono finché c'è qualcuno che non ho battuto."],
+      ["giova","Abbiamo un villaggio da raggiungere in sette turni. Niente sfide."],
+      ["fasty","Sette turni? Io ci arrivo in cinque. ...Facciamo così: vengo con voi. Chi arriva primo ha vinto."],
+      ["lethy","Ha appena trasformato una missione in un torneo. Giova, questo mi piace."],
+      ["giova","Benvenuto nella Brace, Fasty. Il cronometro però lo tengo io."]
+    ]
+  },
+  "giorgio": {
+    "nome": "Giorgio",
+    "classe": "Arciere tifoso",
+    "movimento": "fanteria",
+    "mov": 5,
+    "arma": "arco",
+    "usa": ["arco"],
+    "entra": "c8",
+    "lv": 9,
+    "stat": {"hp":26,"for":11,"mag":2,"abi":14,"vel":11,"fort":10,"def":6,"res":5},
+    "crescita": {"hp":60,"for":50,"mag":10,"abi":60,"vel":50,"fort":50,"def":25,"res":25},
+    "abilita": {
+      "nome": "Tifoso sfegatato",
+      "descrizione": "Fa il tifo come a uno spettacolo di lanterne: chi gli sta entro 2 caselle ha +10 critico. Il suo arco è micidiale contro chi vola.",
+      "effetti": [{"tipo":"aura","raggio":2,"critico":10}]
+    },
+    "oggetti": [{"id":"tonico","q":2}],
+    "aspetto": {"skin":"#e6c3a0","hair":"#3a2e26","style":"messy","coat":"#7a3a6a","eye":"#3a3026"},
+    "arrivo": [
+      ["narr","Lucegrande, la sera prima del tribunale. In piazza c'è uno spettacolo di lanterne: una figura dipinta di luce canta, e nessuno sa chi ci sia dietro."],
+      ["giorgio","È Lumina! La cantatrice delle lanterne! Ho tutte le sue figurine. Anche quella rara, col mantello d'inverno. L'ho seguita per sei città."],
+      ["mars","Sei città per una figura di luce? Ti adoro. Spiegami tutto."],
+      ["giorgio","Non è una figura di luce, è LUMINA. E poi ci sono le eroine dei romanzi a puntate, e i giochi d'ottone del porto... Ho anche un arco. Tiro bene quando faccio il tifo per qualcuno."],
+      ["diego","Giochi d'ottone? Io ho il primato al Labirinto della Caldaia."],
+      ["giorgio","SEI TU il primato del Labirinto?! Firmami la figurina."],
+      ["giova","Il prossimo spettacolo di Lumina è a Cenerossa. È dove stiamo andando."],
+      ["giorgio","Allora vengo. E faccio il tifo per voi. Giorgio. Gratis, eh: sono un fan, mica un mercenario."]
+    ]
   }
 }

@@ -10,8 +10,14 @@
     {"id":"giudizio","prezzo":1600,"da":"c9"},
     {"id":"lanciaA","prezzo":900,"da":"c14c"},
     {"id":"moschetto","prezzo":800,"da":"c14c"},
-    {"id":"arrembaggio","prezzo":1100,"da":"c14c"}
+    {"id":"arrembaggio","prezzo":1100,"da":"c14c"},
+    {"id":"lancia","prezzo":350,"da":"c2"},
+    {"id":"ascia","prezzo":350,"da":"c2"},
+    {"id":"torretta","prezzo":500,"da":"c4"},
+    {"id":"picca","prezzo":500,"da":"c6"},
+    {"id":"arco","prezzo":400,"da":"c8"},
+    {"id":"arcoL","prezzo":900,"da":"c10"},
+    {"id":"torrettaA","prezzo":1300,"da":"c12"}
   ],
-  "oggetti": [{"id":"tonico","prezzo":120},
-    {"id": "sigillo", "prezzo": 2000, "da": "c13c"}]
+  "oggetti": [{"id":"tonico","prezzo":120},{"id":"sigillo","prezzo":2000,"da":"c13c"}]
 }

@@ -1,0 +1,33 @@
+{
+  "coppia": ["giorgio","giova"],
+  "C": [
+    ["giova","Giorgio. In battaglia potresti fare il tifo un po' più piano? Ti sentono fino a Corvara."],
+    ["giorgio","Ma funziona! \"VAI LETHY, SEI LA NUMERO UNO!\" e lei ha fatto il critico!"],
+    ["giova","È una coincidenza."],
+    ["giorgio","Allora conta, capo. Tu conti tutto."],
+    ["giova","...Ho contato. Quando urli, chi ti sta vicino colpisce meglio. Una volta su dieci in più."],
+    ["giorgio","LO SAPEVO!"],
+    ["giova","Non so perché succeda. Lo scrivo lo stesso. Continua pure. Ma non di notte."]
+  ],
+  "B": [
+    ["giova","Giorgio, una curiosità. Lumina, le eroine dei romanzi, i giochi. Perché ti prendono così tanto?"],
+    ["giorgio","Da piccolo stavo al banco della bottega di mio padre. Da solo, tutto il giorno. Passava il carro delle lanterne una volta al mese."],
+    ["giova","E Lumina cantava."],
+    ["giorgio","Cantava per la piazza. Ma io ero sicuro che cantasse per me. Era una figura di luce, non sapevo chi c'era dietro, eppure mi teneva compagnia più di tanta gente vera."],
+    ["giova","..."],
+    ["giorgio","Che c'è? Ho detto una cosa stupida?"],
+    ["giova","No. Hai appena spiegato i cristalli meglio di tutto il Concilio. Una luce, qualcuno dietro che non vedi, e ti tiene compagnia lo stesso."],
+    ["giorgio","Ah. Be', certo. Per questo ci ho creduto subito, alle voci. Sono abituato."]
+  ],
+  "A": [
+    ["giorgio","Capo. Ho fatto una cosa. Figurine. Della Compagnia. Una per ognuno."],
+    ["giova","Le hai disegnate tu?"],
+    ["giorgio","Questa è Wata col gatto. Questa è Mars che esplode. Lethy ne ha tre, perché si muove troppo. E questa è la più rara."],
+    ["giova","...Sono io. Con il quaderno."],
+    ["giorgio","Ne ho fatta una sola. Le rare funzionano così. Dietro c'è scritto: \"Giova, stratega. Fa i conti, e poi sceglie lo stesso.\""],
+    ["giova","Giorgio. Prima dell'ultima battaglia ti chiedo un favore. Fai il tifo. Forte. Non per noi."],
+    ["giorgio","Per chi?"],
+    ["giova","Per quelle dentro i cristalli. Non le vediamo, ma ci sono. Tu sei l'unico di noi che sa come si fa."],
+    ["giorgio","...È la richiesta più bella che mi abbiano mai fatto. Ci penso io, capo. Mi sentiranno fino a Corvara."]
+  ]
+}

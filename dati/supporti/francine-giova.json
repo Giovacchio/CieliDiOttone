@@ -1,0 +1,33 @@
+{
+  "coppia": ["francine","giova"],
+  "C": [
+    ["giova","Francine, le casse delle provviste. Stamattina erano in pila. Adesso sono in uno scaffale. Con le etichette."],
+    ["francine","...La pila pendeva. Tre gradi. Mi dava fastidio."],
+    ["giova","E questo cassetto che si apre da solo quando ti avvicini?"],
+    ["francine","Per il sale. Lo cerchi sempre per ultimo e ti arrabbi."],
+    ["giova","Hai contato quante volte cerco il sale?"],
+    ["francine","Undici in una settimana."],
+    ["giova","...Finalmente qualcuno che conta le cose giuste. Siediti, ti faccio vedere i miei quaderni."]
+  ],
+  "B": [
+    ["francine","Giova. Come fai a decidere? Tu dici \"andiamo\" e si va."],
+    ["giova","Conto i nemici, le vie di fuga, le probabilità. Poi scelgo la migliore."],
+    ["francine","Io misuro. Tre volte, sempre. E poi non taglio. Ho un ponte disegnato da due anni. È perfetto. Non l'ho mai costruito."],
+    ["giova","Perché?"],
+    ["francine","Perché finché è sulla carta non può crollare."],
+    ["giova","...Ti dico una cosa che ho capito da poco. Certe volte i numeri non bastano e bisogna tagliare lo stesso. Fa paura ogni volta."],
+    ["francine","Anche a te?"],
+    ["giova","Soprattutto a me. Io almeno, se sbaglio, posso dire che i conti erano giusti. È una scusa comodissima."]
+  ],
+  "A": [
+    ["francine","Ho tagliato."],
+    ["giova","Il ponte?"],
+    ["francine","No. Una cosa più difficile. Vieni a vedere."],
+    ["narr","Dietro il carro c'è un tavolo nuovo, lungo, di legno chiaro. Intorno, una sedia per ognuno della Compagnia. Ogni sedia è diversa."],
+    ["giova","Quella con lo schienale alto è di Lethy. Quella col cuscino per il gatto è di Wata. E questa, piccola, in fondo?"],
+    ["francine","...È la mia. È la prima volta che costruisco un posto anche per me. Di solito faccio le cose e poi mi metto dietro le casse."],
+    ["giova","Hai misurato tre volte?"],
+    ["francine","Una. Poi ho tagliato. Pende un pochino."],
+    ["giova","È perfetta. Stasera si mangia qui. E il sale, per una volta, lo trovo al primo colpo."]
+  ]
+}

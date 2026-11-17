@@ -110,6 +110,8 @@ In `dati/campagna.json` i capitoli delle rotte sono in ordine di numero (13 di t
 
 - `"usa"`: i tipi di arma che sa portare (`spada`, `lancia`, `ascia`, `arco`, `etere`, `congegni`, `polvere`, `cura`). Una promozione può aggiungerne con `"usa"`.
 - `"entra"`: il capitolo in cui si unisce (senza, c'è dall'inizio). Può essere una lista, un capitolo per rotta (`["c14c","c14r","c14l"]`): vale quello che sta sulla rotta scelta. Con un solo capitolo di rotta (`"c14c"`) il personaggio entra solo su quella rotta. `"lv"` e `"stat"` sono quelli con cui arriva; `crescita` è la probabilità (%) di +1 a ogni livello.
+- `"arrivo"` (facoltativo): una breve scena, scritta come i dialoghi dei capitoli (`["chi parla", "battuta"]`), mostrata una volta sola quando il personaggio entra, prima del capitolo. Così si può aggiungere un amico senza toccare i capitoli già scritti (Diego, Francine, Fasty e Giorgio sono fatti così).
+- La posizione in `"ordine"` decide chi viene schierato quando il giocatore non sceglie: i primi della lista occupano i posti. Chi resta all'accampamento, a ogni vittoria, sale fino a un livello sotto la media di chi ha combattuto.
 - Ricorda di dare al capitolo abbastanza caselle di `schieramento`.
 - **Effetti delle abilità** (si possono combinare):
   `aura` (`raggio`, e `precisione`/`schivata`/`critico` a tutta la squadra entro il raggio),

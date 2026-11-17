@@ -48,6 +48,14 @@ export async function giocaCapitolo(idCapitolo, opzioni = {}) {
   G.partita.sospesa = null;
   const ricordate = G.partita.schieramenti[idCapitolo];
   preparaBattaglia(idCapitolo, { ...opzioni, ia: G.ia, posizioni: posizioniValide(idCapitolo, ricordate) });
+  // chi è appena entrato nella Compagnia si presenta, una volta sola, prima del capitolo
+  for (const id of G.partita.arrivi || []) {
+    const nuovo = G.dati.personaggi[id];
+    if (!nuovo?.arrivo) continue;
+    await storia(nuovo.arrivo);
+    registro(`<b>${h(nuovo.nome)}</b> è entrato nella Compagnia. Nei preparativi scegli chi schierare.`);
+  }
+  if (G.partita.arrivi?.length) { G.partita.arrivi = []; salvaSlot(G.slot, G.partita); }
   await cartello(G.b.cap);
   await preparativi();
   await esegui(G.b.inizia());

@@ -23,5 +23,7 @@
   "spine": {"nome":"Spine del rovo antico","tipo":"etere","potenza":8,"precisione":85,"critico":5,"gittata":[1,2],"magica":true,"icona":"leaf"},
   "elisir": {"nome":"Elisir verde","tipo":"cura","cura":10,"gittata":[1,1],"icona":"flask"},
   "fiala": {"nome":"Fiala esplosiva","tipo":"congegni","potenza":7,"precisione":80,"critico":5,"gittata":[1,2],"magica":true,"icona":"flask"},
-  "elisirF": {"nome":"Elisir di Nonna Tessa","tipo":"cura","cura":16,"gittata":[1,2],"icona":"flask"}
+  "elisirF": {"nome":"Elisir di Nonna Tessa","tipo":"cura","cura":16,"gittata":[1,2],"icona":"flask"},
+  "torretta": {"nome":"Torretta tascabile","tipo":"congegni","potenza":7,"precisione":85,"critico":0,"gittata":[1,2],"icona":"polvere"},
+  "torrettaA": {"nome":"Torretta a doppia canna","tipo":"congegni","potenza":10,"precisione":80,"critico":5,"gittata":[1,2],"icona":"polvere"}
 }

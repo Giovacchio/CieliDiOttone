@@ -13,7 +13,11 @@
     "tullo": "Tullo portò il quaderno alle Radici e lo lasciò lì, come aveva detto. Poi tornò a Cenerossa, dove la galleria nove è diventata un posto in cui si scende senza piccone, solo per salutare. Fa il custode. Parla poco. I visitatori dicono che la lampada all'ingresso canta, stonata.",
     "ferrante": "Ferrante presiede la commissione che riscrive il regolamento della Corona. È passata da undici articoli a uno, e sta valutando se sia ancora troppo lungo. Ringrazia regolarmente. Le riesce sempre meglio.",
     "maelis": "Maelis guida un Concilio che fa molto più rumore di prima. Ogni sera, prima di dormire, ascolta per un'ora senza chiudersi. Ha scoperto che le voci, a quell'ora, raccontano soprattutto barzellette.",
-    "brann": "Brann ha fondato una compagnia di ventura con una regola sola: si viene pagati in anticipo e non si cambia parte. Gli affari vanno malissimo. Non è mai stato così contento, e non lo ammetterà mai."
+    "brann": "Brann ha fondato una compagnia di ventura con una regola sola: si viene pagati in anticipo e non si cambia parte. Gli affari vanno malissimo. Non è mai stato così contento, e non lo ammetterà mai.",
+    "diego": "Diego ha aperto una sala di giochi d'ottone a Porto Ambra. Sull'insegna c'è scritto: \"Qui si può perdere\". È il solo posto di Valdaria dove il campione in carica insegna agli altri come batterlo. Con la ragazza del banco dei dadi parla ormai anche venti minuti di fila.",
+    "francine": "Francine ha costruito il ponte. Quello disegnato da due anni. Attraversa il fiume di Fossa Grigia, pende di mezzo grado e non è mai crollato. All'inaugurazione ha fatto il discorso un uccellino di latta; l'ultima frase, però, l'ha detta lei.",
+    "fasty": "Fasty ha vinto il Gran Torneo delle Leghe. Poi ha fatto una cosa che nessun campione aveva mai fatto: ha pagato l'iscrizione a tutti i ragazzi che correvano dietro alle carrozze. Dice che lo fa per avere avversari all'altezza. Non ci crede nessuno.",
+    "giorgio": "Giorgio ha ancora tutte le figurine, più una serie nuova che ha disegnato lui: la Compagnia della Brace, tredici pezzi, introvabili. Scrive ancora a Lumina. Non ha mai saputo chi ci sia dietro la lanterna, e sostiene che è giusto così: a una voce non si chiede la faccia, le si fa il tifo."
   },
   "coppie": [
     {
@@ -67,6 +71,30 @@
     {
       "coppia": ["brann","lethy"],
       "testo": "Brann siede ogni sera allo stesso tavolo, con una forchetta d'argento che ha le iniziali di un banchiere. Lethy ha finalmente imparato a contrattare: il primo affare l'ha fatto con suo padre, e ha vinto. Brann sostiene di averle insegnato tutto lui. Niente di personale."
+    },
+    {
+      "coppia": ["diego","fasty"],
+      "testo": "Diego e Fasty gestiscono insieme la sala dei giochi d'ottone. Il punteggio, appeso al muro, dice centoquattordici a nove. Fasty giura che il nove vale di più, perché se l'è sudato. Diego, per la prima volta in vita sua, ha un avversario: dice che è il regalo più bello che gli abbiano fatto."
+    },
+    {
+      "coppia": ["giorgio","diego"],
+      "testo": "Giorgio e Diego hanno fondato il Circolo del Labirinto: giochi d'ottone al piano terra, figurine al primo piano. Diego insegna il pistone del livello nove, Giorgio spiega Lumina a chiunque abbia due ore. Sulla porta c'è la lettera con la lanterna, in cornice, e accanto la figurina doppia."
+    },
+    {
+      "coppia": ["francine","mars"],
+      "testo": "La bottega di Francine e Mars è l'unica di Valdaria dove gli alambicchi non esplodono, perché hanno tutti una valvola disegnata da Francine, e dove le macchine profumano di menta, per colpa di Mars. Sul banco stanno due uccellini di latta. Non li usa quasi più nessuna delle due."
+    },
+    {
+      "coppia": ["francine","giova"],
+      "testo": "Il tavolo di Francine sta nella cucina di Giova, e intorno ci sono tredici sedie, tutte diverse. La più piccola è ancora in fondo, ma non è più dietro le casse. Lei misura una volta sola, adesso. Lui trova il sale al primo colpo."
+    },
+    {
+      "coppia": ["fasty","lethy"],
+      "testo": "Le due metà della coppa stanno una nella scuola di scherma di Lethy e una nella stalla del cavallo meccanico di Fasty. Ogni anno si iscrivono insieme al torneo di Porto Ambra, e ogni anno litigano su chi sia il più veloce. Siamo pari, dice lei. Pari non esiste, dice lui. Poi vincono."
+    },
+    {
+      "coppia": ["giorgio","giova"],
+      "testo": "Nel quaderno di Giova c'è una pagina che non contiene numeri: ci è incollata una figurina, la più rara, quella fatta in un pezzo solo. Giorgio passa dalla cucina della Brace ogni volta che Lumina è in città, e fa il tifo per la cena. Giova ha contato: quando c'è lui, il sugo viene meglio una volta su dieci."
     }
   ],
   "congedo": "La Compagnia della Brace non si è mai sciolta. Ha solo smesso di farsi pagare."

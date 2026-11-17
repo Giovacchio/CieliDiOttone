@@ -72,6 +72,8 @@ export function controllaDati(dati) {
     for (const c of [].concat(p.entra || [])) if (!dati.campagna.capitoli.includes(c)) err(dove, `"entra": il capitolo "${c}" non è in campagna.json`);
     if (!movimenti.includes(p.movimento)) err(dove, `movimento "${p.movimento}" sconosciuto`);
     abilita(dove, p.abilita); oggetti(dove, p.oggetti);
+    for (const a of p.armi || []) if (!dati.armi[a]) err(dove, `l'arma "${a}" non esiste`);
+    for (const r of p.arrivo || []) if (!Array.isArray(r) || (!dati.personaggi[r[0]] && !dati.png[r[0]])) err(dove, `scena d'arrivo: parla "${r && r[0]}", che non è né un personaggio né un png`);
     for (const [k, P] of (dati.promozioni[id] || []).entries()) {
       const dp = `promozioni.json "${id}" strada ${k + 1}`;
       if (!P.classe) err(dp, "manca il nome della classe");

@@ -7,7 +7,7 @@ Gioco tattico a turni su griglia, nel browser, da PC e da telefono. Mondo fantas
 ## Stato
 
 - **Storia completa, 37 capitoli**: prologo, capitoli 1-12, scelta della rotta, poi otto capitoli diversi per ognuna delle tre rotte (13-20), con finale ed epiloghi dei personaggi in base ai supporti.
-- **Nove personaggi giocabili**: Giova, Lethy, Wata e Mars dall'inizio; dal capitolo 14 Nives e Tullo, più Ferrante, Maelis o Brann a seconda della rotta.
+- **Tredici personaggi giocabili**: Giova, Lethy, Wata e Mars dall'inizio; poi gli amici Diego (capitolo 2), Francine (4), Fasty (6) e Giorgio (8); dal capitolo 14 Nives e Tullo, più Ferrante, Maelis o Brann a seconda della rotta. Si sceglie chi schierare nei preparativi; chi resta all'accampamento sale di livello lo stesso.
 - Motore a moduli con tutti i contenuti in file JSON (`dati/`): aggiungere un capitolo vuol dire scrivere un JSON.
 - Supporti, promozioni, accampamento con armeria, mercato e cucina, schieramento prima di ogni capitolo.
 - Su PC si gioca anche tutto da tastiera (frecce o WASD, Invio, Esc, Tab, E per il fine turno); suoni e musica sono generati dal gioco, senza file audio.

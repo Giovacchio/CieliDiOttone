@@ -68,5 +68,7 @@ test("schieramento: posizioni scelte e personaggi lasciati all'accampamento", ()
   t.u("giova").lv = 5;
   concludiCapitolo(dati, p, t.b);
   assert.equal(p.compagnia.giova.lv, 5);
-  assert.equal(p.compagnia.lethy.lv, 1, "chi non ha combattuto resta com'era");
+  assert.equal(p.compagnia.lethy.lv, 2, "chi resta all'accampamento sale fino a un livello sotto la media di chi ha combattuto");
+  assert.equal(p.compagnia.lethy.stat.hp, dati.personaggi.lethy.stat.hp + Math.round(dati.personaggi.lethy.crescita.hp / 100));
+  assert.equal(p.compagnia.mars.lv, 2);
 });

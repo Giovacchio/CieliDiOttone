@@ -1,6 +1,6 @@
 // La partita tra un capitolo e l'altro: Compagnia, progressione, ricompense, promozioni.
 // "partita" è l'oggetto che viene salvato.
-import { clona } from "./unita.js";
+import { clona, STAT } from "./unita.js";
 import { chiaveCoppia, statoCoppia, prossimoLivello } from "./supporti.js";
 import { MAX_ARMI } from "./inventario.js";
 
@@ -18,7 +18,10 @@ export function aggiornaCompagnia(dati, partita, idCapitolo) {
     if (partita.compagnia[id] || !b) continue;
     const ingressi = [].concat(b.entra || []);
     const arriva = !ingressi.length || ingressi.some((c) => dati.capitoli[c] && sulPercorso(partita, dati.capitoli[c]) && lista.indexOf(c) <= qui);
-    if (arriva) partita.compagnia[id] = schedaIniziale(b);
+    if (arriva) {
+      partita.compagnia[id] = schedaIniziale(b);
+      if (b.arrivo) (partita.arrivi ||= []).push(id);   // la sua scena d'arrivo va ancora mostrata
+    }
   }
   return partita;
 }
@@ -68,6 +71,7 @@ export function concludiCapitolo(dati, partita, b) {
   }
   partita.supporti = clona(b.supporti);
   partita.sospesa = null;
+  allenaPanchina(dati, partita, b);
   const pasto = partita.bandiere.pasto ? dati.pasti[partita.bandiere.pasto] : null;
   partita.bandiere.pasto = null;
   const R = b.cap.ricompensa || {};
@@ -84,6 +88,21 @@ export function concludiCapitolo(dati, partita, b) {
   partita.prossimo = capitoloDopo(dati, partita, b.cap.id);
   aggiornaCompagnia(dati, partita, partita.prossimo);
   return { pasto, ricompensa: R };
+}
+
+// Chi resta all'accampamento non rimane indietro: dopo ogni vittoria sale fino a un livello sotto la media di chi ha combattuto,
+// con la crescita media del personaggio (niente dadi: la panchina non regala colpi di fortuna).
+export function allenaPanchina(dati, partita, b) {
+  const R = dati.regole.livelloMassimo, inCampo = b.unita.filter((u) => u.compagnia && partita.compagnia[u.id]);
+  if (!inCampo.length) return;
+  const media = Math.floor(inCampo.reduce((n, u) => n + u.lv, 0) / inCampo.length);
+  for (const [id, c] of Object.entries(partita.compagnia)) {
+    if (inCampo.some((u) => u.id === id) || !dati.personaggi[id]) continue;
+    const meta = Math.min(media - 1, c.promo != null ? R.promosso : R.base), n = meta - c.lv;
+    if (n <= 0) continue;
+    for (const k of STAT) c.stat[k] += Math.round(((dati.personaggi[id].crescita[k] || 0) / 100) * n);
+    c.lv = meta; c.pe = 0;
+  }
 }
 
 // --- promozioni
@@ -149,10 +168,12 @@ export function tornaAllaScelta(dati, partita) {
   p.bandiere.rotta = undefined; p.bandiere.pasto = null; p.sospesa = null;
   p.completati = p.completati.filter((id) => !dati.capitoli[id]?.rotta && id !== bivio);
   p.prossimo = bivio;
-  for (const id of Object.keys(p.compagnia)) if (dati.personaggi[id]?.entra) {
+  const lungoUnaRotta = (id) => [].concat(dati.personaggi[id]?.entra || []).some((c) => dati.capitoli[c]?.rotta);
+  for (const id of Object.keys(p.compagnia)) if (lungoUnaRotta(id)) {
     for (const o of p.compagnia[id].oggetti) if (o.q > 0) aggiungiOggetto(p.deposito.oggetti, o.id, o.q);
     delete p.compagnia[id];
   }
+  p.arrivi = (p.arrivi || []).filter((id) => p.compagnia[id]);
   return p;
 }
 

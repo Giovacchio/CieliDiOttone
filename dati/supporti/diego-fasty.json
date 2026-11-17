@@ -1,0 +1,34 @@
+{
+  "coppia": ["diego","fasty"],
+  "C": [
+    ["fasty","Diego! Dicono che non perdi mai. Ti sfido. Dadi."],
+    ["diego","Va bene. ...Ho vinto. Scusa."],
+    ["fasty","Carte!"],
+    ["diego","Scusa."],
+    ["fasty","Birilli! Braccio di ferro! Chi trattiene di più il fiato!"],
+    ["diego","Scusa. Scusa. ...Quello l'hai quasi vinto, però."],
+    ["fasty","Quattordici a zero. QUATTORDICI. Domani ricominciamo. Ne ho altri trenta, di giochi."],
+    ["diego","D'accordo. Però smetto di chiedere scusa, se no facciamo notte."]
+  ],
+  "B": [
+    ["diego","Fasty, perché ci tieni così tanto? Sessantuno a zero e sei ancora qui."],
+    ["fasty","Sono il terzo di cinque fratelli. A casa mia si mangia in ordine d'arrivo. Se non sei il primo in qualcosa, non ti vede nessuno."],
+    ["diego","...Io vinco sempre e non mi vede nessuno lo stesso. Dicono \"ah, Diego, a lui riesce\", e si girano."],
+    ["fasty","Ma come! Tu sei il migliore!"],
+    ["diego","Non ho mai faticato per una cosa in vita mia. Non so neanche com'è, volere qualcosa quanto la vuoi tu."],
+    ["fasty","Aspetta. Mi stai dicendo che mi invidi? Sessantuno a zero e MI INVIDI?"],
+    ["diego","Un po'. Sì."],
+    ["fasty","...È la cosa più bella che mi abbiano mai detto. Sessantadue. Giochiamo."]
+  ],
+  "A": [
+    ["fasty","Ho inventato un gioco. Regole nuove. Non le sa nessuno, nemmeno io fino a ieri sera."],
+    ["diego","Quindi non posso averle già imparate."],
+    ["fasty","Esatto! Si gioca in due, con sei sassi, un elmo e un gatto. Il gatto è Prospy. Non collabora."],
+    ["diego","...Ho perso."],
+    ["fasty","HAI PERSO! HO VINTO! Sessantadue a uno! ...Perché ridi?"],
+    ["diego","Perché è la prima volta che perdo, e ho scoperto che mi è venuta voglia di rigiocare. Di solito vinco e basta, e finisce lì."],
+    ["fasty","Allora facciamo un patto. Io ti insegno a volerla, una cosa. Tu mi insegni a prenderla con calma."],
+    ["diego","Affare fatto. Rivincita?"],
+    ["fasty","Rivincita. Prospy, torna qui con l'elmo!"]
+  ]
+}

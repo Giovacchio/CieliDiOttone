@@ -1,4 +1,5 @@
 import test from "node:test";
+import * as C from "../js/motore/campagna.js";
 import assert from "node:assert/strict";
 import { dati } from "./aiuti.js";
 import { nuovaPartita } from "../js/motore/campagna.js";
@@ -34,6 +35,7 @@ test("la partita del prototipo finisce nello slot 1, una volta sola", () => {
 test("esportazione e importazione: andata e ritorno, e file sbagliati rifiutati con una frase chiara", () => {
   const p = nuovaPartita(dati);
   p.completati = ["prologo", "c1"]; p.prossimo = "c2"; p.oro = 99; p.supporti["giova|wata"] = { punti: 12, livello: "C" };
+  C.aggiornaCompagnia(dati, p, "c2");   // al capitolo 2 arriva Diego
   const copia = S.leggiEsportazione(dati, S.testoEsportazione(p));
   assert.deepEqual(copia, p);
   assert.equal(copia.sospesa, null);

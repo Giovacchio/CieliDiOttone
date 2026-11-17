@@ -1,0 +1,33 @@
+{
+  "coppia": ["fasty","lethy"],
+  "C": [
+    ["fasty","Lethy! La sfida che mi devi. Corsa, da qui a quell'albero."],
+    ["lethy","Dodici passi? Volentieri. ...Arrivata."],
+    ["fasty","Non vale! Non avevo detto via! Di nuovo, ma fino al fiume!"],
+    ["lethy","Il fiume è lontanissimo. A casa mia per andare così lontano si prende la carrozza."],
+    ["fasty","HA! Arrivato! Ho vinto io! Sulla distanza sono il più veloce!"],
+    ["lethy","E io sui dodici passi. Siamo pari."],
+    ["fasty","Pari non esiste. Pari è la parola che usa chi ha perso."],
+    ["lethy","Che curioso. Da noi la usa chi non ha bisogno di vincere."]
+  ],
+  "B": [
+    ["fasty","Lethy. Una cosa non la capisco. Tu potresti essere la migliore spadaccina delle Leghe. Perché non te ne importa?"],
+    ["lethy","Perché a casa mia le gare le vincevo tutte. I maestri erano pagati da papà."],
+    ["fasty","...Ti lasciavano vincere?"],
+    ["lethy","L'ho scoperto a quindici anni. Ho ancora undici coppe in camera. Non so quale sia vera."],
+    ["fasty","Io di coppe non ne ho nessuna. A casa mia non c'erano i soldi per iscrivermi. Correvo dietro alle carrozze degli altri."],
+    ["lethy","Quindi tu vuoi vincere perché non ti hanno mai fatto gareggiare. E io non voglio perché mi hanno sempre fatta vincere."],
+    ["fasty","Detta così sembriamo due scemi."],
+    ["lethy","Detta così sembriamo una squadra."]
+  ],
+  "A": [
+    ["fasty","Torneo di Porto Ambra. Scherma a coppie. Mi sono iscritto. Con te."],
+    ["lethy","Senza chiedermelo?"],
+    ["fasty","Se te lo chiedevo dicevi \"vediamo\". Senti: nessuno ci ha pagato i giudici, e nessuno mi ha tenuto fuori. È la prima gara vera per tutti e due."],
+    ["lethy","...E com'è andata? Ricordami, ero distratta dal fatto che abbiamo vinto."],
+    ["fasty","ABBIAMO VINTO! Prima coppia! C'è la coppa! Una sola, però. Come la dividiamo?"],
+    ["lethy","L'ho già fatta segare a metà dal fabbro. La tua metà ha il manico."],
+    ["fasty","Mezza coppa. La mia prima coppa è mezza coppa. ...È la più bella che abbia mai visto."],
+    ["lethy","La mia è la dodicesima. Ed è la prima di cui sono sicura."]
+  ]
+}

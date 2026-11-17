@@ -134,6 +134,19 @@ Entrano all'inizio del capitolo 14. Nives e Tullo su tutte le rotte; il terzo di
 
 Altri amici si aggiungeranno con la stessa scheda.
 
+### Gli amici entrati dopo (ispirati ad amici veri, come i primi quattro)
+
+Entrano uno alla volta nei primi atti, ognuno con una breve scena d'arrivo. Nei preparativi si sceglie chi schierare; chi resta all'accampamento sale comunque di livello (un livello sotto la media di chi ha combattuto).
+
+| Personaggio | Arriva | Classe · arma | Voce | Abilità | Supporti |
+|---|---|---|---|---|---|
+| **Diego** | cap. 2, lv 3 | Tuttofare · spada, lancia e ascia | Gli riesce ogni gioco e se ne scusa; con le ragazze risponde "sì" a chi gli chiede l'ora. Arco: scoprire che perdere fa venire voglia di rigiocare | **Bravo a tutto:** +10 precisione, +5 schivata | Fasty (62 a 0, poi 62 a 1), Giorgio (il Labirinto della Caldaia) |
+| **Francine** | cap. 4, lv 5 | Ingegnera · torretta tascabile (congegni, 1-2 caselle) | Timidissima, costruisce invece di parlare: aggiusta le cose "perché pendevano". Arco: costruire un posto anche per sé | **Riparo improvvisato:** +15 schivata a lei e a chi le sta accanto | Mars (l'uccellino di latta), Giova (il tavolo con tredici sedie) |
+| **Fasty** | cap. 6, lv 7 | Staffetta d'ottone · picca, a cavallo meccanico | Sfida chiunque a qualunque cosa, vuole essere il migliore. Terzo di cinque fratelli: "se non sei primo non ti vede nessuno" | **Sfida accettata:** +10 critico, +25% PE | Diego, Lethy (la mezza coppa) |
+| **Giorgio** | cap. 8, lv 9 | Arciere tifoso · arco | Fan sfegatato di Lumina, la cantatrice delle lanterne (una figura di luce: nessuno sa chi c'è dietro), delle eroine dei romanzi a puntate e dei giochi d'ottone. Colleziona figurine | **Tifoso sfegatato:** +10 critico a chi gli sta entro 2 caselle | Diego, Giova (la figurina più rara) |
+
+Nel mondo di Valdaria le passioni di Giorgio sono diventate gli spettacoli di lanterne e le figurine; i videogiochi di Diego e Giorgio sono i "giochi d'ottone" del porto.
+
 ### Scheda per ogni amico (da compilare)
 
 | Campo | Esempio |

@@ -6,7 +6,8 @@ import { Battaglia } from "../js/motore/battaglia.js";
 import { simulaCampagna } from "../strumenti/simula_campagna.js";
 import { creaDado } from "../js/motore/dado.js";
 
-const membri = (p) => Object.keys(p.compagnia).sort().join(",");
+const AMICI = ["diego", "francine", "fasty", "giorgio"];
+const membri = (p) => Object.keys(p.compagnia).filter((id) => !AMICI.includes(id)).sort().join(",");
 
 test("i nuovi personaggi entrano al capitolo 14, ognuno sulla sua rotta", () => {
   const inizio = nuovaPartita(dati);
@@ -57,4 +58,23 @@ test("il bot, promuovendo, arriva all'ultimo capitolo su tutte e tre le rotte", 
     }
     assert.ok(finite >= 3, `${rotta}: solo ${finite} campagne su 8 arrivano al capitolo 20`);
   }
+});
+
+test("gli amici entrano uno alla volta nei primi atti, con la scena d'arrivo da mostrare una volta sola", () => {
+  const p = nuovaPartita(dati);
+  aggiornaCompagnia(dati, p, "c1");
+  for (const id of AMICI) assert.equal(p.compagnia[id], undefined, id);
+  for (const [cap, id] of [["c2", "diego"], ["c4", "francine"], ["c6", "fasty"], ["c8", "giorgio"]]) {
+    aggiornaCompagnia(dati, p, cap);
+    assert.equal(p.compagnia[id].lv, dati.personaggi[id].lv, id);
+    assert.ok(p.arrivi.includes(id), id);
+    assert.ok(dati.personaggi[id].arrivo.length >= 6 && dati.personaggi[id].arrivo.some((r) => r[0] === id), id);
+    assert.equal(dati.promozioni[id].length, 2, id);
+    assert.ok(dati.coppie.filter((c) => c.includes(id)).length >= 2, id);
+  }
+  aggiornaCompagnia(dati, p, "c9");
+  assert.equal(p.arrivi.length, 4, "nessuno arriva due volte");
+  assert.deepEqual(dati.personaggi.ordine.slice(-4), AMICI, "in fondo all'ordine: lo schieramento iniziale resta quello della storia");
+  const b = new Battaglia({ dati, capitolo: dati.capitoli.c9, compagnia: p.compagnia });
+  assert.deepEqual(b.unita.filter((u) => u.compagnia).map((u) => u.id), ["giova", "lethy", "wata", "mars"]);
 });

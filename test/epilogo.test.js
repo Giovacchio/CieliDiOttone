@@ -4,7 +4,8 @@ import { dati } from "./aiuti.js";
 import { nuovaPartita, aggiornaCompagnia, componiEpilogo, storiaCompiuta } from "../js/motore/campagna.js";
 
 const partita = (rotta) => { const p = nuovaPartita(dati); p.bandiere.rotta = rotta; aggiornaCompagnia(dati, p, "c20" + rotta[0]); return p; };
-const nomi = (E) => E.pagine.map((x) => x.chi.join("+"));
+const AMICI = ["diego", "francine", "fasty", "giorgio"];
+const nomi = (E) => E.pagine.map((x) => x.chi.join("+")).filter((n) => !AMICI.includes(n));
 
 test("ogni rotta ha il suo finale e l'ultimo capitolo chiude la storia", () => {
   for (const rotta of ["corona", "radici", "libere"]) {
@@ -33,7 +34,7 @@ test("due personaggi con il supporto A condividono la pagina, e ognuno compare u
   assert.deepEqual(nomi(E), ["giova+wata", "lethy+nives", "mars", "tullo", "maelis"]);
   const tutti = E.pagine.flatMap((x) => x.chi);
   assert.equal(new Set(tutti).size, tutti.length);
-  assert.equal(tutti.length, 7);
+  assert.equal(tutti.length, 11);
   assert.match(E.pagine[0].testo, /Prospy/);
 });
 
@@ -52,7 +53,7 @@ test("provare un'altra rotta: la copia torna al bivio con i livelli raggiunti, s
   assert.equal(c.prossimo, "c12");
   assert.equal(c.bandiere.rotta, undefined);
   assert.equal(c.compagnia.giova.lv, 25);
-  assert.deepEqual(Object.keys(c.compagnia).sort(), ["giova", "lethy", "mars", "wata"]);
+  assert.deepEqual(Object.keys(c.compagnia).sort(), ["diego", "fasty", "francine", "giorgio", "giova", "lethy", "mars", "wata"], "gli amici entrati prima del bivio restano");
   assert.ok(!c.completati.includes("c12") && !c.completati.includes("c14c") && c.completati.includes("c11"));
   assert.equal(c.deposito.oggetti.find((o) => o.id === "tonico").q >= 3, true);
   assert.equal(p.bandiere.rotta, "corona", "la partita originale non cambia");

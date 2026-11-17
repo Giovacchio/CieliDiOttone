@@ -189,5 +189,93 @@
         "effetti": [{"tipo":"bonus","danno":2,"critico":5,"schivata":10}]
       }
     }
+  ],
+  "diego": [
+    {
+      "classe": "Campione di ogni tavolo",
+      "stat": {"abi":3,"vel":2,"for":2},
+      "mov": 1,
+      "abilita": {
+        "nome": "Non perde mai",
+        "descrizione": "Spade, lance e asce, con +15 precisione e +10 schivata.",
+        "effetti": [{"tipo":"bonus","precisione":15,"schivata":10}]
+      }
+    },
+    {
+      "classe": "Maestro d'armi",
+      "stat": {"for":3,"def":3,"hp":3},
+      "mov": 0,
+      "abilita": {
+        "nome": "Tre armi, una regola",
+        "descrizione": "Spade, lance e asce, con +10 precisione, +5 schivata e +2 danni.",
+        "effetti": [{"tipo":"bonus","precisione":10,"schivata":5,"danno":2}]
+      }
+    }
+  ],
+  "francine": [
+    {
+      "classe": "Macchinista",
+      "stat": {"for":3,"abi":2,"hp":3},
+      "mov": 0,
+      "abilita": {
+        "nome": "Torrette e ripari",
+        "descrizione": "Lei e chi le sta accanto hanno +15 schivata; i suoi congegni fanno +2 danni.",
+        "effetti": [{"tipo":"aura","raggio":1,"schivata":15},{"tipo":"bonus","danno":2,"seArma":{"tipo":"congegni"}}]
+      }
+    },
+    {
+      "classe": "Inventrice",
+      "stat": {"def":2,"res":3,"hp":4},
+      "mov": 1,
+      "abilita": {
+        "nome": "Piccoli aiutanti",
+        "descrizione": "Chi le sta entro 2 caselle ha +15 schivata; i suoi droni riparano 3 PV a chi le sta accanto a inizio turno.",
+        "effetti": [{"tipo":"aura","raggio":2,"schivata":15},{"tipo":"curaVicini","pv":3}]
+      }
+    }
+  ],
+  "fasty": [
+    {
+      "classe": "Primo cavaliere",
+      "stat": {"vel":3,"for":2,"hp":3},
+      "mov": 1,
+      "abilita": {
+        "nome": "Sempre in testa",
+        "descrizione": "+15 critico, +5 schivata e il 25% di PE in più.",
+        "effetti": [{"tipo":"bonus","critico":15,"schivata":5},{"tipo":"esperienza","moltiplica":1.25}]
+      }
+    },
+    {
+      "classe": "Lancia da torneo",
+      "stat": {"for":4,"def":2,"hp":3},
+      "mov": 0,
+      "abilita": {
+        "nome": "Colpo da finale",
+        "descrizione": "+10 critico, +2 danni e il 25% di PE in più.",
+        "effetti": [{"tipo":"bonus","critico":10,"danno":2},{"tipo":"esperienza","moltiplica":1.25}]
+      }
+    }
+  ],
+  "giorgio": [
+    {
+      "classe": "Tiratore da prima fila",
+      "stat": {"abi":4,"for":2,"hp":2},
+      "mov": 0,
+      "abilita": {
+        "nome": "Occhio da collezionista",
+        "descrizione": "Chi gli sta entro 2 caselle ha +10 critico; lui ha +10 precisione.",
+        "effetti": [{"tipo":"aura","raggio":2,"critico":10},{"tipo":"bonus","precisione":10}]
+      }
+    },
+    {
+      "classe": "Capotifoso",
+      "stat": {"vel":2,"fort":3,"hp":4},
+      "mov": 1,
+      "abilita": {
+        "nome": "Coro da stadio",
+        "descrizione": "Chi gli sta entro 3 caselle ha +10 critico e +5 precisione.",
+        "effetti": [{"tipo":"aura","raggio":3,"critico":10,"precisione":5}]
+      }
+    }
   ]
 }

@@ -1,0 +1,33 @@
+{
+  "coppia": ["giorgio","diego"],
+  "C": [
+    ["giorgio","Diego. Il Labirinto della Caldaia. Livello nove. Come si passa il pistone che gira?"],
+    ["diego","Salti prima che arrivi, non dopo. Lo senti dal rumore."],
+    ["giorgio","Dal rumore! Tre mesi che ci sbatto il naso! Tieni: una figurina di Lumina, doppia. Te la sei meritata."],
+    ["diego","Grazie. È... quella che canta con le lanterne?"],
+    ["giorgio","\"Quella che canta\". Diego. Siediti. Ti spiego tutto dall'inizio. Ci vorranno due ore."],
+    ["diego","Ne ho tre libere."],
+    ["giorgio","Lo sapevo che eri una brava persona."]
+  ],
+  "B": [
+    ["diego","Giorgio, posso chiederti una cosa? Tu parli con chiunque. Ieri hai spiegato Lumina a una capitana della Corona."],
+    ["giorgio","Le ho anche venduto due figurine."],
+    ["diego","Io, se una ragazza mi chiede l'ora, le rispondo \"sì\"."],
+    ["giorgio","Ah. Quello. Ma è facile: tu cerchi la cosa giusta da dire. Io dico la cosa che mi piace. Se a lei non piace, pazienza: ho comunque parlato di una cosa bella."],
+    ["diego","E se non so cosa mi piace?"],
+    ["giorgio","Diego. Hai il primato in undici giochi. Parti da lì."],
+    ["diego","...E tu? Lumina ti ha mai risposto, alle lettere?"],
+    ["giorgio","Mai. Quarantatré lettere. Ma non le scrivo perché risponda. Le scrivo perché sappia che qualcuno, là fuori, fa il tifo."]
+  ],
+  "A": [
+    ["diego","Giorgio. Ho parlato dieci minuti con la ragazza del banco dei dadi. Dieci."],
+    ["giorgio","DIECI! Di cosa?"],
+    ["diego","Di dadi. Delle probabilità col sei doppio. Ha detto che sono \"strano ma interessante\"."],
+    ["giorgio","\"Strano ma interessante\" è il massimo dei voti! Io sono fermo a \"strano\" da anni!"],
+    ["diego","E tu? Hai una faccia..."],
+    ["giorgio","È arrivata una lettera. Da Lumina. C'è dentro un disegno: una lanterna, e sotto scritto \"a chi fa il tifo dalla prima fila\"."],
+    ["diego","Ti ha risposto."],
+    ["giorgio","Mi ha risposto. Non so chi c'è dietro la lanterna, e sai una cosa? Non mi serve. So che c'è qualcuno."],
+    ["diego","Tieni. La figurina doppia. Mettila accanto alla lettera: te la sei meritata tu, stavolta."]
+  ]
+}
